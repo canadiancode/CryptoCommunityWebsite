@@ -139,21 +139,23 @@ a {
   cursor: pointer;
   align-self: center;
   align-items: center;
-  font-weight: 900;
   position: relative;
 }
 .headerContainer .headerSelections .navMenu .mobileViewButton .mobileNavDisplayButton .hamburgerLine {
-  height: 2px;
-  width: 70%;
+  height: 3px;
+  width: 50%;
   background-color: black;
   content: "";
   position: absolute;
+  left: 25%;
+  right: 0;
+  transition: 0.3s;
 }
 .headerContainer .headerSelections .navMenu .mobileViewButton .mobileNavDisplayButton .line1 {
-  transform: translateY(10px);
+  transform: translateY(6px);
 }
 .headerContainer .headerSelections .navMenu .mobileViewButton .mobileNavDisplayButton .line3 {
-  transform: translateY(-10px);
+  transform: translateY(-6px);
 }
 .headerContainer .headerSelections .navMenu .mainNav {
   display: flex;
@@ -233,13 +235,28 @@ a {
     padding: 0;
     padding-top: 2em;
     font-size: 1.5rem;
-    transform: translateY(-150%);
+    transform: translateY(-120%);
     opacity: 0;
   }
   .headerContainer .headerSelections .navMenu .displayMobileHeader {
     transform: translateY(0%);
     opacity: 1;
+    height: fit-content;
+    padding-bottom: 2em;
   }
+}
+
+.heroSection {
+  height: 100%;
+  width: 100%;
+}
+.heroSection .videoContainer {
+  height: 100%;
+  width: 100%;
+}
+.heroSection .videoContainer .videoElement {
+  height: 100%;
+  width: 100%;
 }
 
 /*# sourceMappingURL=/main.77bb5cfd.css.map */

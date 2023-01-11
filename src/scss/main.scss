@@ -144,21 +144,23 @@ a {
                     color: black;
                     cursor: pointer;
                     align-self: center;
-                    align-items: center;  
-                    font-weight: 900;
+                    align-items: center;
                     position: relative;
                     .hamburgerLine {
-                        height: 2px;
-                        width: 70%;
+                        height: 3px;
+                        width: 50%;
                         background-color: black;
                         content: '';
                         position: absolute;
+                        left: 25%;
+                        right: 0;
+                        transition: 0.3s;
                     }
                     .line1 {
-                        transform: translateY(10px);
+                        transform: translateY(6px);
                     }
                     .line3 {
-                        transform: translateY(-10px);
+                        transform: translateY(-6px);
                     }
                 }
             }
@@ -243,15 +245,32 @@ a {
                         padding: 0;
                         padding-top: 2em;
                         font-size: 1.5rem;
-                        transform: translateY(-150%);
+                        transform: translateY(-120%);
                         opacity: 0;
                     }
                     .displayMobileHeader {
                         transform: translateY(0%);
                         opacity: 1;
+                        height: fit-content;
+                        padding-bottom: 2em;
                     }
                 }
             }
+        }
+    }
+}
+
+
+// Hero Section
+.heroSection {
+    height: 100%;
+    width: 100%;
+    .videoContainer {
+        height: 100%;
+        width: 100%;
+        .videoElement {
+            height: 100%;
+            width: 100%;
         }
     }
 }

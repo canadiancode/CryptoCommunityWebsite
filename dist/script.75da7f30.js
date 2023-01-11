@@ -118,30 +118,17 @@ parcelRequire = (function (modules, cache, entry, globalName) {
 
   return newRequire;
 })({"script.js":[function(require,module,exports) {
-function getPrice() {
-  fetch('https://api.coingecko.com/api/v3/coins/bitcoin/market_chart?vs_currency=usd&days=365&interval=daily').then(function (res) {
-    return res.json();
-  }).then(function (data) {
-    console.log(data);
-  });
-}
-getPrice();
+// Header Section 
 
-// The minimum amount of info we need for a chart using the ApexCharts JS library
-var options = {
-  chart: {
-    type: 'line'
-  },
-  series: [{
-    name: 'sales',
-    data: [30, 40, 35, 50, 49, 60, 70, 91, 125]
-  }],
-  xaxis: {
-    categories: [1991, 1992, 1993, 1994, 1995, 1996, 1997, 1998, 1999]
+var headerMobileButton = document.querySelector('.mobileNavDisplayButton');
+var mobileHeader = document.querySelector('.mainNav');
+headerMobileButton.addEventListener('click', function () {
+  if (mobileHeader.classList.contains('displayMobileHeader')) {
+    mobileHeader.classList.remove('displayMobileHeader');
+  } else {
+    mobileHeader.classList.add('displayMobileHeader');
   }
-};
-var chart = new ApexCharts(document.querySelector("#chart"), options);
-chart.render();
+});
 },{}],"../node_modules/parcel-bundler/src/builtins/hmr-runtime.js":[function(require,module,exports) {
 var global = arguments[3];
 var OVERLAY_ID = '__parcel__error__overlay__';
@@ -167,7 +154,7 @@ var parent = module.bundle.parent;
 if ((!parent || !parent.isParcelRequire) && typeof WebSocket !== 'undefined') {
   var hostname = "" || location.hostname;
   var protocol = location.protocol === 'https:' ? 'wss' : 'ws';
-  var ws = new WebSocket(protocol + '://' + hostname + ':' + "49623" + '/');
+  var ws = new WebSocket(protocol + '://' + hostname + ':' + "49339" + '/');
   ws.onmessage = function (event) {
     checkedAssets = {};
     assetsToAccept = [];

@@ -118,7 +118,7 @@ parcelRequire = (function (modules, cache, entry, globalName) {
 
   return newRequire;
 })({"script.js":[function(require,module,exports) {
-// Header Section 
+// Header Section -- Header Section -- Header Section -- Header Section -- Header Section
 
 // To oepn up the header on mobile view
 var headerMobileButton = document.querySelector('.mobileNavDisplayButton');
@@ -128,7 +128,9 @@ var mobileHeader = document.querySelector('.mainNav');
 var hamburgerLine1 = document.querySelector('.line1');
 var hamburgerLine2 = document.querySelector('.line2');
 var hamburgerLine3 = document.querySelector('.line3');
-headerMobileButton.addEventListener('click', function () {
+
+//  code to close the drop-down header section
+function closeMobileHeader() {
   if (mobileHeader.classList.contains('displayMobileHeader')) {
     mobileHeader.classList.remove('displayMobileHeader');
     hamburgerLine1.style.transform = 'rotate(0deg) translateY(6px)';
@@ -140,7 +142,39 @@ headerMobileButton.addEventListener('click', function () {
     hamburgerLine2.style.opacity = '0';
     hamburgerLine3.style.transform = 'rotate(-45deg) translateY(0px)';
   }
+}
+;
+headerMobileButton.addEventListener('click', closeMobileHeader);
+document.addEventListener('keydown', function (e) {
+  if (e.key == 'Escape') {
+    closeMobileHeader();
+  }
+  ;
 });
+
+// close the header if clicked outside of the drop-down header menu
+window.addEventListener('click', function (e) {
+  if (mobileHeader.contains(e.target) || headerMobileButton.contains(e.target)) {} else {
+    mobileHeader.classList.remove('displayMobileHeader');
+    hamburgerLine1.style.transform = 'rotate(0deg) translateY(6px)';
+    hamburgerLine2.style.opacity = '1';
+    hamburgerLine3.style.transform = 'rotate(0deg) translateY(-6px)';
+  }
+});
+
+// Hero Text Animation Section -- Hero Text Animation Section -- Hero Text Animation Section
+setTimeout(function () {
+  var firstWhiteLettering = document.querySelector('.firstWhiteLettering');
+  firstWhiteLettering.style.opacity = '1';
+}, "1000");
+setTimeout(function () {
+  var secondWhiteLettering = document.querySelector('.secondWhiteLettering');
+  secondWhiteLettering.style.opacity = '1';
+}, "2000");
+setTimeout(function () {
+  var thirdWhiteLettering = document.querySelector('.thirdWhiteLettering');
+  thirdWhiteLettering.style.opacity = '1';
+}, "3000");
 },{}],"../node_modules/parcel-bundler/src/builtins/hmr-runtime.js":[function(require,module,exports) {
 var global = arguments[3];
 var OVERLAY_ID = '__parcel__error__overlay__';
@@ -166,7 +200,7 @@ var parent = module.bundle.parent;
 if ((!parent || !parent.isParcelRequire) && typeof WebSocket !== 'undefined') {
   var hostname = "" || location.hostname;
   var protocol = location.protocol === 'https:' ? 'wss' : 'ws';
-  var ws = new WebSocket(protocol + '://' + hostname + ':' + "49339" + '/');
+  var ws = new WebSocket(protocol + '://' + hostname + ':' + "53957" + '/');
   ws.onmessage = function (event) {
     checkedAssets = {};
     assetsToAccept = [];

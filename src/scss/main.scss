@@ -37,6 +37,7 @@ body {
   min-height: 100vh;
   text-rendering: optimizeSpeed;
   line-height: 1.5;
+  background-color: black;
 }
 
 /* A elements that don't have a class get default styles */
@@ -109,9 +110,11 @@ a {
     justify-content: space-between;
     font-family: var(--paragraphFontFamily);
     font-weight: 900;
+    background-color: var(--black);
     .headerLogo {
         width: fit-content;
         height: 100%;
+        z-index: 5;
         .logoContainer {
             width: fit-content;
             height: 100%;
@@ -132,24 +135,28 @@ a {
             padding: 0em 2em;
             align-items: center;
             height: 100%;
+            z-index: 1;
             .mobileViewButton {
                 height: 100%;
                 width: 100%;
                 display: none;
+                z-index: 5;
                 .mobileNavDisplayButton {
                     min-width: 45px;
                     min-height: 40px;
                     border-radius: 20px;
-                    border: var(--black) 3px solid;
-                    color: black;
+                    border: var(--white) 3px solid;
+                    color: var(--black);
                     cursor: pointer;
                     align-self: center;
                     align-items: center;
                     position: relative;
+                    z-index: 5;
+                    background-color: var(--black);
                     .hamburgerLine {
                         height: 3px;
                         width: 50%;
-                        background-color: black;
+                        background-color: var(--white);
                         content: '';
                         position: absolute;
                         left: 25%;
@@ -173,7 +180,7 @@ a {
                 margin: 0;
                 transition: 0.5s;
                 li {
-                    color: var(--black);
+                    color: var(--white);
                 }
             }
             .subNav {
@@ -183,6 +190,7 @@ a {
         .headerCTA {
             display: flex;
             align-items: center;
+            z-index: 5;
             .headerCTAlink {
                 max-width: 130px;
                 max-height: 40px;
@@ -191,7 +199,7 @@ a {
                     min-width: 130px;
                     min-height: 40px;
                     border-radius: 20px;
-                    border: 3px solid var(--black);
+                    border: 3px solid var(--white);
                     color: var(--white);
                     background: var(--black);
                     cursor: pointer;
@@ -253,6 +261,10 @@ a {
                         opacity: 1;
                         height: fit-content;
                         padding-bottom: 2em;
+                        background-color: var(--black);
+                        .headerItem {
+                            color: var(--white);
+                        }
                     }
                 }
             }
@@ -260,17 +272,19 @@ a {
     }
 }
 
-
-// Hero Section
+// Hero Section  -- Hero Section  -- Hero Section -- Hero Section
 .heroSection {
     height: 100%;
     width: 100%;
     .videoContainer {
         height: 100%;
+        max-height: 25em;
         width: 100%;
         .videoElement {
             height: 100%;
             width: 100%;
+            object-fit: contain;
+            flex-shrink: 0;
         }
     }
 }

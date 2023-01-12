@@ -316,6 +316,7 @@ a {
   text-shadow: 1px 1px 1px var(--red);
   opacity: 0;
   transition: 1s;
+  clip-path: polygon(0 0, 0 0, 0 100%, 0% 100%);
 }
 .heroSection .heroTextContainer .heroSubHeadingContainer {
   font-family: var(--secondaryHeaderFontFamily);

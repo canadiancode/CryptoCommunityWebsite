@@ -50,14 +50,17 @@ window.addEventListener('click', (e) => {
 setTimeout(() => {
   const firstWhiteLettering = document.querySelector('.firstWhiteLettering');
   firstWhiteLettering.style.opacity = '1';
+  firstWhiteLettering.style.clipPath = 'polygon(0 0, 100% 0, 100% 100%, 0 100%)';
 }, "1000");
 
 setTimeout(() => {
   const secondWhiteLettering = document.querySelector('.secondWhiteLettering');
   secondWhiteLettering.style.opacity = '1';
+  secondWhiteLettering.style.clipPath = 'polygon(0 0, 100% 0, 100% 100%, 0 100%)';
 }, "2000");
 
 setTimeout(() => {
   const thirdWhiteLettering = document.querySelector('.thirdWhiteLettering');
   thirdWhiteLettering.style.opacity = '1';
+  thirdWhiteLettering.style.clipPath = 'polygon(0 0, 100% 0, 100% 100%, 0 100%)';
 }, "3000");

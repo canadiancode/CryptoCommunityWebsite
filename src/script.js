@@ -64,3 +64,74 @@ setTimeout(() => {
   thirdWhiteLettering.style.opacity = '1';
   thirdWhiteLettering.style.clipPath = 'polygon(0 0, 100% 0, 100% 100%, 0 100%)';
 }, "3000");
+
+setTimeout(() => {
+  const headerCTAlink = document.querySelector('.heroCTALink');
+  headerCTAlink.style.opacity = '1';
+  headerCTAlink.style.transform = 'translateY(0em)';
+}, "4500");
+
+// Hero Heading Parallax Effect
+const heroHeadingContainer = document.querySelector('.heroHeadingContainer');
+
+const heroHeadingOptions = {
+  rootMargin: "0px",
+  threshold: 0
+}
+
+const heroHeadingObserver = new IntersectionObserver(function(entries, heroHeadingObserver) {
+  entries.forEach(entry => {
+
+    function headingParallax() {
+      let windowHeight = window.innerHeight;
+      let windowScrolled = window.scrollY;
+      let parallaxValue = windowScrolled / 15;
+      heroHeadingContainer.style.transform = `translateY(${parallaxValue}px)`;
+    }
+
+    if (entry.isIntersecting) {
+      document.addEventListener('scroll', headingParallax);
+    } else {
+      document.removeEventListener('scroll', headingParallax);
+    }
+  });
+}, heroHeadingOptions);
+heroHeadingObserver.observe(heroHeadingContainer);
+
+// Our Vision animation text
+const crossoverText = document.querySelectorAll('.crosspageText');
+
+const crossoverOptions = {
+  rootMargin: "0px",
+  threshold: "0"
+}
+
+const crossoverObserver = new IntersectionObserver(function(entries, crossoverObserver) {
+  entries.forEach(entry => {
+
+    function crossoverAnimation() {
+
+      crossoverText.forEach(text => {
+        let windowScroll = window.innerHeight;
+        let scrollValue = text.getBoundingClientRect();
+        let scrollY_value = scrollValue.top;
+        let parallaxValue =  25 - ((windowScroll - scrollY_value) / 9);
+        text.style.transform = `translateX(${parallaxValue}%)`;
+        let textOpacity = ((windowScroll - scrollY_value) / 20) / 35;
+        text.style.opacity = `${textOpacity}`;
+
+      });
+    }
+
+    if (entry.isIntersecting) {
+      document.addEventListener('scroll', crossoverAnimation);
+    } else {
+      document.removeEventListener('scroll', crossoverAnimation);
+    }
+    crossoverAnimation();
+  });
+}, crossoverOptions);
+
+crossoverText.forEach(text => {
+  crossoverObserver.observe(text);
+});

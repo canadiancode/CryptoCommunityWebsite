@@ -178,6 +178,65 @@ setTimeout(function () {
   thirdWhiteLettering.style.opacity = '1';
   thirdWhiteLettering.style.clipPath = 'polygon(0 0, 100% 0, 100% 100%, 0 100%)';
 }, "3000");
+setTimeout(function () {
+  var headerCTAlink = document.querySelector('.heroCTALink');
+  headerCTAlink.style.opacity = '1';
+  headerCTAlink.style.transform = 'translateY(0em)';
+}, "4500");
+
+// Hero Heading Parallax Effect
+var heroHeadingContainer = document.querySelector('.heroHeadingContainer');
+var heroHeadingOptions = {
+  rootMargin: "0px",
+  threshold: 0
+};
+var heroHeadingObserver = new IntersectionObserver(function (entries, heroHeadingObserver) {
+  entries.forEach(function (entry) {
+    function headingParallax() {
+      var windowHeight = window.innerHeight;
+      var windowScrolled = window.scrollY;
+      var parallaxValue = windowScrolled / 15;
+      heroHeadingContainer.style.transform = "translateY(".concat(parallaxValue, "px)");
+    }
+    if (entry.isIntersecting) {
+      document.addEventListener('scroll', headingParallax);
+    } else {
+      document.removeEventListener('scroll', headingParallax);
+    }
+  });
+}, heroHeadingOptions);
+heroHeadingObserver.observe(heroHeadingContainer);
+
+// Our Vision animation text
+var crossoverText = document.querySelectorAll('.crosspageText');
+var crossoverOptions = {
+  rootMargin: "0px",
+  threshold: "0"
+};
+var crossoverObserver = new IntersectionObserver(function (entries, crossoverObserver) {
+  entries.forEach(function (entry) {
+    function crossoverAnimation() {
+      crossoverText.forEach(function (text) {
+        var windowScroll = window.innerHeight;
+        var scrollValue = text.getBoundingClientRect();
+        var scrollY_value = scrollValue.top;
+        var parallaxValue = 25 - (windowScroll - scrollY_value) / 9;
+        text.style.transform = "translateX(".concat(parallaxValue, "%)");
+        var textOpacity = (windowScroll - scrollY_value) / 20 / 35;
+        text.style.opacity = "".concat(textOpacity);
+      });
+    }
+    if (entry.isIntersecting) {
+      document.addEventListener('scroll', crossoverAnimation);
+    } else {
+      document.removeEventListener('scroll', crossoverAnimation);
+    }
+    crossoverAnimation();
+  });
+}, crossoverOptions);
+crossoverText.forEach(function (text) {
+  crossoverObserver.observe(text);
+});
 },{}],"../node_modules/parcel-bundler/src/builtins/hmr-runtime.js":[function(require,module,exports) {
 var global = arguments[3];
 var OVERLAY_ID = '__parcel__error__overlay__';
@@ -203,7 +262,7 @@ var parent = module.bundle.parent;
 if ((!parent || !parent.isParcelRequire) && typeof WebSocket !== 'undefined') {
   var hostname = "" || location.hostname;
   var protocol = location.protocol === 'https:' ? 'wss' : 'ws';
-  var ws = new WebSocket(protocol + '://' + hostname + ':' + "53957" + '/');
+  var ws = new WebSocket(protocol + '://' + hostname + ':' + "56851" + '/');
   ws.onmessage = function (event) {
     checkedAssets = {};
     assetsToAccept = [];

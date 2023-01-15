@@ -100,6 +100,14 @@ a {
     --black: black;
 }
 
+h1, h2, h3, h4 {
+    font-family: var(--mainHeaderFont);
+}
+
+p {
+    font-family: var(--paragraphFontFamily);
+}
+
 // Header Section -- Header Section -- Header Section 
 
 .headerContainer {
@@ -284,6 +292,7 @@ a {
                         height: fit-content;
                         padding-bottom: 2em;
                         background-color: var(--black);
+                        box-shadow: 0px 15px 15px 0px var(--black);
                         .headerItem {
                             color: var(--white);
                         }
@@ -330,13 +339,20 @@ a {
                 max-width: 700px;
                 font-family: var(--mainHeaderFont);
                 letter-spacing: 3px;
-                text-align: center;
                 margin: 0 auto;
                 padding: 0em 10%;
                 cursor: default;
+                text-align: center;
                 .redLetter {
                     color: var(--red);
                     text-shadow: 1px 1px 1px var(--white);
+                    transition: 1s;
+                }
+                .secondredLetter {
+                    margin-left: -1em
+                }
+                .thirdredLetter {
+                    margin-left: -2.1em;
                 }
                 .whiteLettering {
                     text-shadow: 1px 1px 1px var(--red);
@@ -430,6 +446,7 @@ a {
 .ourVisionSection {
     width: 100%;
     height: 100%;
+    overflow: hidden;
     .CrosspageAnimationContainer {
         width: 100%;
         height: fit-content;
@@ -458,8 +475,72 @@ a {
             }
         }
     }
-    .visionHeader {
-        color: white;
+    .visionContentContainer {
+        color: var(--white);
         height: 100vh;
+        display: flex;
+        .visonTextContainer {
+            width: 100%;
+            height: 100vh;
+            padding: 0em 10%;
+            text-align: left;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            h3 {
+                font-size: 5vmax;
+                font-family: var(--secondaryHeaderFontFamily);
+            }
+            p {
+                font-family: var(--paragraphFontFamily);
+                font-size: 1.2rem;
+                span {
+                    font-weight: bolder;
+                    text-shadow: 1px 1px 1px var(--red), -1px -1px 1px var(--red);
+                }
+            }
+        }
+        .visionPhoneContainer {
+            width: 100%;
+            height: 100%;
+            .phoneListContainer {
+                display: flex;
+                transform: rotate(30deg);
+                width: 100%;
+                height: 100%;
+                .phoneContainer {
+                    height: 100%;
+                    width: 100%;
+                    .phoneListTwo {
+                        transform: translateY(-500px);
+                    }
+                }
+            }
+        }
+        @media screen and (max-width: 1000px) {
+            & {
+                flex-direction: column;
+                margin-top: 10%;
+                .visonTextContainer {
+                    width: 80%;
+                    padding: 2em 10%;
+                    margin-bottom: 15%;
+                }
+            }
+        }
+        @media screen and (max-width: 500px) {
+            .visonTextContainer {
+                width: 80%;
+                padding: 2em 10%;
+                margin-bottom: -15%;
+            }
+        }
+    }
+}
+
+.getStartedSection {
+    height: 100vh;
+    h4 {
+        color: white;
     }
 }

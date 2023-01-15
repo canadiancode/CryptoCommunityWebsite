@@ -172,11 +172,15 @@ setTimeout(function () {
   var secondWhiteLettering = document.querySelector('.secondWhiteLettering');
   secondWhiteLettering.style.opacity = '1';
   secondWhiteLettering.style.clipPath = 'polygon(0 0, 100% 0, 100% 100%, 0 100%)';
+  var secondredLetter = document.querySelector('.secondredLetter');
+  secondredLetter.style.marginLeft = '0em';
 }, "2000");
 setTimeout(function () {
   var thirdWhiteLettering = document.querySelector('.thirdWhiteLettering');
   thirdWhiteLettering.style.opacity = '1';
   thirdWhiteLettering.style.clipPath = 'polygon(0 0, 100% 0, 100% 100%, 0 100%)';
+  var thirdredLetter = document.querySelector('.thirdredLetter');
+  thirdredLetter.style.marginLeft = '0em';
 }, "3000");
 setTimeout(function () {
   var headerCTAlink = document.querySelector('.heroCTALink');
@@ -197,6 +201,10 @@ var heroHeadingObserver = new IntersectionObserver(function (entries, heroHeadin
       var windowScrolled = window.scrollY;
       var parallaxValue = windowScrolled / 15;
       heroHeadingContainer.style.transform = "translateY(".concat(parallaxValue, "px)");
+      var heroHeaderElement = document.querySelector('.heroHeaderElement');
+      var letterSpacingScrollValue = parallaxValue / 8;
+      var letterSpacing = letterSpacingScrollValue + 3;
+      heroHeaderElement.style.letterSpacing = "".concat(letterSpacing, "px");
     }
     if (entry.isIntersecting) {
       document.addEventListener('scroll', headingParallax);
@@ -220,7 +228,7 @@ var crossoverObserver = new IntersectionObserver(function (entries, crossoverObs
         var windowScroll = window.innerHeight;
         var scrollValue = text.getBoundingClientRect();
         var scrollY_value = scrollValue.top;
-        var parallaxValue = 25 - (windowScroll - scrollY_value) / 9;
+        var parallaxValue = 25 - (windowScroll - scrollY_value) / 11;
         text.style.transform = "translateX(".concat(parallaxValue, "%)");
         var textOpacity = (windowScroll - scrollY_value) / 20 / 35;
         text.style.opacity = "".concat(textOpacity);
@@ -237,6 +245,79 @@ var crossoverObserver = new IntersectionObserver(function (entries, crossoverObs
 crossoverText.forEach(function (text) {
   crossoverObserver.observe(text);
 });
+
+// Animation for the Our Vision heading and paragraph
+
+var visonTextContainer = document.querySelector('.visonTextContainer');
+var ourVisionOptions = {
+  rootMargin: "0px",
+  threshold: 0
+};
+var ourVisionTextObserver = new IntersectionObserver(function (entries, ourVisionTextObserver) {
+  entries.forEach(function (entry) {
+    function ourVisionTextAnimation() {
+      var windowScroll = window.innerHeight;
+      var scrollValue = visonTextContainer.getBoundingClientRect();
+      var scrollY_value = scrollValue.top;
+      var parallaxValue = 25 - (windowScroll - scrollY_value) / 5;
+      visonTextContainer.style.transform = "translateY(".concat(parallaxValue, "px)");
+    }
+    if (entry.isIntersecting) {
+      document.addEventListener('scroll', ourVisionTextAnimation);
+    } else {
+      document.removeEventListener('scroll', ourVisionTextAnimation);
+    }
+  });
+}, ourVisionOptions);
+ourVisionTextObserver.observe(visonTextContainer);
+
+// Animation for the iphones
+
+var phoneAnimationOptions = {
+  rootMargin: "0px",
+  threshold: 0
+};
+
+// The social media column
+var phoneListOne = document.querySelector('.phoneListOne');
+var phoneListOneObserver = new IntersectionObserver(function (entries, phoneListOneObserver) {
+  entries.forEach(function (entry) {
+    function phoneListOneScrolling() {
+      var imageElementRect = phoneListOne.getBoundingClientRect();
+      var imageElementY = imageElementRect.top;
+      var windowHeight = window.innerHeight;
+      var parallaxValue = (imageElementY - windowHeight) / 3;
+      phoneListOne.style.transform = "translateY(".concat(parallaxValue, "px)");
+    }
+    if (entry.isIntersecting) {
+      document.addEventListener('scroll', phoneListOneScrolling);
+    } else {
+      document.removeEventListener('scroll', phoneListOneScrolling);
+    }
+  });
+}, phoneAnimationOptions);
+phoneListOneObserver.observe(phoneListOne);
+
+// The Discord column
+var phoneListTwo = document.querySelector('.phoneListTwo');
+var phoneListTwoObserver = new IntersectionObserver(function (entries, phoneListTwoObserver) {
+  entries.forEach(function (entry) {
+    function phoneListTwoScrolling() {
+      var imageElementRect = phoneListTwo.getBoundingClientRect();
+      var imageElementY = imageElementRect.top;
+      var windowHeight = window.innerHeight - 2000;
+      var parallaxValue = (imageElementY - windowHeight) / -3;
+      phoneListTwo.style.transform = "translateY(".concat(parallaxValue, "px)");
+    }
+    if (entry.isIntersecting) {
+      document.addEventListener('scroll', phoneListTwoScrolling);
+    } else {
+      document.removeEventListener('scroll', phoneListTwoScrolling);
+    }
+  });
+}, phoneAnimationOptions);
+phoneListTwoObserver.observe(phoneListTwo);
+phoneListTwoScrolling();
 },{}],"../node_modules/parcel-bundler/src/builtins/hmr-runtime.js":[function(require,module,exports) {
 var global = arguments[3];
 var OVERLAY_ID = '__parcel__error__overlay__';
@@ -262,7 +343,7 @@ var parent = module.bundle.parent;
 if ((!parent || !parent.isParcelRequire) && typeof WebSocket !== 'undefined') {
   var hostname = "" || location.hostname;
   var protocol = location.protocol === 'https:' ? 'wss' : 'ws';
-  var ws = new WebSocket(protocol + '://' + hostname + ':' + "56851" + '/');
+  var ws = new WebSocket(protocol + '://' + hostname + ':' + "51764" + '/');
   ws.onmessage = function (event) {
     checkedAssets = {};
     assetsToAccept = [];

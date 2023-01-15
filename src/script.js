@@ -57,12 +57,18 @@ setTimeout(() => {
   const secondWhiteLettering = document.querySelector('.secondWhiteLettering');
   secondWhiteLettering.style.opacity = '1';
   secondWhiteLettering.style.clipPath = 'polygon(0 0, 100% 0, 100% 100%, 0 100%)';
+
+  const secondredLetter = document.querySelector('.secondredLetter');
+  secondredLetter.style.marginLeft = '0em';
 }, "2000");
 
 setTimeout(() => {
   const thirdWhiteLettering = document.querySelector('.thirdWhiteLettering');
   thirdWhiteLettering.style.opacity = '1';
   thirdWhiteLettering.style.clipPath = 'polygon(0 0, 100% 0, 100% 100%, 0 100%)';
+
+  const thirdredLetter = document.querySelector('.thirdredLetter');
+  thirdredLetter.style.marginLeft = '0em';
 }, "3000");
 
 setTimeout(() => {
@@ -87,6 +93,12 @@ const heroHeadingObserver = new IntersectionObserver(function(entries, heroHeadi
       let windowScrolled = window.scrollY;
       let parallaxValue = windowScrolled / 15;
       heroHeadingContainer.style.transform = `translateY(${parallaxValue}px)`;
+
+      const heroHeaderElement = document.querySelector('.heroHeaderElement');
+      let letterSpacingScrollValue = parallaxValue / 8;
+      let letterSpacing = letterSpacingScrollValue + 3;
+      heroHeaderElement.style.letterSpacing = `${letterSpacing}px`;
+
     }
 
     if (entry.isIntersecting) {
@@ -115,11 +127,10 @@ const crossoverObserver = new IntersectionObserver(function(entries, crossoverOb
         let windowScroll = window.innerHeight;
         let scrollValue = text.getBoundingClientRect();
         let scrollY_value = scrollValue.top;
-        let parallaxValue =  25 - ((windowScroll - scrollY_value) / 9);
+        let parallaxValue =  25 - ((windowScroll - scrollY_value) / 11);
         text.style.transform = `translateX(${parallaxValue}%)`;
         let textOpacity = ((windowScroll - scrollY_value) / 20) / 35;
         text.style.opacity = `${textOpacity}`;
-
       });
     }
 
@@ -135,3 +146,89 @@ const crossoverObserver = new IntersectionObserver(function(entries, crossoverOb
 crossoverText.forEach(text => {
   crossoverObserver.observe(text);
 });
+
+// Animation for the Our Vision heading and paragraph
+
+const visonTextContainer = document.querySelector('.visonTextContainer');
+
+const ourVisionOptions = {
+  rootMargin: "0px",
+  threshold: 0
+};
+
+const ourVisionTextObserver = new IntersectionObserver(function(entries, ourVisionTextObserver) {
+  entries.forEach(entry => {
+
+    function ourVisionTextAnimation() {
+      let windowScroll = window.innerHeight;
+      let scrollValue = visonTextContainer.getBoundingClientRect();
+      let scrollY_value = scrollValue.top;
+      let parallaxValue =  25 - ((windowScroll - scrollY_value) / 5);
+      visonTextContainer.style.transform = `translateY(${parallaxValue}px)`;
+    }
+
+    if (entry.isIntersecting) {
+      document.addEventListener('scroll', ourVisionTextAnimation);
+    } else {
+      document.removeEventListener('scroll', ourVisionTextAnimation);
+    }
+
+  });
+}, ourVisionOptions);
+ourVisionTextObserver.observe(visonTextContainer);
+
+// Animation for the iphones
+
+const phoneAnimationOptions = {
+  rootMargin: "0px",
+  threshold: 0
+};
+
+// The social media column
+const phoneListOne = document.querySelector('.phoneListOne');
+
+const phoneListOneObserver = new IntersectionObserver(function(entries, phoneListOneObserver) {
+  entries.forEach(entry => {
+
+    function phoneListOneScrolling() {
+      let imageElementRect = phoneListOne.getBoundingClientRect();
+      let imageElementY = imageElementRect.top;
+      let windowHeight = window.innerHeight;
+      let parallaxValue = ((imageElementY - windowHeight) / 3);
+      phoneListOne.style.transform = `translateY(${parallaxValue}px)`;
+    }
+
+    if (entry.isIntersecting) {
+      document.addEventListener('scroll', phoneListOneScrolling);
+    } else {
+      document.removeEventListener('scroll', phoneListOneScrolling);
+    }
+
+  })
+}, phoneAnimationOptions);
+phoneListOneObserver.observe(phoneListOne);
+
+// The Discord column
+const phoneListTwo = document.querySelector('.phoneListTwo');
+
+const phoneListTwoObserver = new IntersectionObserver(function (entries, phoneListTwoObserver) {
+  entries.forEach(entry => {
+
+    function phoneListTwoScrolling() {
+      let imageElementRect = phoneListTwo.getBoundingClientRect();
+      let imageElementY = imageElementRect.top;
+      let windowHeight = window.innerHeight - 2000;
+      let parallaxValue = ((imageElementY - windowHeight) / -3);
+      phoneListTwo.style.transform = `translateY(${parallaxValue}px)`;
+    }
+
+    if (entry.isIntersecting) {
+      document.addEventListener('scroll', phoneListTwoScrolling);
+    } else {
+      document.removeEventListener('scroll', phoneListTwoScrolling);
+    }
+
+  });
+}, phoneAnimationOptions);
+phoneListTwoObserver.observe(phoneListTwo);
+phoneListTwoScrolling();

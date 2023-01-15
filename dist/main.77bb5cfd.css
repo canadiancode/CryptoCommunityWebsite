@@ -92,6 +92,14 @@ a {
   --black: black;
 }
 
+h1, h2, h3, h4 {
+  font-family: var(--mainHeaderFont);
+}
+
+p {
+  font-family: var(--paragraphFontFamily);
+}
+
 .headerContainer {
   width: 100%;
   height: 100%;
@@ -276,6 +284,7 @@ a {
     height: fit-content;
     padding-bottom: 2em;
     background-color: var(--black);
+    box-shadow: 0px 15px 15px 0px var(--black);
   }
   .headerContainer .headerSelections .navMenu .displayMobileHeader .headerItem {
     color: var(--white);
@@ -320,14 +329,21 @@ a {
   max-width: 700px;
   font-family: var(--mainHeaderFont);
   letter-spacing: 3px;
-  text-align: center;
   margin: 0 auto;
   padding: 0em 10%;
   cursor: default;
+  text-align: center;
 }
 .heroSection .heroTextContainer .heroHeadingContainer h1 .redLetter {
   color: var(--red);
   text-shadow: 1px 1px 1px var(--white);
+  transition: 1s;
+}
+.heroSection .heroTextContainer .heroHeadingContainer h1 .secondredLetter {
+  margin-left: -1em;
+}
+.heroSection .heroTextContainer .heroHeadingContainer h1 .thirdredLetter {
+  margin-left: -2.1em;
 }
 .heroSection .heroTextContainer .heroHeadingContainer h1 .whiteLettering {
   text-shadow: 1px 1px 1px var(--red);
@@ -409,6 +425,7 @@ a {
 .ourVisionSection {
   width: 100%;
   height: 100%;
+  overflow: hidden;
 }
 .ourVisionSection .CrosspageAnimationContainer {
   width: 100%;
@@ -438,9 +455,73 @@ a {
     font-size: 20vmin;
   }
 }
-.ourVisionSection .visionHeader {
-  color: white;
+.ourVisionSection .visionContentContainer {
+  color: var(--white);
   height: 100vh;
+  display: flex;
+}
+.ourVisionSection .visionContentContainer .visonTextContainer {
+  width: 100%;
+  height: 100vh;
+  padding: 0em 10%;
+  text-align: left;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+}
+.ourVisionSection .visionContentContainer .visonTextContainer h3 {
+  font-size: 5vmax;
+  font-family: var(--secondaryHeaderFontFamily);
+}
+.ourVisionSection .visionContentContainer .visonTextContainer p {
+  font-family: var(--paragraphFontFamily);
+  font-size: 1.2rem;
+}
+.ourVisionSection .visionContentContainer .visonTextContainer p span {
+  font-weight: bolder;
+  text-shadow: 1px 1px 1px var(--red), -1px -1px 1px var(--red);
+}
+.ourVisionSection .visionContentContainer .visionPhoneContainer {
+  width: 100%;
+  height: 100%;
+}
+.ourVisionSection .visionContentContainer .visionPhoneContainer .phoneListContainer {
+  display: flex;
+  transform: rotate(30deg);
+  width: 100%;
+  height: 100%;
+}
+.ourVisionSection .visionContentContainer .visionPhoneContainer .phoneListContainer .phoneContainer {
+  height: 100%;
+  width: 100%;
+}
+.ourVisionSection .visionContentContainer .visionPhoneContainer .phoneListContainer .phoneContainer .phoneListTwo {
+  transform: translateY(-500px);
+}
+@media screen and (max-width: 1000px) {
+  .ourVisionSection .visionContentContainer {
+    flex-direction: column;
+    margin-top: 10%;
+  }
+  .ourVisionSection .visionContentContainer .visonTextContainer {
+    width: 80%;
+    padding: 2em 10%;
+    margin-bottom: 15%;
+  }
+}
+@media screen and (max-width: 500px) {
+  .ourVisionSection .visionContentContainer .visonTextContainer {
+    width: 80%;
+    padding: 2em 10%;
+    margin-bottom: -15%;
+  }
+}
+
+.getStartedSection {
+  height: 100vh;
+}
+.getStartedSection h4 {
+  color: white;
 }
 
 /*# sourceMappingURL=/main.77bb5cfd.css.map */

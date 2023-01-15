@@ -238,6 +238,7 @@ var crossoverObserver = new IntersectionObserver(function (entries, crossoverObs
       document.addEventListener('scroll', crossoverAnimation);
     } else {
       document.removeEventListener('scroll', crossoverAnimation);
+      crossoverText.style.transform = 'translateX(0em)';
     }
     crossoverAnimation();
   });
@@ -356,8 +357,8 @@ var aboutUsTextObserver = new IntersectionObserver(function (entries, aboutUsTex
       var windowHeight = window.innerHeight;
       var aboutUsTextRect = aboutUsTextContainer.getBoundingClientRect();
       var aboutUsTextY = aboutUsTextRect.top;
-      var parallaxValue = (aboutUsTextY - windowHeight) * -1 / 2;
-      aboutUsTextContainer.style.marginTop = "".concat(parallaxValue, "px");
+      var parallaxValue = (aboutUsTextY - windowHeight) * -1 / 3.5;
+      aboutUsTextContainer.style.transform = "translateY(".concat(parallaxValue, "px)");
     }
     if (entry.isIntersecting) {
       document.addEventListener('scroll', aboutUsTextParallax);
@@ -367,6 +368,38 @@ var aboutUsTextObserver = new IntersectionObserver(function (entries, aboutUsTex
   });
 }, aboutUsTextOptions);
 aboutUsTextObserver.observe(aboutUsTextContainer);
+
+// Our Services Tab Section
+var tabs = document.querySelector('.tabs');
+var tabButtons = tabs.querySelectorAll('[role="tab"]');
+var tabPanels = tabs.querySelectorAll('[role="tabpanel"]');
+
+// Change the tab once the button is clicked
+function handleTabClick(event) {
+  // Hide all tab panels
+  tabPanels.forEach(function (panel) {
+    panel.hidden = true;
+  });
+
+  // mark all tabs as unselected
+  tabButtons.forEach(function (tab) {
+    tab.setAttribute('aria-selected', false);
+  });
+
+  // mark the clicked tab as selected
+  event.currentTarget.setAttribute('aria-selected', true);
+
+  // find the assosictaed tab panel and show it
+  var id = event.currentTarget.id;
+  var tabPanel = tabs.querySelector("[aria-labelledby=\"".concat(id, "\"]"));
+  console.log(tabPanel);
+  tabPanel.hidden = false;
+}
+
+// A loop for each button
+tabButtons.forEach(function (button) {
+  return button.addEventListener('click', handleTabClick);
+});
 },{}],"../node_modules/parcel-bundler/src/builtins/hmr-runtime.js":[function(require,module,exports) {
 var global = arguments[3];
 var OVERLAY_ID = '__parcel__error__overlay__';

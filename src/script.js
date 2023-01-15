@@ -138,6 +138,7 @@ const crossoverObserver = new IntersectionObserver(function(entries, crossoverOb
       document.addEventListener('scroll', crossoverAnimation);
     } else {
       document.removeEventListener('scroll', crossoverAnimation);
+      crossoverText.style.transform = 'translateX(0em)';
     }
     crossoverAnimation();
   });
@@ -279,8 +280,8 @@ const aboutUsTextObserver = new IntersectionObserver(function(entries, aboutUsTe
       const windowHeight = window.innerHeight;
       let aboutUsTextRect = aboutUsTextContainer.getBoundingClientRect();
       let aboutUsTextY = aboutUsTextRect.top;
-      let parallaxValue = ((aboutUsTextY - windowHeight) * -1) / 2;
-      aboutUsTextContainer.style.marginTop = `${parallaxValue}px`;
+      let parallaxValue = ((aboutUsTextY - windowHeight) * -1) / 3.5;
+      aboutUsTextContainer.style.transform = `translateY(${parallaxValue}px)`;
     }
 
     if (entry.isIntersecting) {
@@ -292,3 +293,36 @@ const aboutUsTextObserver = new IntersectionObserver(function(entries, aboutUsTe
   });
 }, aboutUsTextOptions);
 aboutUsTextObserver.observe(aboutUsTextContainer);
+
+
+// Our Services Tab Section
+const tabs = document.querySelector('.tabs');
+const tabButtons = tabs.querySelectorAll('[role="tab"]');
+const tabPanels = tabs.querySelectorAll('[role="tabpanel"]');
+
+// Change the tab once the button is clicked
+function handleTabClick(event) {
+
+    // Hide all tab panels
+    tabPanels.forEach(function(panel) {
+      panel.hidden = true;
+    })
+
+    // mark all tabs as unselected
+    tabButtons.forEach(tab => {
+      tab.setAttribute('aria-selected', false);
+    })
+
+    // mark the clicked tab as selected
+    event.currentTarget.setAttribute('aria-selected', true);
+
+    // find the assosictaed tab panel and show it
+    const id = event.currentTarget.id;
+
+    const tabPanel = tabs.querySelector(`[aria-labelledby="${id}"]`);
+    console.log(tabPanel);
+    tabPanel.hidden = false;
+}
+
+  // A loop for each button
+  tabButtons.forEach(button => button.addEventListener('click', handleTabClick));

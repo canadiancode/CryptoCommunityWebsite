@@ -112,7 +112,7 @@
 
             <div class="gettingStartedpanel">
 
-                <h3>How To Participate</h3>
+                <h3>How To <span>Participate</span></h3>
 
                 <div class="participationStepContainer">
 
@@ -151,16 +151,63 @@
         </div>
 
         <div class="ourServicesSection">
-            <div class="ourServicesContainer">
+                
+            <div class="tabs">
+    
+                <div class="tablist" aria-label="Performante Resources and Tools">
+                    <button class="tabSelectionButton" role="tab" aria-selected="true" id="Discord">Discord Access</button>
+                    <button class="tabSelectionButton" role="tab" aria-selected="false" id="PDFs">Alpha Documents</button>
+                    <button class="tabSelectionButton" role="tab" aria-selected="false" id="TradeTracker">Trade Tracker</button>  
+                    <button class="tabSelectionButton" role="tab" aria-selected="false" id="Bot">PCC Trading Bot</button>
+                        <button class="tabSelectionButton" role="tab" aria-selected="false" id="UsefulLinks">Resource Lists</button>
+                </div>
+    
+                <div class="tabPanelDiv" role="tabpanel" aria-labelledby="Discord">
+                    <div class="tabPanelInfoContainer">
+                        <img class="tabPanelImg" src="/assets/discordService.webp" alt="Man on computer visiting the PCC Discord">  
+                        <p class="tabPanelp">Gain access to restricted Discord channels, going over both the crypto and global markets. There’s also an active chatroom, where alpha is commonly dropped from both the PCC team and fellow PCC members!<br><br><span class="bulletPoints">- Crypto charts<br>- Global charts<br>- Mastermind chat</span></p>
+                    </div>
+                </div>
+    
+                <div class="tabPanelDiv" role="tabpanel" aria-labelledby="PDFs" hidden>
+                    <div class="tabPanelInfoContainer">
+                        <img class="tabPanelImg" src="/assets/pdfService.webp" alt="Man holding a tablet, and in the background, there are PCC PDF's, and the Premium YouTube Series">    
+                        <p class="tabPanelp">Unlock key PDF’s from the PCC team, covering technical analysis, economics, our investing thesis, and more.<br><br><span class="bulletPoints">- Performante Investing Thesis<br>- Modern Finance 101<br>- Defi for Dummies<br>- Crypto Investing<br>- Crypto Trading<br></span></p>
+                    </div>
+                </div>
+    
+                <div class="tabPanelDiv" role="tabpanel" aria-labelledby="Bot" hidden>
+                    <div class="tabPanelInfoContainer">
+                        <img class="tabPanelImg" src="/assets/algoBotService.webp" alt="Robot blasting off into space smoking up the landing pad, with the PCC logo on the heart section of the robot.">    
+                        <p class="tabPanelp">Automate your trading by connecting our PCC bot with your favorite exchange.<br><br><span class="bulletPoints">- Custom indicators<br>- Algo optimization<br>- Bot signal channel</span><br>- Bot setup instructions<br>- Exchange integration support</br></span></p>
+                    </div> 
+                </div>
+                
+                <div class="tabPanelDiv" role="tabpanel" aria-labelledby="TradeTracker" hidden>   
+                    <div class="tabPanelInfoContainer">  
+                        <img class="tabPanelImg" src="/assets/tradeTrackerService.webp" alt="Man laying down on computer, with the PCC trade tracking spreadsheet in the background.">    
+                        <p class="tabPanelp">Our spreadsheet provides feedback on the analytical data, and the psychological component of trading. Specifically, it covers these points:<br><br><span class="bulletPoints">- Trade Tracker<br>- Profit/Loss Chart<br>- Profit/Loss chart<br>- Trade Setup Analysis<br>- Psychological Management<br>- Weighted Average Calculator</span></p>
+                    </div>
+                </div>
+                
+                <div class="tabPanelDiv" role="tabpanel" aria-labelledby="UsefulLinks" hidden>
+                    <div class="tabPanelInfoContainer">
+                        <img class="tabPanelImg" src="/assets/resourceService.webp" alt="Man jumping up to get a book from the large book shelf in the background filled with books.">    
+                        <p class="tabPanelp">Sharing the library of resources we have developed over years in the market. These are the tools that can  supplement your success.<br><br><span class="bulletPoints">- Crypto Link Repository<br>- Global Macro Repository<br>- Advanced Data Dashboards<br>- Intricate Defi Instruments<br></span></p>
+                    </div>
+                </div>
 
             </div>
+
         </div>
 
     </section>
 
 
     <footer class="footerContainer">
+        <div clas="socialMediaContainer">
 
+        </div>
     </footer>
 
     

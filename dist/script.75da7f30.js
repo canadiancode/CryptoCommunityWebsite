@@ -202,7 +202,7 @@ var heroHeadingObserver = new IntersectionObserver(function (entries, heroHeadin
       var parallaxValue = windowScrolled / 15;
       heroHeadingContainer.style.transform = "translateY(".concat(parallaxValue, "px)");
       var heroHeaderElement = document.querySelector('.heroHeaderElement');
-      var letterSpacingScrollValue = parallaxValue / 8;
+      var letterSpacingScrollValue = parallaxValue / 50;
       var letterSpacing = letterSpacingScrollValue + 3;
       heroHeaderElement.style.letterSpacing = "".concat(letterSpacing, "px");
     }
@@ -300,15 +300,15 @@ phoneListOneObserver.observe(phoneListOne);
 
 // The Discord column
 var phoneListTwo = document.querySelector('.phoneListTwo');
+function phoneListTwoScrolling() {
+  var imageElementRect = phoneListTwo.getBoundingClientRect();
+  var imageElementY = imageElementRect.top;
+  var windowHeight = window.innerHeight - 2000;
+  var parallaxValue = (imageElementY - windowHeight) / -3;
+  phoneListTwo.style.transform = "translateY(".concat(parallaxValue, "px)");
+}
 var phoneListTwoObserver = new IntersectionObserver(function (entries, phoneListTwoObserver) {
   entries.forEach(function (entry) {
-    function phoneListTwoScrolling() {
-      var imageElementRect = phoneListTwo.getBoundingClientRect();
-      var imageElementY = imageElementRect.top;
-      var windowHeight = window.innerHeight - 2000;
-      var parallaxValue = (imageElementY - windowHeight) / -3;
-      phoneListTwo.style.transform = "translateY(".concat(parallaxValue, "px)");
-    }
     if (entry.isIntersecting) {
       document.addEventListener('scroll', phoneListTwoScrolling);
     } else {
@@ -318,6 +318,30 @@ var phoneListTwoObserver = new IntersectionObserver(function (entries, phoneList
 }, phoneAnimationOptions);
 phoneListTwoObserver.observe(phoneListTwo);
 phoneListTwoScrolling();
+
+// how to participate panel parallax scroll
+var gettingStartedPanel = document.querySelector('.gettingStartedpanel');
+var gettingStartedOptions = {
+  rootMargin: "0px",
+  threshold: 0
+};
+var gettingStartedObserver = new IntersectionObserver(function (entries, gettingStartedObserver) {
+  entries.forEach(function (entry) {
+    function gettingStartedPanelParallax() {
+      var windowHeight = window.innerHeight;
+      var panelRect = gettingStartedPanel.getBoundingClientRect();
+      var panelTop = panelRect.top;
+      var parallaxValue = (panelTop - windowHeight) / 7;
+      gettingStartedPanel.style.transform = "translateY(".concat(parallaxValue, "px)");
+    }
+    if (entry.isIntersecting) {
+      document.addEventListener('scroll', gettingStartedPanelParallax);
+    } else {
+      document.removeEventListener('scroll', gettingStartedPanelParallax);
+    }
+  });
+}, gettingStartedOptions);
+gettingStartedObserver.observe(gettingStartedPanel);
 },{}],"../node_modules/parcel-bundler/src/builtins/hmr-runtime.js":[function(require,module,exports) {
 var global = arguments[3];
 var OVERLAY_ID = '__parcel__error__overlay__';
@@ -343,7 +367,7 @@ var parent = module.bundle.parent;
 if ((!parent || !parent.isParcelRequire) && typeof WebSocket !== 'undefined') {
   var hostname = "" || location.hostname;
   var protocol = location.protocol === 'https:' ? 'wss' : 'ws';
-  var ws = new WebSocket(protocol + '://' + hostname + ':' + "51764" + '/');
+  var ws = new WebSocket(protocol + '://' + hostname + ':' + "57675" + '/');
   ws.onmessage = function (event) {
     checkedAssets = {};
     assetsToAccept = [];

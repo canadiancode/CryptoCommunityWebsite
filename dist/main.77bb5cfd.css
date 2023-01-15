@@ -88,6 +88,7 @@ a {
   --defaultTextDisplayAnimationDuration: 0.5s ease-out;
   --red: #8b0000;
   --darkgrey: #171717;
+  --semiTransparentDarkgrey: rgb(23,23,23,0.95);
   --white: white;
   --black: black;
 }
@@ -325,7 +326,7 @@ p {
   width: 100%;
 }
 .heroSection .heroTextContainer .heroHeadingContainer h1 {
-  font-size: 10vmin;
+  font-size: 12vmin;
   max-width: 700px;
   font-family: var(--mainHeaderFont);
   letter-spacing: 3px;
@@ -359,7 +360,7 @@ p {
   text-align: center;
 }
 .heroSection .heroTextContainer .heroSubHeadingContainer p {
-  font-family: var(--secondaryHeaderFontFamily);
+  font-family: var(--paragraphFontFamily);
   cursor: default;
 }
 .heroSection .heroTextContainer .headerCTAlink {
@@ -386,6 +387,7 @@ p {
   position: relative;
   transition: 0.2s ease-in-out;
   padding: 0em 1.2em;
+  z-index: 10;
 }
 .heroSection .heroTextContainer .headerCTAlink button span {
   position: absolute;
@@ -426,15 +428,16 @@ p {
   width: 100%;
   height: 100%;
   overflow: hidden;
+  margin-top: 4em;
 }
 .ourVisionSection .CrosspageAnimationContainer {
   width: 100%;
   height: fit-content;
   margin-top: 4em;
 }
-@media screen and (max-width: 1000px) {
+@media screen and (max-width: 750px) and (min-width: 450px) {
   .ourVisionSection .CrosspageAnimationContainer {
-    margin-top: 3em;
+    margin-top: 6em;
   }
 }
 .ourVisionSection .CrosspageAnimationContainer .textContainer {
@@ -471,7 +474,21 @@ p {
 }
 .ourVisionSection .visionContentContainer .visonTextContainer h3 {
   font-size: 5vmax;
-  font-family: var(--secondaryHeaderFontFamily);
+  font-family: var(--mainHeaderFont);
+  position: relative;
+  width: fit-content;
+}
+.ourVisionSection .visionContentContainer .visonTextContainer h3 span {
+  text-shadow: 2px 2px 1px var(--red);
+}
+.ourVisionSection .visionContentContainer .visonTextContainer h3::after {
+  position: absolute;
+  left: 0;
+  bottom: 10%;
+  content: "";
+  height: 2px;
+  width: 100%;
+  background-color: var(--red);
 }
 .ourVisionSection .visionContentContainer .visonTextContainer p {
   font-family: var(--paragraphFontFamily);
@@ -513,15 +530,143 @@ p {
   .ourVisionSection .visionContentContainer .visonTextContainer {
     width: 80%;
     padding: 2em 10%;
-    margin-bottom: -15%;
+    margin-bottom: 5%;
   }
 }
-
-.getStartedSection {
+.ourVisionSection .gettingStartedContainer {
   height: 100vh;
+  width: 100%;
+  display: flex;
+  justify-content: center;
+  justify-items: center;
+  position: relative;
 }
-.getStartedSection h4 {
-  color: white;
+.ourVisionSection .gettingStartedContainer .gettingStartedpanel {
+  z-index: 5;
+  position: absolute;
+  top: 0;
+  background-color: var(--semiTransparentDarkgrey);
+  height: fit-content;
+  margin: 0em 10%;
+  padding: 5%;
+  border-radius: 25px;
+  border: 1px solid var(--white);
+  box-shadow: 0px 0px 20px 5px var(--black), inset 0px 0px 20px 5px var(--black);
+  margin-top: -10em;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  gap: 1em;
+}
+.ourVisionSection .gettingStartedContainer .gettingStartedpanel h3 {
+  color: var(--white);
+  width: 100%;
+  text-align: center;
+  margin-bottom: 1em;
+  font-size: 5vmax;
+  font-family: var(--mainHeaderFont);
+  position: relative;
+  width: fit-content;
+  margin: 0 auto;
+}
+.ourVisionSection .gettingStartedContainer .gettingStartedpanel h3::after {
+  content: "";
+  width: 100%;
+  height: 2px;
+  background-color: var(--red);
+  bottom: 10%;
+  left: 0;
+  position: absolute;
+}
+.ourVisionSection .gettingStartedContainer .gettingStartedpanel .participationStepContainer {
+  color: var(--white);
+  position: relative;
+}
+.ourVisionSection .gettingStartedContainer .gettingStartedpanel .participationStepContainer .participationStep {
+  text-align: center;
+  width: 100%;
+  z-index: 5;
+  display: flex;
+}
+.ourVisionSection .gettingStartedContainer .gettingStartedpanel .participationStepContainer .participationStep .headerArrowContainer {
+  display: flex;
+  flex-direction: column;
+  justify-content: left;
+  align-items: baseline;
+  position: relative;
+}
+.ourVisionSection .gettingStartedContainer .gettingStartedpanel .participationStepContainer .participationStep .headerArrowContainer h4 {
+  z-index: 5;
+  font-family: var(--mainHeaderFont);
+  font-size: 4vmax;
+  min-width: 5em;
+  text-align: left;
+}
+@media screen and (max-width: 1000px) {
+  .ourVisionSection .gettingStartedContainer .gettingStartedpanel .participationStepContainer .participationStep .headerArrowContainer h4 {
+    min-width: 130px;
+  }
+}
+.ourVisionSection .gettingStartedContainer .gettingStartedpanel .participationStepContainer .participationStep .headerArrowContainer img {
+  filter: invert(100%) sepia(0%) saturate(0%) hue-rotate(220deg) brightness(103%) contrast(109%);
+  animation: arrowAnimation infinite ease-in-out 3s;
+}
+@keyframes arrowAnimation {
+  0% {
+    transform: translateY(-1em) rotate(90deg) scale(0.5);
+  }
+  50% {
+    transform: translateY(0em) rotate(90deg) scale(0.5);
+  }
+  100% {
+    transform: translateY(-1em) rotate(90deg) scale(0.5);
+  }
+}
+.ourVisionSection .gettingStartedContainer .gettingStartedpanel .participationStepContainer .participationStep .headerArrowContainer .finalArrow {
+  opacity: 0;
+}
+.ourVisionSection .gettingStartedContainer .gettingStartedpanel .participationStepContainer .participationStep .headerArrowContainer::before {
+  content: "";
+  top: 0;
+  bottom: 0;
+  left: -10%;
+  width: 2px;
+  height: 70%;
+  background-color: var(--red);
+  position: absolute;
+}
+.ourVisionSection .gettingStartedContainer .gettingStartedpanel .participationStepContainer .participationStep p {
+  z-index: 5;
+  margin-bottom: 10%;
+  text-align: left;
+  padding-top: 3%;
+}
+@media screen and (max-width: 1000px) {
+  .ourVisionSection .gettingStartedContainer .gettingStartedpanel .participationStepContainer .participationStep p {
+    padding-top: 5px;
+  }
+}
+.ourVisionSection .gettingStartedContainer .gettingStartedpanel .participationStepContainer .participationStep p a {
+  text-decoration: underline;
+  text-decoration-color: var(--white);
+  color: var(--white);
+}
+.ourVisionSection .gettingStartedContainer .gettingStartedpanel .participationStepContainer .logoBackground {
+  width: 100%;
+  height: 100%;
+  position: absolute;
+  top: 0;
+  z-index: -1;
+}
+.ourVisionSection .gettingStartedContainer .gettingStartedpanel .participationStepContainer .logoBackground img {
+  position: relative;
+  min-height: 100%;
+  min-width: 100%;
+  object-fit: contain;
+  max-height: 5em;
+  z-index: 0;
+  filter: invert(0%) sepia(100%) saturate(0%) hue-rotate(353deg) brightness(30%) contrast(200%);
+  transform: scale(1.5);
 }
 
 /*# sourceMappingURL=/main.77bb5cfd.css.map */

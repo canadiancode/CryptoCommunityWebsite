@@ -95,7 +95,7 @@ const heroHeadingObserver = new IntersectionObserver(function(entries, heroHeadi
       heroHeadingContainer.style.transform = `translateY(${parallaxValue}px)`;
 
       const heroHeaderElement = document.querySelector('.heroHeaderElement');
-      let letterSpacingScrollValue = parallaxValue / 8;
+      let letterSpacingScrollValue = parallaxValue / 50;
       let letterSpacing = letterSpacingScrollValue + 3;
       heroHeaderElement.style.letterSpacing = `${letterSpacing}px`;
 
@@ -211,16 +211,16 @@ phoneListOneObserver.observe(phoneListOne);
 // The Discord column
 const phoneListTwo = document.querySelector('.phoneListTwo');
 
+function phoneListTwoScrolling() {
+  let imageElementRect = phoneListTwo.getBoundingClientRect();
+  let imageElementY = imageElementRect.top;
+  let windowHeight = window.innerHeight - 2000;
+  let parallaxValue = ((imageElementY - windowHeight) / -3);
+  phoneListTwo.style.transform = `translateY(${parallaxValue}px)`;
+}
+
 const phoneListTwoObserver = new IntersectionObserver(function (entries, phoneListTwoObserver) {
   entries.forEach(entry => {
-
-    function phoneListTwoScrolling() {
-      let imageElementRect = phoneListTwo.getBoundingClientRect();
-      let imageElementY = imageElementRect.top;
-      let windowHeight = window.innerHeight - 2000;
-      let parallaxValue = ((imageElementY - windowHeight) / -3);
-      phoneListTwo.style.transform = `translateY(${parallaxValue}px)`;
-    }
 
     if (entry.isIntersecting) {
       document.addEventListener('scroll', phoneListTwoScrolling);
@@ -232,3 +232,34 @@ const phoneListTwoObserver = new IntersectionObserver(function (entries, phoneLi
 }, phoneAnimationOptions);
 phoneListTwoObserver.observe(phoneListTwo);
 phoneListTwoScrolling();
+
+
+// how to participate panel parallax scroll
+const gettingStartedPanel = document.querySelector('.gettingStartedpanel');
+
+const gettingStartedOptions = {
+  rootMargin: "0px",
+  threshold: 0
+};
+
+const gettingStartedObserver = new IntersectionObserver(function(entries, gettingStartedObserver) {
+  entries.forEach(entry => {
+
+    function gettingStartedPanelParallax() {
+      const windowHeight = window.innerHeight;
+      let panelRect = gettingStartedPanel.getBoundingClientRect();
+      let panelTop = panelRect.top;
+      let parallaxValue = (panelTop - windowHeight) / 7;
+      gettingStartedPanel.style.transform = `translateY(${parallaxValue}px)`;
+    }
+
+    if (entry.isIntersecting) {
+      document.addEventListener('scroll', gettingStartedPanelParallax);
+    } else {
+      document.removeEventListener('scroll', gettingStartedPanelParallax);
+    }
+
+  });
+}, gettingStartedOptions);
+gettingStartedObserver.observe(gettingStartedPanel);
+

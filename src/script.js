@@ -194,7 +194,7 @@ const phoneListOneObserver = new IntersectionObserver(function(entries, phoneLis
       let imageElementRect = phoneListOne.getBoundingClientRect();
       let imageElementY = imageElementRect.top;
       let windowHeight = window.innerHeight;
-      let parallaxValue = ((imageElementY - windowHeight) / 3);
+      let parallaxValue = ((imageElementY - windowHeight) / 4);
       phoneListOne.style.transform = `translateY(${parallaxValue}px)`;
     }
 
@@ -263,3 +263,32 @@ const gettingStartedObserver = new IntersectionObserver(function(entries, gettin
 }, gettingStartedOptions);
 gettingStartedObserver.observe(gettingStartedPanel);
 
+// Our Pedagogical vision text parallax
+
+const aboutUsTextContainer = document.querySelector('.aboutUsTextContainer');
+
+const aboutUsTextOptions = {
+  rootMargin: "0px",
+  threshold: 0
+};
+
+const aboutUsTextObserver = new IntersectionObserver(function(entries, aboutUsTextObserver) {
+  entries.forEach(entry => {
+
+    function aboutUsTextParallax() {
+      const windowHeight = window.innerHeight;
+      let aboutUsTextRect = aboutUsTextContainer.getBoundingClientRect();
+      let aboutUsTextY = aboutUsTextRect.top;
+      let parallaxValue = ((aboutUsTextY - windowHeight) * -1) / 2;
+      aboutUsTextContainer.style.marginTop = `${parallaxValue}px`;
+    }
+
+    if (entry.isIntersecting) {
+      document.addEventListener('scroll', aboutUsTextParallax);
+    } else {
+      document.removeEventListener('scroll', aboutUsTextParallax);
+    }
+
+  });
+}, aboutUsTextOptions);
+aboutUsTextObserver.observe(aboutUsTextContainer);

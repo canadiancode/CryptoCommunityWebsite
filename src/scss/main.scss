@@ -96,7 +96,7 @@ a {
     --defaultTextDisplayAnimationDuration: 0.5s ease-out;
     --red: #8b0000;
     --darkgrey: #171717;
-    --semiTransparentDarkgrey: rgb(23,23,23,0.95);
+    --semiTransparentDarkgrey: rgb(23,23,23,0.9);
     --white: white;
     --black: black;
 }
@@ -494,8 +494,9 @@ p {
                 font-family: var(--mainHeaderFont);
                 position: relative;
                 width: fit-content;
+                cursor: default;
                 span {
-                    text-shadow: 2px 2px 1px var(--red);
+                    text-shadow: 2px 2px 1px var(--red), -2px -2px 1px var(--red);
                 }
                 & {
                     &::after {
@@ -512,6 +513,7 @@ p {
             p {
                 font-family: var(--paragraphFontFamily);
                 font-size: 1.2rem;
+                cursor: default;
                 span {
                     font-weight: bolder;
                     text-shadow: 1px 1px 1px var(--red), -1px -1px 1px var(--red);
@@ -587,6 +589,7 @@ p {
                 position: relative;
                 width: fit-content;
                 margin: 0 auto;
+                cursor: default;
                 &::after {
                     content: '';
                     width: 100%;
@@ -617,6 +620,7 @@ p {
                             font-size: 4vmax;
                             min-width: 5em;
                             text-align: left;
+                            cursor: default;
                             @media screen and (max-width: 1000px) {
                                 & {
                                     min-width: 130px;
@@ -626,6 +630,7 @@ p {
                         img {
                             filter: invert(100%) sepia(0%) saturate(0%) hue-rotate(220deg) brightness(103%) contrast(109%);
                             animation: arrowAnimation infinite ease-in-out 3s;
+                            transform: translateY(-1em) rotate(90deg) scale(0.5);
                             @keyframes arrowAnimation {
                                 0% {
                                     transform: translateY(-1em) rotate(90deg) scale(0.5);
@@ -637,6 +642,9 @@ p {
                                     transform: translateY(-1em) rotate(90deg) scale(0.5);
                                 }
                             }
+                        }
+                        .secondArrow {
+                            animation-delay: 0.5s;
                         }
                         .finalArrow {
                             opacity: 0;
@@ -657,6 +665,7 @@ p {
                         margin-bottom: 10%;
                         text-align: left;
                         padding-top: 3%;
+                        cursor: default;
                         @media screen and (max-width: 1000px) {
                             padding-top: 5px;
                         }
@@ -685,6 +694,75 @@ p {
                     }
                 }
             }
+        }
+    }
+    .aboutUsContainer {
+        min-height: 100vh;
+        width: 100%;
+        display: flex;
+        justify-content: right;
+        justify-items: center;
+        align-self: center;
+        padding: 0em 3em;
+        .aboutUsTextContainer {
+            display: flex;
+            flex-direction: column;
+            justify-content: right;
+            color: var(--white);
+            width: 50%;
+            align-self: center;
+            transform: translateY(-10%);
+            @media screen and (max-width: 1000px) {
+                & {
+                    width: 45%;
+                }
+            }
+            @media screen and (max-width: 750px) {
+                & {
+                    width: 60%
+                }
+            }
+            @media screen and (max-width: 500px) {
+                & {
+                    width: 70%;
+                }
+            }
+            h3 {
+                font-family: var(--mainHeaderFont);
+                font-size: 5vmax;
+                position: relative;
+                width: fit-content;
+                cursor: default;
+                span {
+                    text-shadow: 2px 2px 1px var(--red), -2px -2px 1px var(--red);
+                }
+                &::after {
+                    position: absolute;
+                    content: '';
+                    bottom: 10%;
+                    left: 0;
+                    height: 2px;
+                    width: 100%;
+                    background-color: var(--red);
+                }
+            }
+            p {
+                font-size: 1.2rem;
+                font-family: var(--paragraphFontFamily);
+                z-index: 5;
+                max-width: 30em;
+                cursor: default;
+                span {
+                    text-shadow: 1px 1px 1px var(--red), -1px -1px 1px var(--red);
+                }
+            }
+        }
+    }
+    .ourServicesSection {
+        min-height: 100vh;
+        width: 100%;
+        .ourServicesContainer {
+
         }
     }
 }

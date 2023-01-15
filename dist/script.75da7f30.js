@@ -286,7 +286,7 @@ var phoneListOneObserver = new IntersectionObserver(function (entries, phoneList
       var imageElementRect = phoneListOne.getBoundingClientRect();
       var imageElementY = imageElementRect.top;
       var windowHeight = window.innerHeight;
-      var parallaxValue = (imageElementY - windowHeight) / 3;
+      var parallaxValue = (imageElementY - windowHeight) / 4;
       phoneListOne.style.transform = "translateY(".concat(parallaxValue, "px)");
     }
     if (entry.isIntersecting) {
@@ -342,6 +342,31 @@ var gettingStartedObserver = new IntersectionObserver(function (entries, getting
   });
 }, gettingStartedOptions);
 gettingStartedObserver.observe(gettingStartedPanel);
+
+// Our Pedagogical vision text parallax
+
+var aboutUsTextContainer = document.querySelector('.aboutUsTextContainer');
+var aboutUsTextOptions = {
+  rootMargin: "0px",
+  threshold: 0
+};
+var aboutUsTextObserver = new IntersectionObserver(function (entries, aboutUsTextObserver) {
+  entries.forEach(function (entry) {
+    function aboutUsTextParallax() {
+      var windowHeight = window.innerHeight;
+      var aboutUsTextRect = aboutUsTextContainer.getBoundingClientRect();
+      var aboutUsTextY = aboutUsTextRect.top;
+      var parallaxValue = (aboutUsTextY - windowHeight) * -1 / 2;
+      aboutUsTextContainer.style.marginTop = "".concat(parallaxValue, "px");
+    }
+    if (entry.isIntersecting) {
+      document.addEventListener('scroll', aboutUsTextParallax);
+    } else {
+      document.removeEventListener('scroll', aboutUsTextParallax);
+    }
+  });
+}, aboutUsTextOptions);
+aboutUsTextObserver.observe(aboutUsTextContainer);
 },{}],"../node_modules/parcel-bundler/src/builtins/hmr-runtime.js":[function(require,module,exports) {
 var global = arguments[3];
 var OVERLAY_ID = '__parcel__error__overlay__';

@@ -310,8 +310,7 @@ p {
     width: 100%;
     position: relative;
     align-items: center;
-    min-height: 20em;
-    max-height: 40em;
+    min-height: 30em;
     .videoContainer {
         height: 100%;
         width: 100%;
@@ -323,8 +322,9 @@ p {
         }
     }
     .heroTextContainer {
-        top: 20%;
         position: absolute;
+        top: 0;
+        bottom: 0;
         display: flex;
         flex-direction: column;
         gap: 1.5em;
@@ -333,11 +333,12 @@ p {
         width: 100%;
         margin: 0 auto;
         color: var(--white);
+        z-index: 5;
         .heroHeadingContainer {
             width: 100%;
             h1 {
                 font-size: 12vmin;
-                max-width: 700px;
+                max-width: 30em;
                 font-family: var(--mainHeaderFont);
                 letter-spacing: 3px;
 
@@ -367,7 +368,7 @@ p {
         .heroSubHeadingContainer {
             font-family: var(--secondaryHeaderFontFamily);
             font-size: 5vmin;
-            max-width: 600px;
+            max-width: 20em;
             margin: 0 auto;
             text-align: center;
             p {
@@ -455,10 +456,10 @@ p {
     .CrosspageAnimationContainer {
         width: 100%;
         height: fit-content;
-        margin-top: 4em;
-        @media screen and (max-width: 750px) and (min-width: 450px) {
-            margin-top: 6em;
-        }
+        // margin-top: 4em;
+        // @media screen and (max-width: 750px) and (min-width: 450px) {
+        //     margin-top: 6em;
+        // }
         .textContainer {
             width: 100%;
             height: fit-content;

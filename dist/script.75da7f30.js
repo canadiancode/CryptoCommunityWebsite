@@ -201,10 +201,6 @@ var heroHeadingObserver = new IntersectionObserver(function (entries, heroHeadin
       var windowScrolled = window.scrollY;
       var parallaxValue = windowScrolled / 15;
       heroHeadingContainer.style.transform = "translateY(".concat(parallaxValue, "px)");
-      var heroHeaderElement = document.querySelector('.heroHeaderElement');
-      var letterSpacingScrollValue = parallaxValue / 50;
-      var letterSpacing = letterSpacingScrollValue + 3;
-      heroHeaderElement.style.letterSpacing = "".concat(letterSpacing, "px");
     }
     if (entry.isIntersecting) {
       document.addEventListener('scroll', headingParallax);
@@ -425,7 +421,7 @@ var parent = module.bundle.parent;
 if ((!parent || !parent.isParcelRequire) && typeof WebSocket !== 'undefined') {
   var hostname = "" || location.hostname;
   var protocol = location.protocol === 'https:' ? 'wss' : 'ws';
-  var ws = new WebSocket(protocol + '://' + hostname + ':' + "57675" + '/');
+  var ws = new WebSocket(protocol + '://' + hostname + ':' + "52765" + '/');
   ws.onmessage = function (event) {
     checkedAssets = {};
     assetsToAccept = [];

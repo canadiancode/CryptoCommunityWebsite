@@ -93,12 +93,6 @@ const heroHeadingObserver = new IntersectionObserver(function(entries, heroHeadi
       let windowScrolled = window.scrollY;
       let parallaxValue = windowScrolled / 15;
       heroHeadingContainer.style.transform = `translateY(${parallaxValue}px)`;
-
-      const heroHeaderElement = document.querySelector('.heroHeaderElement');
-      let letterSpacingScrollValue = parallaxValue / 50;
-      let letterSpacing = letterSpacingScrollValue + 3;
-      heroHeaderElement.style.letterSpacing = `${letterSpacing}px`;
-
     }
 
     if (entry.isIntersecting) {
@@ -107,6 +101,7 @@ const heroHeadingObserver = new IntersectionObserver(function(entries, heroHeadi
       document.removeEventListener('scroll', headingParallax);
     }
   });
+  
 }, heroHeadingOptions);
 heroHeadingObserver.observe(heroHeadingContainer);
 

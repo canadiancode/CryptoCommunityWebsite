@@ -10,7 +10,7 @@
         max-width: 800px;
         margin: 0 auto;
         justify-items: center;
-        padding: 0em 1em;
+        padding: 0em 2em;
         .headingContainer {
             margin: 0 auto;
             justify-content: center;
@@ -83,15 +83,15 @@
             }
             @keyframes arrowRightAnimation {
                 0% {
-                    transform: translateX(-4%);
+                    transform: translateX(-3%);
                     opacity: 0.6;
                 } 
                 50% {
-                    transform: translateX(4%);
+                    transform: translateX(1.5%);
                     opacity: 1;
                 } 
                 100% {
-                    transform: translateX(-4%);
+                    transform: translateX(-3%);
                     opacity: 0.6;
                 }
             }
@@ -304,19 +304,98 @@
     min-height: 0vh;
     height: 0em;
     transition: 1.2s ease-out;
+    overflow: hidden;
     .quizQuestionDiv {
         height: 100%;
         width: 100%;
         transition: 1.2s ease-out;
         transform: translateY(20em);
-        height: 0em;
-        background-color: var(--red);
         opacity: 0;
+        display: flex;
+        justify-content: center;
         form {
-            display: none;
-            label {
-                color: var(--white);
+            width: 80%;
+            max-width: 900px;
+            gap: 0.5rem;
+            background-color: var(--semiTransparentRed);
+            border-radius: 20px;
+            display: flex;
+            flex-direction: column;
+            margin: 3em;
+            padding: 2em;
+            .injectedQuestions {
+                display: flex;
+                flex-direction: column;
+                align-content: left;
+                padding: 1em;
+                label {
+                    color: var(--white);
+                    font-family: var(--paragraphFontFamily);
+                    font-weight: bolder;
+                }
+                input {
+                    margin-bottom: 3em;
+                    font-family: var(--paragraphFontFamily);
+                    min-height: 45px;
+                }
+            }
+            .submitButtonDiv {
+                overflow: hidden;
+                .submitFormButton {
+                    margin: 0 auto;
+                    max-width: 750px;
+                    width: 7rem;
+                    min-width: 150px;
+                    min-height: 40px;
+                    border-radius: 20px;
+                    border: 3px solid var(--white);
+                    color: var(--white);
+                    background: var(--black);
+                    cursor: pointer;
+                    display: flex;
+                    flex-direction: column;
+                    justify-content: center;
+                    align-items: center;
+                    position: relative;
+                    transition: 0.2s ease-in-out;
+                    overflow: hidden;
+                    font-family: var(--paragraphFontFamily);
+                    span {
+                        position: absolute;
+                        margin: 0 auto;
+                        transition: 0.5s ease-in-out;
+                    }
+                    .display {
+                        opacity: 1;
+                    }
+                    .onHover {
+                        color: var(--red);
+                        transform: translateY(100%);
+                        opacity: 0;
+                    }
+                    &:hover .display {
+                        transform: translateY(-100%);
+                        opacity: 0;
+                    }
+                    &:hover .onHover {
+                        transform: translate(0%);
+                        opacity: 1;
+                    }
+                    &:hover {
+                        background: var(--white);
+                    }
+                }
             }
         }
+    }
+}
+
+.completionPageContainer {
+    display: none;
+    justify-content: center;
+    h3 {
+        color: white;
+        font-size: 4rem;
+        text-align: center;
     }
 }

@@ -118,24 +118,51 @@ parcelRequire = (function (modules, cache, entry, globalName) {
 
   return newRequire;
 })({"quizScript.js":[function(require,module,exports) {
-// Code for the form submission to the Google Sheet
-window.addEventListener("load", function () {
-  var form = document.querySelector('.quizForm');
-  form.addEventListener("submit", function (e) {
-    e.preventDefault();
-    var data = new FormData(form);
-    var action = e.target.action;
-    fetch(action, {
-      method: 'POST',
-      body: data
-    }).then(function () {
-      // This is the code that triggers once the user submits the form
-      alert('success');
-    });
-  });
-});
+//Only thing we need to add is the questions below for the Newsletter
+var quizQuestions = [{
+  Q: 'What is the ticker symbol for Bitcoin?'
+}, {
+  Q: 'Why do we keep an eye on the global macro landscape?'
+}, {
+  Q: 'Who is Jerome Powell?'
+}, {
+  Q: 'Why is Jerome so important in the current environment?'
+}, {
+  Q: 'Why is inflation bad for the economy?'
+}, {
+  Q: 'Are you bullish or bearish?'
+}];
 
-// animation for the benefits text
+//Change the Newsletter Link Here:
+var MediumLink = 'https://medium.com/@Learn2EarnNow/l2e-edition-54-newsletter-862eff2bf99b';
+
+// No Need to Touch Below -- No Need to Touch Below -- No Need to Touch Below
+// code for the label and input elements looping over total questionsn above
+var phoneForMediumLink = document.querySelector('.mediumLink');
+phoneForMediumLink.href = MediumLink;
+var formData = document.querySelector('.injectedQuestions');
+var addQuestionOne = 1;
+for (var i = 0; i < quizQuestions.length; i++) {
+  // label creation
+  var labelElement = document.createElement('label');
+  var labelText = document.createTextNode(quizQuestions[i].Q);
+  labelElement.appendChild(labelText);
+  formData.appendChild(labelElement);
+
+  //input creation
+  var inputElement = document.createElement('input');
+  var inputName = 'answer' + [i];
+  var nameValue = addQuestionOne + parseInt([i]);
+  inputElement.name = 'answer' + nameValue;
+  inputElement.setAttribute('type', 'text');
+  var placeHolderValue = addQuestionOne + parseInt([i]);
+  inputElement.placeholder = "Answer ".concat(placeHolderValue);
+  inputElement.required = true;
+  formData.appendChild(inputElement);
+}
+;
+
+// Animations for the Learn to Earn page
 var benefitsText = document.querySelector('.benefitsText');
 var newsletterArrow = document.querySelector('.newsletterArrow');
 var L2ELandingPageOptions = {
@@ -199,10 +226,35 @@ function startQuiz() {
     quizQuestionDiv.style.transform = 'translateY(0em)';
     quizQuestionDiv.style.opacity = '1';
     var form = document.querySelector('form');
-    form.style.display = 'block';
+    form.style.display = 'flex';
   }
 }
 ;
+
+// Code for the form submission to the Google Sheet
+var quizForm = document.querySelector('.quizForm');
+window.addEventListener("load", function () {
+  var form = document.querySelector('.quizForm');
+  form.addEventListener("submit", function (e) {
+    e.preventDefault();
+    var data = new FormData(form);
+    var action = e.target.action;
+    fetch(action, {
+      method: 'POST',
+      body: data
+    }).then(function () {
+      // This is the code that triggers once the user submits the form
+      var quizQuestionContainer = document.querySelector('.quizQuestionContainer');
+      quizQuestionContainer.style.transform = 'translateY(-100%)';
+      setTimeout(quizEnd, 1000);
+      function quizEnd() {
+        quizQuestionContainer.style.display = 'none';
+      }
+      var completionPageContainer = document.querySelector('.completionPageContainer');
+      completionPageContainer.style.display = 'flex';
+    });
+  });
+});
 },{}],"../node_modules/parcel-bundler/src/builtins/hmr-runtime.js":[function(require,module,exports) {
 var global = arguments[3];
 var OVERLAY_ID = '__parcel__error__overlay__';

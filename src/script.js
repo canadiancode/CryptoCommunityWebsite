@@ -43,7 +43,7 @@ window.addEventListener('click', (e) => {
     hamburgerLine2.style.opacity = '1';
     hamburgerLine3.style.transform = 'rotate(0deg) translateY(-6px)';
   }
-})
+});
 
 
 // Hero Text Animation Section -- Hero Text Animation Section -- Hero Text Animation Section

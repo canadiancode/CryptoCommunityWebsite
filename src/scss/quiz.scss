@@ -36,7 +36,7 @@
             img {
                 justify-items: center;
                 align-self: center;
-                transform: translateX(-5%);
+                transform: translateX(-4%);
                 animation: arrowRightAnimation 5s infinite ease-in-out;
                 z-index: -1;
                 opacity: 0.6;
@@ -83,7 +83,7 @@
             }
             @keyframes arrowRightAnimation {
                 0% {
-                    transform: translateX(-7%);
+                    transform: translateX(-4%);
                     opacity: 0.6;
                 } 
                 50% {
@@ -91,7 +91,7 @@
                     opacity: 1;
                 } 
                 100% {
-                    transform: translateX(-7%);
+                    transform: translateX(-4%);
                     opacity: 0.6;
                 }
             }
@@ -102,4 +102,221 @@
     }
 }
 
-// form format and layout
+// information about the Quiz and the Learn2Earn platform
+.learnToEarnInfoContainer {
+    min-height: 50vh;
+    margin-top: 1em;
+    background: linear-gradient(0deg, rgba(23,23,23,0.9) 0%, rgba(0,0,0,1) 100%);
+    transition: 1.5s ease-in-out;
+    overflow: hidden;
+    .textContainer {
+        width: 100%;
+        display: flex;
+        justify-content: center;
+        flex-direction: column;
+        gap: 1em;
+        margin: 3em 0em 6em 0em;
+        cursor: default;
+        p {
+            max-width: 500px;
+            color: var(--white);
+            text-align: center;
+            font-size: 1.2rem;
+            margin: 0 auto;
+            padding: 0em 1em;
+            span {
+                text-shadow: 1px 1px 1px var(--red), -1px -1px 1px var(--red);
+            }
+        }
+        .simpleText {
+            text-shadow: 2px 2px 1px var(--red), -2px -2px 1px var(--red);
+        }
+    }
+    .phoneContainer {
+        display: grid;
+        grid-template-columns: repeat(4, 1fr);
+        gap: 1em;
+        width: 100%;
+        padding: 0em 2em;
+        .graphicDesc {
+            position: relative;
+            display: flex;
+            flex-direction: column;
+            width: 100%;
+            cursor: default;
+            img {
+                max-height: 450px;
+            }
+            p {
+                color: var(--white);
+                font-size: 2rem;
+            }
+        }
+        .newsletterPhoneDiv {
+            align-items: flex-end;
+            animation: newsletterCTA 3s ease-in-out infinite;
+            @keyframes newsletterCTA {
+                0% {
+                    transform: scale(1);
+                }
+                50% {
+                    transform: scale(1.02);
+                }
+                100% {
+                    transform: scale(1);
+                }
+            }
+        }
+        .clickToReadDiv {
+            margin-top: 1em;
+            .clickToReadText {
+                span {
+                    text-shadow: 2px 2px 1px var(--red), -2px -2px 1px var(--red);
+                }
+            }
+            .newsletterArrow {
+                margin-left: -2em;
+                opacity: 0;
+                transition: 2s ease-out;
+                transform: rotate(-90deg) scale(0) translateX(-3em);
+                max-height: 17em;
+                max-width: 17em;
+                width: 100%;
+                @media screen and (max-width: 600px) {
+                    & {
+                        transform: rotate(0deg) scale(0.8) translateX(0em);
+                        opacity: 1;
+                    }
+                }
+            }
+        }
+        .benefitsTextDiv {
+            justify-content: flex-end;
+            align-items: flex-end;
+            height: 100%;
+            .benefitsText {
+                text-align: left;
+                min-width: 10em;
+                margin-right: -1em;
+                height: fit-content;
+                background: var(--semiTransparentDarkgrey);
+                border-radius: 20px;
+                padding: 1em;
+                padding-right: 5em;
+                transform: translateX(8em);
+                opacity: 0;
+                transition: 2s ease-out;
+                border: 1px solid var(--white);
+                margin-bottom: 0.6em;
+                display: flex;
+                flex-direction: column;
+                gap: 0.5rem;
+                p {
+                    font-size: 1.2rem;
+                    min-width: 6em;
+                }
+            }
+        }
+        .benefitsPhoneDiv {
+            align-items: flex-start;
+        }
+        @media screen and (max-width: 1000px) {
+            & {
+                grid-template-columns: repeat(2, 1fr);
+                .graphicDesc {
+                    p {
+                        font-size: 1rem;
+                    }
+                    .benefitsText {
+                        min-width: 12em;
+                        width: 80%;
+                        margin-right: -0.5em;
+                        height: fit-content;
+                        background: var(--semiTransparentDarkgrey);
+                        border-radius: 20px;
+                        padding: 1em;
+                        padding-right: 2em;
+                        margin-bottom: 1.5em;
+                        p {
+                            font-size: 1rem;
+                        }
+                    }
+                }
+            }
+        }
+    }
+    .startButtonContainer {
+        width: 100%;
+        display: flex;
+        justify-content: center;
+        padding: 5em 0em;
+        .startButtonDiv {
+            overflow: hidden;
+            transform: scale(1.5);
+            button {
+                min-width: 130px;
+                min-height: 40px;
+                border-radius: 20px;
+                border: 3px solid var(--white);
+                color: var(--white);
+                background: var(--black);
+                cursor: pointer;
+                display: flex;
+                flex-direction: column;
+                justify-content: center;
+                align-items: center;
+                position: relative;
+                transition: 0.2s ease-in-out;
+                overflow: hidden;
+                font-family: var(--paragraphFontFamily);
+                span {
+                    position: absolute;
+                    margin: 0 auto;
+                    transition: 0.5s ease-in-out;
+                }
+                .display {
+                    opacity: 1;
+                }
+                .onHover {
+                    color: var(--red);
+                    transform: translateY(100%);
+                    opacity: 0;
+                }
+                &:hover .display {
+                    transform: translateY(-100%);
+                    opacity: 0;
+                }
+                &:hover .onHover {
+                    transform: translate(0%);
+                    opacity: 1;
+                }
+                &:hover {
+                    background: var(--white);
+                }
+            }
+        }
+    }
+}
+
+// layout for the quiz questions
+.quizQuestionContainer {
+    background: linear-gradient(0deg, rgba(23,23,23,0.9) 0%, rgba(0,0,0,1) 100%);
+    min-height: 0vh;
+    height: 0em;
+    transition: 1.2s ease-out;
+    .quizQuestionDiv {
+        height: 100%;
+        width: 100%;
+        transition: 1.2s ease-out;
+        transform: translateY(20em);
+        height: 0em;
+        background-color: var(--red);
+        opacity: 0;
+        form {
+            display: none;
+            label {
+                color: var(--white);
+            }
+        }
+    }
+}

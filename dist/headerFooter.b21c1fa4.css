@@ -349,6 +349,11 @@ p {
   justify-content: center;
   box-shadow: inset 0px 0px 15px 0px var(--black), 0px 0px 15px 0px var(--black);
 }
+@media screen and (max-width: 400px) {
+  .footerContainer .footerPanel {
+    width: 90%;
+  }
+}
 .footerContainer .footerPanel .footerLogos {
   width: 100%;
   margin: 2em 0em;
@@ -388,6 +393,9 @@ p {
   filter: invert(100%) sepia(100%) saturate(2%) hue-rotate(88deg) brightness(106%) contrast(101%);
   font-size: 2.5rem;
   height: 3.3rem;
+  width: 3.3rem;
+  display: flex;
+  justify-content: center;
 }
 .footerContainer .footerPanel .socialMediaContainer .footerIcon .fa-brands {
   transform: translateY(1em);
@@ -402,7 +410,8 @@ p {
     gap: 0.5em;
   }
   .footerContainer .footerPanel .socialMediaContainer .footerIcon {
-    height: 1.5rem;
+    height: 2rem;
+    width: 2rem;
     font-size: 1.6rem;
   }
 }
@@ -411,7 +420,6 @@ p {
     gap: 0.2em;
   }
   .footerContainer .footerPanel .socialMediaContainer .footerIcon {
-    height: 1.2rem;
     font-size: 1.4rem;
   }
 }

@@ -38,7 +38,7 @@
 .headingsContainer .animationContainer .headingContainer img {
   justify-items: center;
   align-self: center;
-  transform: translateX(-5%);
+  transform: translateX(-4%);
   animation: arrowRightAnimation 5s infinite ease-in-out;
   z-index: -1;
   opacity: 0.6;
@@ -83,7 +83,7 @@
 }
 @keyframes arrowRightAnimation {
   0% {
-    transform: translateX(-7%);
+    transform: translateX(-4%);
     opacity: 0.6;
   }
   50% {
@@ -91,12 +91,225 @@
     opacity: 1;
   }
   100% {
-    transform: translateX(-7%);
+    transform: translateX(-4%);
     opacity: 0.6;
   }
 }
 .headingsContainer .animationContainer .arrowContainer {
   z-index: -1;
+}
+
+.learnToEarnInfoContainer {
+  min-height: 50vh;
+  margin-top: 1em;
+  background: linear-gradient(0deg, rgba(23, 23, 23, 0.9) 0%, rgb(0, 0, 0) 100%);
+  transition: 1.5s ease-in-out;
+  overflow: hidden;
+}
+.learnToEarnInfoContainer .textContainer {
+  width: 100%;
+  display: flex;
+  justify-content: center;
+  flex-direction: column;
+  gap: 1em;
+  margin: 3em 0em 6em 0em;
+  cursor: default;
+}
+.learnToEarnInfoContainer .textContainer p {
+  max-width: 500px;
+  color: var(--white);
+  text-align: center;
+  font-size: 1.2rem;
+  margin: 0 auto;
+  padding: 0em 1em;
+}
+.learnToEarnInfoContainer .textContainer p span {
+  text-shadow: 1px 1px 1px var(--red), -1px -1px 1px var(--red);
+}
+.learnToEarnInfoContainer .textContainer .simpleText {
+  text-shadow: 2px 2px 1px var(--red), -2px -2px 1px var(--red);
+}
+.learnToEarnInfoContainer .phoneContainer {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  gap: 1em;
+  width: 100%;
+  padding: 0em 2em;
+}
+.learnToEarnInfoContainer .phoneContainer .graphicDesc {
+  position: relative;
+  display: flex;
+  flex-direction: column;
+  width: 100%;
+  cursor: default;
+}
+.learnToEarnInfoContainer .phoneContainer .graphicDesc img {
+  max-height: 450px;
+}
+.learnToEarnInfoContainer .phoneContainer .graphicDesc p {
+  color: var(--white);
+  font-size: 2rem;
+}
+.learnToEarnInfoContainer .phoneContainer .newsletterPhoneDiv {
+  align-items: flex-end;
+  animation: newsletterCTA 3s ease-in-out infinite;
+}
+@keyframes newsletterCTA {
+  0% {
+    transform: scale(1);
+  }
+  50% {
+    transform: scale(1.02);
+  }
+  100% {
+    transform: scale(1);
+  }
+}
+.learnToEarnInfoContainer .phoneContainer .clickToReadDiv {
+  margin-top: 1em;
+}
+.learnToEarnInfoContainer .phoneContainer .clickToReadDiv .clickToReadText span {
+  text-shadow: 2px 2px 1px var(--red), -2px -2px 1px var(--red);
+}
+.learnToEarnInfoContainer .phoneContainer .clickToReadDiv .newsletterArrow {
+  margin-left: -2em;
+  opacity: 0;
+  transition: 2s ease-out;
+  transform: rotate(-90deg) scale(0) translateX(-3em);
+  max-height: 17em;
+  max-width: 17em;
+  width: 100%;
+}
+@media screen and (max-width: 600px) {
+  .learnToEarnInfoContainer .phoneContainer .clickToReadDiv .newsletterArrow {
+    transform: rotate(0deg) scale(0.8) translateX(0em);
+    opacity: 1;
+  }
+}
+.learnToEarnInfoContainer .phoneContainer .benefitsTextDiv {
+  justify-content: flex-end;
+  align-items: flex-end;
+  height: 100%;
+}
+.learnToEarnInfoContainer .phoneContainer .benefitsTextDiv .benefitsText {
+  text-align: left;
+  min-width: 10em;
+  margin-right: -1em;
+  height: fit-content;
+  background: var(--semiTransparentDarkgrey);
+  border-radius: 20px;
+  padding: 1em;
+  padding-right: 5em;
+  transform: translateX(8em);
+  opacity: 0;
+  transition: 2s ease-out;
+  border: 1px solid var(--white);
+  margin-bottom: 0.6em;
+  display: flex;
+  flex-direction: column;
+  gap: 0.5rem;
+}
+.learnToEarnInfoContainer .phoneContainer .benefitsTextDiv .benefitsText p {
+  font-size: 1.2rem;
+  min-width: 6em;
+}
+.learnToEarnInfoContainer .phoneContainer .benefitsPhoneDiv {
+  align-items: flex-start;
+}
+@media screen and (max-width: 1000px) {
+  .learnToEarnInfoContainer .phoneContainer {
+    grid-template-columns: repeat(2, 1fr);
+  }
+  .learnToEarnInfoContainer .phoneContainer .graphicDesc p {
+    font-size: 1rem;
+  }
+  .learnToEarnInfoContainer .phoneContainer .graphicDesc .benefitsText {
+    min-width: 12em;
+    width: 80%;
+    margin-right: -0.5em;
+    height: fit-content;
+    background: var(--semiTransparentDarkgrey);
+    border-radius: 20px;
+    padding: 1em;
+    padding-right: 2em;
+    margin-bottom: 1.5em;
+  }
+  .learnToEarnInfoContainer .phoneContainer .graphicDesc .benefitsText p {
+    font-size: 1rem;
+  }
+}
+.learnToEarnInfoContainer .startButtonContainer {
+  width: 100%;
+  display: flex;
+  justify-content: center;
+  padding: 5em 0em;
+}
+.learnToEarnInfoContainer .startButtonContainer .startButtonDiv {
+  overflow: hidden;
+  transform: scale(1.5);
+}
+.learnToEarnInfoContainer .startButtonContainer .startButtonDiv button {
+  min-width: 130px;
+  min-height: 40px;
+  border-radius: 20px;
+  border: 3px solid var(--white);
+  color: var(--white);
+  background: var(--black);
+  cursor: pointer;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  position: relative;
+  transition: 0.2s ease-in-out;
+  overflow: hidden;
+  font-family: var(--paragraphFontFamily);
+}
+.learnToEarnInfoContainer .startButtonContainer .startButtonDiv button span {
+  position: absolute;
+  margin: 0 auto;
+  transition: 0.5s ease-in-out;
+}
+.learnToEarnInfoContainer .startButtonContainer .startButtonDiv button .display {
+  opacity: 1;
+}
+.learnToEarnInfoContainer .startButtonContainer .startButtonDiv button .onHover {
+  color: var(--red);
+  transform: translateY(100%);
+  opacity: 0;
+}
+.learnToEarnInfoContainer .startButtonContainer .startButtonDiv button:hover .display {
+  transform: translateY(-100%);
+  opacity: 0;
+}
+.learnToEarnInfoContainer .startButtonContainer .startButtonDiv button:hover .onHover {
+  transform: translate(0%);
+  opacity: 1;
+}
+.learnToEarnInfoContainer .startButtonContainer .startButtonDiv button:hover {
+  background: var(--white);
+}
+
+.quizQuestionContainer {
+  background: linear-gradient(0deg, rgba(23, 23, 23, 0.9) 0%, rgb(0, 0, 0) 100%);
+  min-height: 0vh;
+  height: 0em;
+  transition: 1.2s ease-out;
+}
+.quizQuestionContainer .quizQuestionDiv {
+  height: 100%;
+  width: 100%;
+  transition: 1.2s ease-out;
+  transform: translateY(20em);
+  height: 0em;
+  background-color: var(--red);
+  opacity: 0;
+}
+.quizQuestionContainer .quizQuestionDiv form {
+  display: none;
+}
+.quizQuestionContainer .quizQuestionDiv form label {
+  color: var(--white);
 }
 
 /*# sourceMappingURL=/quiz.1d6342fe.css.map */

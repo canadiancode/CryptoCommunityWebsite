@@ -134,6 +134,75 @@ window.addEventListener("load", function () {
     });
   });
 });
+
+// animation for the benefits text
+var benefitsText = document.querySelector('.benefitsText');
+var newsletterArrow = document.querySelector('.newsletterArrow');
+var L2ELandingPageOptions = {
+  rootMargin: "-180px",
+  threshold: 0
+};
+
+// For the arrow animation
+var newsletterArrowObserver = new IntersectionObserver(function (entries, newsletterArrowObserver) {
+  entries.forEach(function (entry) {
+    if (entry.isIntersecting) {
+      newsletterArrow.style.opacity = '1';
+      newsletterArrow.style.transform = 'rotate(0deg) scale(1) translateX(0em)';
+    }
+  });
+}, L2ELandingPageOptions);
+newsletterArrowObserver.observe(newsletterArrow);
+
+// For the benefits text animation
+var benefitsTextObserver = new IntersectionObserver(function (entries, benefitsTextObserver) {
+  entries.forEach(function (entry) {
+    if (entry.isIntersecting) {
+      benefitsText.style.transform = 'translateX(2em)';
+      benefitsText.style.opacity = '1';
+    }
+  });
+}, L2ELandingPageOptions);
+benefitsTextObserver.observe(benefitsText);
+
+// Starting the quiz code
+var startButton = document.querySelector('.startButton');
+startButton.addEventListener('click', startQuiz);
+function startQuiz() {
+  // scroll user to top of page
+  window.scrollTo({
+    top: 0,
+    behavior: "smooth"
+  });
+
+  // removing the landing page
+  var landingPage = document.querySelector('.learnToEarnInfoContainer');
+  landingPage.style.opacity = '0';
+  landingPage.style.transform = 'translateY(-100%)';
+
+  // adding the quiz container in
+  var quizQuestionContainer = document.querySelector('.quizQuestionContainer');
+  quizQuestionContainer.style.minHeight = '100vh';
+  quizQuestionContainer.style.height = 'auto';
+
+  //removing the landing page display to none
+  setTimeout(removeLandingPage, 1000);
+  function removeLandingPage() {
+    landingPage.style.display = 'none';
+  }
+  ;
+
+  //adding the form with gradual animation for smooth transition
+  setTimeout(addQuiz, 1200);
+  function addQuiz() {
+    var quizQuestionDiv = document.querySelector('.quizQuestionDiv');
+    quizQuestionDiv.style.transform = 'translateY(0em)';
+    quizQuestionDiv.style.opacity = '1';
+    var form = document.querySelector('form');
+    form.style.display = 'block';
+  }
+}
+;
 },{}],"../node_modules/parcel-bundler/src/builtins/hmr-runtime.js":[function(require,module,exports) {
 var global = arguments[3];
 var OVERLAY_ID = '__parcel__error__overlay__';
@@ -159,7 +228,7 @@ var parent = module.bundle.parent;
 if ((!parent || !parent.isParcelRequire) && typeof WebSocket !== 'undefined') {
   var hostname = "" || location.hostname;
   var protocol = location.protocol === 'https:' ? 'wss' : 'ws';
-  var ws = new WebSocket(protocol + '://' + hostname + ':' + "52560" + '/');
+  var ws = new WebSocket(protocol + '://' + hostname + ':' + "57848" + '/');
   ws.onmessage = function (event) {
     checkedAssets = {};
     assetsToAccept = [];

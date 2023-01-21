@@ -95,7 +95,7 @@ const heroHeadingObserver = new IntersectionObserver(function(entries, heroHeadi
       heroHeadingContainer.style.transform = `translateY(${parallaxValue}px)`;
     }
 
-    if (entry.isIntersecting) {
+    if (entry.isIntersecting && window.innerWidth > 600) {
       document.addEventListener('scroll', headingParallax);
     } else {
       document.removeEventListener('scroll', headingParallax);
@@ -117,7 +117,6 @@ const crossoverObserver = new IntersectionObserver(function(entries, crossoverOb
   entries.forEach(entry => {
 
     function crossoverAnimation() {
-
       crossoverText.forEach(text => {
         let windowScroll = window.innerHeight;
         let scrollValue = text.getBoundingClientRect();
@@ -126,17 +125,19 @@ const crossoverObserver = new IntersectionObserver(function(entries, crossoverOb
         text.style.transform = `translateX(${parallaxValue}%)`;
         let textOpacity = ((windowScroll - scrollY_value) / 20) / 35;
         text.style.opacity = `${textOpacity}`;
-
       });
     }
 
-    if (entry.isIntersecting) {
+    if (entry.isIntersecting && window.innerWidth > 600) {
       document.addEventListener('scroll', crossoverAnimation);
     } else {
       document.removeEventListener('scroll', crossoverAnimation);
       crossoverText.style.transform = 'translateX(0em)';
     }
-    crossoverAnimation();
+
+    if (window.innerWidth > 600) {
+      crossoverAnimation();
+    }
   });
 }, crossoverOptions);
 
@@ -164,7 +165,7 @@ const ourVisionTextObserver = new IntersectionObserver(function(entries, ourVisi
       visonTextContainer.style.transform = `translateY(${parallaxValue}px)`;
     }
 
-    if (entry.isIntersecting) {
+    if (entry.isIntersecting && window.innerWidth > 600) {
       document.addEventListener('scroll', ourVisionTextAnimation);
     } else {
       document.removeEventListener('scroll', ourVisionTextAnimation);
@@ -195,7 +196,7 @@ const phoneListOneObserver = new IntersectionObserver(function(entries, phoneLis
       phoneListOne.style.transform = `translateY(${parallaxValue}px)`;
     }
 
-    if (entry.isIntersecting) {
+    if (entry.isIntersecting && window.innerWidth > 600) {
       document.addEventListener('scroll', phoneListOneScrolling);
     } else {
       document.removeEventListener('scroll', phoneListOneScrolling);
@@ -219,7 +220,7 @@ function phoneListTwoScrolling() {
 const phoneListTwoObserver = new IntersectionObserver(function (entries, phoneListTwoObserver) {
   entries.forEach(entry => {
 
-    if (entry.isIntersecting) {
+    if (entry.isIntersecting && window.innerWidth > 600) {
       document.addEventListener('scroll', phoneListTwoScrolling);
     } else {
       document.removeEventListener('scroll', phoneListTwoScrolling);
@@ -228,7 +229,10 @@ const phoneListTwoObserver = new IntersectionObserver(function (entries, phoneLi
   });
 }, phoneAnimationOptions);
 phoneListTwoObserver.observe(phoneListTwo);
-phoneListTwoScrolling();
+
+if (window.innerWidth > 600) {
+  phoneListTwoScrolling();
+}
 
 
 // how to participate panel parallax scroll
@@ -250,7 +254,7 @@ const gettingStartedObserver = new IntersectionObserver(function(entries, gettin
       gettingStartedPanel.style.transform = `translateY(${parallaxValue}px)`;
     }
 
-    if (entry.isIntersecting) {
+    if (entry.isIntersecting && window.innerWidth > 600) {
       document.addEventListener('scroll', gettingStartedPanelParallax);
     } else {
       document.removeEventListener('scroll', gettingStartedPanelParallax);
@@ -280,7 +284,7 @@ const aboutUsTextObserver = new IntersectionObserver(function(entries, aboutUsTe
       aboutUsTextContainer.style.transform = `translateY(${parallaxValue}px)`;
     }
 
-    if (entry.isIntersecting) {
+    if (entry.isIntersecting && window.innerWidth > 600) {
       document.addEventListener('scroll', aboutUsTextParallax);
     } else {
       document.removeEventListener('scroll', aboutUsTextParallax);
@@ -364,9 +368,8 @@ function handleTabClick(event) {
     const id = event.currentTarget.id;
 
     const tabPanel = tabs.querySelector(`[aria-labelledby="${id}"]`);
-    console.log(tabPanel);
     tabPanel.hidden = false;
 }
 
-  // A loop for each button
-  tabButtons.forEach(button => button.addEventListener('click', handleTabClick));
+// A loop for each button
+tabButtons.forEach(button => button.addEventListener('click', handleTabClick));

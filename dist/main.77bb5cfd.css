@@ -248,8 +248,6 @@ p {
   z-index: 5;
 }
 .headerContainer .headerSelections .headerCTA .headerCTAlink {
-  max-width: 130px;
-  max-height: 40px;
   overflow: hidden;
 }
 .headerContainer .headerSelections .headerCTA .headerCTAlink button {
@@ -407,8 +405,6 @@ p {
   cursor: default;
 }
 .heroSection .heroTextContainer .headerCTAlink {
-  max-width: 150px;
-  max-height: 40px;
   overflow: hidden;
   opacity: 0;
   transform: translateY(1em);
@@ -494,6 +490,11 @@ p {
 @media screen and (max-width: 1000px) {
   .ourVisionSection .CrosspageAnimationContainer .textContainer .crosspageText {
     font-size: 20vmin;
+  }
+}
+@media screen and (max-width: 500px) {
+  .ourVisionSection .CrosspageAnimationContainer {
+    display: none;
   }
 }
 .ourVisionSection .visionContentContainer {
@@ -754,16 +755,10 @@ p {
     min-height: 55em;
   }
 }
-@media screen and (max-width: 500px) {
+@media screen and (max-width: 600px) {
   .ourVisionSection .aboutUsContainer .aboutUsTextContainer {
+    min-height: 100%;
     width: 80%;
-    min-height: 70em;
-  }
-}
-@media screen and (max-width: 300px) {
-  .ourVisionSection .aboutUsContainer .aboutUsTextContainer {
-    width: 90%;
-    min-height: 78em;
   }
 }
 .ourVisionSection .aboutUsContainer .aboutUsTextContainer h3 {
@@ -823,24 +818,59 @@ p {
 }
 .ourVisionSection .ourServicesSection .tabs .tablist {
   text-align: center;
+  display: flex;
+  justify-content: center;
+  gap: 1em;
+  flex-wrap: wrap;
 }
 .ourVisionSection .ourServicesSection .tabs .tablist .tabSelectionButton {
-  border: 0;
+  min-width: 170px;
+  min-height: 40px;
+  border-radius: 20px;
+  border: 3px solid var(--white);
   color: var(--white);
-  border-radius: 5px;
-  box-shadow: inset 0 -3px 10px var(--black);
+  background: var(--black);
   cursor: pointer;
-  height: 1em;
-  margin: 1em 2em;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  position: relative;
+  transition: 0.2s ease-in-out;
+  overflow: hidden;
   font-family: var(--paragraphFontFamily);
-  padding: 1em;
-  padding-bottom: 2.5em;
-  background: linear-gradient(0deg, rgb(139, 0, 0) 73%, rgb(0, 0, 0) 100%);
-  transition: 0.5s;
+  font-size: 1rem;
+}
+.ourVisionSection .ourServicesSection .tabs .tablist .tabSelectionButton span {
+  position: absolute;
+  margin: 0 auto;
+  transition: 0.5s ease-in-out;
+}
+.ourVisionSection .ourServicesSection .tabs .tablist .tabSelectionButton .display {
+  opacity: 1;
+}
+.ourVisionSection .ourServicesSection .tabs .tablist .tabSelectionButton .onHover {
+  color: var(--red);
+  transform: translateY(100%);
+  opacity: 0;
+}
+.ourVisionSection .ourServicesSection .tabs .tablist .tabSelectionButton:hover .display {
+  transform: translateY(-100%);
+  opacity: 0;
+}
+.ourVisionSection .ourServicesSection .tabs .tablist .tabSelectionButton:hover .onHover {
+  transform: translate(0%);
+  opacity: 1;
+}
+.ourVisionSection .ourServicesSection .tabs .tablist .tabSelectionButton:hover {
+  background: var(--white);
 }
 .ourVisionSection .ourServicesSection .tabs .tablist .tabSelectionButton[aria-selected=true] {
   background: var(--red);
   box-shadow: none;
+  color: var(--white);
+}
+.ourVisionSection .ourServicesSection .tabs .tablist .tabSelectionButton[aria-selected=true]:hover span {
   color: var(--white);
 }
 .ourVisionSection .ourServicesSection .tabs .tablist .tabSelectionButton:focus {
@@ -874,27 +904,28 @@ p {
 
 .footerContainer {
   background-color: var(--semiTransparentDarkgrey);
+  z-index: 10;
+  position: relative;
 }
 .footerContainer .footerPanel {
   min-height: 50vh;
-  background: var(--black);
+  background-color: var(--darkgrey);
   border-top: 1px var(--white) solid;
   border-right: 1px var(--white) solid;
   border-left: 1px var(--white) solid;
   border-top-right-radius: 20px;
   border-top-left-radius: 20px;
   height: 100%;
-  width: 90%;
+  width: 80%;
   margin: 0 auto;
   display: flex;
   flex-direction: column;
   justify-content: center;
-  box-shadow: inset 0px 0px 15px 0px var(--black);
-  background-color: var(--darkgrey);
+  box-shadow: inset 0px 0px 15px 0px var(--black), 0px 0px 15px 0px var(--black);
 }
 .footerContainer .footerPanel .footerLogos {
   width: 100%;
-  margin-bottom: 3em;
+  margin: 2em 0em;
   display: flex;
   justify-content: center;
 }
@@ -916,7 +947,7 @@ p {
     padding: 0em 25%;
   }
   .footerContainer .footerPanel .footerLogos a img {
-    height: 100%;
+    height: auto;
   }
 }
 .footerContainer .footerPanel .socialMediaContainer {

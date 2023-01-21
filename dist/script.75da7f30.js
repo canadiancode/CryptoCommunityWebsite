@@ -202,7 +202,7 @@ var heroHeadingObserver = new IntersectionObserver(function (entries, heroHeadin
       var parallaxValue = windowScrolled / 15;
       heroHeadingContainer.style.transform = "translateY(".concat(parallaxValue, "px)");
     }
-    if (entry.isIntersecting) {
+    if (entry.isIntersecting && window.innerWidth > 600) {
       document.addEventListener('scroll', headingParallax);
     } else {
       document.removeEventListener('scroll', headingParallax);
@@ -230,13 +230,15 @@ var crossoverObserver = new IntersectionObserver(function (entries, crossoverObs
         text.style.opacity = "".concat(textOpacity);
       });
     }
-    if (entry.isIntersecting) {
+    if (entry.isIntersecting && window.innerWidth > 600) {
       document.addEventListener('scroll', crossoverAnimation);
     } else {
       document.removeEventListener('scroll', crossoverAnimation);
       crossoverText.style.transform = 'translateX(0em)';
     }
-    crossoverAnimation();
+    if (window.innerWidth > 600) {
+      crossoverAnimation();
+    }
   });
 }, crossoverOptions);
 crossoverText.forEach(function (text) {
@@ -259,7 +261,7 @@ var ourVisionTextObserver = new IntersectionObserver(function (entries, ourVisio
       var parallaxValue = 25 - (windowScroll - scrollY_value) / 5;
       visonTextContainer.style.transform = "translateY(".concat(parallaxValue, "px)");
     }
-    if (entry.isIntersecting) {
+    if (entry.isIntersecting && window.innerWidth > 600) {
       document.addEventListener('scroll', ourVisionTextAnimation);
     } else {
       document.removeEventListener('scroll', ourVisionTextAnimation);
@@ -286,7 +288,7 @@ var phoneListOneObserver = new IntersectionObserver(function (entries, phoneList
       var parallaxValue = (imageElementY - windowHeight) / 4;
       phoneListOne.style.transform = "translateY(".concat(parallaxValue, "px)");
     }
-    if (entry.isIntersecting) {
+    if (entry.isIntersecting && window.innerWidth > 600) {
       document.addEventListener('scroll', phoneListOneScrolling);
     } else {
       document.removeEventListener('scroll', phoneListOneScrolling);
@@ -306,7 +308,7 @@ function phoneListTwoScrolling() {
 }
 var phoneListTwoObserver = new IntersectionObserver(function (entries, phoneListTwoObserver) {
   entries.forEach(function (entry) {
-    if (entry.isIntersecting) {
+    if (entry.isIntersecting && window.innerWidth > 600) {
       document.addEventListener('scroll', phoneListTwoScrolling);
     } else {
       document.removeEventListener('scroll', phoneListTwoScrolling);
@@ -314,7 +316,9 @@ var phoneListTwoObserver = new IntersectionObserver(function (entries, phoneList
   });
 }, phoneAnimationOptions);
 phoneListTwoObserver.observe(phoneListTwo);
-phoneListTwoScrolling();
+if (window.innerWidth > 600) {
+  phoneListTwoScrolling();
+}
 
 // how to participate panel parallax scroll
 var gettingStartedPanel = document.querySelector('.gettingStartedpanel');
@@ -331,7 +335,7 @@ var gettingStartedObserver = new IntersectionObserver(function (entries, getting
       var parallaxValue = (panelTop - windowHeight) / 7;
       gettingStartedPanel.style.transform = "translateY(".concat(parallaxValue, "px)");
     }
-    if (entry.isIntersecting) {
+    if (entry.isIntersecting && window.innerWidth > 600) {
       document.addEventListener('scroll', gettingStartedPanelParallax);
     } else {
       document.removeEventListener('scroll', gettingStartedPanelParallax);
@@ -356,7 +360,7 @@ var aboutUsTextObserver = new IntersectionObserver(function (entries, aboutUsTex
       var parallaxValue = (aboutUsTextY - windowHeight) * -1 / 3.5;
       aboutUsTextContainer.style.transform = "translateY(".concat(parallaxValue, "px)");
     }
-    if (entry.isIntersecting) {
+    if (entry.isIntersecting && window.innerWidth > 600) {
       document.addEventListener('scroll', aboutUsTextParallax);
     } else {
       document.removeEventListener('scroll', aboutUsTextParallax);
@@ -364,6 +368,44 @@ var aboutUsTextObserver = new IntersectionObserver(function (entries, aboutUsTex
   });
 }, aboutUsTextOptions);
 aboutUsTextObserver.observe(aboutUsTextContainer);
+
+// Code for the red underline on headers
+var underlineText = document.querySelectorAll('.underlineText');
+var underlineOptions = {
+  rootMargin: "-50px",
+  threshold: 1
+};
+var underlineObserver = new IntersectionObserver(function (entries, underlineObserver) {
+  entries.forEach(function (entry) {
+    if (entry.isIntersecting) {
+      entry.target.classList.add('showUnderline');
+    }
+  });
+}, underlineOptions);
+underlineText.forEach(function (text) {
+  underlineObserver.observe(text);
+});
+
+//Footer icon spread animation
+var footerIcon = document.querySelectorAll('.footerIcon');
+var footerIconOption = {
+  rootMargin: "-50px",
+  threshold: 0
+};
+var footerIconObserver = new IntersectionObserver(function (entries, footerIconObserver) {
+  entries.forEach(function (entry) {
+    var faBrands = document.querySelectorAll('.fa-brands');
+    if (entry.isIntersecting) {
+      faBrands.forEach(function (icon) {
+        icon.style.transform = 'translateY(0em)';
+        icon.style.opacity = '1';
+      });
+    }
+  });
+}, footerIconOption);
+footerIcon.forEach(function (icon) {
+  footerIconObserver.observe(icon);
+});
 
 // Our Services Tab Section
 var tabs = document.querySelector('.tabs');
@@ -388,7 +430,6 @@ function handleTabClick(event) {
   // find the assosictaed tab panel and show it
   var id = event.currentTarget.id;
   var tabPanel = tabs.querySelector("[aria-labelledby=\"".concat(id, "\"]"));
-  console.log(tabPanel);
   tabPanel.hidden = false;
 }
 

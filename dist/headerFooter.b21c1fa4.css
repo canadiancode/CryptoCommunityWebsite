@@ -406,6 +406,15 @@ p {
     font-size: 1.6rem;
   }
 }
+@media screen and (max-width: 350px) {
+  .footerContainer .footerPanel .socialMediaContainer {
+    gap: 0.2em;
+  }
+  .footerContainer .footerPanel .socialMediaContainer .footerIcon {
+    height: 1.2rem;
+    font-size: 1.4rem;
+  }
+}
 .footerContainer .footerPanel .terms {
   display: flex;
   width: 100%;

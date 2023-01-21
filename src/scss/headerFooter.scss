@@ -416,6 +416,15 @@ p {
                     }
                 }
             }
+            @media screen and (max-width: 350px) {
+                & {
+                    gap: 0.2em;
+                    .footerIcon {
+                        height: 1.2rem;
+                        font-size: 1.4rem;
+                    }
+                }
+            }
         }
         .terms {
             display: flex;

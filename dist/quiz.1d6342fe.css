@@ -1,2 +1,102 @@
+.headingsContainer {
+  width: 100%;
+  height: 100%;
+}
+.headingsContainer .animationContainer {
+  width: 100%;
+  height: 100%;
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  max-width: 800px;
+  margin: 0 auto;
+  justify-items: center;
+  padding: 0em 1em;
+}
+.headingsContainer .animationContainer .headingContainer {
+  margin: 0 auto;
+  justify-content: center;
+  align-self: center;
+}
+.headingsContainer .animationContainer .headingContainer h2 {
+  color: var(--white);
+  font-size: 7rem;
+  letter-spacing: 0.4rem;
+  text-shadow: 2px 2px 1px var(--red);
+  cursor: default;
+  z-index: 2;
+  opacity: 0;
+}
+.headingsContainer .animationContainer .headingContainer h2 span {
+  color: var(--red);
+  text-shadow: 2px 2px 1px var(--white), -2px -2px 1px var(--white);
+}
+@media screen and (max-width: 800px) {
+  .headingsContainer .animationContainer .headingContainer h2 {
+    font-size: 15vmin;
+  }
+}
+.headingsContainer .animationContainer .headingContainer img {
+  justify-items: center;
+  align-self: center;
+  transform: translateX(-5%);
+  animation: arrowRightAnimation 5s infinite ease-in-out;
+  z-index: -1;
+  opacity: 0.6;
+}
+.headingsContainer .animationContainer .headingContainer .shortArrow {
+  display: none;
+}
+@media screen and (max-width: 600px) {
+  .headingsContainer .animationContainer .headingContainer .longArrow {
+    display: none;
+  }
+  .headingsContainer .animationContainer .headingContainer .shortArrow {
+    display: inline-block;
+  }
+}
+.headingsContainer .animationContainer .headingContainer .hideHeaderContentLeft {
+  animation: pushHeadingRight 2s ease-out forwards;
+}
+.headingsContainer .animationContainer .headingContainer .hideHeaderContentRight {
+  animation: pushHeadingLeft 2s ease-out forwards;
+  animation-delay: 0.5s;
+}
+@keyframes pushHeadingRight {
+  from {
+    transform: translateX(-100%);
+    opacity: 0;
+  }
+  to {
+    transform: translateX(0%);
+    opacity: 1;
+  }
+}
+@keyframes pushHeadingLeft {
+  from {
+    transform: translateX(100%);
+    opacity: 0;
+  }
+  to {
+    transform: translateX(0%);
+    opacity: 1;
+  }
+}
+@keyframes arrowRightAnimation {
+  0% {
+    transform: translateX(-7%);
+    opacity: 0.6;
+  }
+  50% {
+    transform: translateX(4%);
+    opacity: 1;
+  }
+  100% {
+    transform: translateX(-7%);
+    opacity: 0.6;
+  }
+}
+.headingsContainer .animationContainer .arrowContainer {
+  z-index: -1;
+}
 
 /*# sourceMappingURL=/quiz.1d6342fe.css.map */

@@ -118,48 +118,21 @@ parcelRequire = (function (modules, cache, entry, globalName) {
 
   return newRequire;
 })({"quizScript.js":[function(require,module,exports) {
-// Header Section -- Header Section -- Header Section -- Header Section -- Header Section
-
-// To oepn up the header on mobile view
-var headerMobileButton = document.querySelector('.mobileNavDisplayButton');
-var mobileHeader = document.querySelector('.mainNav');
-
-// to animate the hamburger menu to an X
-var hamburgerLine1 = document.querySelector('.line1');
-var hamburgerLine2 = document.querySelector('.line2');
-var hamburgerLine3 = document.querySelector('.line3');
-
-//  code to close the drop-down header section
-function closeMobileHeader() {
-  if (mobileHeader.classList.contains('displayMobileHeader')) {
-    mobileHeader.classList.remove('displayMobileHeader');
-    hamburgerLine1.style.transform = 'rotate(0deg) translateY(6px)';
-    hamburgerLine2.style.opacity = '1';
-    hamburgerLine3.style.transform = 'rotate(0deg) translateY(-6px)';
-  } else {
-    mobileHeader.classList.add('displayMobileHeader');
-    hamburgerLine1.style.transform = 'rotate(45deg) translateY(0px)';
-    hamburgerLine2.style.opacity = '0';
-    hamburgerLine3.style.transform = 'rotate(-45deg) translateY(0px)';
-  }
-}
-;
-headerMobileButton.addEventListener('click', closeMobileHeader);
-document.addEventListener('keydown', function (e) {
-  if (e.key == 'Escape') {
-    closeMobileHeader();
-  }
-  ;
-});
-
-// close the header if clicked outside of the drop-down header menu
-window.addEventListener('click', function (e) {
-  if (mobileHeader.contains(e.target) || headerMobileButton.contains(e.target)) {} else {
-    mobileHeader.classList.remove('displayMobileHeader');
-    hamburgerLine1.style.transform = 'rotate(0deg) translateY(6px)';
-    hamburgerLine2.style.opacity = '1';
-    hamburgerLine3.style.transform = 'rotate(0deg) translateY(-6px)';
-  }
+// Code for the form submission to the Google Sheet
+window.addEventListener("load", function () {
+  var form = document.querySelector('.quizForm');
+  form.addEventListener("submit", function (e) {
+    e.preventDefault();
+    var data = new FormData(form);
+    var action = e.target.action;
+    fetch(action, {
+      method: 'POST',
+      body: data
+    }).then(function () {
+      // This is the code that triggers once the user submits the form
+      alert('success');
+    });
+  });
 });
 },{}],"../node_modules/parcel-bundler/src/builtins/hmr-runtime.js":[function(require,module,exports) {
 var global = arguments[3];
@@ -186,7 +159,7 @@ var parent = module.bundle.parent;
 if ((!parent || !parent.isParcelRequire) && typeof WebSocket !== 'undefined') {
   var hostname = "" || location.hostname;
   var protocol = location.protocol === 'https:' ? 'wss' : 'ws';
-  var ws = new WebSocket(protocol + '://' + hostname + ':' + "50438" + '/');
+  var ws = new WebSocket(protocol + '://' + hostname + ':' + "52560" + '/');
   ws.onmessage = function (event) {
     checkedAssets = {};
     assetsToAccept = [];

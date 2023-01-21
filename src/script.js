@@ -101,7 +101,7 @@ const heroHeadingObserver = new IntersectionObserver(function(entries, heroHeadi
       document.removeEventListener('scroll', headingParallax);
     }
   });
-  
+
 }, heroHeadingOptions);
 heroHeadingObserver.observe(heroHeadingContainer);
 
@@ -126,6 +126,7 @@ const crossoverObserver = new IntersectionObserver(function(entries, crossoverOb
         text.style.transform = `translateX(${parallaxValue}%)`;
         let textOpacity = ((windowScroll - scrollY_value) / 20) / 35;
         text.style.opacity = `${textOpacity}`;
+
       });
     }
 
@@ -288,6 +289,54 @@ const aboutUsTextObserver = new IntersectionObserver(function(entries, aboutUsTe
   });
 }, aboutUsTextOptions);
 aboutUsTextObserver.observe(aboutUsTextContainer);
+
+// Code for the red underline on headers
+const underlineText = document.querySelectorAll('.underlineText');
+
+const underlineOptions = {
+  rootMargin: "-50px",
+  threshold: 1
+}
+
+const underlineObserver = new IntersectionObserver(function(entries, underlineObserver) {
+  entries.forEach(entry => {
+
+    if (entry.isIntersecting) {
+      entry.target.classList.add('showUnderline');
+    }
+
+  });
+}, underlineOptions);
+underlineText.forEach(text => {
+  underlineObserver.observe(text);
+})
+
+//Footer icon spread animation
+const footerIcon = document.querySelectorAll('.footerIcon');
+
+const footerIconOption = {
+  rootMargin: "-50px",
+  threshold: 0
+}
+
+const footerIconObserver = new IntersectionObserver(function(entries, footerIconObserver) {
+  entries.forEach(entry => {
+
+    const faBrands = document.querySelectorAll('.fa-brands');
+
+    if (entry.isIntersecting) {
+      faBrands.forEach(icon => {
+        icon.style.transform = 'translateY(0em)';
+        icon.style.opacity = '1';
+      })
+    }
+
+  })
+}, footerIconOption);
+footerIcon.forEach(icon => {
+  footerIconObserver.observe(icon);
+})
+
 
 
 // Our Services Tab Section

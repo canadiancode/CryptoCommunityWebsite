@@ -123,11 +123,23 @@ p {
 }
 .headerContainer .headerLogo .logoContainer .performanteLogoLink {
   cursor: pointer;
+  display: flex;
+  flex-direction: row;
+  align-items: center;
 }
 .headerContainer .headerLogo .logoContainer .performanteLogoLink .PerformanteLogo {
   max-height: 75px;
   max-width: 75px;
   flex-shrink: 0;
+}
+.headerContainer .headerLogo .logoContainer .performanteLogoLink .textLogo {
+  max-height: 30px;
+  flex-shrink: 0;
+}
+@media screen and (max-width: 1300px) {
+  .headerContainer .headerLogo .logoContainer .performanteLogoLink .textLogo {
+    display: none;
+  }
 }
 .headerContainer .headerSelections {
   display: flex;
@@ -183,6 +195,7 @@ p {
   height: 100%;
   margin: 0;
   transition: 0.5s;
+  position: relative;
 }
 .headerContainer .headerSelections .navMenu .mainNav li {
   color: var(--white);
@@ -201,8 +214,33 @@ p {
   position: absolute;
   transition: 0.3s ease-in-out;
 }
-.headerContainer .headerSelections .navMenu .subNav {
+.headerContainer .headerSelections .navMenu .mainNav .dropDownmenu {
+  transition: 0.5s ease-in-out;
+}
+.headerContainer .headerSelections .navMenu .mainNav .subNav {
   display: none;
+  position: absolute;
+  padding: 0.5em 2em;
+  background-color: var(--semiTransparentDarkgrey);
+}
+.headerContainer .headerSelections .navMenu .mainNav .subNav a {
+  padding: 0.5rem;
+}
+.headerContainer .headerSelections .navMenu .mainNav .toolLink:hover .subNav-Tools {
+  display: block;
+  z-index: 10;
+}
+.headerContainer .headerSelections .navMenu .mainNav .PCCNftLink:hover .subNav-NFT {
+  display: block;
+  z-index: 10;
+}
+@media screen and (max-width: 1000px) {
+  .headerContainer .headerSelections .navMenu .mainNav .headerItem {
+    text-align: center;
+  }
+  .headerContainer .headerSelections .navMenu .mainNav .subNav {
+    position: relative;
+  }
 }
 .headerContainer .headerSelections .headerCTA {
   display: flex;
@@ -297,7 +335,12 @@ p {
   width: 100%;
   position: relative;
   align-items: center;
-  min-height: 30em;
+  min-height: 33em;
+}
+@media screen and (max-width: 400px) {
+  .heroSection {
+    min-height: 25em;
+  }
 }
 .heroSection .videoContainer {
   height: 100%;
@@ -321,7 +364,6 @@ p {
   width: 100%;
   margin: 0 auto;
   color: var(--white);
-  z-index: 5;
 }
 .heroSection .heroTextContainer .heroHeadingContainer {
   width: 100%;
@@ -348,7 +390,7 @@ p {
   margin-left: -2.1em;
 }
 .heroSection .heroTextContainer .heroHeadingContainer h1 .whiteLettering {
-  text-shadow: 1px 1px 1px var(--red);
+  text-shadow: 2px 2px 1px var(--red), -2px -2px 1px var(--red);
   opacity: 0;
   transition: 1s;
   clip-path: polygon(0 0, 0 0, 0 100%, 0% 100%);
@@ -446,7 +488,7 @@ p {
   font-family: "Rowdies", serif;
   color: rgb(14, 14, 14);
   font-size: 40vmin;
-  text-shadow: 1px 1px rgb(108, 108, 108), -1px -1px rgb(108, 108, 108);
+  text-shadow: rgba(255, 255, 255, 0.5) -1px 0, rgba(255, 255, 255, 0.3) 0 -1px, rgba(255, 255, 255, 0.5) 0 1px, rgba(255, 255, 255, 0.3) -1px -2px;
   cursor: default;
 }
 @media screen and (max-width: 1000px) {
@@ -474,6 +516,7 @@ p {
   position: relative;
   width: fit-content;
   cursor: default;
+  transition: 0.5s ease-out;
 }
 .ourVisionSection .visionContentContainer .visonTextContainer h3 span {
   text-shadow: 2px 2px 1px var(--red), -2px -2px 1px var(--red);
@@ -484,8 +527,12 @@ p {
   bottom: 10%;
   content: "";
   height: 2px;
-  width: 100%;
+  width: 0%;
   background-color: var(--red);
+  transition: 1.5s ease-out;
+}
+.ourVisionSection .visionContentContainer .visonTextContainer .showUnderline::after {
+  width: 100%;
 }
 .ourVisionSection .visionContentContainer .visonTextContainer p {
   font-family: var(--paragraphFontFamily);
@@ -569,16 +616,22 @@ p {
   cursor: default;
 }
 .ourVisionSection .gettingStartedContainer .gettingStartedpanel h3 span {
-  text-shadow: 1px 1px 1px var(--red), -1px -1px 1px var(--red);
+  text-shadow: 2px 2px 1px var(--red), -2px -2px 1px var(--red);
 }
 .ourVisionSection .gettingStartedContainer .gettingStartedpanel h3::after {
   content: "";
-  width: 100%;
+  width: 0%;
   height: 2px;
   background-color: var(--red);
   bottom: 10%;
   left: 0;
+  right: 0;
   position: absolute;
+  margin: 0 auto;
+  transition: 1.5s ease-out;
+}
+.ourVisionSection .gettingStartedContainer .gettingStartedpanel .showUnderline::after {
+  width: 100%;
 }
 .ourVisionSection .gettingStartedContainer .gettingStartedpanel .participationStepContainer {
   color: var(--white);
@@ -608,27 +661,32 @@ p {
 }
 @media screen and (max-width: 1000px) {
   .ourVisionSection .gettingStartedContainer .gettingStartedpanel .participationStepContainer .participationStep .headerArrowContainer h4 {
-    min-width: 130px;
+    min-width: 90px;
   }
 }
-.ourVisionSection .gettingStartedContainer .gettingStartedpanel .participationStepContainer .participationStep .headerArrowContainer img {
-  filter: invert(100%) sepia(0%) saturate(0%) hue-rotate(220deg) brightness(103%) contrast(109%);
-  animation: arrowAnimation infinite ease-in-out 3s;
+.ourVisionSection .gettingStartedContainer .gettingStartedpanel .participationStepContainer .participationStep .headerArrowContainer .arrow {
+  opacity: 0.2;
+  animation: arrowAnimation infinite ease-in-out 2s;
+  filter: invert(27%) sepia(62%) saturate(5992%) hue-rotate(350deg) brightness(87%) contrast(138%);
   transform: translateY(-1em) rotate(90deg) scale(0.5);
+  min-height: 6em;
 }
 @keyframes arrowAnimation {
   0% {
-    transform: translateY(-1em) rotate(90deg) scale(0.5);
+    transform: translateY(-1.5em) rotate(90deg) scale(0.5);
+    opacity: 0.2;
   }
   50% {
-    transform: translateY(0em) rotate(90deg) scale(0.5);
+    transform: translateY(-0.5em) rotate(90deg) scale(0.5);
+    opacity: 1;
   }
   100% {
-    transform: translateY(-1em) rotate(90deg) scale(0.5);
+    transform: translateY(-1.5em) rotate(90deg) scale(0.5);
+    opacity: 0.2;
   }
 }
 .ourVisionSection .gettingStartedContainer .gettingStartedpanel .participationStepContainer .participationStep .headerArrowContainer .secondArrow {
-  animation-delay: 0.5s;
+  animation-delay: 0.25s;
 }
 .ourVisionSection .gettingStartedContainer .gettingStartedpanel .participationStepContainer .participationStep .headerArrowContainer .finalArrow {
   opacity: 0;
@@ -639,13 +697,18 @@ p {
   bottom: 0;
   left: -10%;
   width: 2px;
-  height: 70%;
+  height: 0%;
   background-color: var(--red);
   position: absolute;
+  transition: 1.5s ease-out;
+}
+.ourVisionSection .gettingStartedContainer .gettingStartedpanel .participationStepContainer .participationStep .showUnderline::before {
+  height: 70%;
 }
 .ourVisionSection .gettingStartedContainer .gettingStartedpanel .participationStepContainer .participationStep p {
   z-index: 5;
   margin-bottom: 10%;
+  padding-left: 1em;
   text-align: left;
   padding-top: 3%;
   cursor: default;
@@ -659,23 +722,6 @@ p {
   text-decoration: underline;
   text-decoration-color: var(--white);
   color: var(--white);
-}
-.ourVisionSection .gettingStartedContainer .gettingStartedpanel .participationStepContainer .logoBackground {
-  width: 100%;
-  height: 100%;
-  position: absolute;
-  top: 0;
-  z-index: -1;
-}
-.ourVisionSection .gettingStartedContainer .gettingStartedpanel .participationStepContainer .logoBackground img {
-  position: relative;
-  min-height: 100%;
-  min-width: 100%;
-  object-fit: contain;
-  max-height: 5em;
-  z-index: 0;
-  filter: invert(0%) sepia(100%) saturate(0%) hue-rotate(353deg) brightness(30%) contrast(200%);
-  transform: scale(1.5);
 }
 .ourVisionSection .aboutUsContainer {
   min-height: 100vh;
@@ -736,8 +782,12 @@ p {
   bottom: 10%;
   left: 0;
   height: 2px;
-  width: 100%;
+  width: 0%;
   background-color: var(--red);
+  transition: 1.5s ease-out;
+}
+.ourVisionSection .aboutUsContainer .aboutUsTextContainer .showUnderline::after {
+  width: 100%;
 }
 .ourVisionSection .aboutUsContainer .aboutUsTextContainer p {
   font-size: 1.2rem;
@@ -758,7 +808,6 @@ p {
   padding: 3em 1em;
   position: relative;
   border-top: 1px solid var(--white);
-  box-shadow: 0px 0px 20px 5px var(--black), inset 0px 0px 20px 5px var(--black);
 }
 .ourVisionSection .ourServicesSection .tabs {
   position: relative;
@@ -824,8 +873,109 @@ p {
 }
 
 .footerContainer {
+  background-color: var(--semiTransparentDarkgrey);
+}
+.footerContainer .footerPanel {
   min-height: 50vh;
-  background: linear-gradient(0deg, rgb(0, 0, 0) 0%, rgb(21, 21, 21) 100%);
+  background: var(--black);
+  border-top: 1px var(--white) solid;
+  border-right: 1px var(--white) solid;
+  border-left: 1px var(--white) solid;
+  border-top-right-radius: 20px;
+  border-top-left-radius: 20px;
+  height: 100%;
+  width: 90%;
+  margin: 0 auto;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  box-shadow: inset 0px 0px 15px 0px var(--black);
+  background-color: var(--darkgrey);
+}
+.footerContainer .footerPanel .footerLogos {
+  width: 100%;
+  margin-bottom: 3em;
+  display: flex;
+  justify-content: center;
+}
+.footerContainer .footerPanel .footerLogos a {
+  width: fit-content;
+  display: flex;
+  flex-direction: row;
+  justify-content: center;
+}
+.footerContainer .footerPanel .footerLogos a img {
+  height: 2rem;
+}
+.footerContainer .footerPanel .footerLogos a .performanteText {
+  filter: invert(99%) sepia(100%) saturate(6%) hue-rotate(108deg) brightness(102%) contrast(103%);
+}
+@media screen and (max-width: 400px) {
+  .footerContainer .footerPanel .footerLogos a {
+    flex-direction: column;
+    padding: 0em 25%;
+  }
+  .footerContainer .footerPanel .footerLogos a img {
+    height: 100%;
+  }
+}
+.footerContainer .footerPanel .socialMediaContainer {
+  display: flex;
+  justify-content: center;
+  flex-direction: row;
+  gap: 2em;
+  position: relative;
+  width: 100%;
+}
+.footerContainer .footerPanel .socialMediaContainer .footerIcon {
+  filter: invert(100%) sepia(100%) saturate(2%) hue-rotate(88deg) brightness(106%) contrast(101%);
+  font-size: 2.5rem;
+  height: 3.3rem;
+}
+.footerContainer .footerPanel .socialMediaContainer .footerIcon .fa-brands {
+  transform: translateY(1em);
+  opacity: 0;
+  transition: 1.5s ease-out;
+}
+.footerContainer .footerPanel .socialMediaContainer .Discord {
+  filter: invert(42%) sepia(58%) saturate(5089%) hue-rotate(357deg) brightness(89%) contrast(81%);
+}
+@media screen and (max-width: 800px) {
+  .footerContainer .footerPanel .socialMediaContainer {
+    gap: 0.5em;
+  }
+  .footerContainer .footerPanel .socialMediaContainer .footerIcon {
+    height: 1.5rem;
+    font-size: 1.6rem;
+  }
+}
+.footerContainer .footerPanel .terms {
+  display: flex;
+  width: 100%;
+  justify-content: center;
+  margin: 3em 0em;
+  gap: 2rem;
+}
+@media screen and (max-width: 500px) {
+  .footerContainer .footerPanel .terms {
+    gap: 0.5em;
+  }
+}
+.footerContainer .footerPanel .terms .links a {
+  text-decoration: none;
+  color: var(--white);
+}
+.footerContainer .footerPanel .terms .links a:hover {
+  text-decoration: underline;
+}
+.footerContainer .footerPanel .terms .termsOfService {
+  position: relative;
+}
+@media screen and (max-width: 400px) {
+  .footerContainer .footerPanel .terms {
+    flex-direction: column;
+    text-align: center;
+  }
 }
 
 /*# sourceMappingURL=/main.77bb5cfd.css.map */

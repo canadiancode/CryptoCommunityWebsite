@@ -365,6 +365,44 @@ var aboutUsTextObserver = new IntersectionObserver(function (entries, aboutUsTex
 }, aboutUsTextOptions);
 aboutUsTextObserver.observe(aboutUsTextContainer);
 
+// Code for the red underline on headers
+var underlineText = document.querySelectorAll('.underlineText');
+var underlineOptions = {
+  rootMargin: "-50px",
+  threshold: 1
+};
+var underlineObserver = new IntersectionObserver(function (entries, underlineObserver) {
+  entries.forEach(function (entry) {
+    if (entry.isIntersecting) {
+      entry.target.classList.add('showUnderline');
+    }
+  });
+}, underlineOptions);
+underlineText.forEach(function (text) {
+  underlineObserver.observe(text);
+});
+
+//Footer icon spread animation
+var footerIcon = document.querySelectorAll('.footerIcon');
+var footerIconOption = {
+  rootMargin: "-50px",
+  threshold: 0
+};
+var footerIconObserver = new IntersectionObserver(function (entries, footerIconObserver) {
+  entries.forEach(function (entry) {
+    var faBrands = document.querySelectorAll('.fa-brands');
+    if (entry.isIntersecting) {
+      faBrands.forEach(function (icon) {
+        icon.style.transform = 'translateY(0em)';
+        icon.style.opacity = '1';
+      });
+    }
+  });
+}, footerIconOption);
+footerIcon.forEach(function (icon) {
+  footerIconObserver.observe(icon);
+});
+
 // Our Services Tab Section
 var tabs = document.querySelector('.tabs');
 var tabButtons = tabs.querySelectorAll('[role="tab"]');

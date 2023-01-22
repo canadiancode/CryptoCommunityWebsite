@@ -139,13 +139,6 @@ p {
                     max-width: 75px;
                     flex-shrink: 0;
                 }
-                .textLogo {
-                    max-height: 30px;
-                    flex-shrink: 0;
-                    @media screen and (max-width: 1300px) {
-                        display: none;
-                    }
-                }
             }
         }
     }

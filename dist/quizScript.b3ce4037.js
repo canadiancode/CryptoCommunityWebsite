@@ -118,7 +118,10 @@ parcelRequire = (function (modules, cache, entry, globalName) {
 
   return newRequire;
 })({"quizScript.js":[function(require,module,exports) {
-//Only thing we need to add is the questions below for the Newsletter
+// Change Newsletter Link Here:
+var MediumLink = 'https://medium.com/@Learn2EarnNow/l2e-edition-54-newsletter-862eff2bf99b';
+
+// Change Questions Here:
 var quizQuestions = [{
   Q: 'What is the ticker symbol for Bitcoin?'
 }, {
@@ -133,13 +136,23 @@ var quizQuestions = [{
   Q: 'Are you bullish or bearish?'
 }];
 
-//Change the Newsletter Link Here:
-var MediumLink = 'https://medium.com/@Learn2EarnNow/l2e-edition-54-newsletter-862eff2bf99b';
-
 // No Need to Touch Below -- No Need to Touch Below -- No Need to Touch Below
+
 // code for the label and input elements looping over total questionsn above
 var phoneForMediumLink = document.querySelector('.mediumLink');
 phoneForMediumLink.href = MediumLink;
+var editionLink = MediumLink.slice(MediumLink.indexOf('edition-'));
+// Change the 10 to an 11 once we get into the triple digits for the edition value
+var editionNumber = editionLink.substring(8, 10);
+var editionText = document.querySelector('.editionText');
+editionText.appendChild(document.createTextNode("Edition ".concat(editionNumber, " Quiz")));
+var quizEndNewsletterEdition = document.querySelector('.newsletterEdition');
+quizEndNewsletterEdition.appendChild(document.createTextNode(editionNumber));
+var earnedPCCElement = document.querySelector('.earnedPCC');
+var earnedPCC = quizQuestions.length * 50;
+earnedPCCElement.appendChild(document.createTextNode(earnedPCC));
+
+// form inputs and label creation
 var formData = document.querySelector('.injectedQuestions');
 var addQuestionOne = 1;
 for (var i = 0; i < quizQuestions.length; i++) {
@@ -227,6 +240,9 @@ function startQuiz() {
     quizQuestionDiv.style.opacity = '1';
     var form = document.querySelector('form');
     form.style.display = 'flex';
+    var editionTextDiv = document.querySelector('.editionTextDiv');
+    editionTextDiv.style.opacity = '1';
+    editionTextDiv.style.transform = 'translateY(0em)';
   }
 }
 ;
@@ -246,12 +262,15 @@ window.addEventListener("load", function () {
       // This is the code that triggers once the user submits the form
       var quizQuestionContainer = document.querySelector('.quizQuestionContainer');
       quizQuestionContainer.style.transform = 'translateY(-100%)';
+      var completionPageContainer = document.querySelector('.completionPageContainer');
+      completionPageContainer.style.display = 'flex';
       setTimeout(quizEnd, 1000);
       function quizEnd() {
         quizQuestionContainer.style.display = 'none';
+        var quizCompletionText = document.querySelector('.quizCompletionText');
+        quizCompletionText.style.opacity = '1';
+        quizCompletionText.style.transform = 'translateY(0em)';
       }
-      var completionPageContainer = document.querySelector('.completionPageContainer');
-      completionPageContainer.style.display = 'flex';
     });
   });
 });
@@ -280,7 +299,7 @@ var parent = module.bundle.parent;
 if ((!parent || !parent.isParcelRequire) && typeof WebSocket !== 'undefined') {
   var hostname = "" || location.hostname;
   var protocol = location.protocol === 'https:' ? 'wss' : 'ws';
-  var ws = new WebSocket(protocol + '://' + hostname + ':' + "57848" + '/');
+  var ws = new WebSocket(protocol + '://' + hostname + ':' + "65086" + '/');
   ws.onmessage = function (event) {
     checkedAssets = {};
     assetsToAccept = [];

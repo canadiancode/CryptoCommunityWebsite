@@ -1,4 +1,7 @@
-//Only thing we need to add is the questions below for the Newsletter
+// Change Newsletter Link Here:
+const MediumLink = 'https://medium.com/@Learn2EarnNow/l2e-edition-54-newsletter-862eff2bf99b';
+
+// Change Questions Here:
 const quizQuestions = [
   {
     Q: 'What is the ticker symbol for Bitcoin?'
@@ -20,16 +23,27 @@ const quizQuestions = [
   }
 ];
 
-//Change the Newsletter Link Here:
-const MediumLink = 'https://medium.com/@Learn2EarnNow/l2e-edition-54-newsletter-862eff2bf99b';
-
 
 // No Need to Touch Below -- No Need to Touch Below -- No Need to Touch Below
+
 // code for the label and input elements looping over total questionsn above
 const phoneForMediumLink = document.querySelector('.mediumLink');
 phoneForMediumLink.href = MediumLink;
 
+const editionLink = MediumLink.slice(MediumLink.indexOf('edition-'));
+// Change the 10 to an 11 once we get into the triple digits for the edition value
+const editionNumber = editionLink.substring(8, 10);
+const editionText = document.querySelector('.editionText');
+editionText.appendChild(document.createTextNode(`Edition ${editionNumber} Quiz`));
 
+const quizEndNewsletterEdition = document.querySelector('.newsletterEdition');
+quizEndNewsletterEdition.appendChild(document.createTextNode(editionNumber));
+
+const earnedPCCElement = document.querySelector('.earnedPCC');
+const earnedPCC = quizQuestions.length * 50;
+earnedPCCElement.appendChild(document.createTextNode(earnedPCC));
+
+// form inputs and label creation
 const formData = document.querySelector('.injectedQuestions');
 let addQuestionOne = 1;
 
@@ -119,6 +133,11 @@ function startQuiz() {
     quizQuestionDiv.style.opacity = '1';
     const form = document.querySelector('form');
     form.style.display = 'flex';
+
+    const editionTextDiv = document.querySelector('.editionTextDiv');
+    editionTextDiv.style.opacity = '1';
+    editionTextDiv.style.transform = 'translateY(0em)';
+
   }
 };
 
@@ -140,14 +159,17 @@ window.addEventListener("load", function() {
       const quizQuestionContainer = document.querySelector('.quizQuestionContainer');
       quizQuestionContainer.style.transform = 'translateY(-100%)';
 
-      setTimeout(quizEnd, 1000);
-      function quizEnd() {
-        quizQuestionContainer.style.display = 'none';
-      }
-
       const completionPageContainer = document.querySelector('.completionPageContainer');
       completionPageContainer.style.display = 'flex';
 
+      setTimeout(quizEnd, 1000);
+      function quizEnd() {
+        quizQuestionContainer.style.display = 'none';
+
+        const quizCompletionText = document.querySelector('.quizCompletionText');
+        quizCompletionText.style.opacity = '1';
+        quizCompletionText.style.transform = 'translateY(0em)';
+      }
     })
   });
 });

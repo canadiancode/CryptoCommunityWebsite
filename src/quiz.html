@@ -31,7 +31,7 @@
 
         <div class="headerLogo">
             <div class="logoContainer">
-                <a class="performanteLogoLink" href="/index.html"><img src="/assets/PerformanteLogo.png" class="PerformanteLogo" alt="Performante Graduation Hat logo"><img alt="Performante Text logo" class="textLogo" src="/assets/performanteTextLogo.png"></a>
+                <a class="performanteLogoLink" href="/index.html"><img src="/assets/PerformanteLogo.png" class="PerformanteLogo" alt="Performante Graduation Hat logo"></a>
             </div>
         </div>
         <div class="headerSelections">
@@ -107,10 +107,11 @@
     </div>
 
     <div class="quizQuestionContainer">
+        <div class="editionTextDiv"><p class="editionText"></p><p class="goodLuck">Good luck everyone - thank you for participating! </p></div>
         <div class="quizQuestionDiv">
             <form class="quizForm" method="POST" action="https://script.google.com/macros/s/AKfycbzSufQ9N5KVSItmETJng2X2XKAmaQJxzFfkvjVV48Ul-ukZouAlmQGhpQxMqexuBchteA/exec">
                 <div class="injectedQuestions">
-                    <label>What is your Roll Usernmae or ETH Wallet?</label>
+                    <label>What is your Roll Username or ETH Wallet?</label>
                     <input name="answer0" type="text" placeholder="Roll Username or ETH Wallet" required>
                 </div>
                 <div class="submitButtonDiv"><button class="submitFormButton" type="submit"><span class="display">SUBMIT QUIZ</span><span class="onHover">SUBMIT QUIZ</span></button></div>
@@ -119,7 +120,16 @@
     </div>
 
     <div class="completionPageContainer">
-        <h3>You Finished!</h3>
+        <div class="fireworkContainer pyro">
+            <div class="before"></div>
+            <div class="after"></div>
+        </div>
+
+        <div class="quizCompletionText">
+            <p class="thankYouText">Thank you for completing Edition <span class="newsletterEdition"></span> of the PCC Newsletter!</p>
+            <h2 class="earnedText">You've earned up to <span class="earnedPCC"></span> PCC!</h2>
+            <p class="quizTerms">Answers are only accepted one week after content release. Past this point, submissions will not be monitored.</p>
+        </div>
     </div>
 
     <footer class="footerContainer">

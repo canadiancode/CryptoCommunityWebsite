@@ -133,15 +133,6 @@ p {
   max-width: 75px;
   flex-shrink: 0;
 }
-.headerContainer .headerLogo .logoContainer .performanteLogoLink .textLogo {
-  max-height: 30px;
-  flex-shrink: 0;
-}
-@media screen and (max-width: 1300px) {
-  .headerContainer .headerLogo .logoContainer .performanteLogoLink .textLogo {
-    display: none;
-  }
-}
 .headerContainer .headerSelections {
   display: flex;
   min-height: 100%;

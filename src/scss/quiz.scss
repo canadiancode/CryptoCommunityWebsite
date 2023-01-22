@@ -451,6 +451,7 @@
         transform: translateY(5em);
         opacity: 0;
         transition: 1.2s ease-out;
+        cursor: default;
         p {
             color: white;
             font-size: 1.3rem;

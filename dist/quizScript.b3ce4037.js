@@ -260,6 +260,7 @@ window.addEventListener("load", function () {
       body: data
     }).then(function () {
       // This is the code that triggers once the user submits the form
+
       var quizQuestionContainer = document.querySelector('.quizQuestionContainer');
       quizQuestionContainer.style.transform = 'translateY(-100%)';
       var completionPageContainer = document.querySelector('.completionPageContainer');
@@ -271,6 +272,12 @@ window.addEventListener("load", function () {
         quizCompletionText.style.opacity = '1';
         quizCompletionText.style.transform = 'translateY(0em)';
       }
+      ;
+      // scroll user to top of page
+      window.scrollTo({
+        top: 0,
+        behavior: "smooth"
+      });
     });
   });
 });

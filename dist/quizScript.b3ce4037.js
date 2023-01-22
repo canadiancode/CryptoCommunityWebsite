@@ -149,7 +149,7 @@ editionText.appendChild(document.createTextNode("Edition ".concat(editionNumber,
 var quizEndNewsletterEdition = document.querySelector('.newsletterEdition');
 quizEndNewsletterEdition.appendChild(document.createTextNode(editionNumber));
 var earnedPCCElement = document.querySelector('.earnedPCC');
-var earnedPCC = quizQuestions.length * 50;
+var earnedPCC = quizQuestions.length * 50 + 50;
 earnedPCCElement.appendChild(document.createTextNode(earnedPCC));
 
 // form inputs and label creation

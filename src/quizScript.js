@@ -40,7 +40,7 @@ const quizEndNewsletterEdition = document.querySelector('.newsletterEdition');
 quizEndNewsletterEdition.appendChild(document.createTextNode(editionNumber));
 
 const earnedPCCElement = document.querySelector('.earnedPCC');
-const earnedPCC = quizQuestions.length * 50;
+const earnedPCC = (quizQuestions.length * 50) + 50;
 earnedPCCElement.appendChild(document.createTextNode(earnedPCC));
 
 // form inputs and label creation

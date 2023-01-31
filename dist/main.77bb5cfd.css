@@ -22,6 +22,33 @@
   flex-shrink: 0;
   pointer-events: none;
 }
+.heroSection .videoContainer .imageElement {
+  display: none;
+  height: 100%;
+  width: 100%;
+  object-fit: contain;
+  flex-shrink: 0;
+  pointer-events: none;
+}
+@media screen and (max-width: 450px) {
+  .heroSection .videoContainer .videoElement {
+    height: 100%;
+    width: 100%;
+    object-fit: contain;
+    flex-shrink: 0;
+    pointer-events: none;
+    display: none;
+  }
+  .heroSection .videoContainer .imageElement {
+    display: none;
+    height: 100%;
+    width: 100%;
+    object-fit: contain;
+    flex-shrink: 0;
+    pointer-events: none;
+    display: block;
+  }
+}
 .heroSection .heroTextContainer {
   position: absolute;
   top: 0;

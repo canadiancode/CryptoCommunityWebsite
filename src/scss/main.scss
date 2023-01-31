@@ -19,6 +19,33 @@
             flex-shrink: 0;
             pointer-events: none;
         }
+        .imageElement {
+            display: none;
+            height: 100%;
+            width: 100%;
+            object-fit: contain;
+            flex-shrink: 0;
+            pointer-events: none;
+        }
+        @media screen and (max-width: 450px) {
+            .videoElement {
+                height: 100%;
+                width: 100%;
+                object-fit: contain;
+                flex-shrink: 0;
+                pointer-events: none;
+                display: none;
+            }
+            .imageElement {
+                display: none;
+                height: 100%;
+                width: 100%;
+                object-fit: contain;
+                flex-shrink: 0;
+                pointer-events: none;
+                display: block;
+            }
+        }
     }
     .heroTextContainer {
         position: absolute;

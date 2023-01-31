@@ -78,6 +78,23 @@
     width: 260px;
   }
 }
+.ecosystemListContainer .contentContainer .linkContainer .stockPickPanel {
+  display: flex;
+  justify-content: center;
+  flex-direction: column;
+  width: 100%;
+  gap: 1.5rem;
+  height: 0px;
+  opacity: 0;
+  transform: translateY(-2em);
+  position: absolute;
+  transition: 1.5s ease-out;
+}
+.ecosystemListContainer .contentContainer .linkContainer .stockPickPanel button {
+  color: var(--white);
+  background-color: var(--red);
+  box-shadow: 5px 5px 0px -2px var(--white), -5px -5px 0px -2px var(--white);
+}
 .ecosystemListContainer .contentContainer .socialMediaContainer {
   display: flex;
   justify-content: center;

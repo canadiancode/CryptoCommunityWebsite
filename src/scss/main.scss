@@ -5,6 +5,7 @@
     position: relative;
     align-items: center;
     min-height: 33em;
+    max-height: 80vh;
     @media screen and (max-width: 400px) {
         min-height: 25em;
     }
@@ -33,11 +34,10 @@
         .heroHeadingContainer {
             width: 100%;
             h1 {
-                font-size: 12vmin;
+                font-size: 10vmin;
                 max-width: 30em;
                 font-family: var(--mainHeaderFont);
                 letter-spacing: 3px;
-
                 margin: 0 auto;
                 padding: 0em 10%;
                 cursor: default;
@@ -63,7 +63,7 @@
         }
         .heroSubHeadingContainer {
             font-family: var(--secondaryHeaderFontFamily);
-            font-size: 5vmin;
+            font-size: 4vmin;
             max-width: 20em;
             margin: 0 auto;
             text-align: center;
@@ -125,12 +125,7 @@
             & {
                 padding: 0em 1em;
                 text-align: center;
-                top: 10%;
-                .heroHeadingContainer {
-                    h1 {
-
-                    }
-                }
+                top: 5%;
                 .heroSubHeadingContainer {
                     p {
                         font-size: 1rem;

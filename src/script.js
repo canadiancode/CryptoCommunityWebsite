@@ -84,7 +84,9 @@ const crossoverObserver = new IntersectionObserver(function(entries, crossoverOb
       document.addEventListener('scroll', crossoverAnimation);
     } else {
       document.removeEventListener('scroll', crossoverAnimation);
-      crossoverText.style.transform = 'translateX(0em)';
+      crossoverText.forEach(text => {
+        text.style.transform = 'translateX(0em)';
+      })
     }
 
     if (window.innerWidth > 600) {
@@ -165,7 +167,7 @@ function phoneListTwoScrolling() {
   let imageElementRect = phoneListTwo.getBoundingClientRect();
   let imageElementY = imageElementRect.top;
   let windowHeight = window.innerHeight - 2000;
-  let parallaxValue = ((imageElementY - windowHeight) / -3);
+  let parallaxValue = ((imageElementY - windowHeight) / -1);
   phoneListTwo.style.transform = `translateY(${parallaxValue}px)`;
 }
 

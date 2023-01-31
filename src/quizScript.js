@@ -266,11 +266,14 @@ const scrollArrowRight = document.querySelector('.fa-arrow-right');
 const scrollArrowLeft = document.querySelector('.fa-arrow-left');
 
 scrollArrowRight.onclick = () => {
-
   const questions = document.querySelector('.injectedQuestions');
-  questions.scrollLeft += 20;
-  console.log('clocked');
-}
+  questions.scrollBy(100, 0);
+};
+
+scrollArrowLeft.onclick = () => {
+  const questions = document.querySelector('.injectedQuestions');
+  questions.scrollBy(-100, 0);
+};
 
 // Code for the form submission to the Google Sheet
 const quizForm = document.querySelector('.quizForm');
@@ -310,12 +313,4 @@ window.addEventListener("load", function() {
     })
   });
 });
-
-
-
-
-
-
-// Remove this at the end
-startQuiz();
 

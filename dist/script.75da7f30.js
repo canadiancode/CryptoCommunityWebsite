@@ -190,7 +190,9 @@ var crossoverObserver = new IntersectionObserver(function (entries, crossoverObs
       document.addEventListener('scroll', crossoverAnimation);
     } else {
       document.removeEventListener('scroll', crossoverAnimation);
-      crossoverText.style.transform = 'translateX(0em)';
+      crossoverText.forEach(function (text) {
+        text.style.transform = 'translateX(0em)';
+      });
     }
     if (window.innerWidth > 600) {
       crossoverAnimation();
@@ -259,7 +261,7 @@ function phoneListTwoScrolling() {
   var imageElementRect = phoneListTwo.getBoundingClientRect();
   var imageElementY = imageElementRect.top;
   var windowHeight = window.innerHeight - 2000;
-  var parallaxValue = (imageElementY - windowHeight) / -3;
+  var parallaxValue = (imageElementY - windowHeight) / -1;
   phoneListTwo.style.transform = "translateY(".concat(parallaxValue, "px)");
 }
 var phoneListTwoObserver = new IntersectionObserver(function (entries, phoneListTwoObserver) {
@@ -418,7 +420,7 @@ var parent = module.bundle.parent;
 if ((!parent || !parent.isParcelRequire) && typeof WebSocket !== 'undefined') {
   var hostname = "" || location.hostname;
   var protocol = location.protocol === 'https:' ? 'wss' : 'ws';
-  var ws = new WebSocket(protocol + '://' + hostname + ':' + "65217" + '/');
+  var ws = new WebSocket(protocol + '://' + hostname + ':' + "53191" + '/');
   ws.onmessage = function (event) {
     checkedAssets = {};
     assetsToAccept = [];

@@ -352,8 +352,11 @@ var scrollArrowRight = document.querySelector('.fa-arrow-right');
 var scrollArrowLeft = document.querySelector('.fa-arrow-left');
 scrollArrowRight.onclick = function () {
   var questions = document.querySelector('.injectedQuestions');
-  questions.scrollLeft += 20;
-  console.log('clocked');
+  questions.scrollBy(100, 0);
+};
+scrollArrowLeft.onclick = function () {
+  var questions = document.querySelector('.injectedQuestions');
+  questions.scrollBy(-100, 0);
 };
 
 // Code for the form submission to the Google Sheet
@@ -390,9 +393,6 @@ window.addEventListener("load", function () {
     });
   });
 });
-
-// Remove this at the end
-startQuiz();
 },{}],"../node_modules/parcel-bundler/src/builtins/hmr-runtime.js":[function(require,module,exports) {
 var global = arguments[3];
 var OVERLAY_ID = '__parcel__error__overlay__';
@@ -418,7 +418,7 @@ var parent = module.bundle.parent;
 if ((!parent || !parent.isParcelRequire) && typeof WebSocket !== 'undefined') {
   var hostname = "" || location.hostname;
   var protocol = location.protocol === 'https:' ? 'wss' : 'ws';
-  var ws = new WebSocket(protocol + '://' + hostname + ':' + "65217" + '/');
+  var ws = new WebSocket(protocol + '://' + hostname + ':' + "53191" + '/');
   ws.onmessage = function (event) {
     checkedAssets = {};
     assetsToAccept = [];

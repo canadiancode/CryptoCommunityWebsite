@@ -1,4 +1,4 @@
-// Hero Text Animation Section -- Hero Text Animation Section -- Hero Text Animation Section
+// Hero Text Animation Section
 setTimeout(() => {
   const firstWhiteLettering = document.querySelector('.firstWhiteLettering');
   firstWhiteLettering.style.opacity = '1';

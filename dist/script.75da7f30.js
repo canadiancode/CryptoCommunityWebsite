@@ -118,7 +118,7 @@ parcelRequire = (function (modules, cache, entry, globalName) {
 
   return newRequire;
 })({"script.js":[function(require,module,exports) {
-// Hero Text Animation Section -- Hero Text Animation Section -- Hero Text Animation Section
+// Hero Text Animation Section
 setTimeout(function () {
   var firstWhiteLettering = document.querySelector('.firstWhiteLettering');
   firstWhiteLettering.style.opacity = '1';
@@ -420,7 +420,7 @@ var parent = module.bundle.parent;
 if ((!parent || !parent.isParcelRequire) && typeof WebSocket !== 'undefined') {
   var hostname = "" || location.hostname;
   var protocol = location.protocol === 'https:' ? 'wss' : 'ws';
-  var ws = new WebSocket(protocol + '://' + hostname + ':' + "53191" + '/');
+  var ws = new WebSocket(protocol + '://' + hostname + ':' + "55566" + '/');
   ws.onmessage = function (event) {
     checkedAssets = {};
     assetsToAccept = [];

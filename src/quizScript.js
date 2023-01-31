@@ -49,14 +49,21 @@ let addQuestionOne = 1;
 
 for (let i = 0; i < quizQuestions.length; i++) {
 
+  // Div for containing question creation
+  const divElement = document.createElement('div');
+  divElement.classList.add('questionContainer');
+  const questionNumber = parseInt([i]) + 1;
+  divElement.classList.add(`question${[questionNumber]}`);
+  formData.appendChild(divElement);
+
   // label creation
   const labelElement = document.createElement('label');
   const labelText = document.createTextNode(quizQuestions[i].Q);
   labelElement.appendChild(labelText);
-  formData.appendChild(labelElement);
+  divElement.appendChild(labelElement);
   
   //input creation
-  const inputElement = document.createElement('input');
+  const inputElement = document.createElement('textarea');
   const inputName = ('answer'+[i]);
   let nameValue = addQuestionOne + parseInt([i]);
   inputElement.name = ('answer' + nameValue);
@@ -64,19 +71,70 @@ for (let i = 0; i < quizQuestions.length; i++) {
   let placeHolderValue = addQuestionOne + parseInt([i]);
   inputElement.placeholder = `Answer ${placeHolderValue}`;
   inputElement.required = true;
-  formData.appendChild(inputElement);
+  divElement.appendChild(inputElement);
 };
 
-// Animations for the Learn to Earn page
-const benefitsText = document.querySelector('.benefitsText');
-const newsletterArrow = document.querySelector('.newsletterArrow');
+// Remove the left arrow at the start of the quiz
+const firstQuestionpanel = document.querySelector('.firstQuestion');
 
+const viewArrowOptions = {
+  rootMargin: "0px",
+  threshold: 0.5
+}
+
+const firstQuestionObserver = new IntersectionObserver(function(entries, firstQuestionObserver) {
+  entries.forEach(entry => {
+
+    const questionNavLeftArrow = document.querySelector('.fa-arrow-left');
+
+    if (entry.isIntersecting) {
+      questionNavLeftArrow.style.opacity = '0';
+    } else {
+      questionNavLeftArrow.style.opacity = '1';
+    }
+
+  })
+}, viewArrowOptions);
+firstQuestionObserver.observe(firstQuestionpanel);
+
+// Remove the right arrow at the end of the quiz
+const questionPanels = document.querySelectorAll('.questionContainer');
+
+for (let j = 0; j < questionPanels.length; j++) {
+  const totalQuestionNumber = quizQuestions.length;
+  const finalQuestion = questionPanels[totalQuestionNumber];
+  finalQuestion.classList.add('finalQuestion');
+};
+
+const finalQuestion = document.querySelector('.finalQuestion');
+
+const finalQuestionObserver = new IntersectionObserver(function(entries, finalQuestionObserver) {
+  entries.forEach(entry => {
+
+    const questionNavRightArrow = document.querySelector('.fa-arrow-right');
+    const submitButtonDiv = document.querySelector('.submitButtonDiv');
+
+    if (entry.isIntersecting) {
+      questionNavRightArrow.style.opacity = '0';
+      submitButtonDiv.style.opacity = '1';
+      submitButtonDiv.style.transform = 'translate(0em)';
+    } else {
+      questionNavRightArrow.style.opacity = '1';
+    }
+
+  })
+}, viewArrowOptions);
+finalQuestionObserver.observe(finalQuestion);
+
+// code for the arrow pointing to the iPhone with the medium link
 const L2ELandingPageOptions = {
   rootMargin: "-180px",
   threshold: 0
 }
 
-// For the arrow animation
+// For the Medium link on iPhone arrow animation
+const newsletterArrow = document.querySelector('.newsletterArrow');
+
 const newsletterArrowObserver = new IntersectionObserver(function(entries, newsletterArrowObserver) {
   entries.forEach(entry => {
     if (entry.isIntersecting) {
@@ -88,6 +146,8 @@ const newsletterArrowObserver = new IntersectionObserver(function(entries, newsl
 newsletterArrowObserver.observe(newsletterArrow);
 
 // For the benefits text animation
+const benefitsText = document.querySelector('.benefitsText');
+
 const benefitsTextObserver = new IntersectionObserver(function(entries, benefitsTextObserver) {
   entries.forEach(entry => {
     if (entry.isIntersecting) {
@@ -141,6 +201,77 @@ function startQuiz() {
   }
 };
 
+// Code for the progress bar animation
+const progressBarOptions = {
+  rootMargin: "0px",
+  threshold: 1
+};
+
+const questionContainer = document.querySelectorAll('.questionContainer');
+
+const panelObserver = new IntersectionObserver(function(entries, panelObserver) {
+  entries.forEach(entry => {
+
+    if (entry.isIntersecting) {
+
+      // for the progress bar
+      const questionContainerClass = entry.target.classList;
+      const questionClassValue = questionContainerClass[1].substring(8, 10);
+      let progressInstrumemnt = (100 / quizQuestions.length) +1;
+      let progressWidth = questionClassValue * progressInstrumemnt;
+
+      const finishedProgress = document.querySelector('.finishedProgress');
+      finishedProgress.style.width = `${progressWidth}%`;
+
+      //style of the panels
+      entry.target.style.boxShadow = '0px 0px 10px 2px var(--white)';
+    } else {
+      entry.target.style.boxShadow = '0px 0px 0px 0px var(--white)';
+    }
+  })
+}, progressBarOptions);
+questionContainer.forEach(panel => {
+  panelObserver.observe(panel);
+});
+
+// styling the label
+const labelOptions = {
+  rootMargin: "0px",
+  threshold: 1
+}
+
+const labels = document.querySelectorAll('label');
+const textareas = document.querySelectorAll('textarea');
+
+const labelObserver = new IntersectionObserver(function(entries, labelObserver) {
+  entries.forEach(entry => {
+
+    if (entry.isIntersecting) {
+      entry.target.style.opacity = '1';
+      entry.target.style.transform = 'translateY(0em)';
+    };
+  })
+}, labelOptions);
+
+labels.forEach(label => {
+  labelObserver.observe(label);
+});
+
+textareas.forEach(textarea => {
+  labelObserver.observe(textarea);
+});
+
+// scroll on click
+const scrollArrowRight = document.querySelector('.fa-arrow-right');
+const scrollArrowLeft = document.querySelector('.fa-arrow-left');
+
+scrollArrowRight.onclick = () => {
+
+  const questions = document.querySelector('.injectedQuestions');
+  questions.scrollLeft += 20;
+  console.log('clocked');
+}
+
 // Code for the form submission to the Google Sheet
 const quizForm = document.querySelector('.quizForm');
 
@@ -179,3 +310,12 @@ window.addEventListener("load", function() {
     })
   });
 });
+
+
+
+
+
+
+// Remove this at the end
+startQuiz();
+

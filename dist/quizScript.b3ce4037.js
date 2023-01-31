@@ -156,14 +156,21 @@ earnedPCCElement.appendChild(document.createTextNode(earnedPCC));
 var formData = document.querySelector('.injectedQuestions');
 var addQuestionOne = 1;
 for (var i = 0; i < quizQuestions.length; i++) {
+  // Div for containing question creation
+  var divElement = document.createElement('div');
+  divElement.classList.add('questionContainer');
+  var questionNumber = parseInt([i]) + 1;
+  divElement.classList.add("question".concat([questionNumber]));
+  formData.appendChild(divElement);
+
   // label creation
   var labelElement = document.createElement('label');
   var labelText = document.createTextNode(quizQuestions[i].Q);
   labelElement.appendChild(labelText);
-  formData.appendChild(labelElement);
+  divElement.appendChild(labelElement);
 
   //input creation
-  var inputElement = document.createElement('input');
+  var inputElement = document.createElement('textarea');
   var inputName = 'answer' + [i];
   var nameValue = addQuestionOne + parseInt([i]);
   inputElement.name = 'answer' + nameValue;
@@ -171,19 +178,60 @@ for (var i = 0; i < quizQuestions.length; i++) {
   var placeHolderValue = addQuestionOne + parseInt([i]);
   inputElement.placeholder = "Answer ".concat(placeHolderValue);
   inputElement.required = true;
-  formData.appendChild(inputElement);
+  divElement.appendChild(inputElement);
 }
 ;
 
-// Animations for the Learn to Earn page
-var benefitsText = document.querySelector('.benefitsText');
-var newsletterArrow = document.querySelector('.newsletterArrow');
+// Remove the left arrow at the start of the quiz
+var firstQuestionpanel = document.querySelector('.firstQuestion');
+var viewArrowOptions = {
+  rootMargin: "0px",
+  threshold: 0.5
+};
+var firstQuestionObserver = new IntersectionObserver(function (entries, firstQuestionObserver) {
+  entries.forEach(function (entry) {
+    var questionNavLeftArrow = document.querySelector('.fa-arrow-left');
+    if (entry.isIntersecting) {
+      questionNavLeftArrow.style.opacity = '0';
+    } else {
+      questionNavLeftArrow.style.opacity = '1';
+    }
+  });
+}, viewArrowOptions);
+firstQuestionObserver.observe(firstQuestionpanel);
+
+// Remove the right arrow at the end of the quiz
+var questionPanels = document.querySelectorAll('.questionContainer');
+for (var j = 0; j < questionPanels.length; j++) {
+  var totalQuestionNumber = quizQuestions.length;
+  var _finalQuestion = questionPanels[totalQuestionNumber];
+  _finalQuestion.classList.add('finalQuestion');
+}
+;
+var finalQuestion = document.querySelector('.finalQuestion');
+var finalQuestionObserver = new IntersectionObserver(function (entries, finalQuestionObserver) {
+  entries.forEach(function (entry) {
+    var questionNavRightArrow = document.querySelector('.fa-arrow-right');
+    var submitButtonDiv = document.querySelector('.submitButtonDiv');
+    if (entry.isIntersecting) {
+      questionNavRightArrow.style.opacity = '0';
+      submitButtonDiv.style.opacity = '1';
+      submitButtonDiv.style.transform = 'translate(0em)';
+    } else {
+      questionNavRightArrow.style.opacity = '1';
+    }
+  });
+}, viewArrowOptions);
+finalQuestionObserver.observe(finalQuestion);
+
+// code for the arrow pointing to the iPhone with the medium link
 var L2ELandingPageOptions = {
   rootMargin: "-180px",
   threshold: 0
 };
 
-// For the arrow animation
+// For the Medium link on iPhone arrow animation
+var newsletterArrow = document.querySelector('.newsletterArrow');
 var newsletterArrowObserver = new IntersectionObserver(function (entries, newsletterArrowObserver) {
   entries.forEach(function (entry) {
     if (entry.isIntersecting) {
@@ -195,6 +243,7 @@ var newsletterArrowObserver = new IntersectionObserver(function (entries, newsle
 newsletterArrowObserver.observe(newsletterArrow);
 
 // For the benefits text animation
+var benefitsText = document.querySelector('.benefitsText');
 var benefitsTextObserver = new IntersectionObserver(function (entries, benefitsTextObserver) {
   entries.forEach(function (entry) {
     if (entry.isIntersecting) {
@@ -247,6 +296,66 @@ function startQuiz() {
 }
 ;
 
+// Code for the progress bar animation
+var progressBarOptions = {
+  rootMargin: "0px",
+  threshold: 1
+};
+var questionContainer = document.querySelectorAll('.questionContainer');
+var panelObserver = new IntersectionObserver(function (entries, panelObserver) {
+  entries.forEach(function (entry) {
+    if (entry.isIntersecting) {
+      // for the progress bar
+      var questionContainerClass = entry.target.classList;
+      var questionClassValue = questionContainerClass[1].substring(8, 10);
+      var progressInstrumemnt = 100 / quizQuestions.length + 1;
+      var progressWidth = questionClassValue * progressInstrumemnt;
+      var finishedProgress = document.querySelector('.finishedProgress');
+      finishedProgress.style.width = "".concat(progressWidth, "%");
+
+      //style of the panels
+      entry.target.style.boxShadow = '0px 0px 10px 2px var(--white)';
+    } else {
+      entry.target.style.boxShadow = '0px 0px 0px 0px var(--white)';
+    }
+  });
+}, progressBarOptions);
+questionContainer.forEach(function (panel) {
+  panelObserver.observe(panel);
+});
+
+// styling the label
+var labelOptions = {
+  rootMargin: "0px",
+  threshold: 1
+};
+var labels = document.querySelectorAll('label');
+var textareas = document.querySelectorAll('textarea');
+var labelObserver = new IntersectionObserver(function (entries, labelObserver) {
+  entries.forEach(function (entry) {
+    if (entry.isIntersecting) {
+      entry.target.style.opacity = '1';
+      entry.target.style.transform = 'translateY(0em)';
+    }
+    ;
+  });
+}, labelOptions);
+labels.forEach(function (label) {
+  labelObserver.observe(label);
+});
+textareas.forEach(function (textarea) {
+  labelObserver.observe(textarea);
+});
+
+// scroll on click
+var scrollArrowRight = document.querySelector('.fa-arrow-right');
+var scrollArrowLeft = document.querySelector('.fa-arrow-left');
+scrollArrowRight.onclick = function () {
+  var questions = document.querySelector('.injectedQuestions');
+  questions.scrollLeft += 20;
+  console.log('clocked');
+};
+
 // Code for the form submission to the Google Sheet
 var quizForm = document.querySelector('.quizForm');
 window.addEventListener("load", function () {
@@ -281,6 +390,9 @@ window.addEventListener("load", function () {
     });
   });
 });
+
+// Remove this at the end
+startQuiz();
 },{}],"../node_modules/parcel-bundler/src/builtins/hmr-runtime.js":[function(require,module,exports) {
 var global = arguments[3];
 var OVERLAY_ID = '__parcel__error__overlay__';
@@ -306,7 +418,7 @@ var parent = module.bundle.parent;
 if ((!parent || !parent.isParcelRequire) && typeof WebSocket !== 'undefined') {
   var hostname = "" || location.hostname;
   var protocol = location.protocol === 'https:' ? 'wss' : 'ws';
-  var ws = new WebSocket(protocol + '://' + hostname + ':' + "65086" + '/');
+  var ws = new WebSocket(protocol + '://' + hostname + ':' + "65217" + '/');
   ws.onmessage = function (event) {
     checkedAssets = {};
     assetsToAccept = [];

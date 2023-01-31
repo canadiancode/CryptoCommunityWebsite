@@ -110,10 +110,21 @@
         <div class="editionTextDiv"><p class="editionText"></p><p class="goodLuck">Good luck everyone - thank you for participating! </p></div>
         <div class="quizQuestionDiv">
             <form class="quizForm" method="POST" action="https://script.google.com/macros/s/AKfycbzSufQ9N5KVSItmETJng2X2XKAmaQJxzFfkvjVV48Ul-ukZouAlmQGhpQxMqexuBchteA/exec">
-                <div class="injectedQuestions">
-                    <label>What is your Roll Username or ETH Wallet?</label>
-                    <input name="answer0" type="text" placeholder="Roll Username or ETH Wallet" required="">
+                <div class="progressbarContainer">
+                    <div class="unfinishedProgress"></div>
+                    <div class="finishedProgress"></div>
                 </div>
+                <div class="quizNavigation">
+                    <i class="navigationArrow fa-solid fa-arrow-left"></i>
+                    <div class="injectedQuestions">
+                        <div class="questionContainer question0 firstQuestion">
+                            <label>What is your Roll Username or ETH Wallet?</label>
+                            <textarea name="answer0" type="text" placeholder="Roll Username or ETH Wallet" required=""></textarea>
+                        </div>
+                    </div>
+                    <i class="navigationArrow fa-solid fa-arrow-right"></i>
+                </div>
+                
                 <div class="submitButtonDiv"><button class="submitFormButton" type="submit"><span class="display">SUBMIT QUIZ</span><span class="onHover">SUBMIT QUIZ</span></button></div>
             </form>
         </div>
@@ -145,7 +156,7 @@
                 <div class="footerIcon Medium"><a target="_blank" href="https://medium.com/@Learn2EarnNow"><i class="fa-brands fa-medium"></i></a></div> 
             </div>
             <div class="terms">
-                <div class="links"><a href="https://cdn.shopify.com/s/files/1/0024/9551/2691/files/PCC_Litepaper_1.0.pdf?v=1640655208"><p>$PCC Whitepaper</p></a></div>
+                <div class="links"><a href="https://bit.ly/PCC-Whitepaper"><p>$PCC Whitepaper</p></a></div>
                 <div class="links termsOfService"><a href="#"><p>Terms of Service</p></a></div>
             </div>
         </div>

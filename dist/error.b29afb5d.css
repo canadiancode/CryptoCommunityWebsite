@@ -1,0 +1,47 @@
+.errorPageContainer {
+  width: 100%;
+  height: 100%;
+  padding: 2em;
+  background: linear-gradient(0deg, rgba(23, 23, 23, 0.9) 0%, rgb(0, 0, 0) 100%);
+  display: flex;
+  justify-content: center;
+}
+.errorPageContainer .errorPagePanel {
+  width: 100%;
+  height: 100%;
+  border: 1px solid var(--white);
+  border-radius: 20px;
+  max-width: 900px;
+  box-shadow: inset 6px 6px 0px -3px var(--red), inset -6px -6px 0px -3px var(--red);
+  display: flex;
+  flex-direction: column;
+}
+.errorPageContainer .errorPagePanel .errorDescription {
+  color: var(--white);
+  display: flex;
+  justify-content: center;
+  flex-direction: column;
+  width: 100%;
+  margin: 0 auto;
+}
+.errorPageContainer .errorPagePanel .errorDescription h3 {
+  margin: 0 auto;
+  text-align: center;
+  padding-bottom: 1em;
+  font-size: 2rem;
+}
+.errorPageContainer .errorPagePanel .errorDescription h3 span {
+  text-shadow: 2px 2px 1px var(--red), -2px -2px 1px var(--red);
+}
+.errorPageContainer .errorPagePanel .errorDescription p {
+  margin: 0 auto;
+  text-align: center;
+  margin-bottom: 2em;
+}
+.errorPageContainer .errorPagePanel .errorDescription a {
+  text-decoration: underline;
+  text-shadow: 1px 1px 1px var(--red);
+  color: var(--white);
+}
+
+/*# sourceMappingURL=/error.b29afb5d.css.map */

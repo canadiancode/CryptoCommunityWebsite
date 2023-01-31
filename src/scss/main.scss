@@ -158,14 +158,8 @@
                 cursor: default;
                 @media screen and (max-width: 1000px) {
                     & {
-                        font-size: 20vmin;
                     }
                 }
-            }
-        }
-        @media screen and (max-width: 500px) {
-            & {
-                display: none;
             }
         }
     }

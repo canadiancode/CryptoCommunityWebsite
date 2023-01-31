@@ -186,7 +186,7 @@ var crossoverObserver = new IntersectionObserver(function (entries, crossoverObs
         text.style.opacity = "".concat(textOpacity);
       });
     }
-    if (entry.isIntersecting && window.innerWidth > 600) {
+    if (entry.isIntersecting) {
       document.addEventListener('scroll', crossoverAnimation);
     } else {
       document.removeEventListener('scroll', crossoverAnimation);
@@ -344,27 +344,6 @@ underlineText.forEach(function (text) {
   underlineObserver.observe(text);
 });
 
-//Footer icon spread animation
-var footerIcon = document.querySelectorAll('.footerIcon');
-var footerIconOption = {
-  rootMargin: "-50px",
-  threshold: 0
-};
-var footerIconObserver = new IntersectionObserver(function (entries, footerIconObserver) {
-  entries.forEach(function (entry) {
-    var faBrands = document.querySelectorAll('.fa-brands');
-    if (entry.isIntersecting) {
-      faBrands.forEach(function (icon) {
-        icon.style.transform = 'translateY(0em)';
-        icon.style.opacity = '1';
-      });
-    }
-  });
-}, footerIconOption);
-footerIcon.forEach(function (icon) {
-  footerIconObserver.observe(icon);
-});
-
 // Our Services Tab Section
 var tabs = document.querySelector('.tabs');
 var tabButtons = tabs.querySelectorAll('[role="tab"]');
@@ -420,7 +399,7 @@ var parent = module.bundle.parent;
 if ((!parent || !parent.isParcelRequire) && typeof WebSocket !== 'undefined') {
   var hostname = "" || location.hostname;
   var protocol = location.protocol === 'https:' ? 'wss' : 'ws';
-  var ws = new WebSocket(protocol + '://' + hostname + ':' + "55566" + '/');
+  var ws = new WebSocket(protocol + '://' + hostname + ':' + "53898" + '/');
   ws.onmessage = function (event) {
     checkedAssets = {};
     assetsToAccept = [];

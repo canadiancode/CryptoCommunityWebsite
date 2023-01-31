@@ -80,7 +80,7 @@ const crossoverObserver = new IntersectionObserver(function(entries, crossoverOb
       });
     }
 
-    if (entry.isIntersecting && window.innerWidth > 600) {
+    if (entry.isIntersecting) {
       document.addEventListener('scroll', crossoverAnimation);
     } else {
       document.removeEventListener('scroll', crossoverAnimation);
@@ -267,33 +267,7 @@ const underlineObserver = new IntersectionObserver(function(entries, underlineOb
 }, underlineOptions);
 underlineText.forEach(text => {
   underlineObserver.observe(text);
-})
-
-//Footer icon spread animation
-const footerIcon = document.querySelectorAll('.footerIcon');
-
-const footerIconOption = {
-  rootMargin: "-50px",
-  threshold: 0
-}
-
-const footerIconObserver = new IntersectionObserver(function(entries, footerIconObserver) {
-  entries.forEach(entry => {
-
-    const faBrands = document.querySelectorAll('.fa-brands');
-
-    if (entry.isIntersecting) {
-      faBrands.forEach(icon => {
-        icon.style.transform = 'translateY(0em)';
-        icon.style.opacity = '1';
-      })
-    }
-
-  })
-}, footerIconOption);
-footerIcon.forEach(icon => {
-  footerIconObserver.observe(icon);
-})
+});
 
 
 

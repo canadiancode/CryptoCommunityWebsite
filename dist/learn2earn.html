@@ -6,7 +6,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
     <!-- Title & Favicon -->
-    <title>Performante - Tools</title>
+    <title>Performante - Learn2Earn</title>
     <link rel="icon" type="image/x-icon" href="/faviconLogo.cd34a806.png">
 
     <!-- Font Imports -->
@@ -21,13 +21,12 @@
     <!-- Linking CSS and Javascript -->
     <link href="/headerFooter.b21c1fa4.css" rel="stylesheet">
     <script src="/headerFooter.bf72d060.js" defer=""></script>
+    
+    <link href="/quiz.1d6342fe.css" rel="stylesheet">
+    <script src="/quizScript.b3ce4037.js" defer=""></script>
 
-    <link href="/tools.50630abf.css" rel="stylesheet">
-    <script src="/toolsScript.96a0c043.js" defer=""></script>
-
-<script src="/tools.50630abf.js"></script></head>
+<script src="/quiz.1d6342fe.js"></script></head>
 <body>
-
     <header class="headerContainer">
 
         <div class="headerLogo">
@@ -48,11 +47,11 @@
                     <a href="/index.html"><li class="headerItem headerHome">Home</li></a>
                     <a href="/learn2earn.html"><li class="headerItem headerLearn2Earn">Learn2Earn</li></a>
                     <div class="toolLink dropDownmenu">
-                        <a href="#"><li class="headerItem headerTools">Tools</li></a>
+                        <a href="/dashboard.html"><li class="headerItem headerTools">Tools</li></a>
                         <ul class="subNav subNav-Tools">
-                            <a href="/tools.html"><li class="headerItem headerDashboard">Market Dashboard</li></a>
-                            <a href="/tools.html"><li class="headerItem headerILcalculator">Impermanent Loss Calculator</li></a>
-                            <a href="/tools.html"><li class="headerItem yieldAg">Yield Aggregator</li></a>
+                            <a href="/dashboard.html"><li class="headerItem headerDashboard">Market Dashboard</li></a>
+                            <a href="/dashboard.html"><li class="headerItem headerILcalculator">Impermanent Loss Calculator</li></a>
+                            <a href="/dashboard.html"><li class="headerItem yieldAg">Yield Aggregator</li></a>
                         </ul>
                     </div>
                     <div class="PCCNftLink dropDownmenu">
@@ -71,7 +70,78 @@
         </div>
     </header>
 
-    <h3>Coming Soon!</h3>
+    <!-- Start of the quiz page -->
+    <div class="headingsContainer">
+        <div class="animationContainer">
+            <div class="headingContainer"><h2 class="hideHeaderContentLeft"><span>L</span>earn</h2></div>
+            <div class="headingContainer arrowContainer"><img class="longArrow" src="/arrowRightLong.1a9494af.png" alt="grey arrow pointing from the Learn text to the Earn text"><img class="shortArrow" src="/arrowRightShort.406420c3.png" alt="grey arrow pointing from the Learn text to the Earn text"></div>
+            <div class="headingContainer"><h2 class="hideHeaderContentRight"><span>E</span>arn</h2></div>
+        </div>
+    </div>
+
+    <div class="learnToEarnInfoContainer">
+
+        <div class="textContainer">
+            <p>Read the <span>free newsletter</span> filled with impactful research, complete the quiz, and <span>earn $PCC</span>.</p>
+            <p class="simpleText">It's that simple!</p>
+        </div>
+
+        <div class="phoneContainer">
+            <div class="graphicDesc newsletterPhoneDiv"><a class="mediumLink" href="#"><img src="/newsletterPhone.94b6a10c.png" alt="an iPhone with a list of PCC Newsletters displaying on the screen"></a></div>
+            <div class="graphicDesc clickToReadDiv"><p class="clickToReadText"><span>Click the screen</span> to read the latest PCC Newsletter!</p><img class="newsletterArrow" alt="an arrow pointing to an iPhone displaying PCC Newsletters" src="/clickOnPhoneArrow.7f60e411.png"></div>
+            <div class="graphicDesc benefitsTextDiv">
+                <div class="benefitsText">
+                    <p>• Gain Confidence</p>
+                    <p>• Complete quizzes</p>
+                    <p>• Earn $PCC Daily</p>
+                    <p>• Reap Rewards</p>
+                </div>
+            </div>
+            <div class="graphicDesc benefitsPhoneDiv"><img src="/earnPhone.ad49291e.png"></div>
+        </div>
+
+        <div class="startButtonContainer">
+            <div class="startButtonDiv"><button class="startButton"><span class="display">START QUIZ</span><span class="onHover">START QUIZ</span></button></div>
+        </div>
+
+    </div>
+
+    <div class="quizQuestionContainer">
+        <div class="editionTextDiv"><p class="editionText"></p><p class="goodLuck">Good luck everyone - thank you for participating! </p></div>
+        <div class="quizQuestionDiv">
+            <form class="quizForm" method="POST" action="https://script.google.com/macros/s/AKfycbzSufQ9N5KVSItmETJng2X2XKAmaQJxzFfkvjVV48Ul-ukZouAlmQGhpQxMqexuBchteA/exec">
+                <div class="progressbarContainer">
+                    <div class="unfinishedProgress"></div>
+                    <div class="finishedProgress"></div>
+                </div>
+                <div class="quizNavigation">
+                    <i class="navigationArrow fa-solid fa-arrow-left"></i>
+                    <div class="injectedQuestions">
+                        <div class="questionContainer question0 firstQuestion">
+                            <label>What is your Roll Username or ETH Wallet?</label>
+                            <textarea name="answer0" type="text" placeholder="Roll Username or ETH Wallet" required=""></textarea>
+                        </div>
+                    </div>
+                    <i class="navigationArrow fa-solid fa-arrow-right"></i>
+                </div>
+                
+                <div class="submitButtonDiv"><button class="submitFormButton" type="submit"><span class="display">SUBMIT QUIZ</span><span class="onHover">SUBMIT QUIZ</span></button></div>
+            </form>
+        </div>
+    </div>
+
+    <div class="completionPageContainer">
+        <div class="fireworkContainer pyro">
+            <div class="before"></div>
+            <div class="after"></div>
+        </div>
+
+        <div class="quizCompletionText">
+            <h2 class="earnedText">You've earned up to <span class="earnedPCC"></span> PCC!</h2>
+            <p class="thankYouText">Thank you for completing Edition <span class="newsletterEdition"></span> of the PCC Newsletter!</p>
+            <p class="quizTerms">Answers are only accepted one week after content release. Past this point, submissions will not be monitored.</p>
+        </div>
+    </div>
 
     <footer class="footerContainer">
         <div class="footerPanel">
@@ -86,11 +156,10 @@
                 <div class="footerIcon Medium"><a target="_blank" href="https://medium.com/@Learn2EarnNow"><i class="fa-brands fa-medium"></i></a></div> 
             </div>
             <div class="terms">
-                <div class="links"><a href="https://cdn.shopify.com/s/files/1/0024/9551/2691/files/PCC_Litepaper_1.0.pdf?v=1640655208"><p>$PCC Whitepaper</p></a></div>
+                <div class="links"><a href="https://bit.ly/PCC-Whitepaper"><p>$PCC Whitepaper</p></a></div>
                 <div class="links termsOfService"><a href="/terms.html"><p>Terms of Service</p></a></div>
             </div>
         </div>
     </footer>
-    
 </body>
 </html>

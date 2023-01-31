@@ -17,6 +17,7 @@
             width: 100%;
             object-fit: contain;
             flex-shrink: 0;
+            pointer-events: none;
         }
     }
     .heroTextContainer {

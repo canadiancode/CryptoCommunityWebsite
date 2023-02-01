@@ -118,8 +118,18 @@ parcelRequire = (function (modules, cache, entry, globalName) {
 
   return newRequire;
 })({"quizScript.js":[function(require,module,exports) {
+// Duplicate Google Sheet for the newest newsletter edition 
+// open up new spreadsheet > Extentions > App Scripts
+// Copy the code from the example into the new app script
+// add the trigger - event type is on form submit
+// save & run the script
+// deploy > new deployment > select type of deplayment as web app
+// anyone can have access to the script 
+// add the link for the script below in the googleScript variable
+
 // Change Newsletter Link Here:
-var MediumLink = 'https://medium.com/@Learn2EarnNow/l2e-edition-54-newsletter-862eff2bf99b';
+var MediumLink = 'https://medium.com/@Learn2EarnNow/l2e-edition-56-newsletter-e2ff18c7994a';
+var googleScript = 'https://script.google.com/macros/s/AKfycbyQWYdNqq01fyViOBQEZACeb6FZ3ENAhmN4zri64dJ_Zhzkx2kusngCRZ4zdK-clwETvA/exec';
 
 // Change Questions Here:
 var quizQuestions = [{
@@ -146,11 +156,15 @@ var editionLink = MediumLink.slice(MediumLink.indexOf('edition-'));
 var editionNumber = editionLink.substring(8, 10);
 var editionText = document.querySelector('.editionText');
 editionText.appendChild(document.createTextNode("Edition ".concat(editionNumber, " Quiz")));
-var quizEndNewsletterEdition = document.querySelector('.newsletterEdition');
-quizEndNewsletterEdition.appendChild(document.createTextNode(editionNumber));
+var quizEndNewsletterEdition = document.querySelectorAll('.newsletterEdition');
+quizEndNewsletterEdition.forEach(function (number) {
+  number.appendChild(document.createTextNode(editionNumber));
+});
 var earnedPCCElement = document.querySelector('.earnedPCC');
 var earnedPCC = quizQuestions.length * 50 + 50;
 earnedPCCElement.appendChild(document.createTextNode(earnedPCC));
+var formElement = document.querySelector('.quizForm');
+formElement.action = googleScript;
 
 // form inputs and label creation
 var formData = document.querySelector('.injectedQuestions');
@@ -418,7 +432,7 @@ var parent = module.bundle.parent;
 if ((!parent || !parent.isParcelRequire) && typeof WebSocket !== 'undefined') {
   var hostname = "" || location.hostname;
   var protocol = location.protocol === 'https:' ? 'wss' : 'ws';
-  var ws = new WebSocket(protocol + '://' + hostname + ':' + "55215" + '/');
+  var ws = new WebSocket(protocol + '://' + hostname + ':' + "62687" + '/');
   ws.onmessage = function (event) {
     checkedAssets = {};
     assetsToAccept = [];

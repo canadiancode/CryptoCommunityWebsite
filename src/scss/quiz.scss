@@ -169,6 +169,9 @@
         }
         .clickToReadDiv {
             margin-top: 1em;
+            .editionNumber {
+                text-shadow: 2px 2px 1px var(--red), -2px -2px 1px var(--red);
+            }
             .clickToReadText {
                 span {
                     text-shadow: 2px 2px 1px var(--red), -2px -2px 1px var(--red);
@@ -294,6 +297,27 @@
                     background: var(--white);
                 }
             }
+        }
+    }
+    .archivedNewslettersContainer {
+        width: 100%;
+        display: flex;
+        justify-content: center;
+        color: var(--white);
+        flex-direction: column;
+        padding: 2em;
+        gap: 1em;
+        h3 {    
+            text-align: center;
+            font-size: 2rem;
+        }
+        p {
+            text-align: center;
+        }
+        a {
+            color: var(--whhite);
+            text-decoration: underline;
+            text-shadow: 2px 2px 1px var(--red), -2px -2px 1px var(--red);
         }
     }
 }
@@ -589,9 +613,6 @@
             text-align: center;
             max-width: 500px;
             margin: 2em;
-        }
-        .quizTerms {
-            font-size: 0.9rem;
         }
     }
 

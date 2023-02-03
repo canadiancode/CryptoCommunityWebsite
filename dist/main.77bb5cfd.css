@@ -76,18 +76,19 @@
   text-align: center;
 }
 .heroSection .heroTextContainer .heroHeadingContainer h1 .redLetter {
-  color: var(--red);
+  color: var(--white);
   text-shadow: 1px 1px 1px var(--white);
   transition: 1s;
+  font-size: 12vmin;
+  text-shadow: 2px 2px 1px var(--red), -2px -2px 1px var(--red);
 }
 .heroSection .heroTextContainer .heroHeadingContainer h1 .secondredLetter {
-  margin-left: -1em;
+  margin-left: -0.8em;
 }
 .heroSection .heroTextContainer .heroHeadingContainer h1 .thirdredLetter {
-  margin-left: -2.1em;
+  margin-left: -1.75em;
 }
 .heroSection .heroTextContainer .heroHeadingContainer h1 .whiteLettering {
-  text-shadow: 2px 2px 1px var(--red), -2px -2px 1px var(--red);
   opacity: 0;
   transition: 1s;
   clip-path: polygon(0 0, 0 0, 0 100%, 0% 100%);
@@ -308,18 +309,6 @@
 .ourVisionSection .gettingStartedContainer .gettingStartedpanel h3 span {
   text-shadow: 2px 2px 1px var(--red), -2px -2px 1px var(--red);
 }
-.ourVisionSection .gettingStartedContainer .gettingStartedpanel h3::after {
-  content: "";
-  width: 0%;
-  height: 2px;
-  background-color: var(--red);
-  bottom: 10%;
-  left: 0;
-  right: 0;
-  position: absolute;
-  margin: 0 auto;
-  transition: 1.5s ease-out;
-}
 .ourVisionSection .gettingStartedContainer .gettingStartedpanel .showUnderline::after {
   width: 100%;
 }
@@ -355,31 +344,17 @@
   }
 }
 .ourVisionSection .gettingStartedContainer .gettingStartedpanel .participationStepContainer .participationStep .headerArrowContainer .arrow {
-  opacity: 0.2;
-  animation: arrowAnimation infinite ease-in-out 2s;
-  filter: invert(27%) sepia(62%) saturate(5992%) hue-rotate(350deg) brightness(87%) contrast(138%);
-  transform: translateY(-1em) rotate(90deg) scale(0.5);
-  min-height: 6em;
-}
-@keyframes arrowAnimation {
-  0% {
-    transform: translateY(-1.5em) rotate(90deg) scale(0.5);
-    opacity: 0.2;
-  }
-  50% {
-    transform: translateY(-0.5em) rotate(90deg) scale(0.5);
-    opacity: 1;
-  }
-  100% {
-    transform: translateY(-1.5em) rotate(90deg) scale(0.5);
-    opacity: 0.2;
-  }
-}
-.ourVisionSection .gettingStartedContainer .gettingStartedpanel .participationStepContainer .participationStep .headerArrowContainer .secondArrow {
-  animation-delay: 0.25s;
+  transform: translateY(-2em) rotate(90deg) scale(0.5);
+  filter: invert(100%) sepia(0%) saturate(0%) hue-rotate(93deg) brightness(103%) contrast(103%);
+  transition: 1s ease-out;
+  opacity: 0;
 }
 .ourVisionSection .gettingStartedContainer .gettingStartedpanel .participationStepContainer .participationStep .headerArrowContainer .finalArrow {
   opacity: 0;
+}
+.ourVisionSection .gettingStartedContainer .gettingStartedpanel .participationStepContainer .participationStep .headerArrowContainer .arrowShowing {
+  transform: translateY(-0.5em) rotate(90deg) scale(0.5);
+  opacity: 1;
 }
 .ourVisionSection .gettingStartedContainer .gettingStartedpanel .participationStepContainer .participationStep .headerArrowContainer::before {
   content: "";

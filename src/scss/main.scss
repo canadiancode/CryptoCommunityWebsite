@@ -71,18 +71,19 @@
                 cursor: default;
                 text-align: center;
                 .redLetter {
-                    color: var(--red);
+                    color: var(--white);
                     text-shadow: 1px 1px 1px var(--white);
                     transition: 1s;
+                    font-size: 12vmin;
+                    text-shadow: 2px 2px 1px var(--red), -2px -2px 1px var(--red);
                 }
                 .secondredLetter {
-                    margin-left: -1em
+                    margin-left: -0.8em
                 }
                 .thirdredLetter {
-                    margin-left: -2.1em;
+                    margin-left: -1.75em;
                 }
                 .whiteLettering {
-                    text-shadow: 2px 2px 1px var(--red), -2px -2px 1px var(--red);
                     opacity: 0;
                     transition: 1s;
                     clip-path: polygon(0 0, 0 0, 0 100%, 0% 100%);
@@ -310,18 +311,6 @@
                 span {
                     text-shadow: 2px 2px 1px var(--red), -2px -2px 1px var(--red);
                 }
-                &::after {
-                    content: '';
-                    width: 0%;
-                    height: 2px;
-                    background-color: var(--red);
-                    bottom: 10%;
-                    left: 0;
-                    right: 0;
-                    position: absolute;
-                    margin: 0 auto;
-                    transition: 1.5s ease-out;
-                }
             }
             .showUnderline::after {
                 width: 100%;
@@ -355,31 +344,17 @@
                             }
                         }
                         .arrow {
-                            opacity: 0.2;
-                            animation: arrowAnimation infinite ease-in-out 2s;
-                            filter: invert(27%) sepia(62%) saturate(5992%) hue-rotate(350deg) brightness(87%) contrast(138%);
-                            transform: translateY(-1em) rotate(90deg) scale(0.5);
-                            min-height: 6em;
-                            @keyframes arrowAnimation {
-                                0% {
-                                    transform: translateY(-1.5em) rotate(90deg) scale(0.5);
-                                    opacity: 0.2;
-                                }
-                                50% {
-                                    transform: translateY(-0.5em) rotate(90deg) scale(0.5);
-                                    opacity: 1;
-                                }
-                                100% {
-                                    transform: translateY(-1.5em) rotate(90deg) scale(0.5);
-                                    opacity: 0.2;
-                                }
-                            }
-                        }
-                        .secondArrow {
-                            animation-delay: 0.25s;
+                            transform: translateY(-2em) rotate(90deg) scale(0.5);
+                            filter: invert(100%) sepia(0%) saturate(0%) hue-rotate(93deg) brightness(103%) contrast(103%);
+                            transition: 1s ease-out;
+                            opacity: 0;
                         }
                         .finalArrow {
                             opacity: 0;
+                        }
+                        .arrowShowing {
+                            transform: translateY(-0.5em) rotate(90deg) scale(0.5);
+                            opacity: 1;
                         }
                         &::before {
                             content: '';

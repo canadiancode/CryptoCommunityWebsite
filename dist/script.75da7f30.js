@@ -204,7 +204,6 @@ crossoverText.forEach(function (text) {
 });
 
 // Animation for the Our Vision heading and paragraph
-
 var visonTextContainer = document.querySelector('.visonTextContainer');
 var ourVisionOptions = {
   rootMargin: "0px",
@@ -235,7 +234,7 @@ var phoneAnimationOptions = {
   threshold: 0
 };
 
-// The social media column
+// The social media iPhone scrolling list
 var phoneListOne = document.querySelector('.phoneListOne');
 var phoneListOneObserver = new IntersectionObserver(function (entries, phoneListOneObserver) {
   entries.forEach(function (entry) {
@@ -255,7 +254,7 @@ var phoneListOneObserver = new IntersectionObserver(function (entries, phoneList
 }, phoneAnimationOptions);
 phoneListOneObserver.observe(phoneListOne);
 
-// The Discord column
+// The Discord iPhone scrolling list
 var phoneListTwo = document.querySelector('.phoneListTwo');
 function phoneListTwoScrolling() {
   var imageElementRect = phoneListTwo.getBoundingClientRect();
@@ -302,8 +301,24 @@ var gettingStartedObserver = new IntersectionObserver(function (entries, getting
 }, gettingStartedOptions);
 gettingStartedObserver.observe(gettingStartedPanel);
 
-// Our Pedagogical vision text parallax
+// the down arrow for how to participate 
+var participationArrow = document.querySelectorAll('.arrow');
+var participationStepArrowOptions = {
+  rootMargin: "-100px",
+  threshold: 1
+};
+var participationArrowObserver = new IntersectionObserver(function (entries, participationArrowObserver) {
+  entries.forEach(function (entry) {
+    if (entry.isIntersecting) {
+      entry.target.classList.add('arrowShowing');
+    }
+  });
+}, participationStepArrowOptions);
+participationArrow.forEach(function (arrow) {
+  participationArrowObserver.observe(arrow);
+});
 
+// Our Pedagogical vision text parallax
 var aboutUsTextContainer = document.querySelector('.aboutUsTextContainer');
 var aboutUsTextOptions = {
   rootMargin: "0px",
@@ -399,7 +414,7 @@ var parent = module.bundle.parent;
 if ((!parent || !parent.isParcelRequire) && typeof WebSocket !== 'undefined') {
   var hostname = "" || location.hostname;
   var protocol = location.protocol === 'https:' ? 'wss' : 'ws';
-  var ws = new WebSocket(protocol + '://' + hostname + ':' + "62687" + '/');
+  var ws = new WebSocket(protocol + '://' + hostname + ':' + "57926" + '/');
   ws.onmessage = function (event) {
     checkedAssets = {};
     assetsToAccept = [];

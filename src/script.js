@@ -100,7 +100,6 @@ crossoverText.forEach(text => {
 });
 
 // Animation for the Our Vision heading and paragraph
-
 const visonTextContainer = document.querySelector('.visonTextContainer');
 
 const ourVisionOptions = {
@@ -136,7 +135,7 @@ const phoneAnimationOptions = {
   threshold: 0
 };
 
-// The social media column
+// The social media iPhone scrolling list
 const phoneListOne = document.querySelector('.phoneListOne');
 
 const phoneListOneObserver = new IntersectionObserver(function(entries, phoneListOneObserver) {
@@ -160,7 +159,7 @@ const phoneListOneObserver = new IntersectionObserver(function(entries, phoneLis
 }, phoneAnimationOptions);
 phoneListOneObserver.observe(phoneListOne);
 
-// The Discord column
+// The Discord iPhone scrolling list
 const phoneListTwo = document.querySelector('.phoneListTwo');
 
 function phoneListTwoScrolling() {
@@ -218,8 +217,28 @@ const gettingStartedObserver = new IntersectionObserver(function(entries, gettin
 }, gettingStartedOptions);
 gettingStartedObserver.observe(gettingStartedPanel);
 
-// Our Pedagogical vision text parallax
+// the down arrow for how to participate 
+const participationArrow = document.querySelectorAll('.arrow');
 
+const participationStepArrowOptions = {
+  rootMargin: "-100px",
+  threshold: 1
+}
+
+const participationArrowObserver = new IntersectionObserver(function(entries, participationArrowObserver) {
+  entries.forEach(entry => {
+
+    if (entry.isIntersecting) {
+      entry.target.classList.add('arrowShowing');
+    }
+
+  })
+}, participationStepArrowOptions);
+participationArrow.forEach(arrow => {
+  participationArrowObserver.observe(arrow);
+});
+
+// Our Pedagogical vision text parallax
 const aboutUsTextContainer = document.querySelector('.aboutUsTextContainer');
 
 const aboutUsTextOptions = {

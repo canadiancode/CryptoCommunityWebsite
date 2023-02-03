@@ -350,17 +350,6 @@
             font-size: 2rem;
             position: relative;
             width: fit-content;
-            &::after {
-                content: '';
-                position: absolute;
-                bottom: 0;
-                left: 0;
-                right: 0;
-                width: 100%;
-                height: 2px;
-                background-color: var(--red);
-                border-radius: 50%;
-            }
         }
         .goodLuck {
             font-size: 1.2rem;

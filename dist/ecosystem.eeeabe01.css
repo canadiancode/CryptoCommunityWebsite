@@ -63,12 +63,14 @@
 .ecosystemListContainer .contentContainer .linkContainer a {
   width: fit-content;
   margin: 0 auto;
+  color: var(--black);
 }
 .ecosystemListContainer .contentContainer .linkContainer a button {
   width: 350px;
   font-family: var(--paragraphFontFamily);
   cursor: pointer;
   box-shadow: 5px 5px 0px -2px var(--red), -5px -5px 0px -2px var(--red);
+  color: var(--black);
 }
 .ecosystemListContainer .contentContainer .linkContainer a button .stockPickDescription {
   font-size: 0.8rem;
@@ -76,24 +78,8 @@
 @media screen and (max-width: 450px) {
   .ecosystemListContainer .contentContainer .linkContainer a button {
     width: 260px;
+    color: var(--black);
   }
-}
-.ecosystemListContainer .contentContainer .linkContainer .stockPickPanel {
-  display: flex;
-  justify-content: center;
-  flex-direction: column;
-  width: 100%;
-  gap: 1.5rem;
-  height: 0px;
-  opacity: 0;
-  transform: translateY(-2em);
-  position: absolute;
-  transition: 1.5s ease-out;
-}
-.ecosystemListContainer .contentContainer .linkContainer .stockPickPanel button {
-  color: var(--white);
-  background-color: var(--red);
-  box-shadow: 5px 5px 0px -2px var(--white), -5px -5px 0px -2px var(--white);
 }
 .ecosystemListContainer .contentContainer .socialMediaContainer {
   display: flex;

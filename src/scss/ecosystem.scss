@@ -12,7 +12,7 @@
         background: linear-gradient(0deg, rgba(23,23,23,0.9) 0%, rgba(0,0,0,1) 100%);
         min-height: 100vh;
         @media screen and (max-width: 450px) {
-            padding: 0.5rem;
+            padding: 0.2rem;
         }
         .heading {
             display: flex;
@@ -58,11 +58,13 @@
             a {
                 width: fit-content;
                 margin: 0 auto;
+                color: var(--black);
                 button {
                     width: 350px;
                     font-family: var(--paragraphFontFamily);
                     cursor: pointer;
                     box-shadow: 5px 5px 0px -2px var(--red), -5px -5px 0px -2px var(--red);
+                    color: var(--black);
                     .stockPickDescription {
                         font-size: 0.8rem;
                     }
@@ -71,23 +73,6 @@
                             width: 260px;
                         }
                     }
-                }
-            }
-            .stockPickPanel {
-                display: flex;
-                justify-content: center;
-                flex-direction: column;
-                width: 100%;
-                gap: 1.5rem;
-                height: 0px;
-                opacity: 0;
-                transform: translateY(-2em);
-                position: absolute;
-                transition: 1.5s ease-out;
-                button {
-                    color: var(--white);
-                    background-color: var(--red);
-                    box-shadow: 5px 5px 0px -2px var(--white), -5px -5px 0px -2px var(--white);
                 }
             }
         }

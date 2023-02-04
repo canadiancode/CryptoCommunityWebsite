@@ -118,14 +118,22 @@ parcelRequire = (function (modules, cache, entry, globalName) {
 
   return newRequire;
 })({"quizScript.js":[function(require,module,exports) {
-// Duplicate Google Sheet for the newest newsletter edition 
+// Step 1: ARCHIVE NEWSLETTER
+// Create new "editionX" folder inside the Archived Newsletter folder
+// copy the current html, css, and JS files from the main learn2earn folder into the newly created "editionX" folder
+// change the linked JS file on the newly archived html file
+// copy and paste the archived newsletter button within the archived newsletter page via the html
+
+// Step 2: SET UP NEW NEWSLETTER
+// duplicate Google Sheet for the newest newsletter edition
 // open up new spreadsheet > Extentions > App Scripts
 // Copy the code from the example into the new app script
-// add the trigger - event type is on form submit
+// add the trigger (event type is on form submit)
 // save & run the script
-// deploy > new deployment > select type of deplayment as web app
-// anyone can have access to the script 
+// deploy > new deployment > select type of deployment as web app
+// ensure that anyone can have access to the script
 // add the link for the script below in the googleScript variable
+// add new questions and medium link to the JS file
 
 // Change Newsletter Link Here:
 var MediumLink = 'https://medium.com/@Learn2EarnNow/l2e-edition-56-newsletter-e2ff18c7994a';
@@ -199,7 +207,7 @@ for (var i = 0; i < quizQuestions.length; i++) {
 // Remove the left arrow at the start of the quiz
 var firstQuestionpanel = document.querySelector('.firstQuestion');
 var viewArrowOptions = {
-  rootMargin: "0px",
+  rootMargin: "50px",
   threshold: 0.5
 };
 var firstQuestionObserver = new IntersectionObserver(function (entries, firstQuestionObserver) {
@@ -328,9 +336,9 @@ var panelObserver = new IntersectionObserver(function (entries, panelObserver) {
       finishedProgress.style.width = "".concat(progressWidth, "%");
 
       //style of the panels
-      entry.target.style.boxShadow = '0px 0px 10px 2px var(--white)';
+      entry.target.style.border = '1px solid rgb(222, 2, 2)';
     } else {
-      entry.target.style.boxShadow = '0px 0px 0px 0px var(--white)';
+      entry.target.style.border = '1px solid var(--white)';
     }
   });
 }, progressBarOptions);
@@ -432,7 +440,7 @@ var parent = module.bundle.parent;
 if ((!parent || !parent.isParcelRequire) && typeof WebSocket !== 'undefined') {
   var hostname = "" || location.hostname;
   var protocol = location.protocol === 'https:' ? 'wss' : 'ws';
-  var ws = new WebSocket(protocol + '://' + hostname + ':' + "58934" + '/');
+  var ws = new WebSocket(protocol + '://' + hostname + ':' + "61595" + '/');
   ws.onmessage = function (event) {
     checkedAssets = {};
     assetsToAccept = [];

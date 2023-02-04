@@ -410,7 +410,6 @@
                 display: flex;
                 justify-content: row;
                 width: 100%;
-                background-image: url(../assets/PerformanteLogo.png);
                 position: relative;
                 .backgroundImage {
                     position: absolute;
@@ -422,6 +421,7 @@
                     width: 100%;
                     display: flex;
                     justify-content: center;
+                    z-index: -1;
                     filter: blur(7px);
                     img {
                         height: 100%;

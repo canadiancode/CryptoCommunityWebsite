@@ -65,6 +65,9 @@
 .heroSection .heroTextContainer .heroHeadingContainer {
   width: 100%;
 }
+.heroSection .heroTextContainer .heroHeadingContainer .heroTitleSingleTextContainer {
+  margin-bottom: -2rem;
+}
 .heroSection .heroTextContainer .heroHeadingContainer h1 {
   font-size: 10vmin;
   max-width: 30em;

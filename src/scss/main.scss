@@ -61,6 +61,9 @@
         color: var(--white);
         .heroHeadingContainer {
             width: 100%;
+            .heroTitleSingleTextContainer {
+              margin-bottom: -2rem;
+            }
             h1 {
                 font-size: 10vmin;
                 max-width: 30em;

@@ -178,7 +178,7 @@ var dataPageOptions = {
   threshold: 0
 };
 
-// MARKETS PAGE
+// MARKETS PAGE -- CRYPTOCURRENCIES
 var marketsPageObserver = new IntersectionObserver(function (entries, marketsPageObserver) {
   entries.forEach(function (entry) {
     if (entry.isIntersecting) {
@@ -707,6 +707,8 @@ var marketsPageObserver = new IntersectionObserver(function (entries, marketsPag
     ;
   });
 }, dataPageOptions);
+
+// MARKETS PAGE -- PUBLIC EXCHANGES AND 
 
 // OBSERVE EACH PAGE
 dataPageContainer.forEach(function (page) {

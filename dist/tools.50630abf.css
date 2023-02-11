@@ -154,6 +154,20 @@
   padding: 1em 1em;
   max-width: 1000px;
   margin: 0 auto;
+  gap: 20px;
+}
+.dashboardContainer .dataContainer .dataPageContainer .dataSubPageContainer div .chartOptions .assetSelectionDiv {
+  width: 100%;
+  height: 100%;
+  display: flex;
+  justify-content: flex-start;
+  gap: 0.5rem;
+}
+.dashboardContainer .dataContainer .dataPageContainer .dataSubPageContainer div .chartOptions .assetSelectionDiv label {
+  color: var(--white);
+}
+.dashboardContainer .dataContainer .dataPageContainer .dataSubPageContainer div .chartOptions .assetSelectionDiv .assetList {
+  max-width: 200px;
 }
 .dashboardContainer .dataContainer .dataPageContainer .dataSubPageContainer div .chartOptions .timeframeSelectionDiv {
   width: 100%;
@@ -192,10 +206,14 @@
 .dashboardContainer .dataContainer .dataPageContainer .dataSubPageContainer div .chartOptions .logOptionDiv .logChartOption {
   background-color: rgba(128, 128, 128, 0.2);
 }
-@media screen and (max-width: 500px) {
+@media screen and (max-width: 700px) {
   .dashboardContainer .dataContainer .dataPageContainer .dataSubPageContainer div .chartOptions {
     flex-direction: column;
     gap: 15px;
+  }
+  .dashboardContainer .dataContainer .dataPageContainer .dataSubPageContainer div .chartOptions .assetSelectionDiv {
+    justify-content: center;
+    margin: 0 auto;
   }
   .dashboardContainer .dataContainer .dataPageContainer .dataSubPageContainer div .chartOptions .timeframeSelectionDiv {
     justify-content: center;

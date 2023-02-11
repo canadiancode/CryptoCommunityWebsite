@@ -197,93 +197,300 @@ var marketsPageObserver = new IntersectionObserver(function (entries, marketsPag
           displayedChart.update();
         }
       };
-      // change timeframe
-      var changeTimeframe = function changeTimeframe() {
+      var getAssetList = /*#__PURE__*/function () {
+        var _ref2 = _asyncToGenerator( /*#__PURE__*/_regeneratorRuntime().mark(function _callee2() {
+          var response, assetListData, _iterator3, _step3, asset, assetID, listOptions, assetName;
+          return _regeneratorRuntime().wrap(function _callee2$(_context2) {
+            while (1) switch (_context2.prev = _context2.next) {
+              case 0:
+                _context2.prev = 0;
+                _context2.next = 3;
+                return fetch(assetListURL);
+              case 3:
+                response = _context2.sent;
+                _context2.next = 6;
+                return response.json();
+              case 6:
+                assetListData = _context2.sent;
+                _iterator3 = _createForOfIteratorHelper(assetListData);
+                _context2.prev = 8;
+                _iterator3.s();
+              case 10:
+                if ((_step3 = _iterator3.n()).done) {
+                  _context2.next = 27;
+                  break;
+                }
+                asset = _step3.value;
+                _context2.next = 14;
+                return asset.id;
+              case 14:
+                assetID = _context2.sent;
+                listOptions = document.createElement('option');
+                listOptions.classList.add(assetID);
+
+                // for the display name
+                _context2.next = 19;
+                return asset.name;
+              case 19:
+                assetName = _context2.sent;
+                _context2.next = 22;
+                return assetName;
+              case 22:
+                listOptions.value = _context2.sent;
+                // add option onto the dropdown selection
+                listOptions.appendChild(document.createTextNode(assetName));
+                assetListEl.appendChild(listOptions);
+              case 25:
+                _context2.next = 10;
+                break;
+              case 27:
+                _context2.next = 32;
+                break;
+              case 29:
+                _context2.prev = 29;
+                _context2.t0 = _context2["catch"](8);
+                _iterator3.e(_context2.t0);
+              case 32:
+                _context2.prev = 32;
+                _iterator3.f();
+                return _context2.finish(32);
+              case 35:
+                _context2.next = 41;
+                break;
+              case 37:
+                _context2.prev = 37;
+                _context2.t1 = _context2["catch"](0);
+                console.log(_context2.t1);
+                console.log('cannot get list of assets from CoinGecko...');
+              case 41:
+              case "end":
+                return _context2.stop();
+            }
+          }, _callee2, null, [[0, 37], [8, 29, 32, 35]]);
+        }));
+        return function getAssetList() {
+          return _ref2.apply(this, arguments);
+        };
+      }();
+      // change asset
+      var changeAsset = function changeAsset() {
         try {
-          var fetchNewTimeframe = /*#__PURE__*/function () {
-            var _ref2 = _asyncToGenerator( /*#__PURE__*/_regeneratorRuntime().mark(function _callee2() {
-              var URL, response, data, priceAndTimeData, _iterator3, _step3, time, epochTimeframe, formattedDate, longTimeframe, timeframe, fetchedPriceData, _iterator4, _step4, price, prices, DataObject;
-              return _regeneratorRuntime().wrap(function _callee2$(_context2) {
-                while (1) switch (_context2.prev = _context2.next) {
+          var changeDisplayedAsset = /*#__PURE__*/function () {
+            var _ref3 = _asyncToGenerator( /*#__PURE__*/_regeneratorRuntime().mark(function _callee3() {
+              var URL, response, data, priceAndTimeData, _iterator4, _step4, time, epochTimeframe, formattedDate, longTimeframe, timeframe, fetchedPriceData, _iterator5, _step5, price, prices, DataObject;
+              return _regeneratorRuntime().wrap(function _callee3$(_context3) {
+                while (1) switch (_context3.prev = _context3.next) {
                   case 0:
                     URL = "https://api.coingecko.com/api/v3/coins/".concat(selectedAssetID, "/market_chart?vs_currency=usd&days=").concat(selectedTimePeriod);
-                    _context2.next = 3;
+                    _context3.next = 3;
                     return fetch(URL);
                   case 3:
-                    response = _context2.sent;
-                    _context2.next = 6;
+                    response = _context3.sent;
+                    _context3.next = 6;
                     return response.json();
                   case 6:
-                    data = _context2.sent;
-                    _context2.next = 9;
+                    data = _context3.sent;
+                    _context3.next = 9;
                     return data.prices;
                   case 9:
-                    priceAndTimeData = _context2.sent;
-                    // adding the newly fetched time to the chart
-                    _iterator3 = _createForOfIteratorHelper(priceAndTimeData);
-                    _context2.prev = 11;
-                    _iterator3.s();
+                    priceAndTimeData = _context3.sent;
+                    // adding the fetched time to the chart
+                    _iterator4 = _createForOfIteratorHelper(priceAndTimeData);
+                    _context3.prev = 11;
+                    _iterator4.s();
                   case 13:
-                    if ((_step3 = _iterator3.n()).done) {
-                      _context2.next = 24;
+                    if ((_step4 = _iterator4.n()).done) {
+                      _context3.next = 24;
                       break;
                     }
-                    time = _step3.value;
-                    _context2.next = 17;
+                    time = _step4.value;
+                    _context3.next = 17;
                     return time[0];
                   case 17:
-                    epochTimeframe = _context2.sent;
+                    epochTimeframe = _context3.sent;
                     formattedDate = new Date(epochTimeframe);
                     longTimeframe = formattedDate.toUTCString();
                     timeframe = longTimeframe.substring(4, 16);
                     chartTime.push(timeframe);
                   case 22:
-                    _context2.next = 13;
+                    _context3.next = 13;
                     break;
                   case 24:
-                    _context2.next = 29;
+                    _context3.next = 29;
                     break;
                   case 26:
-                    _context2.prev = 26;
-                    _context2.t0 = _context2["catch"](11);
-                    _iterator3.e(_context2.t0);
+                    _context3.prev = 26;
+                    _context3.t0 = _context3["catch"](11);
+                    _iterator4.e(_context3.t0);
                   case 29:
-                    _context2.prev = 29;
-                    _iterator3.f();
-                    return _context2.finish(29);
+                    _context3.prev = 29;
+                    _iterator4.f();
+                    return _context3.finish(29);
+                  case 32:
+                    ;
+                    displayedChart.data.labels = chartTime;
+
+                    // adding the fetched price to the chart
+                    fetchedPriceData = [];
+                    _iterator5 = _createForOfIteratorHelper(priceAndTimeData);
+                    _context3.prev = 36;
+                    _iterator5.s();
+                  case 38:
+                    if ((_step5 = _iterator5.n()).done) {
+                      _context3.next = 46;
+                      break;
+                    }
+                    price = _step5.value;
+                    _context3.next = 42;
+                    return price[1];
+                  case 42:
+                    prices = _context3.sent;
+                    fetchedPriceData.push(prices);
+                  case 44:
+                    _context3.next = 38;
+                    break;
+                  case 46:
+                    _context3.next = 51;
+                    break;
+                  case 48:
+                    _context3.prev = 48;
+                    _context3.t1 = _context3["catch"](36);
+                    _iterator5.e(_context3.t1);
+                  case 51:
+                    _context3.prev = 51;
+                    _iterator5.f();
+                    return _context3.finish(51);
+                  case 54:
+                    ;
+                    DataObject = {
+                      label: "Price of ".concat(selectedAssetName),
+                      data: fetchedPriceData,
+                      fill: false,
+                      pointRadius: 0,
+                      borderWidth: 1,
+                      backgroundColor: '#FFFFFF',
+                      borderColor: '#FFFFFF',
+                      yAxisID: 'y'
+                    };
+                    assetPriceData.push(DataObject);
+                    displayedChart.data.datasets = assetPriceData;
+
+                    // update the chart with data and time
+                    displayedChart.update();
+                  case 59:
+                  case "end":
+                    return _context3.stop();
+                }
+              }, _callee3, null, [[11, 26, 29, 32], [36, 48, 51, 54]]);
+            }));
+            return function changeDisplayedAsset() {
+              return _ref3.apply(this, arguments);
+            };
+          }();
+          // clear old chart history
+          assetPriceData = [];
+          chartTime = [];
+          selectedAssetID = '';
+          selectedAssetName = '';
+
+          // change the data on the chart
+          var _changeAssetEl = document.querySelector('.assetList');
+          var selectedOption = _changeAssetEl.options[_changeAssetEl.selectedIndex];
+          selectedAssetName = selectedOption.value;
+          selectedAssetID = selectedOption.classList[0];
+          ;
+          changeDisplayedAsset();
+        } catch (error) {
+          console.log('Could not add new asset to chart....');
+        }
+      };
+      // change timeframe
+      var changeTimeframe = function changeTimeframe() {
+        try {
+          var fetchNewTimeframe = /*#__PURE__*/function () {
+            var _ref4 = _asyncToGenerator( /*#__PURE__*/_regeneratorRuntime().mark(function _callee4() {
+              var URL, response, data, priceAndTimeData, _iterator6, _step6, time, epochTimeframe, formattedDate, longTimeframe, timeframe, fetchedPriceData, _iterator7, _step7, price, prices, DataObject;
+              return _regeneratorRuntime().wrap(function _callee4$(_context4) {
+                while (1) switch (_context4.prev = _context4.next) {
+                  case 0:
+                    URL = "https://api.coingecko.com/api/v3/coins/".concat(selectedAssetID, "/market_chart?vs_currency=usd&days=").concat(selectedTimePeriod);
+                    _context4.next = 3;
+                    return fetch(URL);
+                  case 3:
+                    response = _context4.sent;
+                    _context4.next = 6;
+                    return response.json();
+                  case 6:
+                    data = _context4.sent;
+                    _context4.next = 9;
+                    return data.prices;
+                  case 9:
+                    priceAndTimeData = _context4.sent;
+                    // adding the newly fetched time to the chart
+                    _iterator6 = _createForOfIteratorHelper(priceAndTimeData);
+                    _context4.prev = 11;
+                    _iterator6.s();
+                  case 13:
+                    if ((_step6 = _iterator6.n()).done) {
+                      _context4.next = 24;
+                      break;
+                    }
+                    time = _step6.value;
+                    _context4.next = 17;
+                    return time[0];
+                  case 17:
+                    epochTimeframe = _context4.sent;
+                    formattedDate = new Date(epochTimeframe);
+                    longTimeframe = formattedDate.toUTCString();
+                    timeframe = longTimeframe.substring(4, 16);
+                    chartTime.push(timeframe);
+                  case 22:
+                    _context4.next = 13;
+                    break;
+                  case 24:
+                    _context4.next = 29;
+                    break;
+                  case 26:
+                    _context4.prev = 26;
+                    _context4.t0 = _context4["catch"](11);
+                    _iterator6.e(_context4.t0);
+                  case 29:
+                    _context4.prev = 29;
+                    _iterator6.f();
+                    return _context4.finish(29);
                   case 32:
                     displayedChart.data.labels = chartTime;
 
                     // adding the fetched price to the chart
                     fetchedPriceData = [];
-                    _iterator4 = _createForOfIteratorHelper(priceAndTimeData);
-                    _context2.prev = 35;
-                    _iterator4.s();
+                    _iterator7 = _createForOfIteratorHelper(priceAndTimeData);
+                    _context4.prev = 35;
+                    _iterator7.s();
                   case 37:
-                    if ((_step4 = _iterator4.n()).done) {
-                      _context2.next = 45;
+                    if ((_step7 = _iterator7.n()).done) {
+                      _context4.next = 45;
                       break;
                     }
-                    price = _step4.value;
-                    _context2.next = 41;
+                    price = _step7.value;
+                    _context4.next = 41;
                     return price[1];
                   case 41:
-                    prices = _context2.sent;
+                    prices = _context4.sent;
                     fetchedPriceData.push(prices);
                   case 43:
-                    _context2.next = 37;
+                    _context4.next = 37;
                     break;
                   case 45:
-                    _context2.next = 50;
+                    _context4.next = 50;
                     break;
                   case 47:
-                    _context2.prev = 47;
-                    _context2.t1 = _context2["catch"](35);
-                    _iterator4.e(_context2.t1);
+                    _context4.prev = 47;
+                    _context4.t1 = _context4["catch"](35);
+                    _iterator7.e(_context4.t1);
                   case 50:
-                    _context2.prev = 50;
-                    _iterator4.f();
-                    return _context2.finish(50);
+                    _context4.prev = 50;
+                    _iterator7.f();
+                    return _context4.finish(50);
                   case 53:
                     ;
                     DataObject = {};
@@ -304,12 +511,12 @@ var marketsPageObserver = new IntersectionObserver(function (entries, marketsPag
                     displayedChart.update();
                   case 59:
                   case "end":
-                    return _context2.stop();
+                    return _context4.stop();
                 }
-              }, _callee2, null, [[11, 26, 29, 32], [35, 47, 50, 53]]);
+              }, _callee4, null, [[11, 26, 29, 32], [35, 47, 50, 53]]);
             }));
             return function fetchNewTimeframe() {
-              return _ref2.apply(this, arguments);
+              return _ref4.apply(this, arguments);
             };
           }();
           selectedTimePeriod = '';
@@ -455,6 +662,14 @@ var marketsPageObserver = new IntersectionObserver(function (entries, marketsPag
       } catch (error) {
         console.log('could not fetch initial data...');
       }
+
+      // generate list of assets
+      var assetListURL = 'https://api.coingecko.com/api/v3/coins/markets?vs_currency=usd&order=market_cap_desc&per_page=250&page=1&sparkline=false';
+      var assetListEl = document.querySelector('.assetList');
+      var addDataButton = document.querySelector('.addDataButton');
+      getAssetList();
+      var changeAssetEl = document.querySelector('.assetList');
+      changeAssetEl.addEventListener('change', changeAsset);
       var selectedTimePeriodEl = document.querySelector('.timeframeList');
       selectedTimePeriodEl.addEventListener('change', changeTimeframe);
 
@@ -474,6 +689,9 @@ var marketsPageObserver = new IntersectionObserver(function (entries, marketsPag
           maintainAspectRatio: false,
           scales: {
             y: {
+              grid: {
+                color: '#232323'
+              },
               ticks: {
                 // Include a dollar sign in the ticks
                 callback: function callback(value, index, values) {

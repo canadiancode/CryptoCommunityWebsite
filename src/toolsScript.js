@@ -127,6 +127,103 @@ const marketsPageObserver = new IntersectionObserver(function(entries, marketsPa
         console.log('could not fetch initial data...');
       }
 
+        // generate list of assets
+      const assetListURL = 'https://api.coingecko.com/api/v3/coins/markets?vs_currency=usd&order=market_cap_desc&per_page=250&page=1&sparkline=false';
+      const assetListEl = document.querySelector('.assetList');
+      const addDataButton = document.querySelector('.addDataButton');
+      async function getAssetList() {
+        try {
+            // fetch the list of assets
+            let response = await fetch(assetListURL);
+            let assetListData = await response.json();
+
+            for (const asset of assetListData) {
+                // for the ID 
+                let assetID = await asset.id;
+                const listOptions = document.createElement('option');
+                listOptions.classList.add(assetID);
+
+                // for the display name
+                let assetName = await asset.name;
+                listOptions.value = await assetName;
+
+                // add option onto the dropdown selection
+                listOptions.appendChild(document.createTextNode(assetName));
+                assetListEl.appendChild(listOptions);
+            }
+        }
+        catch(error) {
+            console.log(error);
+            console.log('cannot get list of assets from CoinGecko...');
+        }
+      }
+      getAssetList();
+
+      // change asset
+      function changeAsset() {
+        try {
+
+          // clear old chart history
+          assetPriceData = [];
+          chartTime = [];
+          selectedAssetID = '';
+          selectedAssetName = '';
+
+              // change the data on the chart
+          const changeAssetEl = document.querySelector('.assetList');
+          let selectedOption = changeAssetEl.options[changeAssetEl.selectedIndex];
+          selectedAssetName = selectedOption.value;
+          selectedAssetID = selectedOption.classList[0];
+
+          async function changeDisplayedAsset() {
+            let URL = `https://api.coingecko.com/api/v3/coins/${selectedAssetID}/market_chart?vs_currency=usd&days=${selectedTimePeriod}`;
+            let response = await fetch(URL);
+            let data = await response.json();
+            let priceAndTimeData = await data.prices;
+  
+            // adding the fetched time to the chart
+            for (const time of priceAndTimeData) {
+              let epochTimeframe = await time[0];
+              let formattedDate = new Date(epochTimeframe);
+              let longTimeframe = formattedDate.toUTCString();
+              let timeframe = longTimeframe.substring(4, 16);
+              chartTime.push(timeframe);
+            };
+            displayedChart.data.labels = chartTime;
+  
+            // adding the fetched price to the chart
+            let fetchedPriceData = [];
+            for (const price of priceAndTimeData) {
+              let prices = await price[1];
+              fetchedPriceData.push(prices);
+            };
+            let DataObject = {
+              label: `Price of ${selectedAssetName}`,
+              data: fetchedPriceData,
+              fill: false,
+              pointRadius: 0,
+              borderWidth: 1,
+              backgroundColor: '#FFFFFF',
+              borderColor: '#FFFFFF',
+              yAxisID: 'y'
+            };
+            assetPriceData.push(DataObject);
+            displayedChart.data.datasets = assetPriceData;
+  
+            // update the chart with data and time
+            displayedChart.update();
+          };
+          changeDisplayedAsset();
+
+        } 
+        catch(error) {
+          console.log('Could not add new asset to chart....')
+        }
+      }
+      const changeAssetEl = document.querySelector('.assetList');
+      changeAssetEl.addEventListener('change', changeAsset);
+
+
       // change timeframe
       function changeTimeframe() {
         try {
@@ -190,7 +287,6 @@ const marketsPageObserver = new IntersectionObserver(function(entries, marketsPa
       
       // CODE FOR THE CHART.JS LIBRARY
       const ctx = document.querySelector('.marketCryptoPrice');
-
       let displayedChart = new Chart(ctx, {
         type: 'line',
         data: {
@@ -205,6 +301,9 @@ const marketsPageObserver = new IntersectionObserver(function(entries, marketsPa
           maintainAspectRatio: false,
           scales: {
             y: {
+              grid: {
+                color: '#232323',
+              },
               ticks: {
                 // Include a dollar sign in the ticks
                 callback: function(value, index, values) {

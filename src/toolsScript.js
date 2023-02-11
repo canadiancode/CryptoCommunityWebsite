@@ -256,7 +256,6 @@ const marketsPageObserver = new IntersectionObserver(function(entries, marketsPa
               let prices = await price[1];
               fetchedPriceData.push(prices);
             };
-            DataObject = {};
             let DataObject = {
               label: `Price of ${selectedAssetName}`,
               data: fetchedPriceData,

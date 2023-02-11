@@ -493,7 +493,6 @@ var marketsPageObserver = new IntersectionObserver(function (entries, marketsPag
                     return _context4.finish(50);
                   case 53:
                     ;
-                    DataObject = {};
                     DataObject = {
                       label: "Price of ".concat(selectedAssetName),
                       data: fetchedPriceData,
@@ -509,7 +508,7 @@ var marketsPageObserver = new IntersectionObserver(function (entries, marketsPag
 
                     // update the chart with data and time
                     displayedChart.update();
-                  case 59:
+                  case 58:
                   case "end":
                     return _context4.stop();
                 }

@@ -1,2 +1,50 @@
+.dashboardContainer {
+  min-height: 150vh;
+  background: linear-gradient(0deg, rgba(23, 23, 23, 0.9) 0%, rgb(0, 0, 0) 100%);
+  position: relative;
+}
+.dashboardContainer .chartSelectionPanelContainer {
+  position: absolute;
+  left: 0;
+  top: 0;
+  overflow: scroll;
+  display: flex;
+  flex-direction: column;
+  width: 200px;
+}
+.dashboardContainer .chartSelectionPanelContainer .chartSelectionPanel {
+  display: flex;
+  flex-direction: column;
+}
+.dashboardContainer .chartSelectionPanelContainer .chartSelectionPanel .dataCategoryContainer {
+  display: flex;
+  flex-direction: column;
+}
+.dashboardContainer .chartSelectionPanelContainer .chartSelectionPanel .dataCategoryContainer .categoryHeadingContainer {
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+}
+.dashboardContainer .chartSelectionPanelContainer .chartSelectionPanel .dataCategoryContainer .categoryHeadingContainer h3 {
+  color: var(--white);
+  padding: 10px;
+  padding-left: 5%;
+}
+.dashboardContainer .chartSelectionPanelContainer .chartSelectionPanel .dataCategoryContainer .categoryHeadingContainer i {
+  color: var(--white);
+  align-self: center;
+}
+.dashboardContainer .chartSelectionPanelContainer .chartSelectionPanel .dataCategoryContainer .categoryHeadingContainer .fa-arrow-up-short-wide {
+  display: none;
+}
+.dashboardContainer .chartSelectionPanelContainer .chartSelectionPanel .dataCategoryContainer .chartButtonContainer {
+  display: flex;
+  flex-direction: column;
+}
+.dashboardContainer .chartSelectionPanelContainer .chartSelectionPanel .dataCategoryContainer .chartButtonContainer button {
+  display: flex;
+  justify-content: flex-start;
+  text-align: left;
+}
 
 /*# sourceMappingURL=/tools.50630abf.css.map */

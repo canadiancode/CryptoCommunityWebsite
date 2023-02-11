@@ -1,0 +1,49 @@
+.dashboardContainer {
+    min-height: 150vh;
+    background: linear-gradient(0deg, rgba(23,23,23,0.9) 0%, rgba(0,0,0,1) 100%);
+    position: relative;
+    // The panel for the data selection
+    .chartSelectionPanelContainer {
+        position: absolute;
+        left: 0;
+        top: 0;
+        overflow: scroll;
+        display: flex;
+        flex-direction: column;
+        width: 200px;
+        .chartSelectionPanel {
+            display: flex;
+            flex-direction: column;
+            .dataCategoryContainer {
+                display: flex;
+                flex-direction: column;
+                .categoryHeadingContainer {
+                    display: flex;
+                    flex-direction: row;
+                    justify-content: space-between;
+                    h3 {
+                        color: var(--white);
+                        padding: 10px;
+                        padding-left: 5%;
+                    }
+                    i {
+                        color: var(--white);
+                        align-self: center;
+                    }
+                    .fa-arrow-up-short-wide {
+                        display: none;
+                    }
+                }
+                .chartButtonContainer {
+                    display: flex;
+                    flex-direction: column;
+                    button {
+                        display: flex;
+                        justify-content: flex-start;
+                        text-align: left;
+                    }
+                }
+            }
+        }
+    }
+}

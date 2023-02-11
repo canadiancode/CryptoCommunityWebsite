@@ -1,16 +1,78 @@
 .dashboardContainer {
-  min-height: 150vh;
+  min-height: 100vh;
   background: linear-gradient(0deg, rgba(23, 23, 23, 0.9) 0%, rgb(0, 0, 0) 100%);
   position: relative;
+  padding-left: 20px;
+}
+.dashboardContainer .openCloseCategoriesDiv {
+  width: 120px;
+  height: 30px;
+  z-index: 4;
+  position: absolute;
+  left: -65px;
+  top: -14px;
+  border-top: 1px solid var(--white);
+  border-right: 1px solid var(--white);
+  border-bottom: 1px solid var(--white);
+  border-radius: 25px;
+  display: flex;
+  justify-content: flex-end;
+  padding-right: 10px;
+  background: var(--black);
+  cursor: pointer;
+  transition: 0.5s;
+}
+.dashboardContainer .openCloseCategoriesDiv i {
+  color: var(--white);
+  z-index: 2;
+  align-self: center;
+  transition: 0.5s;
+}
+.dashboardContainer .openCategoryList {
+  left: -10px;
+}
+.dashboardContainer .containerSignDiv {
+  border: 1px solid var(--white);
+  width: fit-content;
+  position: absolute;
+  transform: rotate(-90deg);
+  top: 64px;
+  left: -65px;
+  border-bottom-left-radius: 25px;
+  transition: 0.5s;
+  background: var(--black);
+}
+.dashboardContainer .containerSignDiv p {
+  color: var(--white);
+  padding: 10px;
+  padding-top: 20px;
+  cursor: pointer;
 }
 .dashboardContainer .chartSelectionPanelContainer {
   position: absolute;
   left: 0;
   top: 0;
-  overflow: scroll;
   display: flex;
   flex-direction: column;
   width: 200px;
+  padding: 10px;
+  padding-top: 25px;
+  max-height: 80vh;
+  overflow-y: scroll;
+  border-top: 1px solid var(--white);
+  border-right: 1px solid var(--white);
+  border-bottom: 1px solid var(--white);
+  border-top-right-radius: 25px;
+  border-bottom-right-radius: 25px;
+  box-shadow: 0px 0px 20px 5px var(--black), inset 0px 0px 20px 5px var(--black);
+  transition: 0.5s;
+  transform: translateX(-100%);
+  background-color: var(--black);
+  z-index: 3;
+  scrollbar-width: none;
+}
+.dashboardContainer .chartSelectionPanelContainer::-webkit-scrollbar {
+  display: none;
 }
 .dashboardContainer .chartSelectionPanelContainer .chartSelectionPanel {
   display: flex;
@@ -24,11 +86,14 @@
   display: flex;
   flex-direction: row;
   justify-content: space-between;
+  cursor: pointer;
+  transition: 0.5s;
 }
 .dashboardContainer .chartSelectionPanelContainer .chartSelectionPanel .dataCategoryContainer .categoryHeadingContainer h3 {
   color: var(--white);
   padding: 10px;
   padding-left: 5%;
+  transition: 0.5s;
 }
 .dashboardContainer .chartSelectionPanelContainer .chartSelectionPanel .dataCategoryContainer .categoryHeadingContainer i {
   color: var(--white);
@@ -37,14 +102,122 @@
 .dashboardContainer .chartSelectionPanelContainer .chartSelectionPanel .dataCategoryContainer .categoryHeadingContainer .fa-arrow-up-short-wide {
   display: none;
 }
+.dashboardContainer .chartSelectionPanelContainer .chartSelectionPanel .dataCategoryContainer .categoryHeadingContainer:hover h3 {
+  transform: translateX(5px);
+}
 .dashboardContainer .chartSelectionPanelContainer .chartSelectionPanel .dataCategoryContainer .chartButtonContainer {
-  display: flex;
   flex-direction: column;
+  transform: translateX(-100%);
+  transition: 0.2s;
+  height: 0px;
+  display: flex;
 }
 .dashboardContainer .chartSelectionPanelContainer .chartSelectionPanel .dataCategoryContainer .chartButtonContainer button {
   display: flex;
   justify-content: flex-start;
+  transition: 0.3s;
   text-align: left;
+  background: none;
+  color: var(--white);
+  border: none;
+  cursor: pointer;
+  font-family: var(--paragraphFontFamily);
+  font-size: 0.9rem;
+  padding: 5px;
+}
+.dashboardContainer .chartSelectionPanelContainer .chartSelectionPanel .dataCategoryContainer .chartButtonContainer button:hover {
+  transform: translateX(5px);
+}
+.dashboardContainer .chartSelectionPanelContainer .chartSelectionPanel .dataCategoryContainer .opened {
+  transform: translateX(0%);
+  height: 100%;
+}
+.dashboardContainer .dataContainer .dataPageContainer .dataSubPageContainer div {
+  max-width: 1200px;
+  margin: 0 auto;
+}
+.dashboardContainer .dataContainer .dataPageContainer .dataSubPageContainer div canvas {
+  width: 100%;
+  max-width: 1200px;
+  max-height: 500px;
+}
+@media screen and (max-width: 600px) {
+  .dashboardContainer .dataContainer .dataPageContainer .dataSubPageContainer div canvas {
+    max-height: 350px;
+  }
+}
+.dashboardContainer .dataContainer .dataPageContainer .dataSubPageContainer div .chartOptions {
+  width: 100%;
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+  padding: 1em 1em;
+  max-width: 1000px;
+  margin: 0 auto;
+}
+.dashboardContainer .dataContainer .dataPageContainer .dataSubPageContainer div .chartOptions .timeframeSelectionDiv {
+  width: 100%;
+  height: 100%;
+  display: flex;
+  justify-content: flex-start;
+  color: white;
+  list-style: none;
+  display: flex;
+  flex-direction: row;
+  gap: 0.5rem;
+}
+.dashboardContainer .dataContainer .dataPageContainer .dataSubPageContainer div .chartOptions .timeframeSelectionDiv .timeframeList {
+  max-width: 150px;
+}
+.dashboardContainer .dataContainer .dataPageContainer .dataSubPageContainer div .chartOptions .logOptionDiv {
+  width: 100%;
+  display: flex;
+  flex-direction: row;
+  justify-content: flex-end;
+}
+.dashboardContainer .dataContainer .dataPageContainer .dataSubPageContainer div .chartOptions .logOptionDiv div {
+  margin: 0;
+}
+.dashboardContainer .dataContainer .dataPageContainer .dataSubPageContainer div .chartOptions .logOptionDiv .chartLogAutoButton {
+  padding: 0em 15px;
+  border: none;
+  color: white;
+  border-radius: 5px;
+  cursor: pointer;
+  transition: 0.5s;
+}
+.dashboardContainer .dataContainer .dataPageContainer .dataSubPageContainer div .chartOptions .logOptionDiv .autoChartOption {
+  background-color: rgba(128, 128, 128, 0.6);
+}
+.dashboardContainer .dataContainer .dataPageContainer .dataSubPageContainer div .chartOptions .logOptionDiv .logChartOption {
+  background-color: rgba(128, 128, 128, 0.2);
+}
+@media screen and (max-width: 500px) {
+  .dashboardContainer .dataContainer .dataPageContainer .dataSubPageContainer div .chartOptions {
+    flex-direction: column;
+    gap: 15px;
+  }
+  .dashboardContainer .dataContainer .dataPageContainer .dataSubPageContainer div .chartOptions .timeframeSelectionDiv {
+    justify-content: center;
+    margin: 0 auto;
+  }
+  .dashboardContainer .dataContainer .dataPageContainer .dataSubPageContainer div .chartOptions .logOptionDiv {
+    justify-content: center;
+    margin: 0 auto;
+    gap: 10px;
+  }
+}
+.dashboardContainer .dataContainer .marketPriceDiv {
+  width: 100%;
+  padding: 1em 2em;
+}
+.dashboardContainer .dataContainer .marketPriceDiv p {
+  color: var(--white);
+  padding-left: 4em;
+}
+.dashboardContainer .dataContainer .marketPriceDiv h1 {
+  color: var(--white);
+  padding-left: 2em;
 }
 
 /*# sourceMappingURL=/tools.50630abf.css.map */

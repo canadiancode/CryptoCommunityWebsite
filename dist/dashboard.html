@@ -18,6 +18,9 @@
     <link href="https://fonts.googleapis.com/css2?family=Rowdies:wght@700&display=swap" rel="stylesheet">
     <script src="https://kit.fontawesome.com/ac617a2067.js" crossorigin="anonymous"></script>
 
+    <!-- Chart JS Library -->
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+
     <!-- Linking CSS and Javascript -->
     <link href="/headerFooter.b21c1fa4.css" rel="stylesheet">
     <script src="/headerFooter.bf72d060.js" defer=""></script>
@@ -74,16 +77,21 @@
     <section class="dashboardContainer">
 
         <!-- The section for the page displayed -->
+        <div class="openCloseCategoriesDiv">
+            <i class="fa-solid fa-arrow-right-to-bracket"></i>
+        </div>
+        <div class="containerSignDiv">
+            <p>Dashboard Menu</p>
+        </div>
         <div class="chartSelectionPanelContainer">
             <div class="chartSelectionPanel">
-
                 <div class="marketsDiv dataCategoryContainer">
                     <div class="categoryHeadingContainer">
                         <h3>Markets</h3>
                         <i class="fa-solid fa-arrow-down-short-wide"></i>
                         <i class="fa-solid fa-arrow-up-short-wide"></i>
                     </div>
-                    <div class="chartButtonContainer">
+                    <div class="chartButtonContainer opened">
                         <button>Asset Price</button>
                         <button>Market Capitalization</button>
                         <button>Volume</button>
@@ -123,9 +131,9 @@
                         <i class="fa-solid fa-arrow-up-short-wide"></i>
                     </div>
                     <div class="chartButtonContainer">
-                        <button>Total Value Locked</button>
-                        <button>Protocol Revenue</button>
-                        <button>Exploits</button>
+                        <button>NFT sales</button>
+                        <button>Trending NFTs</button>
+                        <button>NFT trading volume</button>
                     </div>
                 </div>
 
@@ -146,6 +154,76 @@
 
         <!-- The page that is displayed -->
         <div class="dataContainer">
+
+            <!-- Markets page -->
+            <div class="dataPageContainer">
+                <div class="priceContainer dataSubPageContainer">
+                    <div class="marketPriceDiv">
+                        <p>Markets</p>
+                        <h1>Cryptocurrencies</h1>
+                        <canvas class="marketCryptoPrice"></canvas>
+                        <div class="chartOptions">
+                            <div class="timeframeSelectionDiv">
+                                <label>Timeframe:</label>
+                                <select class="timeframeList">
+                                    <option value="3650" class="timeframe year">10 Year</option>
+                                    <option value="2555" class="timeframe year">7 Year</option>
+                                    <option value="1825" class="timeframe year">5 Year</option>
+                                    <option value="1460" class="timeframe year">4 Year</option>
+                                    <option value="1095" class="timeframe year">3 Year</option>
+                                    <option value="730" class="timeframe year">2 Year</option>
+                                    <option value="365" selected="" class="timeframe year">1 Year</option>
+                                    <option value="120" class="timeframe onequarter">90D</option>
+                                    <option value="30" class="timeframe onequarter">30D</option>
+                                    <option value="7" class="timeframe onequarter">7D</option>
+                                </select>
+                            </div>
+                            <div class="logOptionDiv">
+                                <div>
+                                    <button class="chartLogAutoButton autoChartOption">Auto</button>
+                                    <button class="chartLogAutoButton logChartOption">Log</button>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="marketPriceDiv">
+                        <p>Markets</p>
+                        <h1>Public Exchanges</h1>
+                        <canvas class="marketExchangePrice"></canvas>
+                    </div>
+                    <div class="marketPriceDiv">
+                        <p>Markets</p>
+                        <h1>Miners & Stakers</h1>
+                        <canvas class="marketMinerPrice"></canvas>
+                    </div>
+                </div>
+                <div class="marketCapContainer dataSubPageContainer"></div>
+                <div class="volumePageContainer dataSubPageContainer"></div>
+            </div>
+            <!-- On-Chain page -->
+            <div class="dataPageContainer">
+                <div class="onChainContainer dataSubPageContainer"></div>
+                <div class="transactionCostContainer dataSubPageContainer"></div>
+                <div class="valueFlowContainer dataSubPageContainer"></div>
+            </div>
+            <!-- DeFi page -->
+            <div class="dataPageContainer">
+                <div class="totalValueLockedContainer dataSubPageContainer"></div>
+                <div class="protocolRevenueContainer dataSubPageContainer"></div>
+                <div class="exploitsContainer dataSubPageContainer"></div>
+            </div>
+            <!-- NFT page -->
+            <div class="dataPageContainer">
+                <div class="dataSubPageContainer"></div>
+                <div class="dataSubPageContainer"></div>
+                <div class="dataSubPageContainer"></div>
+            </div>
+            <!-- Alternative metrics -->
+            <div class="dataPageContainer">
+                <div class="dataSubPageContainer"></div>
+                <div class="dataSubPageContainer"></div>
+                <div class="dataSubPageContainer"></div>
+            </div>
 
         </div>
 

@@ -118,7 +118,382 @@ parcelRequire = (function (modules, cache, entry, globalName) {
 
   return newRequire;
 })({"toolsScript.js":[function(require,module,exports) {
+function _typeof(obj) { "@babel/helpers - typeof"; return _typeof = "function" == typeof Symbol && "symbol" == typeof Symbol.iterator ? function (obj) { return typeof obj; } : function (obj) { return obj && "function" == typeof Symbol && obj.constructor === Symbol && obj !== Symbol.prototype ? "symbol" : typeof obj; }, _typeof(obj); }
+function _regeneratorRuntime() { "use strict"; /*! regenerator-runtime -- Copyright (c) 2014-present, Facebook, Inc. -- license (MIT): https://github.com/facebook/regenerator/blob/main/LICENSE */ _regeneratorRuntime = function _regeneratorRuntime() { return exports; }; var exports = {}, Op = Object.prototype, hasOwn = Op.hasOwnProperty, defineProperty = Object.defineProperty || function (obj, key, desc) { obj[key] = desc.value; }, $Symbol = "function" == typeof Symbol ? Symbol : {}, iteratorSymbol = $Symbol.iterator || "@@iterator", asyncIteratorSymbol = $Symbol.asyncIterator || "@@asyncIterator", toStringTagSymbol = $Symbol.toStringTag || "@@toStringTag"; function define(obj, key, value) { return Object.defineProperty(obj, key, { value: value, enumerable: !0, configurable: !0, writable: !0 }), obj[key]; } try { define({}, ""); } catch (err) { define = function define(obj, key, value) { return obj[key] = value; }; } function wrap(innerFn, outerFn, self, tryLocsList) { var protoGenerator = outerFn && outerFn.prototype instanceof Generator ? outerFn : Generator, generator = Object.create(protoGenerator.prototype), context = new Context(tryLocsList || []); return defineProperty(generator, "_invoke", { value: makeInvokeMethod(innerFn, self, context) }), generator; } function tryCatch(fn, obj, arg) { try { return { type: "normal", arg: fn.call(obj, arg) }; } catch (err) { return { type: "throw", arg: err }; } } exports.wrap = wrap; var ContinueSentinel = {}; function Generator() {} function GeneratorFunction() {} function GeneratorFunctionPrototype() {} var IteratorPrototype = {}; define(IteratorPrototype, iteratorSymbol, function () { return this; }); var getProto = Object.getPrototypeOf, NativeIteratorPrototype = getProto && getProto(getProto(values([]))); NativeIteratorPrototype && NativeIteratorPrototype !== Op && hasOwn.call(NativeIteratorPrototype, iteratorSymbol) && (IteratorPrototype = NativeIteratorPrototype); var Gp = GeneratorFunctionPrototype.prototype = Generator.prototype = Object.create(IteratorPrototype); function defineIteratorMethods(prototype) { ["next", "throw", "return"].forEach(function (method) { define(prototype, method, function (arg) { return this._invoke(method, arg); }); }); } function AsyncIterator(generator, PromiseImpl) { function invoke(method, arg, resolve, reject) { var record = tryCatch(generator[method], generator, arg); if ("throw" !== record.type) { var result = record.arg, value = result.value; return value && "object" == _typeof(value) && hasOwn.call(value, "__await") ? PromiseImpl.resolve(value.__await).then(function (value) { invoke("next", value, resolve, reject); }, function (err) { invoke("throw", err, resolve, reject); }) : PromiseImpl.resolve(value).then(function (unwrapped) { result.value = unwrapped, resolve(result); }, function (error) { return invoke("throw", error, resolve, reject); }); } reject(record.arg); } var previousPromise; defineProperty(this, "_invoke", { value: function value(method, arg) { function callInvokeWithMethodAndArg() { return new PromiseImpl(function (resolve, reject) { invoke(method, arg, resolve, reject); }); } return previousPromise = previousPromise ? previousPromise.then(callInvokeWithMethodAndArg, callInvokeWithMethodAndArg) : callInvokeWithMethodAndArg(); } }); } function makeInvokeMethod(innerFn, self, context) { var state = "suspendedStart"; return function (method, arg) { if ("executing" === state) throw new Error("Generator is already running"); if ("completed" === state) { if ("throw" === method) throw arg; return doneResult(); } for (context.method = method, context.arg = arg;;) { var delegate = context.delegate; if (delegate) { var delegateResult = maybeInvokeDelegate(delegate, context); if (delegateResult) { if (delegateResult === ContinueSentinel) continue; return delegateResult; } } if ("next" === context.method) context.sent = context._sent = context.arg;else if ("throw" === context.method) { if ("suspendedStart" === state) throw state = "completed", context.arg; context.dispatchException(context.arg); } else "return" === context.method && context.abrupt("return", context.arg); state = "executing"; var record = tryCatch(innerFn, self, context); if ("normal" === record.type) { if (state = context.done ? "completed" : "suspendedYield", record.arg === ContinueSentinel) continue; return { value: record.arg, done: context.done }; } "throw" === record.type && (state = "completed", context.method = "throw", context.arg = record.arg); } }; } function maybeInvokeDelegate(delegate, context) { var methodName = context.method, method = delegate.iterator[methodName]; if (undefined === method) return context.delegate = null, "throw" === methodName && delegate.iterator.return && (context.method = "return", context.arg = undefined, maybeInvokeDelegate(delegate, context), "throw" === context.method) || "return" !== methodName && (context.method = "throw", context.arg = new TypeError("The iterator does not provide a '" + methodName + "' method")), ContinueSentinel; var record = tryCatch(method, delegate.iterator, context.arg); if ("throw" === record.type) return context.method = "throw", context.arg = record.arg, context.delegate = null, ContinueSentinel; var info = record.arg; return info ? info.done ? (context[delegate.resultName] = info.value, context.next = delegate.nextLoc, "return" !== context.method && (context.method = "next", context.arg = undefined), context.delegate = null, ContinueSentinel) : info : (context.method = "throw", context.arg = new TypeError("iterator result is not an object"), context.delegate = null, ContinueSentinel); } function pushTryEntry(locs) { var entry = { tryLoc: locs[0] }; 1 in locs && (entry.catchLoc = locs[1]), 2 in locs && (entry.finallyLoc = locs[2], entry.afterLoc = locs[3]), this.tryEntries.push(entry); } function resetTryEntry(entry) { var record = entry.completion || {}; record.type = "normal", delete record.arg, entry.completion = record; } function Context(tryLocsList) { this.tryEntries = [{ tryLoc: "root" }], tryLocsList.forEach(pushTryEntry, this), this.reset(!0); } function values(iterable) { if (iterable) { var iteratorMethod = iterable[iteratorSymbol]; if (iteratorMethod) return iteratorMethod.call(iterable); if ("function" == typeof iterable.next) return iterable; if (!isNaN(iterable.length)) { var i = -1, next = function next() { for (; ++i < iterable.length;) if (hasOwn.call(iterable, i)) return next.value = iterable[i], next.done = !1, next; return next.value = undefined, next.done = !0, next; }; return next.next = next; } } return { next: doneResult }; } function doneResult() { return { value: undefined, done: !0 }; } return GeneratorFunction.prototype = GeneratorFunctionPrototype, defineProperty(Gp, "constructor", { value: GeneratorFunctionPrototype, configurable: !0 }), defineProperty(GeneratorFunctionPrototype, "constructor", { value: GeneratorFunction, configurable: !0 }), GeneratorFunction.displayName = define(GeneratorFunctionPrototype, toStringTagSymbol, "GeneratorFunction"), exports.isGeneratorFunction = function (genFun) { var ctor = "function" == typeof genFun && genFun.constructor; return !!ctor && (ctor === GeneratorFunction || "GeneratorFunction" === (ctor.displayName || ctor.name)); }, exports.mark = function (genFun) { return Object.setPrototypeOf ? Object.setPrototypeOf(genFun, GeneratorFunctionPrototype) : (genFun.__proto__ = GeneratorFunctionPrototype, define(genFun, toStringTagSymbol, "GeneratorFunction")), genFun.prototype = Object.create(Gp), genFun; }, exports.awrap = function (arg) { return { __await: arg }; }, defineIteratorMethods(AsyncIterator.prototype), define(AsyncIterator.prototype, asyncIteratorSymbol, function () { return this; }), exports.AsyncIterator = AsyncIterator, exports.async = function (innerFn, outerFn, self, tryLocsList, PromiseImpl) { void 0 === PromiseImpl && (PromiseImpl = Promise); var iter = new AsyncIterator(wrap(innerFn, outerFn, self, tryLocsList), PromiseImpl); return exports.isGeneratorFunction(outerFn) ? iter : iter.next().then(function (result) { return result.done ? result.value : iter.next(); }); }, defineIteratorMethods(Gp), define(Gp, toStringTagSymbol, "Generator"), define(Gp, iteratorSymbol, function () { return this; }), define(Gp, "toString", function () { return "[object Generator]"; }), exports.keys = function (val) { var object = Object(val), keys = []; for (var key in object) keys.push(key); return keys.reverse(), function next() { for (; keys.length;) { var key = keys.pop(); if (key in object) return next.value = key, next.done = !1, next; } return next.done = !0, next; }; }, exports.values = values, Context.prototype = { constructor: Context, reset: function reset(skipTempReset) { if (this.prev = 0, this.next = 0, this.sent = this._sent = undefined, this.done = !1, this.delegate = null, this.method = "next", this.arg = undefined, this.tryEntries.forEach(resetTryEntry), !skipTempReset) for (var name in this) "t" === name.charAt(0) && hasOwn.call(this, name) && !isNaN(+name.slice(1)) && (this[name] = undefined); }, stop: function stop() { this.done = !0; var rootRecord = this.tryEntries[0].completion; if ("throw" === rootRecord.type) throw rootRecord.arg; return this.rval; }, dispatchException: function dispatchException(exception) { if (this.done) throw exception; var context = this; function handle(loc, caught) { return record.type = "throw", record.arg = exception, context.next = loc, caught && (context.method = "next", context.arg = undefined), !!caught; } for (var i = this.tryEntries.length - 1; i >= 0; --i) { var entry = this.tryEntries[i], record = entry.completion; if ("root" === entry.tryLoc) return handle("end"); if (entry.tryLoc <= this.prev) { var hasCatch = hasOwn.call(entry, "catchLoc"), hasFinally = hasOwn.call(entry, "finallyLoc"); if (hasCatch && hasFinally) { if (this.prev < entry.catchLoc) return handle(entry.catchLoc, !0); if (this.prev < entry.finallyLoc) return handle(entry.finallyLoc); } else if (hasCatch) { if (this.prev < entry.catchLoc) return handle(entry.catchLoc, !0); } else { if (!hasFinally) throw new Error("try statement without catch or finally"); if (this.prev < entry.finallyLoc) return handle(entry.finallyLoc); } } } }, abrupt: function abrupt(type, arg) { for (var i = this.tryEntries.length - 1; i >= 0; --i) { var entry = this.tryEntries[i]; if (entry.tryLoc <= this.prev && hasOwn.call(entry, "finallyLoc") && this.prev < entry.finallyLoc) { var finallyEntry = entry; break; } } finallyEntry && ("break" === type || "continue" === type) && finallyEntry.tryLoc <= arg && arg <= finallyEntry.finallyLoc && (finallyEntry = null); var record = finallyEntry ? finallyEntry.completion : {}; return record.type = type, record.arg = arg, finallyEntry ? (this.method = "next", this.next = finallyEntry.finallyLoc, ContinueSentinel) : this.complete(record); }, complete: function complete(record, afterLoc) { if ("throw" === record.type) throw record.arg; return "break" === record.type || "continue" === record.type ? this.next = record.arg : "return" === record.type ? (this.rval = this.arg = record.arg, this.method = "return", this.next = "end") : "normal" === record.type && afterLoc && (this.next = afterLoc), ContinueSentinel; }, finish: function finish(finallyLoc) { for (var i = this.tryEntries.length - 1; i >= 0; --i) { var entry = this.tryEntries[i]; if (entry.finallyLoc === finallyLoc) return this.complete(entry.completion, entry.afterLoc), resetTryEntry(entry), ContinueSentinel; } }, catch: function _catch(tryLoc) { for (var i = this.tryEntries.length - 1; i >= 0; --i) { var entry = this.tryEntries[i]; if (entry.tryLoc === tryLoc) { var record = entry.completion; if ("throw" === record.type) { var thrown = record.arg; resetTryEntry(entry); } return thrown; } } throw new Error("illegal catch attempt"); }, delegateYield: function delegateYield(iterable, resultName, nextLoc) { return this.delegate = { iterator: values(iterable), resultName: resultName, nextLoc: nextLoc }, "next" === this.method && (this.arg = undefined), ContinueSentinel; } }, exports; }
+function _createForOfIteratorHelper(o, allowArrayLike) { var it = typeof Symbol !== "undefined" && o[Symbol.iterator] || o["@@iterator"]; if (!it) { if (Array.isArray(o) || (it = _unsupportedIterableToArray(o)) || allowArrayLike && o && typeof o.length === "number") { if (it) o = it; var i = 0; var F = function F() {}; return { s: F, n: function n() { if (i >= o.length) return { done: true }; return { done: false, value: o[i++] }; }, e: function e(_e) { throw _e; }, f: F }; } throw new TypeError("Invalid attempt to iterate non-iterable instance.\nIn order to be iterable, non-array objects must have a [Symbol.iterator]() method."); } var normalCompletion = true, didErr = false, err; return { s: function s() { it = it.call(o); }, n: function n() { var step = it.next(); normalCompletion = step.done; return step; }, e: function e(_e2) { didErr = true; err = _e2; }, f: function f() { try { if (!normalCompletion && it.return != null) it.return(); } finally { if (didErr) throw err; } } }; }
+function _unsupportedIterableToArray(o, minLen) { if (!o) return; if (typeof o === "string") return _arrayLikeToArray(o, minLen); var n = Object.prototype.toString.call(o).slice(8, -1); if (n === "Object" && o.constructor) n = o.constructor.name; if (n === "Map" || n === "Set") return Array.from(o); if (n === "Arguments" || /^(?:Ui|I)nt(?:8|16|32)(?:Clamped)?Array$/.test(n)) return _arrayLikeToArray(o, minLen); }
+function _arrayLikeToArray(arr, len) { if (len == null || len > arr.length) len = arr.length; for (var i = 0, arr2 = new Array(len); i < len; i++) arr2[i] = arr[i]; return arr2; }
+function asyncGeneratorStep(gen, resolve, reject, _next, _throw, key, arg) { try { var info = gen[key](arg); var value = info.value; } catch (error) { reject(error); return; } if (info.done) { resolve(value); } else { Promise.resolve(value).then(_next, _throw); } }
+function _asyncToGenerator(fn) { return function () { var self = this, args = arguments; return new Promise(function (resolve, reject) { var gen = fn.apply(self, args); function _next(value) { asyncGeneratorStep(gen, resolve, reject, _next, _throw, "next", value); } function _throw(err) { asyncGeneratorStep(gen, resolve, reject, _next, _throw, "throw", err); } _next(undefined); }); }; }
+// CODE FOR THE CATEGORY LIST FUNCTION
+// display and hide the category list
+var openCloseCategoriesDiv = document.querySelector('.openCloseCategoriesDiv');
+var openCloseCategoriesDivText = document.querySelector('.containerSignDiv');
+var chartSelectionPanelContainer = document.querySelector('.chartSelectionPanelContainer');
+var categoryHeadingContainer = document.querySelectorAll('.categoryHeadingContainer');
+var chartButtonContainer = document.querySelectorAll('.chartButtonContainer');
+var categoryArrowOpen = document.querySelectorAll('.fa-arrow-down-short-wide');
+var categoryArrowClose = document.querySelectorAll('.fa-arrow-up-short-wide');
+var openCategoryListIcon = document.querySelector('.fa-arrow-right-to-bracket');
+function openOrCloseCategoryList() {
+  if (openCloseCategoriesDiv.classList.contains('openCategoryList')) {
+    openCloseCategoriesDiv.classList.remove('openCategoryList');
+    chartSelectionPanelContainer.style.transform = 'translateX(-100%)';
+    openCategoryListIcon.style.transform = 'rotate(0deg)';
+    openCloseCategoriesDivText.style.transform = 'rotate(-90deg) translateY(0%)';
+  } else {
+    openCloseCategoriesDiv.classList.add('openCategoryList');
+    chartSelectionPanelContainer.style.transform = 'translateX(0%)';
+    openCategoryListIcon.style.transform = 'rotate(180deg)';
+    openCloseCategoriesDivText.style.transform = 'rotate(-90deg) translateY(-100%)';
+  }
+}
+openCloseCategoriesDiv.addEventListener('click', openOrCloseCategoryList);
+openCloseCategoriesDivText.addEventListener('click', openOrCloseCategoryList);
+var _loop = function _loop(i) {
+  // function to open or close the category
+  function openOrCloseCategory() {
+    if (chartButtonContainer[i].classList.contains('opened')) {
+      chartButtonContainer[i].classList.remove('opened');
+      categoryArrowOpen[i].style.display = 'none';
+      categoryArrowClose[i].style.display = 'block';
+    } else {
+      chartButtonContainer[i].classList.add('opened');
+      categoryArrowOpen[i].style.display = 'block';
+      categoryArrowClose[i].style.display = 'none';
+    }
+  }
+  ;
+  categoryHeadingContainer[i].addEventListener('click', openOrCloseCategory);
+};
+for (var i = 0; i < categoryHeadingContainer.length; i++) {
+  _loop(i);
+}
+;
 
+// START OF THE DATA PAGES
+var dataPageContainer = document.querySelectorAll('.dataPageContainer');
+var dataPageOptions = {
+  rootMargin: "0px",
+  threshold: 0
+};
+
+// MARKETS PAGE
+var marketsPageObserver = new IntersectionObserver(function (entries, marketsPageObserver) {
+  entries.forEach(function (entry) {
+    if (entry.isIntersecting) {
+      var changeChartScale = function changeChartScale(event) {
+        if (event.target.classList.contains('autoChartOption')) {
+          autoChartOption.style.backgroundColor = 'rgb(128, 128, 128, 0.6)';
+          logChartOption.style.backgroundColor = 'rgb(128, 128, 128, 0.2)';
+          chartScale = 'linear';
+          displayedChart.options.scales.y.type = chartScale;
+          displayedChart.update();
+        } else {
+          autoChartOption.style.backgroundColor = 'rgb(128, 128, 128, 0.2)';
+          logChartOption.style.backgroundColor = 'rgb(128, 128, 128, 0.6)';
+          chartScale = 'logarithmic';
+          displayedChart.options.scales.y.type = chartScale;
+          displayedChart.update();
+        }
+      };
+      // change timeframe
+      var changeTimeframe = function changeTimeframe() {
+        try {
+          var fetchNewTimeframe = /*#__PURE__*/function () {
+            var _ref2 = _asyncToGenerator( /*#__PURE__*/_regeneratorRuntime().mark(function _callee2() {
+              var URL, response, data, priceAndTimeData, _iterator3, _step3, time, epochTimeframe, formattedDate, longTimeframe, timeframe, fetchedPriceData, _iterator4, _step4, price, prices, DataObject;
+              return _regeneratorRuntime().wrap(function _callee2$(_context2) {
+                while (1) switch (_context2.prev = _context2.next) {
+                  case 0:
+                    URL = "https://api.coingecko.com/api/v3/coins/".concat(selectedAssetID, "/market_chart?vs_currency=usd&days=").concat(selectedTimePeriod);
+                    _context2.next = 3;
+                    return fetch(URL);
+                  case 3:
+                    response = _context2.sent;
+                    _context2.next = 6;
+                    return response.json();
+                  case 6:
+                    data = _context2.sent;
+                    _context2.next = 9;
+                    return data.prices;
+                  case 9:
+                    priceAndTimeData = _context2.sent;
+                    // adding the newly fetched time to the chart
+                    _iterator3 = _createForOfIteratorHelper(priceAndTimeData);
+                    _context2.prev = 11;
+                    _iterator3.s();
+                  case 13:
+                    if ((_step3 = _iterator3.n()).done) {
+                      _context2.next = 24;
+                      break;
+                    }
+                    time = _step3.value;
+                    _context2.next = 17;
+                    return time[0];
+                  case 17:
+                    epochTimeframe = _context2.sent;
+                    formattedDate = new Date(epochTimeframe);
+                    longTimeframe = formattedDate.toUTCString();
+                    timeframe = longTimeframe.substring(4, 16);
+                    chartTime.push(timeframe);
+                  case 22:
+                    _context2.next = 13;
+                    break;
+                  case 24:
+                    _context2.next = 29;
+                    break;
+                  case 26:
+                    _context2.prev = 26;
+                    _context2.t0 = _context2["catch"](11);
+                    _iterator3.e(_context2.t0);
+                  case 29:
+                    _context2.prev = 29;
+                    _iterator3.f();
+                    return _context2.finish(29);
+                  case 32:
+                    displayedChart.data.labels = chartTime;
+
+                    // adding the fetched price to the chart
+                    fetchedPriceData = [];
+                    _iterator4 = _createForOfIteratorHelper(priceAndTimeData);
+                    _context2.prev = 35;
+                    _iterator4.s();
+                  case 37:
+                    if ((_step4 = _iterator4.n()).done) {
+                      _context2.next = 45;
+                      break;
+                    }
+                    price = _step4.value;
+                    _context2.next = 41;
+                    return price[1];
+                  case 41:
+                    prices = _context2.sent;
+                    fetchedPriceData.push(prices);
+                  case 43:
+                    _context2.next = 37;
+                    break;
+                  case 45:
+                    _context2.next = 50;
+                    break;
+                  case 47:
+                    _context2.prev = 47;
+                    _context2.t1 = _context2["catch"](35);
+                    _iterator4.e(_context2.t1);
+                  case 50:
+                    _context2.prev = 50;
+                    _iterator4.f();
+                    return _context2.finish(50);
+                  case 53:
+                    ;
+                    DataObject = {};
+                    DataObject = {
+                      label: "Price of ".concat(selectedAssetName),
+                      data: fetchedPriceData,
+                      fill: false,
+                      pointRadius: 0,
+                      borderWidth: 1,
+                      backgroundColor: '#FFFFFF',
+                      borderColor: '#FFFFFF',
+                      yAxisID: 'y'
+                    };
+                    assetPriceData.push(DataObject);
+                    displayedChart.data.datasets = assetPriceData;
+
+                    // update the chart with data and time
+                    displayedChart.update();
+                  case 59:
+                  case "end":
+                    return _context2.stop();
+                }
+              }, _callee2, null, [[11, 26, 29, 32], [35, 47, 50, 53]]);
+            }));
+            return function fetchNewTimeframe() {
+              return _ref2.apply(this, arguments);
+            };
+          }();
+          selectedTimePeriod = '';
+          assetPriceData = [];
+          chartTime = [];
+          var timeframeList = document.querySelector('.timeframeList');
+          selectedTimePeriod = timeframeList.value;
+          fetchNewTimeframe();
+        } catch (error) {
+          console.log('could not fetch new timeframe data...');
+        }
+      };
+      // CODE FOR CHANGING THE CHART SCALE
+      var chartScale = 'linear'; //logarithmic or linear
+      var autoChartOption = document.querySelector('.autoChartOption');
+      autoChartOption.addEventListener('click', changeChartScale);
+      var logChartOption = document.querySelector('.logChartOption');
+      logChartOption.addEventListener('click', changeChartScale);
+      ;
+
+      // variables for the chart
+      var chartTime = []; //fetched data
+      var selectedTimePeriod = '365';
+      var assetPriceData = []; //fetched data
+      var selectedAssetID = 'bitcoin';
+      var selectedAssetName = 'Bitcoin';
+
+      // fetch initial data
+      try {
+        var fetchData = /*#__PURE__*/function () {
+          var _ref = _asyncToGenerator( /*#__PURE__*/_regeneratorRuntime().mark(function _callee() {
+            var URL, response, data, priceAndTimeData, _iterator, _step, time, epochTimeframe, formattedDate, longTimeframe, timeframe, fetchedPriceData, _iterator2, _step2, price, prices, DataObject;
+            return _regeneratorRuntime().wrap(function _callee$(_context) {
+              while (1) switch (_context.prev = _context.next) {
+                case 0:
+                  URL = "https://api.coingecko.com/api/v3/coins/".concat(selectedAssetID, "/market_chart?vs_currency=usd&days=").concat(selectedTimePeriod);
+                  _context.next = 3;
+                  return fetch(URL);
+                case 3:
+                  response = _context.sent;
+                  _context.next = 6;
+                  return response.json();
+                case 6:
+                  data = _context.sent;
+                  _context.next = 9;
+                  return data.prices;
+                case 9:
+                  priceAndTimeData = _context.sent;
+                  // adding the fetched time to the chart
+                  _iterator = _createForOfIteratorHelper(priceAndTimeData);
+                  _context.prev = 11;
+                  _iterator.s();
+                case 13:
+                  if ((_step = _iterator.n()).done) {
+                    _context.next = 24;
+                    break;
+                  }
+                  time = _step.value;
+                  _context.next = 17;
+                  return time[0];
+                case 17:
+                  epochTimeframe = _context.sent;
+                  formattedDate = new Date(epochTimeframe);
+                  longTimeframe = formattedDate.toUTCString();
+                  timeframe = longTimeframe.substring(4, 16);
+                  chartTime.push(timeframe);
+                case 22:
+                  _context.next = 13;
+                  break;
+                case 24:
+                  _context.next = 29;
+                  break;
+                case 26:
+                  _context.prev = 26;
+                  _context.t0 = _context["catch"](11);
+                  _iterator.e(_context.t0);
+                case 29:
+                  _context.prev = 29;
+                  _iterator.f();
+                  return _context.finish(29);
+                case 32:
+                  ;
+                  displayedChart.data.labels = chartTime;
+
+                  // adding the fetched price to the chart
+                  fetchedPriceData = [];
+                  _iterator2 = _createForOfIteratorHelper(priceAndTimeData);
+                  _context.prev = 36;
+                  _iterator2.s();
+                case 38:
+                  if ((_step2 = _iterator2.n()).done) {
+                    _context.next = 46;
+                    break;
+                  }
+                  price = _step2.value;
+                  _context.next = 42;
+                  return price[1];
+                case 42:
+                  prices = _context.sent;
+                  fetchedPriceData.push(prices);
+                case 44:
+                  _context.next = 38;
+                  break;
+                case 46:
+                  _context.next = 51;
+                  break;
+                case 48:
+                  _context.prev = 48;
+                  _context.t1 = _context["catch"](36);
+                  _iterator2.e(_context.t1);
+                case 51:
+                  _context.prev = 51;
+                  _iterator2.f();
+                  return _context.finish(51);
+                case 54:
+                  ;
+                  DataObject = {
+                    label: "Price of ".concat(selectedAssetName),
+                    data: fetchedPriceData,
+                    fill: false,
+                    pointRadius: 0,
+                    borderWidth: 1,
+                    backgroundColor: '#FFFFFF',
+                    borderColor: '#FFFFFF',
+                    yAxisID: 'y'
+                  };
+                  assetPriceData.push(DataObject);
+                  displayedChart.data.datasets = assetPriceData;
+
+                  // update the chart with data and time
+                  displayedChart.update();
+                case 59:
+                case "end":
+                  return _context.stop();
+              }
+            }, _callee, null, [[11, 26, 29, 32], [36, 48, 51, 54]]);
+          }));
+          return function fetchData() {
+            return _ref.apply(this, arguments);
+          };
+        }();
+        fetchData();
+      } catch (error) {
+        console.log('could not fetch initial data...');
+      }
+      var selectedTimePeriodEl = document.querySelector('.timeframeList');
+      selectedTimePeriodEl.addEventListener('change', changeTimeframe);
+
+      // CODE FOR THE CHART.JS LIBRARY
+      var ctx = document.querySelector('.marketCryptoPrice');
+      var displayedChart = new Chart(ctx, {
+        type: 'line',
+        data: {
+          labels: chartTime,
+          datasets: assetPriceData
+        },
+        options: {
+          type: chartScale,
+          display: true,
+          position: 'left',
+          responsive: true,
+          maintainAspectRatio: false,
+          scales: {
+            y: {
+              ticks: {
+                // Include a dollar sign in the ticks
+                callback: function callback(value, index, values) {
+                  return '$' + value.toLocaleString("en-US");
+                }
+              }
+            }
+          }
+        }
+      });
+      // end of the Intersection Observer
+    }
+    ;
+  });
+}, dataPageOptions);
+
+// OBSERVE EACH PAGE
+dataPageContainer.forEach(function (page) {
+  marketsPageObserver.observe(page);
+});
 },{}],"../node_modules/parcel-bundler/src/builtins/hmr-runtime.js":[function(require,module,exports) {
 var global = arguments[3];
 var OVERLAY_ID = '__parcel__error__overlay__';
@@ -144,7 +519,7 @@ var parent = module.bundle.parent;
 if ((!parent || !parent.isParcelRequire) && typeof WebSocket !== 'undefined') {
   var hostname = "" || location.hostname;
   var protocol = location.protocol === 'https:' ? 'wss' : 'ws';
-  var ws = new WebSocket(protocol + '://' + hostname + ':' + "60488" + '/');
+  var ws = new WebSocket(protocol + '://' + hostname + ':' + "56594" + '/');
   ws.onmessage = function (event) {
     checkedAssets = {};
     assetsToAccept = [];

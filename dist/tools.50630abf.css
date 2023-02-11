@@ -165,9 +165,14 @@
 }
 .dashboardContainer .dataContainer .dataPageContainer .dataSubPageContainer div .chartOptions .assetSelectionDiv label {
   color: var(--white);
+  font-family: var(--paragraphFontFamily);
 }
 .dashboardContainer .dataContainer .dataPageContainer .dataSubPageContainer div .chartOptions .assetSelectionDiv .assetList {
   max-width: 200px;
+  background-color: rgba(128, 128, 128, 0.6);
+  border-radius: 5px;
+  color: var(--white);
+  font-family: var(--paragraphFontFamily);
 }
 .dashboardContainer .dataContainer .dataPageContainer .dataSubPageContainer div .chartOptions .timeframeSelectionDiv {
   width: 100%;
@@ -180,8 +185,15 @@
   flex-direction: row;
   gap: 0.5rem;
 }
+.dashboardContainer .dataContainer .dataPageContainer .dataSubPageContainer div .chartOptions .timeframeSelectionDiv label {
+  font-family: var(--paragraphFontFamily);
+}
 .dashboardContainer .dataContainer .dataPageContainer .dataSubPageContainer div .chartOptions .timeframeSelectionDiv .timeframeList {
   max-width: 150px;
+  background-color: rgba(128, 128, 128, 0.6);
+  border-radius: 5px;
+  color: var(--white);
+  font-family: var(--paragraphFontFamily);
 }
 .dashboardContainer .dataContainer .dataPageContainer .dataSubPageContainer div .chartOptions .logOptionDiv {
   width: 100%;
@@ -199,6 +211,7 @@
   border-radius: 5px;
   cursor: pointer;
   transition: 0.5s;
+  font-family: var(--paragraphFontFamily);
 }
 .dashboardContainer .dataContainer .dataPageContainer .dataSubPageContainer div .chartOptions .logOptionDiv .autoChartOption {
   background-color: rgba(128, 128, 128, 0.6);

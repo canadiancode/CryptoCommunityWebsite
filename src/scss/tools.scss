@@ -170,9 +170,14 @@
                             gap: 0.5rem;
                             label {
                                 color: var(--white);
+                                font-family: var(--paragraphFontFamily);
                             }
                             .assetList {
                                 max-width: 200px;
+                                background-color: rgb(128, 128, 128, 0.6);
+                                border-radius: 5px;
+                                color: var(--white);
+                                font-family: var(--paragraphFontFamily);
                             }
                         }
                         .timeframeSelectionDiv {
@@ -185,8 +190,15 @@
                             display: flex;
                             flex-direction: row;
                             gap: 0.5rem;
+                            label {
+                                font-family: var(--paragraphFontFamily);
+                            }
                               .timeframeList {
                                 max-width: 150px;
+                                background-color: rgb(128, 128, 128, 0.6);
+                                border-radius: 5px;
+                                color: var(--white);
+                                font-family: var(--paragraphFontFamily);
                               }
                           }
                         .logOptionDiv {
@@ -204,6 +216,7 @@
                                 border-radius: 5px;
                                 cursor: pointer;
                                 transition: 0.5s; 
+                                font-family: var(--paragraphFontFamily);
                             }
                             .autoChartOption {
                                 background-color: rgb(128, 128, 128, 0.6);

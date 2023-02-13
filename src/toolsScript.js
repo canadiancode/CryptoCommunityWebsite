@@ -48,7 +48,7 @@ const dataPageOptions = {
 };
 
   // MARKETS PAGE -- CRYPTOCURRENCIES
-const marketsPageObserver = new IntersectionObserver(function(entries, marketsPageObserver) {
+const marketsCryptoObserver = new IntersectionObserver(function(entries, marketsCryptoObserver) {
   entries.forEach(entry => {
     if (entry.isIntersecting) {
 
@@ -319,11 +319,21 @@ const marketsPageObserver = new IntersectionObserver(function(entries, marketsPa
 }, dataPageOptions);
 
   // MARKETS PAGE -- PUBLIC EXCHANGES AND 
+const marketsStocksObserver = new IntersectionObserver(function(entries, marketsStocksObserver) {
+  entries.forEach(entry => {
+    if (entry.isIntersecting) {
+
+      console.log('marketsStocksObserver');
+
+    }
+  })
+}, dataPageOptions);
 
 
 
-
-  // OBSERVE EACH PAGE
+  // OBSERVE FOR EACH Intersection Observers
 dataPageContainer.forEach(page => {
-  marketsPageObserver.observe(page);
+  marketsCryptoObserver.observe(page);
+  marketsStocksObserver.observe(page);
 });
+

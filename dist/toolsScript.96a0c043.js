@@ -179,7 +179,7 @@ var dataPageOptions = {
 };
 
 // MARKETS PAGE -- CRYPTOCURRENCIES
-var marketsPageObserver = new IntersectionObserver(function (entries, marketsPageObserver) {
+var marketsCryptoObserver = new IntersectionObserver(function (entries, marketsCryptoObserver) {
   entries.forEach(function (entry) {
     if (entry.isIntersecting) {
       var changeChartScale = function changeChartScale(event) {
@@ -708,10 +708,18 @@ var marketsPageObserver = new IntersectionObserver(function (entries, marketsPag
 }, dataPageOptions);
 
 // MARKETS PAGE -- PUBLIC EXCHANGES AND 
+var marketsStocksObserver = new IntersectionObserver(function (entries, marketsStocksObserver) {
+  entries.forEach(function (entry) {
+    if (entry.isIntersecting) {
+      console.log('marketsStocksObserver');
+    }
+  });
+}, dataPageOptions);
 
-// OBSERVE EACH PAGE
+// OBSERVE FOR EACH Intersection Observers
 dataPageContainer.forEach(function (page) {
-  marketsPageObserver.observe(page);
+  marketsCryptoObserver.observe(page);
+  marketsStocksObserver.observe(page);
 });
 },{}],"../node_modules/parcel-bundler/src/builtins/hmr-runtime.js":[function(require,module,exports) {
 var global = arguments[3];
@@ -738,7 +746,7 @@ var parent = module.bundle.parent;
 if ((!parent || !parent.isParcelRequire) && typeof WebSocket !== 'undefined') {
   var hostname = "" || location.hostname;
   var protocol = location.protocol === 'https:' ? 'wss' : 'ws';
-  var ws = new WebSocket(protocol + '://' + hostname + ':' + "56594" + '/');
+  var ws = new WebSocket(protocol + '://' + hostname + ':' + "52239" + '/');
   ws.onmessage = function (event) {
     checkedAssets = {};
     assetsToAccept = [];

@@ -128,14 +128,13 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
 // CODE FOR THE CATEGORY LIST FUNCTION
 // display and hide the category list
 var openCloseCategoriesDiv = document.querySelector('.openCloseCategoriesDiv');
-var openCloseCategoriesDivText = document.querySelector('.containerSignDiv');
-var chartSelectionPanelContainer = document.querySelector('.chartSelectionPanelContainer');
 var categoryHeadingContainer = document.querySelectorAll('.categoryHeadingContainer');
+var openCloseCategoriesDivText = document.querySelector('.containerSignDiv');
 var chartButtonContainer = document.querySelectorAll('.chartButtonContainer');
-var categoryArrowOpen = document.querySelectorAll('.fa-arrow-down-short-wide');
-var categoryArrowClose = document.querySelectorAll('.fa-arrow-up-short-wide');
-var openCategoryListIcon = document.querySelector('.fa-arrow-right-to-bracket');
 function openOrCloseCategoryList() {
+  // variables
+  var chartSelectionPanelContainer = document.querySelector('.chartSelectionPanelContainer');
+  var openCategoryListIcon = document.querySelector('.fa-arrow-right-to-bracket');
   if (openCloseCategoriesDiv.classList.contains('openCategoryList')) {
     openCloseCategoriesDiv.classList.remove('openCategoryList');
     chartSelectionPanelContainer.style.transform = 'translateX(-100%)';
@@ -151,6 +150,10 @@ function openOrCloseCategoryList() {
 openCloseCategoriesDiv.addEventListener('click', openOrCloseCategoryList);
 openCloseCategoriesDivText.addEventListener('click', openOrCloseCategoryList);
 var _loop = function _loop(i) {
+  // variables
+  var categoryArrowOpen = document.querySelectorAll('.fa-arrow-down-short-wide');
+  var categoryArrowClose = document.querySelectorAll('.fa-arrow-up-short-wide');
+
   // function to open or close the category
   function openOrCloseCategory() {
     if (chartButtonContainer[i].classList.contains('opened')) {
@@ -171,14 +174,14 @@ for (var i = 0; i < categoryHeadingContainer.length; i++) {
 }
 ;
 
-// START OF THE DATA PAGES
+// START OF THE DATA PAGES // START OF THE DATA PAGES // START OF THE DATA PAGES
 var dataPageContainer = document.querySelectorAll('.dataSubPageContainer');
 var dataPageOptions = {
   rootMargin: "0px",
   threshold: 0
 };
 
-// MARKETS PAGE -- CRYPTOCURRENCIES
+// MARKETS PAGE -- CRYPTOCURRENCIES // MARKETS PAGE -- CRYPTOCURRENCIES // MARKETS PAGE -- CRYPTOCURRENCIES
 var marketsCryptoObserver = new IntersectionObserver(function (entries, marketsCryptoObserver) {
   entries.forEach(function (entry) {
     if (entry.isIntersecting) {
@@ -709,7 +712,7 @@ var marketsCryptoObserver = new IntersectionObserver(function (entries, marketsC
 var marketCryptoPriceContainer = document.querySelector('.marketCryptocurrrencyChartContainer');
 marketsCryptoObserver.observe(marketCryptoPriceContainer);
 
-// MARKETS PAGE -- PUBLIC EXCHANGES, STAKERS & MINERS
+// MARKETS PAGE -- PUBLIC EXCHANGES, STAKERS & MINERS // MARKETS PAGE -- PUBLIC EXCHANGES, STAKERS & MINERS
 var marketsStocksObserver = new IntersectionObserver(function (entries, marketsStocksObserver) {
   entries.forEach(function (entry) {
     if (entry.isIntersecting) {
@@ -1029,7 +1032,7 @@ var parent = module.bundle.parent;
 if ((!parent || !parent.isParcelRequire) && typeof WebSocket !== 'undefined') {
   var hostname = "" || location.hostname;
   var protocol = location.protocol === 'https:' ? 'wss' : 'ws';
-  var ws = new WebSocket(protocol + '://' + hostname + ':' + "65017" + '/');
+  var ws = new WebSocket(protocol + '://' + hostname + ':' + "51413" + '/');
   ws.onmessage = function (event) {
     checkedAssets = {};
     assetsToAccept = [];

@@ -1,14 +1,15 @@
   // CODE FOR THE CATEGORY LIST FUNCTION
 // display and hide the category list
 const openCloseCategoriesDiv = document.querySelector('.openCloseCategoriesDiv');
-const openCloseCategoriesDivText = document.querySelector('.containerSignDiv');
-const chartSelectionPanelContainer = document.querySelector('.chartSelectionPanelContainer');
 const categoryHeadingContainer = document.querySelectorAll('.categoryHeadingContainer');
+const openCloseCategoriesDivText = document.querySelector('.containerSignDiv');
 const chartButtonContainer = document.querySelectorAll('.chartButtonContainer');
-const categoryArrowOpen = document.querySelectorAll('.fa-arrow-down-short-wide');
-const categoryArrowClose = document.querySelectorAll('.fa-arrow-up-short-wide');
-const openCategoryListIcon = document.querySelector('.fa-arrow-right-to-bracket');
 function openOrCloseCategoryList() {
+
+  // variables
+  const chartSelectionPanelContainer = document.querySelector('.chartSelectionPanelContainer');
+  const openCategoryListIcon = document.querySelector('.fa-arrow-right-to-bracket');
+
   if (openCloseCategoriesDiv.classList.contains('openCategoryList')) {
     openCloseCategoriesDiv.classList.remove('openCategoryList');
     chartSelectionPanelContainer.style.transform = 'translateX(-100%)';
@@ -24,6 +25,11 @@ function openOrCloseCategoryList() {
 openCloseCategoriesDiv.addEventListener('click', openOrCloseCategoryList);
 openCloseCategoriesDivText.addEventListener('click', openOrCloseCategoryList);
 for (let i = 0; i < categoryHeadingContainer.length; i++) {
+
+  // variables
+  const categoryArrowOpen = document.querySelectorAll('.fa-arrow-down-short-wide');
+  const categoryArrowClose = document.querySelectorAll('.fa-arrow-up-short-wide');
+
   // function to open or close the category
   function openOrCloseCategory() {
     if (chartButtonContainer[i].classList.contains('opened')) {
@@ -40,14 +46,14 @@ for (let i = 0; i < categoryHeadingContainer.length; i++) {
   categoryHeadingContainer[i].addEventListener('click', openOrCloseCategory);
 };
 
-  // START OF THE DATA PAGES
+  // START OF THE DATA PAGES // START OF THE DATA PAGES // START OF THE DATA PAGES
 const dataPageContainer = document.querySelectorAll('.dataSubPageContainer');
 const dataPageOptions = {
   rootMargin: "0px",
   threshold: 0
 };
 
-  // MARKETS PAGE -- CRYPTOCURRENCIES
+  // MARKETS PAGE -- CRYPTOCURRENCIES // MARKETS PAGE -- CRYPTOCURRENCIES // MARKETS PAGE -- CRYPTOCURRENCIES
 const marketsCryptoObserver = new IntersectionObserver(function(entries, marketsCryptoObserver) {
   entries.forEach(entry => {
     if (entry.isIntersecting) {
@@ -321,7 +327,7 @@ const marketCryptoPriceContainer = document.querySelector('.marketCryptocurrrenc
 marketsCryptoObserver.observe(marketCryptoPriceContainer);
 
 
-  // MARKETS PAGE -- PUBLIC EXCHANGES, STAKERS & MINERS
+  // MARKETS PAGE -- PUBLIC EXCHANGES, STAKERS & MINERS // MARKETS PAGE -- PUBLIC EXCHANGES, STAKERS & MINERS
 const marketsStocksObserver = new IntersectionObserver(function(entries, marketsStocksObserver) {
   entries.forEach(entry => {
     if (entry.isIntersecting) {

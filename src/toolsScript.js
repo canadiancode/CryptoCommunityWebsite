@@ -325,6 +325,7 @@ marketsCryptoObserver.observe(marketCryptoPriceContainer);
 const marketsStocksObserver = new IntersectionObserver(function(entries, marketsStocksObserver) {
   entries.forEach(entry => {
     if (entry.isIntersecting) {
+      const myAPIkey = 'GH9DTBAMAJL2HKD1';
 
       // CODE FOR CHANGING THE CHART SCALE
       let chartScale = 'logarithmic'; //logarithmic or linear
@@ -349,11 +350,36 @@ const marketsStocksObserver = new IntersectionObserver(function(entries, markets
       }
       };
 
-      const myAPIkey = 'GH9DTBAMAJL2HKD1';
+      // variables for the chart (price and data)
       let timeframeData = [];
       let stockPriceData = [];
-  
-  
+
+      // The ticker and timeframe variables
+      let ticker = 'COIN';
+      let timeframe = 'TIME_SERIES_WEEKLY'; // TIME_SERIES_DAILY_ADJUSTED, TIME_SERIES_WEEKLY, TIME_SERIES_MONTHLY
+      let timeSeries = 'Time Series (Daily)';
+
+      // This is for seeing if we need to change the timeframe
+      function dictateTimeframe() {
+        const selectedStockTimePeriodEl = document.querySelector('.stockChartTimeframe');
+        let selectedTimeframe = selectedStockTimePeriodEl.value; // this shows the number of days
+        timeframe = '';
+        timeframe = selectedTimeframe;
+      }
+      dictateTimeframe();
+      // this is for changing the time series
+      function changeTimeSeries() {
+        if (timeframe == 'TIME_SERIES_DAILY_ADJUSTED') {
+          timeSeries = 'Time Series (Daily)';
+        } else if (timeframe == 'TIME_SERIES_WEEKLY_ADJUSTED') {
+          timeSeries = 'Weekly Adjusted Time Series';
+        } else if (timeframe == 'TIME_SERIES_MONTHLY_ADJUSTED') {
+          timeSeries = 'Monthly Adjusted Time Series';
+        }
+      }
+      changeTimeSeries();
+
+      // function to initially fetch the data
       async function fetchData() {
         try {
           const options = {
@@ -364,18 +390,19 @@ const marketsStocksObserver = new IntersectionObserver(function(entries, markets
               }
           };
 
-          let ticker = 'AAPL';
-          let timeframe = 'TIME_SERIES_WEEKLY'; // TIME_SERIES_DAILY_ADJUSTED, TIME_SERIES_WEEKLY, TIME_SERIES_MONTHLY
-          let timeSeries = 'Weekly Time Series';
-          let URL = `https://www.alphavantage.co/query?function=${timeframe}&symbol=${ticker}&apikey=${myAPIkey}`;
+          // Initialize the time series
+          changeTimeSeries();
+          dictateTimeframe();
 
+          // Creating the URL and fetching the data
+          let URL = `https://www.alphavantage.co/query?function=${timeframe}&symbol=${ticker}&apikey=${myAPIkey}`;
           let response = await fetch(URL);
           let data = await response.json();
 
           // to fetch timeframe
           timeframeData = [];
           let unorderedTimeframeData = [];
-          let timeSeriesData = data[`${timeSeries}`];
+          let timeSeriesData = await data[`${timeSeries}`];
           for (const time in timeSeriesData) {  
             unorderedTimeframeData.push(time);
           }
@@ -390,13 +417,11 @@ const marketsStocksObserver = new IntersectionObserver(function(entries, markets
           for (let i = 0; i < allPriceDataObject.length; i++) {
             let allPrices = allPriceDataObject[`${i}`];
             let closePrices = Object.values(allPrices);
-            let closePrice = Number(closePrices[3]);
+            let closePrice = Number(closePrices[4]);
             reversedFetchedPrice.push(closePrice);
           };
           fetchedPriceData = reversedFetchedPrice.reverse();
           
-
-          // create the object to push into the stock price array
           let dataObject = {
             label: `Price of ${ticker}`,
             data: fetchedPriceData,
@@ -419,6 +444,88 @@ const marketsStocksObserver = new IntersectionObserver(function(entries, markets
         };
       };
       fetchData();
+
+      // Change the timeframe for the stock chart
+      async function changeStockTimeframe() {
+        try {
+
+          // change the variables for the URL
+          dictateTimeframe();
+          changeTimeSeries();
+
+          // Creating the URL and fetching the data
+          let URL = `https://www.alphavantage.co/query?function=${timeframe}&symbol=${ticker}&apikey=${myAPIkey}`;
+          let response = await fetch(URL);
+          let data = await response.json();
+
+          timeframeData = [];
+          let unorderedTimeframeData = [];
+          let timeSeriesData = await data[`${timeSeries}`];
+          for (const time in timeSeriesData) {  
+            unorderedTimeframeData.push(time);
+          }
+          timeframeData = unorderedTimeframeData.reverse();
+          stockPriceChart.data.labels = timeframeData;
+
+          // to fetch price data
+          stockPriceData = [];
+          let reversedFetchedPrice = [];
+          let fetchedPriceData = [];
+          let priceSeriesData = data[`${timeSeries}`];
+          let allPriceDataObject = Object.values(priceSeriesData);
+          for (let i = 0; i < allPriceDataObject.length; i++) {
+            let allPrices = allPriceDataObject[`${i}`];
+            let closePrices = Object.values(allPrices);
+            let closePrice = Number(closePrices[4]);
+            reversedFetchedPrice.push(closePrice);
+          };
+          fetchedPriceData = reversedFetchedPrice.reverse();
+          
+          let dataObject = {
+            label: `Price of ${ticker}`,
+            data: fetchedPriceData,
+            fill: false,
+            pointRadius: 0,
+            borderWidth: 1,
+            backgroundColor: '#FFFFFF',
+            borderColor: '#FFFFFF',
+            yAxisID: 'y'
+          };
+          stockPriceData.push(dataObject);
+
+          // code for adjusting the timeframe shown on the chart
+          if (selectedTimePeriodEl.value < 8) {
+            console.log('one week');
+            let shortenedPriceData = stockPriceData.slice(0, -selectedStockTimeframe.value);
+            stockPriceChart.data.datasets = shortenedPriceData;
+          } else {
+            stockPriceChart.data.datasets = stockPriceData;
+            console.log('no price filter');
+          }
+
+          stockPriceChart.data.datasets = stockPriceData;
+
+          // update the chart 
+          stockPriceChart.update();
+
+        }
+        catch(error) {
+          console.log(error);
+          console.log('could not change timeframe for stock chart...');
+        }
+
+      };
+      const selectedTimePeriodEl = document.querySelector('.stockChartTimeframe');
+      selectedTimePeriodEl.addEventListener('change', changeStockTimeframe);
+
+
+      // Change the displayed stock for the chart
+      async function changeStockAsset() {
+        console.log('');
+      };
+      const selectedStockEl = document.querySelector('.stockList');
+      selectedStockEl.addEventListener('change', changeStockAsset);
+
 
       // Code for the chart
       const stockPriceCanvas = document.querySelector('.marketStockPrice');

@@ -41,7 +41,7 @@ for (let i = 0; i < categoryHeadingContainer.length; i++) {
 };
 
   // START OF THE DATA PAGES
-const dataPageContainer = document.querySelectorAll('.dataPageContainer');
+const dataPageContainer = document.querySelectorAll('.dataSubPageContainer');
 const dataPageOptions = {
   rootMargin: "0px",
   threshold: 0
@@ -94,7 +94,7 @@ const marketsCryptoObserver = new IntersectionObserver(function(entries, markets
             let epochTimeframe = await time[0];
             let formattedDate = new Date(epochTimeframe);
             let longTimeframe = formattedDate.toUTCString();
-            let timeframe = longTimeframe.substring(4, 16);
+            let timeframe = longTimeframe.substring(5, 16);
             chartTime.push(timeframe);
           };
           displayedChart.data.labels = chartTime;
@@ -317,23 +317,142 @@ const marketsCryptoObserver = new IntersectionObserver(function(entries, markets
     };
   })
 }, dataPageOptions);
+const marketCryptoPriceContainer = document.querySelector('.marketCryptocurrrencyChartContainer');
+marketsCryptoObserver.observe(marketCryptoPriceContainer);
 
-  // MARKETS PAGE -- PUBLIC EXCHANGES AND 
+
+  // MARKETS PAGE -- PUBLIC EXCHANGES, STAKERS & MINERS
 const marketsStocksObserver = new IntersectionObserver(function(entries, marketsStocksObserver) {
   entries.forEach(entry => {
     if (entry.isIntersecting) {
 
-      console.log('marketsStocksObserver');
+      // CODE FOR CHANGING THE CHART SCALE
+      let chartScale = 'logarithmic'; //logarithmic or linear
+      const autoChartOption = document.querySelector('.stockAutoChartOption');
+      autoChartOption.addEventListener('click', changeChartScale)
+      const logChartOption = document.querySelector('.stockLogChartOption');
+      logChartOption.addEventListener('click', changeChartScale);
+      function changeChartScale(event) {
+      if (event.target.classList.contains('autoChartOption')) {
+        autoChartOption.style.backgroundColor = 'rgb(128, 128, 128, 0.6)';
+        logChartOption.style.backgroundColor = 'rgb(128, 128, 128, 0.2)';
+        chartScale = 'linear';
+        stockPriceChart.options.scales.y.type = chartScale;
+        stockPriceChart.update();
+      } 
+      else {
+        autoChartOption.style.backgroundColor = 'rgb(128, 128, 128, 0.2)';
+        logChartOption.style.backgroundColor = 'rgb(128, 128, 128, 0.6)';
+        chartScale = 'logarithmic';
+        stockPriceChart.options.scales.y.type = chartScale;
+        stockPriceChart.update();
+      }
+      };
 
+      const myAPIkey = 'GH9DTBAMAJL2HKD1';
+      let timeframeData = [];
+      let stockPriceData = [];
+  
+  
+      async function fetchData() {
+        try {
+          const options = {
+              method: 'GET',
+              headers: {
+                  'X-RapidAPI-Key': '5abcde3910mshe635fb57c055c0fp10d768jsna1801b9b4a77',
+                  'X-RapidAPI-Host': 'real-time-finance-data.p.rapidapi.com'
+              }
+          };
+
+          let ticker = 'AAPL';
+          let timeframe = 'TIME_SERIES_WEEKLY'; // TIME_SERIES_DAILY_ADJUSTED, TIME_SERIES_WEEKLY, TIME_SERIES_MONTHLY
+          let timeSeries = 'Weekly Time Series';
+          let URL = `https://www.alphavantage.co/query?function=${timeframe}&symbol=${ticker}&apikey=${myAPIkey}`;
+
+          let response = await fetch(URL);
+          let data = await response.json();
+
+          // to fetch timeframe
+          timeframeData = [];
+          let unorderedTimeframeData = [];
+          let timeSeriesData = data[`${timeSeries}`];
+          for (const time in timeSeriesData) {  
+            unorderedTimeframeData.push(time);
+          }
+          timeframeData = unorderedTimeframeData.reverse();
+          stockPriceChart.data.labels = timeframeData;
+
+          // to fetch price data
+          let reversedFetchedPrice = [];
+          let fetchedPriceData = [];
+          let priceSeriesData = data[`${timeSeries}`];
+          let allPriceDataObject = Object.values(priceSeriesData);
+          for (let i = 0; i < allPriceDataObject.length; i++) {
+            let allPrices = allPriceDataObject[`${i}`];
+            let closePrices = Object.values(allPrices);
+            let closePrice = Number(closePrices[3]);
+            reversedFetchedPrice.push(closePrice);
+          };
+          fetchedPriceData = reversedFetchedPrice.reverse();
+          
+
+          // create the object to push into the stock price array
+          let dataObject = {
+            label: `Price of ${ticker}`,
+            data: fetchedPriceData,
+            fill: false,
+            pointRadius: 0,
+            borderWidth: 1,
+            backgroundColor: '#FFFFFF',
+            borderColor: '#FFFFFF',
+            yAxisID: 'y'
+          };
+          stockPriceData.push(dataObject);
+          stockPriceChart.data.datasets = stockPriceData;
+
+          // update the chart 
+          stockPriceChart.update();
+        } 
+        catch(error) {
+          console.log(error);
+          console.log('could not fetch data');
+        };
+      };
+      fetchData();
+
+      // Code for the chart
+      const stockPriceCanvas = document.querySelector('.marketStockPrice');
+      let stockPriceChart = new Chart(stockPriceCanvas, {
+        type: 'line',
+        data: {
+          labels: timeframeData,
+          datasets: stockPriceData,
+        },
+        options: {
+          type: chartScale,
+          display: true,
+          position: 'left',
+          responsive: true,
+          maintainAspectRatio: false,
+          scales: {
+            y: {
+              grid: {
+                color: '#232323',
+              },
+              ticks: {
+                callback: function(value, index, values) {
+                  return '$' + value.toLocaleString("en-US");
+                }
+              }
+            }
+          }
+        }
+      });
+
+
+    // End of the if statement for the intersection observer
     }
   })
 }, dataPageOptions);
-
-
-
-  // OBSERVE FOR EACH Intersection Observers
-dataPageContainer.forEach(page => {
-  marketsCryptoObserver.observe(page);
-  marketsStocksObserver.observe(page);
-});
-
+const marketPublicstockChartContainer = document.querySelector('.marketPublicstockChartContainer');
+marketsStocksObserver.observe(marketPublicstockChartContainer);

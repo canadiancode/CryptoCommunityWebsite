@@ -172,7 +172,7 @@ for (var i = 0; i < categoryHeadingContainer.length; i++) {
 ;
 
 // START OF THE DATA PAGES
-var dataPageContainer = document.querySelectorAll('.dataPageContainer');
+var dataPageContainer = document.querySelectorAll('.dataSubPageContainer');
 var dataPageOptions = {
   rootMargin: "0px",
   threshold: 0
@@ -580,7 +580,7 @@ var marketsCryptoObserver = new IntersectionObserver(function (entries, marketsC
                   epochTimeframe = _context.sent;
                   formattedDate = new Date(epochTimeframe);
                   longTimeframe = formattedDate.toUTCString();
-                  timeframe = longTimeframe.substring(4, 16);
+                  timeframe = longTimeframe.substring(5, 16);
                   chartTime.push(timeframe);
                 case 22:
                   _context.next = 13;
@@ -706,21 +706,161 @@ var marketsCryptoObserver = new IntersectionObserver(function (entries, marketsC
     ;
   });
 }, dataPageOptions);
+var marketCryptoPriceContainer = document.querySelector('.marketCryptocurrrencyChartContainer');
+marketsCryptoObserver.observe(marketCryptoPriceContainer);
 
-// MARKETS PAGE -- PUBLIC EXCHANGES AND 
+// MARKETS PAGE -- PUBLIC EXCHANGES, STAKERS & MINERS
 var marketsStocksObserver = new IntersectionObserver(function (entries, marketsStocksObserver) {
   entries.forEach(function (entry) {
     if (entry.isIntersecting) {
-      console.log('marketsStocksObserver');
+      var changeChartScale = function changeChartScale(event) {
+        if (event.target.classList.contains('autoChartOption')) {
+          autoChartOption.style.backgroundColor = 'rgb(128, 128, 128, 0.6)';
+          logChartOption.style.backgroundColor = 'rgb(128, 128, 128, 0.2)';
+          chartScale = 'linear';
+          stockPriceChart.options.scales.y.type = chartScale;
+          stockPriceChart.update();
+        } else {
+          autoChartOption.style.backgroundColor = 'rgb(128, 128, 128, 0.2)';
+          logChartOption.style.backgroundColor = 'rgb(128, 128, 128, 0.6)';
+          chartScale = 'logarithmic';
+          stockPriceChart.options.scales.y.type = chartScale;
+          stockPriceChart.update();
+        }
+      };
+      var fetchData = /*#__PURE__*/function () {
+        var _ref5 = _asyncToGenerator( /*#__PURE__*/_regeneratorRuntime().mark(function _callee5() {
+          var options, ticker, timeframe, timeSeries, URL, response, data, unorderedTimeframeData, timeSeriesData, time, reversedFetchedPrice, fetchedPriceData, priceSeriesData, allPriceDataObject, _i, allPrices, closePrices, closePrice, dataObject;
+          return _regeneratorRuntime().wrap(function _callee5$(_context5) {
+            while (1) switch (_context5.prev = _context5.next) {
+              case 0:
+                _context5.prev = 0;
+                options = {
+                  method: 'GET',
+                  headers: {
+                    'X-RapidAPI-Key': '5abcde3910mshe635fb57c055c0fp10d768jsna1801b9b4a77',
+                    'X-RapidAPI-Host': 'real-time-finance-data.p.rapidapi.com'
+                  }
+                };
+                ticker = 'AAPL';
+                timeframe = 'TIME_SERIES_WEEKLY'; // TIME_SERIES_DAILY_ADJUSTED, TIME_SERIES_WEEKLY, TIME_SERIES_MONTHLY
+                timeSeries = 'Weekly Time Series';
+                URL = "https://www.alphavantage.co/query?function=".concat(timeframe, "&symbol=").concat(ticker, "&apikey=").concat(myAPIkey);
+                _context5.next = 8;
+                return fetch(URL);
+              case 8:
+                response = _context5.sent;
+                _context5.next = 11;
+                return response.json();
+              case 11:
+                data = _context5.sent;
+                // to fetch timeframe
+                timeframeData = [];
+                unorderedTimeframeData = [];
+                timeSeriesData = data["".concat(timeSeries)];
+                for (time in timeSeriesData) {
+                  unorderedTimeframeData.push(time);
+                }
+                timeframeData = unorderedTimeframeData.reverse();
+                stockPriceChart.data.labels = timeframeData;
+
+                // to fetch price data
+                reversedFetchedPrice = [];
+                fetchedPriceData = [];
+                priceSeriesData = data["".concat(timeSeries)];
+                allPriceDataObject = Object.values(priceSeriesData);
+                for (_i = 0; _i < allPriceDataObject.length; _i++) {
+                  allPrices = allPriceDataObject["".concat(_i)];
+                  closePrices = Object.values(allPrices);
+                  closePrice = Number(closePrices[3]);
+                  reversedFetchedPrice.push(closePrice);
+                }
+                ;
+                fetchedPriceData = reversedFetchedPrice.reverse();
+
+                // create the object to push into the stock price array
+                dataObject = {
+                  label: "Price of ".concat(ticker),
+                  data: fetchedPriceData,
+                  fill: false,
+                  pointRadius: 0,
+                  borderWidth: 1,
+                  backgroundColor: '#FFFFFF',
+                  borderColor: '#FFFFFF',
+                  yAxisID: 'y'
+                };
+                stockPriceData.push(dataObject);
+                stockPriceChart.data.datasets = stockPriceData;
+
+                // update the chart 
+                stockPriceChart.update();
+                _context5.next = 35;
+                break;
+              case 31:
+                _context5.prev = 31;
+                _context5.t0 = _context5["catch"](0);
+                console.log(_context5.t0);
+                console.log('could not fetch data');
+              case 35:
+                ;
+              case 36:
+              case "end":
+                return _context5.stop();
+            }
+          }, _callee5, null, [[0, 31]]);
+        }));
+        return function fetchData() {
+          return _ref5.apply(this, arguments);
+        };
+      }();
+      // CODE FOR CHANGING THE CHART SCALE
+      var chartScale = 'logarithmic'; //logarithmic or linear
+      var autoChartOption = document.querySelector('.stockAutoChartOption');
+      autoChartOption.addEventListener('click', changeChartScale);
+      var logChartOption = document.querySelector('.stockLogChartOption');
+      logChartOption.addEventListener('click', changeChartScale);
+      ;
+      var myAPIkey = 'GH9DTBAMAJL2HKD1';
+      var timeframeData = [];
+      var stockPriceData = [];
+      ;
+      fetchData();
+
+      // Code for the chart
+      var stockPriceCanvas = document.querySelector('.marketStockPrice');
+      var stockPriceChart = new Chart(stockPriceCanvas, {
+        type: 'line',
+        data: {
+          labels: timeframeData,
+          datasets: stockPriceData
+        },
+        options: {
+          type: chartScale,
+          display: true,
+          position: 'left',
+          responsive: true,
+          maintainAspectRatio: false,
+          scales: {
+            y: {
+              grid: {
+                color: '#232323'
+              },
+              ticks: {
+                callback: function callback(value, index, values) {
+                  return '$' + value.toLocaleString("en-US");
+                }
+              }
+            }
+          }
+        }
+      });
+
+      // End of the if statement for the intersection observer
     }
   });
 }, dataPageOptions);
-
-// OBSERVE FOR EACH Intersection Observers
-dataPageContainer.forEach(function (page) {
-  marketsCryptoObserver.observe(page);
-  marketsStocksObserver.observe(page);
-});
+var marketPublicstockChartContainer = document.querySelector('.marketPublicstockChartContainer');
+marketsStocksObserver.observe(marketPublicstockChartContainer);
 },{}],"../node_modules/parcel-bundler/src/builtins/hmr-runtime.js":[function(require,module,exports) {
 var global = arguments[3];
 var OVERLAY_ID = '__parcel__error__overlay__';
@@ -746,7 +886,7 @@ var parent = module.bundle.parent;
 if ((!parent || !parent.isParcelRequire) && typeof WebSocket !== 'undefined') {
   var hostname = "" || location.hostname;
   var protocol = location.protocol === 'https:' ? 'wss' : 'ws';
-  var ws = new WebSocket(protocol + '://' + hostname + ':' + "52239" + '/');
+  var ws = new WebSocket(protocol + '://' + hostname + ':' + "57178" + '/');
   ws.onmessage = function (event) {
     checkedAssets = {};
     assetsToAccept = [];

@@ -157,8 +157,10 @@
 
             <!-- Markets page -->
             <div class="dataPageContainer">
+                
+                <!-- Price action -->
                 <div class="priceContainer dataSubPageContainer">
-                    <div class="marketPriceDiv">
+                    <div class="marketCryptocurrrencyChartContainer marketPriceDiv">
                         <p>Markets</p>
                         <h1>Cryptocurrencies</h1>
                         <canvas class="marketCryptoPrice"></canvas>
@@ -190,38 +192,69 @@
                             </div>
                         </div>
                     </div>
-                    <div class="marketPriceDiv">
+                    <div class="marketPublicstockChartContainer marketPriceDiv">
                         <p>Markets</p>
                         <h1>Public Exchanges, Miners & Stakers</h1>
-                        <canvas class="marketExchangePrice"></canvas>
+                        <canvas class="marketStockPrice"></canvas>
+                        <div class="chartOptions">
+                            <div class="assetSelectionDiv">
+                                <label>Asset:</label>
+                                <select class="assetList"></select>
+                            </div>
+                            <div class="timeframeSelectionDiv">
+                                <label>Timeframe:</label>
+                                <select class="timeframeList">
+                                    <option value="3650" class="timeframe year">10 Year</option>
+                                    <option value="2555" class="timeframe year">7 Year</option>
+                                    <option value="1825" class="timeframe year">5 Year</option>
+                                    <option value="1460" class="timeframe year">4 Year</option>
+                                    <option value="1095" class="timeframe year">3 Year</option>
+                                    <option value="730" class="timeframe year">2 Year</option>
+                                    <option value="365" selected class="timeframe year">1 Year</option>
+                                    <option value="120" class="timeframe onequarter">90D</option>
+                                    <option value="30" class="timeframe onequarter">30D</option>
+                                    <option value="7" class="timeframe onequarter">7D</option>
+                                </select>
+                            </div>
+                            <div class="logOptionDiv">
+                                <div>
+                                    <button class="stockAutoChartOption chartLogAutoButton autoChartOption">Auto</button>
+                                    <button class="stockLogChartOption chartLogAutoButton logChartOption">Log</button>
+                                </div>
+                            </div>
+                        </div>
                     </div>
                 </div>
-                <div class="marketCapContainer dataSubPageContainer"></div>
-                <div class="volumePageContainer dataSubPageContainer"></div>
+                <!-- <div class="marketCapContainer dataSubPageContainer"></div>
+                <div class="volumePageContainer dataSubPageContainer"></div> -->
             </div>
+
             <!-- On-Chain page -->
             <div class="dataPageContainer">
-                <div class="onChainContainer dataSubPageContainer"></div>
+                <!-- <div class="onChainContainer dataSubPageContainer"></div>
                 <div class="transactionCostContainer dataSubPageContainer"></div>
-                <div class="valueFlowContainer dataSubPageContainer"></div>
+                <div class="valueFlowContainer dataSubPageContainer"></div> -->
             </div>
+
             <!-- DeFi page -->
             <div class="dataPageContainer">
-                <div class="totalValueLockedContainer dataSubPageContainer"></div>
+                <!-- <div class="totalValueLockedContainer dataSubPageContainer"></div>
                 <div class="protocolRevenueContainer dataSubPageContainer"></div>
-                <div class="exploitsContainer dataSubPageContainer"></div>
+                <div class="exploitsContainer dataSubPageContainer"></div> -->
             </div>
+
             <!-- NFT page -->
             <div class="dataPageContainer">
+                <!-- <div class="dataSubPageContainer"></div>
                 <div class="dataSubPageContainer"></div>
-                <div class="dataSubPageContainer"></div>
-                <div class="dataSubPageContainer"></div>
+                <div class="dataSubPageContainer"></div> -->
             </div>
+            
             <!-- Alternative metrics -->
             <div class="dataPageContainer">
+                <!-- <div class="dataSubPageContainer"></div>
                 <div class="dataSubPageContainer"></div>
-                <div class="dataSubPageContainer"></div>
-                <div class="dataSubPageContainer"></div>
+                <div class="dataSubPageContainer"></div> -->
             </div>
 
         </div>

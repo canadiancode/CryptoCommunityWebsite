@@ -361,7 +361,7 @@ const marketsStocksObserver = new IntersectionObserver(function(entries, markets
       let stockPriceData = [];
 
       // The ticker and timeframe variables
-      let ticker = 'COIN';
+      let ticker = 'AAPL';
       let timeframe = 'TIME_SERIES_WEEKLY_ADJUSTED'; // TIME_SERIES_DAILY_ADJUSTED, TIME_SERIES_WEEKLY_ADJUSTED, TIME_SERIES_MONTHLY_ADJUSTED
       let timeSeries = 'Weekly Adjusted Time Series'; // (we don't need to adjust this) Time Series (Daily), Weekly Adjusted Time Series, Monthly Adjusted Time Series
 
@@ -452,9 +452,6 @@ const marketsStocksObserver = new IntersectionObserver(function(entries, markets
           stockPriceData.push(dataObject);
           stockPriceChart.data.datasets = stockPriceData;
 
-          console.log(stockPriceData);
-          console.log(timeframeData);
-
           // update chart
           stockPriceChart.update();
         } 
@@ -511,15 +508,70 @@ const marketsStocksObserver = new IntersectionObserver(function(entries, markets
             yAxisID: 'y'
           };
           stockPriceData.push(dataObject);
-          // stockPriceChart.data.datasets = stockPriceData
 
-          // shorten timeframe for timeframe selection
-          console.log(stockPriceData);
-          console.log(timeframeData);
+          // edit the timeframe data displayed on the chart
+          function adjustDisplayedTime() {
+            if (selectedTimePeriodEl.value < 8) {
+              // edit the length of the timeframe data
+              let adjustedTimeframeData = timeframeData.slice(93);
+              // update the chart data
+              stockPriceChart.data.datasets = stockPriceData;
+              stockPriceChart.data.labels = adjustedTimeframeData;  
+            } else if (selectedTimePeriodEl.value < 31) {
+              let adjustedTimeframeData = timeframeData.slice(75);
+              // update the chart data
+              stockPriceChart.data.datasets = stockPriceData;
+              stockPriceChart.data.labels = adjustedTimeframeData;
+            } else if (selectedTimePeriodEl.value < 91) {
+              let adjustedTimeframeData = timeframeData.slice(10);
+              // update the chart data
+              stockPriceChart.data.datasets = stockPriceData;
+              stockPriceChart.data.labels = adjustedTimeframeData;
+            } else if (selectedTimePeriodEl.value < 366) {
+              let adjustedTimeframeData = timeframeData.slice(1163);
+              console.log(adjustedTimeframeData);
+              // update the chart data
+              stockPriceChart.data.datasets = stockPriceData;
+              stockPriceChart.data.labels = adjustedTimeframeData;
+            } else if (selectedTimePeriodEl.value < 731) {
+              let adjustedTimeframeData = timeframeData.slice(1111);
+              // update the chart data
+              stockPriceChart.data.datasets = stockPriceData;
+              stockPriceChart.data.labels = adjustedTimeframeData;
+            } else if (selectedTimePeriodEl.value < 1096) {
+              let adjustedTimeframeData = timeframeData.slice(1059);
+              // update the chart data
+              stockPriceChart.data.datasets = stockPriceData;
+              stockPriceChart.data.labels = adjustedTimeframeData;  
+            } else if (selectedTimePeriodEl.value < 1461) {
+              let adjustedTimeframeData = timeframeData.slice(1007);
+              // update the chart data
+              stockPriceChart.data.datasets = stockPriceData;
+              stockPriceChart.data.labels = adjustedTimeframeData;  
+            } else if (selectedTimePeriodEl.value < 1826) {
+              let adjustedTimeframeData = timeframeData.slice(955);
+              // update the chart data
+              stockPriceChart.data.datasets = stockPriceData;
+              stockPriceChart.data.labels = adjustedTimeframeData;  
+            } else if (selectedTimePeriodEl.value < 2556) {
+              let adjustedTimeframeData = timeframeData.slice(194);
+              // update the chart data
+              stockPriceChart.data.datasets = stockPriceData;
+              stockPriceChart.data.labels = adjustedTimeframeData;  
+            } else if (selectedTimePeriodEl.value < 3651) {
+              let adjustedTimeframeData = timeframeData.slice(158);
+              // update the chart data
+              stockPriceChart.data.datasets = stockPriceData;
+              stockPriceChart.data.labels = adjustedTimeframeData;  
+            } else {
+              // update the chart data
+              stockPriceChart.data.datasets = stockPriceData;
+              stockPriceChart.data.labels = timeframeData;            
+            };
+          }
+          adjustDisplayedTime();
 
           // update the chart 
-          stockPriceChart.data.datasets = stockPriceData;
-          stockPriceChart.data.labels = timeframeData;
           stockPriceChart.update();
 
         }

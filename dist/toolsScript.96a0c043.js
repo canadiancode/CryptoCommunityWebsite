@@ -731,15 +731,29 @@ var marketsStocksObserver = new IntersectionObserver(function (entries, marketsS
           stockPriceChart.update();
         }
       };
+      // (we don't need to adjust this) Time Series (Daily), Weekly Adjusted Time Series, Monthly Adjusted Time Series
       // This is for seeing if we need to change the timeframe
       var dictateTimeframe = function dictateTimeframe() {
         var selectedStockTimePeriodEl = document.querySelector('.stockChartTimeframe');
         var selectedTimeframe = selectedStockTimePeriodEl.value; // this shows the number of days
+
         timeframe = '';
-        timeframe = selectedTimeframe;
-      };
-      // this is for changing the time series
-      var changeTimeSeries = function changeTimeSeries() {
+        if (selectedTimeframe < 8) {
+          timeframe = 'TIME_SERIES_DAILY_ADJUSTED';
+          // console.log('timeframe is less than 8 days');
+        } else if (selectedTimeframe < 91) {
+          timeframe = 'TIME_SERIES_DAILY_ADJUSTED';
+        } else if (selectedTimeframe < 366) {
+          timeframe = 'TIME_SERIES_WEEKLY_ADJUSTED';
+          // console.log('timeframe is less than 1 year and day');
+        } else if (selectedTimeframe < 1826) {
+          timeframe = 'TIME_SERIES_WEEKLY_ADJUSTED';
+          // console.log('timeframe is less than 5 years and a day');
+        } else {
+          timeframe = 'TIME_SERIES_MONTHLY_ADJUSTED';
+          // console.log('timeframe is longer than 5 years');
+        }
+
         if (timeframe == 'TIME_SERIES_DAILY_ADJUSTED') {
           timeSeries = 'Time Series (Daily)';
         } else if (timeframe == 'TIME_SERIES_WEEKLY_ADJUSTED') {
@@ -763,25 +777,24 @@ var marketsStocksObserver = new IntersectionObserver(function (entries, marketsS
                     'X-RapidAPI-Host': 'real-time-finance-data.p.rapidapi.com'
                   }
                 }; // Initialize the time series
-                changeTimeSeries();
                 dictateTimeframe();
 
                 // Creating the URL and fetching the data
                 URL = "https://www.alphavantage.co/query?function=".concat(timeframe, "&symbol=").concat(ticker, "&apikey=").concat(myAPIkey);
-                _context5.next = 7;
+                _context5.next = 6;
                 return fetch(URL);
-              case 7:
+              case 6:
                 response = _context5.sent;
-                _context5.next = 10;
+                _context5.next = 9;
                 return response.json();
-              case 10:
+              case 9:
                 data = _context5.sent;
                 // to fetch timeframe
                 timeframeData = [];
                 unorderedTimeframeData = [];
-                _context5.next = 15;
+                _context5.next = 14;
                 return data["".concat(timeSeries)];
-              case 15:
+              case 14:
                 timeSeriesData = _context5.sent;
                 for (time in timeSeriesData) {
                   unorderedTimeframeData.push(time);
@@ -792,7 +805,10 @@ var marketsStocksObserver = new IntersectionObserver(function (entries, marketsS
                 // to fetch price data
                 reversedFetchedPrice = [];
                 fetchedPriceData = [];
-                priceSeriesData = data["".concat(timeSeries)];
+                _context5.next = 22;
+                return data["".concat(timeSeries)];
+              case 22:
+                priceSeriesData = _context5.sent;
                 allPriceDataObject = Object.values(priceSeriesData);
                 for (_i = 0; _i < allPriceDataObject.length; _i++) {
                   allPrices = allPriceDataObject["".concat(_i)];
@@ -814,23 +830,25 @@ var marketsStocksObserver = new IntersectionObserver(function (entries, marketsS
                 };
                 stockPriceData.push(dataObject);
                 stockPriceChart.data.datasets = stockPriceData;
+                console.log(stockPriceData);
+                console.log(timeframeData);
 
-                // update the chart 
+                // update chart
                 stockPriceChart.update();
-                _context5.next = 36;
+                _context5.next = 39;
                 break;
-              case 32:
-                _context5.prev = 32;
+              case 35:
+                _context5.prev = 35;
                 _context5.t0 = _context5["catch"](0);
                 console.log(_context5.t0);
                 console.log('could not fetch data');
-              case 36:
+              case 39:
                 ;
-              case 37:
+              case 40:
               case "end":
                 return _context5.stop();
             }
-          }, _callee5, null, [[0, 32]]);
+          }, _callee5, null, [[0, 35]]);
         }));
         return function fetchData() {
           return _ref5.apply(this, arguments);
@@ -839,36 +857,35 @@ var marketsStocksObserver = new IntersectionObserver(function (entries, marketsS
       // Change the timeframe for the stock chart
       var changeStockTimeframe = /*#__PURE__*/function () {
         var _ref6 = _asyncToGenerator( /*#__PURE__*/_regeneratorRuntime().mark(function _callee6() {
-          var URL, response, data, unorderedTimeframeData, timeSeriesData, time, reversedFetchedPrice, fetchedPriceData, priceSeriesData, allPriceDataObject, _i2, allPrices, closePrices, closePrice, dataObject, shortenedPriceData;
+          var URL, response, data, unorderedTimeframeData, timeSeriesData, time, reversedFetchedPrice, fetchedPriceData, priceSeriesData, allPriceDataObject, _i2, allPrices, closePrices, closePrice, dataObject;
           return _regeneratorRuntime().wrap(function _callee6$(_context6) {
             while (1) switch (_context6.prev = _context6.next) {
               case 0:
                 _context6.prev = 0;
                 // change the variables for the URL
                 dictateTimeframe();
-                changeTimeSeries();
 
                 // Creating the URL and fetching the data
                 URL = "https://www.alphavantage.co/query?function=".concat(timeframe, "&symbol=").concat(ticker, "&apikey=").concat(myAPIkey);
-                _context6.next = 6;
+                _context6.next = 5;
                 return fetch(URL);
-              case 6:
+              case 5:
                 response = _context6.sent;
-                _context6.next = 9;
+                _context6.next = 8;
                 return response.json();
-              case 9:
+              case 8:
                 data = _context6.sent;
                 timeframeData = [];
                 unorderedTimeframeData = [];
-                _context6.next = 14;
+                _context6.next = 13;
                 return data["".concat(timeSeries)];
-              case 14:
+              case 13:
                 timeSeriesData = _context6.sent;
                 for (time in timeSeriesData) {
                   unorderedTimeframeData.push(time);
                 }
                 timeframeData = unorderedTimeframeData.reverse();
-                stockPriceChart.data.labels = timeframeData;
+                // stockPriceChart.data.labels = timeframeData;
 
                 // to fetch price data
                 stockPriceData = [];
@@ -895,19 +912,15 @@ var marketsStocksObserver = new IntersectionObserver(function (entries, marketsS
                   yAxisID: 'y'
                 };
                 stockPriceData.push(dataObject);
+                // stockPriceChart.data.datasets = stockPriceData
 
-                // code for adjusting the timeframe shown on the chart
-                if (selectedTimePeriodEl.value < 8) {
-                  console.log('one week');
-                  shortenedPriceData = stockPriceData.slice(0, -selectedStockTimeframe.value);
-                  stockPriceChart.data.datasets = shortenedPriceData;
-                } else {
-                  stockPriceChart.data.datasets = stockPriceData;
-                  console.log('no price filter');
-                }
-                stockPriceChart.data.datasets = stockPriceData;
+                // shorten timeframe for timeframe selection
+                console.log(stockPriceData);
+                console.log(timeframeData);
 
                 // update the chart 
+                stockPriceChart.data.datasets = stockPriceData;
+                stockPriceChart.data.labels = timeframeData;
                 stockPriceChart.update();
                 _context6.next = 37;
                 break;
@@ -953,16 +966,15 @@ var marketsStocksObserver = new IntersectionObserver(function (entries, marketsS
       logChartOption.addEventListener('click', changeChartScale);
       ;
 
-      // variables for the chart (price and data)
+      // variables for the chart data arrays (price and data)
       var timeframeData = [];
       var stockPriceData = [];
 
       // The ticker and timeframe variables
       var ticker = 'COIN';
-      var timeframe = 'TIME_SERIES_WEEKLY'; // TIME_SERIES_DAILY_ADJUSTED, TIME_SERIES_WEEKLY, TIME_SERIES_MONTHLY
-      var timeSeries = 'Time Series (Daily)';
+      var timeframe = 'TIME_SERIES_WEEKLY_ADJUSTED'; // TIME_SERIES_DAILY_ADJUSTED, TIME_SERIES_WEEKLY_ADJUSTED, TIME_SERIES_MONTHLY_ADJUSTED
+      var timeSeries = 'Weekly Adjusted Time Series';
       dictateTimeframe();
-      changeTimeSeries();
       ;
       fetchData();
       ;

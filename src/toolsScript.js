@@ -356,25 +356,37 @@ const marketsStocksObserver = new IntersectionObserver(function(entries, markets
       }
       };
 
-      // variables for the chart (price and data)
+      // variables for the chart data arrays (price and data)
       let timeframeData = [];
       let stockPriceData = [];
 
       // The ticker and timeframe variables
       let ticker = 'COIN';
-      let timeframe = 'TIME_SERIES_WEEKLY'; // TIME_SERIES_DAILY_ADJUSTED, TIME_SERIES_WEEKLY, TIME_SERIES_MONTHLY
-      let timeSeries = 'Time Series (Daily)';
+      let timeframe = 'TIME_SERIES_WEEKLY_ADJUSTED'; // TIME_SERIES_DAILY_ADJUSTED, TIME_SERIES_WEEKLY_ADJUSTED, TIME_SERIES_MONTHLY_ADJUSTED
+      let timeSeries = 'Weekly Adjusted Time Series'; // (we don't need to adjust this) Time Series (Daily), Weekly Adjusted Time Series, Monthly Adjusted Time Series
 
       // This is for seeing if we need to change the timeframe
       function dictateTimeframe() {
         const selectedStockTimePeriodEl = document.querySelector('.stockChartTimeframe');
         let selectedTimeframe = selectedStockTimePeriodEl.value; // this shows the number of days
+        
         timeframe = '';
-        timeframe = selectedTimeframe;
-      }
-      dictateTimeframe();
-      // this is for changing the time series
-      function changeTimeSeries() {
+        if (selectedTimeframe < 8) {
+          timeframe = 'TIME_SERIES_DAILY_ADJUSTED';
+          // console.log('timeframe is less than 8 days');
+        } else if (selectedTimeframe < 91) {
+          timeframe = 'TIME_SERIES_DAILY_ADJUSTED';
+        } else if (selectedTimeframe < 366) {
+          timeframe = 'TIME_SERIES_WEEKLY_ADJUSTED';
+          // console.log('timeframe is less than 1 year and day');
+        } else if (selectedTimeframe < 1826) {
+          timeframe = 'TIME_SERIES_WEEKLY_ADJUSTED';
+          // console.log('timeframe is less than 5 years and a day');
+        } else {
+          timeframe = 'TIME_SERIES_MONTHLY_ADJUSTED';
+          // console.log('timeframe is longer than 5 years');
+        }
+
         if (timeframe == 'TIME_SERIES_DAILY_ADJUSTED') {
           timeSeries = 'Time Series (Daily)';
         } else if (timeframe == 'TIME_SERIES_WEEKLY_ADJUSTED') {
@@ -383,7 +395,7 @@ const marketsStocksObserver = new IntersectionObserver(function(entries, markets
           timeSeries = 'Monthly Adjusted Time Series';
         }
       }
-      changeTimeSeries();
+      dictateTimeframe();
 
       // function to initially fetch the data
       async function fetchData() {
@@ -397,7 +409,6 @@ const marketsStocksObserver = new IntersectionObserver(function(entries, markets
           };
 
           // Initialize the time series
-          changeTimeSeries();
           dictateTimeframe();
 
           // Creating the URL and fetching the data
@@ -418,7 +429,7 @@ const marketsStocksObserver = new IntersectionObserver(function(entries, markets
           // to fetch price data
           let reversedFetchedPrice = [];
           let fetchedPriceData = [];
-          let priceSeriesData = data[`${timeSeries}`];
+          let priceSeriesData = await data[`${timeSeries}`];
           let allPriceDataObject = Object.values(priceSeriesData);
           for (let i = 0; i < allPriceDataObject.length; i++) {
             let allPrices = allPriceDataObject[`${i}`];
@@ -441,7 +452,10 @@ const marketsStocksObserver = new IntersectionObserver(function(entries, markets
           stockPriceData.push(dataObject);
           stockPriceChart.data.datasets = stockPriceData;
 
-          // update the chart 
+          console.log(stockPriceData);
+          console.log(timeframeData);
+
+          // update chart
           stockPriceChart.update();
         } 
         catch(error) {
@@ -457,7 +471,6 @@ const marketsStocksObserver = new IntersectionObserver(function(entries, markets
 
           // change the variables for the URL
           dictateTimeframe();
-          changeTimeSeries();
 
           // Creating the URL and fetching the data
           let URL = `https://www.alphavantage.co/query?function=${timeframe}&symbol=${ticker}&apikey=${myAPIkey}`;
@@ -471,7 +484,7 @@ const marketsStocksObserver = new IntersectionObserver(function(entries, markets
             unorderedTimeframeData.push(time);
           }
           timeframeData = unorderedTimeframeData.reverse();
-          stockPriceChart.data.labels = timeframeData;
+          // stockPriceChart.data.labels = timeframeData;
 
           // to fetch price data
           stockPriceData = [];
@@ -498,20 +511,15 @@ const marketsStocksObserver = new IntersectionObserver(function(entries, markets
             yAxisID: 'y'
           };
           stockPriceData.push(dataObject);
+          // stockPriceChart.data.datasets = stockPriceData
 
-          // code for adjusting the timeframe shown on the chart
-          if (selectedTimePeriodEl.value < 8) {
-            console.log('one week');
-            let shortenedPriceData = stockPriceData.slice(0, -selectedStockTimeframe.value);
-            stockPriceChart.data.datasets = shortenedPriceData;
-          } else {
-            stockPriceChart.data.datasets = stockPriceData;
-            console.log('no price filter');
-          }
-
-          stockPriceChart.data.datasets = stockPriceData;
+          // shorten timeframe for timeframe selection
+          console.log(stockPriceData);
+          console.log(timeframeData);
 
           // update the chart 
+          stockPriceChart.data.datasets = stockPriceData;
+          stockPriceChart.data.labels = timeframeData;
           stockPriceChart.update();
 
         }
@@ -519,7 +527,6 @@ const marketsStocksObserver = new IntersectionObserver(function(entries, markets
           console.log(error);
           console.log('could not change timeframe for stock chart...');
         }
-
       };
       const selectedTimePeriodEl = document.querySelector('.stockChartTimeframe');
       selectedTimePeriodEl.addEventListener('change', changeStockTimeframe);

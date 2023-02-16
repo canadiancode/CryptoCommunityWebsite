@@ -731,41 +731,11 @@ var marketsStocksObserver = new IntersectionObserver(function (entries, marketsS
           stockPriceChart.update();
         }
       };
-      // (we don't need to adjust this) Time Series (Daily), Weekly Adjusted Time Series, Monthly Adjusted Time Series
-      // This is for seeing if we need to change the timeframe
-      var dictateTimeframe = function dictateTimeframe() {
-        var selectedStockTimePeriodEl = document.querySelector('.stockChartTimeframe');
-        var selectedTimeframe = selectedStockTimePeriodEl.value; // this shows the number of days
-
-        timeframe = '';
-        if (selectedTimeframe < 8) {
-          timeframe = 'TIME_SERIES_DAILY_ADJUSTED';
-          // console.log('timeframe is less than 8 days');
-        } else if (selectedTimeframe < 91) {
-          timeframe = 'TIME_SERIES_DAILY_ADJUSTED';
-        } else if (selectedTimeframe < 366) {
-          timeframe = 'TIME_SERIES_WEEKLY_ADJUSTED';
-          // console.log('timeframe is less than 1 year and day');
-        } else if (selectedTimeframe < 1826) {
-          timeframe = 'TIME_SERIES_WEEKLY_ADJUSTED';
-          // console.log('timeframe is less than 5 years and a day');
-        } else {
-          timeframe = 'TIME_SERIES_MONTHLY_ADJUSTED';
-          // console.log('timeframe is longer than 5 years');
-        }
-
-        if (timeframe == 'TIME_SERIES_DAILY_ADJUSTED') {
-          timeSeries = 'Time Series (Daily)';
-        } else if (timeframe == 'TIME_SERIES_WEEKLY_ADJUSTED') {
-          timeSeries = 'Weekly Adjusted Time Series';
-        } else if (timeframe == 'TIME_SERIES_MONTHLY_ADJUSTED') {
-          timeSeries = 'Monthly Adjusted Time Series';
-        }
-      };
+      // Time Series (Daily), Weekly Adjusted Time Series
       // function to initially fetch the data
       var fetchData = /*#__PURE__*/function () {
         var _ref5 = _asyncToGenerator( /*#__PURE__*/_regeneratorRuntime().mark(function _callee5() {
-          var options, URL, response, data, unorderedTimeframeData, timeSeriesData, time, reversedFetchedPrice, fetchedPriceData, priceSeriesData, allPriceDataObject, _i, allPrices, closePrices, closePrice, dataObject;
+          var options, URL, response, data, unorderedTimeframeData, timeSeriesData, time, priceSeriesData, allPriceDataObject, _i, allPrices, closePrices, closePrice, dataObject;
           return _regeneratorRuntime().wrap(function _callee5$(_context5) {
             while (1) switch (_context5.prev = _context5.next) {
               case 0:
@@ -776,25 +746,22 @@ var marketsStocksObserver = new IntersectionObserver(function (entries, marketsS
                     'X-RapidAPI-Key': '5abcde3910mshe635fb57c055c0fp10d768jsna1801b9b4a77',
                     'X-RapidAPI-Host': 'real-time-finance-data.p.rapidapi.com'
                   }
-                }; // Initialize the time series
-                dictateTimeframe();
-
-                // Creating the URL and fetching the data
+                }; // Creating the URL and fetching the data
                 URL = "https://www.alphavantage.co/query?function=".concat(timeframe, "&symbol=").concat(ticker, "&apikey=").concat(myAPIkey);
-                _context5.next = 6;
+                _context5.next = 5;
                 return fetch(URL);
-              case 6:
+              case 5:
                 response = _context5.sent;
-                _context5.next = 9;
+                _context5.next = 8;
                 return response.json();
-              case 9:
+              case 8:
                 data = _context5.sent;
                 // to fetch timeframe
                 timeframeData = [];
                 unorderedTimeframeData = [];
-                _context5.next = 14;
+                _context5.next = 13;
                 return data["".concat(timeSeries)];
-              case 14:
+              case 13:
                 timeSeriesData = _context5.sent;
                 for (time in timeSeriesData) {
                   unorderedTimeframeData.push(time);
@@ -803,6 +770,7 @@ var marketsStocksObserver = new IntersectionObserver(function (entries, marketsS
                 stockPriceChart.data.labels = timeframeData;
 
                 // to fetch price data
+                stockPriceData = [];
                 reversedFetchedPrice = [];
                 fetchedPriceData = [];
                 _context5.next = 22;
@@ -852,163 +820,152 @@ var marketsStocksObserver = new IntersectionObserver(function (entries, marketsS
           return _ref5.apply(this, arguments);
         };
       }();
-      // Change the timeframe for the stock chart
-      var changeStockTimeframe = /*#__PURE__*/function () {
+      // change timeframe for main stock chart
+      var changeTimeframe = function changeTimeframe() {
+        if (publicStockChartTimeframe.value == 'TIME_SERIES_DAILY_ADJUSTED') {
+          timeSeries = 'Time Series (Daily)'; // Time Series (Daily), Weekly Adjusted Time Series
+          timeframe = publicStockChartTimeframe.value;
+        } else {
+          timeSeries = 'Weekly Adjusted Time Series'; // Time Series (Daily), Weekly Adjusted Time Series
+          timeframe = publicStockChartTimeframe.value;
+        }
+        fetchData();
+      };
+      var fetchStockList = /*#__PURE__*/function () {
         var _ref6 = _asyncToGenerator( /*#__PURE__*/_regeneratorRuntime().mark(function _callee6() {
-          var adjustDisplayedTime, URL, response, data, unorderedTimeframeData, timeSeriesData, time, reversedFetchedPrice, fetchedPriceData, priceSeriesData, allPriceDataObject, _i2, allPrices, closePrices, closePrice, dataObject;
+          var URL, response, data, stockName, stockList, _iterator8, _step8, names, optionEl, nameOfStock, fullTicker, justTicker, singleticker, publicStockHoldingFullName, selectedStock, publicStockHoldingTicker, nameofSelectedCryptoPublicCompany, UpperCaseSelectedAsset, firstCompanydata, companyTotalCryptoHoldings, unformattedTotalCryptoHoldings, totalCryptoHoldings, companyTotalUSDholdings, unformattedUsdHoldings, totalUsdHoldings, percentOfTotalSupply, InitialInvestmentValue, changeColorOfInvestmentChart;
           return _regeneratorRuntime().wrap(function _callee6$(_context6) {
             while (1) switch (_context6.prev = _context6.next) {
               case 0:
-                _context6.prev = 0;
-                // edit the timeframe data displayed on the chart
-                adjustDisplayedTime = function adjustDisplayedTime() {
-                  if (selectedTimePeriodEl.value < 8) {
-                    // edit the length of the timeframe data
-                    var adjustedTimeframeData = timeframeData.slice(93);
-                    // update the chart data
-                    stockPriceChart.data.datasets = stockPriceData;
-                    stockPriceChart.data.labels = adjustedTimeframeData;
-                  } else if (selectedTimePeriodEl.value < 31) {
-                    var _adjustedTimeframeData = timeframeData.slice(75);
-                    // update the chart data
-                    stockPriceChart.data.datasets = stockPriceData;
-                    stockPriceChart.data.labels = _adjustedTimeframeData;
-                  } else if (selectedTimePeriodEl.value < 91) {
-                    var _adjustedTimeframeData2 = timeframeData.slice(10);
-                    // update the chart data
-                    stockPriceChart.data.datasets = stockPriceData;
-                    stockPriceChart.data.labels = _adjustedTimeframeData2;
-                  } else if (selectedTimePeriodEl.value < 366) {
-                    var _adjustedTimeframeData3 = timeframeData.slice(1163);
-                    console.log(_adjustedTimeframeData3);
-                    // update the chart data
-                    stockPriceChart.data.datasets = stockPriceData;
-                    stockPriceChart.data.labels = _adjustedTimeframeData3;
-                  } else if (selectedTimePeriodEl.value < 731) {
-                    var _adjustedTimeframeData4 = timeframeData.slice(1111);
-                    // update the chart data
-                    stockPriceChart.data.datasets = stockPriceData;
-                    stockPriceChart.data.labels = _adjustedTimeframeData4;
-                  } else if (selectedTimePeriodEl.value < 1096) {
-                    var _adjustedTimeframeData5 = timeframeData.slice(1059);
-                    // update the chart data
-                    stockPriceChart.data.datasets = stockPriceData;
-                    stockPriceChart.data.labels = _adjustedTimeframeData5;
-                  } else if (selectedTimePeriodEl.value < 1461) {
-                    var _adjustedTimeframeData6 = timeframeData.slice(1007);
-                    // update the chart data
-                    stockPriceChart.data.datasets = stockPriceData;
-                    stockPriceChart.data.labels = _adjustedTimeframeData6;
-                  } else if (selectedTimePeriodEl.value < 1826) {
-                    var _adjustedTimeframeData7 = timeframeData.slice(955);
-                    // update the chart data
-                    stockPriceChart.data.datasets = stockPriceData;
-                    stockPriceChart.data.labels = _adjustedTimeframeData7;
-                  } else if (selectedTimePeriodEl.value < 2556) {
-                    var _adjustedTimeframeData8 = timeframeData.slice(194);
-                    // update the chart data
-                    stockPriceChart.data.datasets = stockPriceData;
-                    stockPriceChart.data.labels = _adjustedTimeframeData8;
-                  } else if (selectedTimePeriodEl.value < 3651) {
-                    var _adjustedTimeframeData9 = timeframeData.slice(158);
-                    // update the chart data
-                    stockPriceChart.data.datasets = stockPriceData;
-                    stockPriceChart.data.labels = _adjustedTimeframeData9;
+                changeColorOfInvestmentChart = function _changeColorOfInvestm() {
+                  if (InitialInvestmentValue < currentInvestmentValue) {
+                    backgroundColor = 'rgb(0,255,0, 0.15)';
                   } else {
-                    // update the chart data
-                    stockPriceChart.data.datasets = stockPriceData;
-                    stockPriceChart.data.labels = timeframeData;
+                    backgroundColor = 'rgb(255,0,0, 0.15)';
                   }
-                  ;
+                  publicCompanyInvestmentReturns.data.datasets.forEach(function (data) {
+                    data.backgroundColor = backgroundColor;
+                  });
+                  publicCompanyInvestmentReturns.options.scales.y.ticks.beginAtZero = false;
                 };
-                // change the variables for the URL
-                dictateTimeframe();
-
-                // Creating the URL and fetching the data
-                URL = "https://www.alphavantage.co/query?function=".concat(timeframe, "&symbol=").concat(ticker, "&apikey=").concat(myAPIkey);
-                _context6.next = 6;
+                URL = "https://api.coingecko.com/api/v3/companies/public_treasury/".concat(selectedAsset);
+                _context6.next = 4;
                 return fetch(URL);
-              case 6:
+              case 4:
                 response = _context6.sent;
-                _context6.next = 9;
+                _context6.next = 7;
                 return response.json();
-              case 9:
+              case 7:
                 data = _context6.sent;
-                timeframeData = [];
-                unorderedTimeframeData = [];
-                _context6.next = 14;
-                return data["".concat(timeSeries)];
-              case 14:
-                timeSeriesData = _context6.sent;
-                for (time in timeSeriesData) {
-                  unorderedTimeframeData.push(time);
-                }
-                timeframeData = unorderedTimeframeData.reverse();
-                // stockPriceChart.data.labels = timeframeData;
+                console.log(data);
 
-                // to fetch price data
-                stockPriceData = [];
-                reversedFetchedPrice = [];
-                fetchedPriceData = [];
-                priceSeriesData = data["".concat(timeSeries)];
-                allPriceDataObject = Object.values(priceSeriesData);
-                for (_i2 = 0; _i2 < allPriceDataObject.length; _i2++) {
-                  allPrices = allPriceDataObject["".concat(_i2)];
-                  closePrices = Object.values(allPrices);
-                  closePrice = Number(closePrices[4]);
-                  reversedFetchedPrice.push(closePrice);
-                }
-                ;
-                fetchedPriceData = reversedFetchedPrice.reverse();
-                dataObject = {
-                  label: "Price of ".concat(ticker),
-                  data: fetchedPriceData,
-                  fill: false,
-                  pointRadius: 0,
-                  borderWidth: 1,
-                  backgroundColor: '#FFFFFF',
-                  borderColor: '#FFFFFF',
-                  yAxisID: 'y'
-                };
-                stockPriceData.push(dataObject);
-                adjustDisplayedTime();
+                // fetch the names of the stocks
+                _context6.next = 11;
+                return data['companies'];
+              case 11:
+                stockName = _context6.sent;
+                stockList = document.querySelector('.stockList');
+                _iterator8 = _createForOfIteratorHelper(stockName);
+                try {
+                  for (_iterator8.s(); !(_step8 = _iterator8.n()).done;) {
+                    names = _step8.value;
+                    // create the element for the drop down list
+                    optionEl = document.createElement('option');
+                    nameOfStock = names['name'];
+                    optionEl.appendChild(document.createTextNode(nameOfStock));
+                    fullTicker = names['symbol'];
+                    justTicker = fullTicker.split(':').pop();
+                    singleticker = justTicker.trim();
+                    optionEl.value = singleticker;
+                    stockList.appendChild(optionEl);
+                  }
 
-                // update the chart 
-                stockPriceChart.update();
+                  // fetch the data on the text section
+                } catch (err) {
+                  _iterator8.e(err);
+                } finally {
+                  _iterator8.f();
+                }
+                publicStockHoldingFullName = document.querySelector('.publicStockHoldingFullName');
+                selectedStock = stockList.options[stockList.selectedIndex].text;
+                publicStockHoldingFullName.innerHTML = selectedStock;
+                publicStockHoldingTicker = document.querySelector('.publicStockHoldingTicker');
+                publicStockHoldingTicker.innerHTML = stockList.value;
+                nameofSelectedCryptoPublicCompany = document.querySelector('.nameofSelectedCryptoPublicCompany');
+                UpperCaseSelectedAsset = selectedAsset.charAt(0).toUpperCase() + selectedAsset.slice(1);
+                nameofSelectedCryptoPublicCompany.innerHTML = UpperCaseSelectedAsset;
+
+                // fetch the total holding data
+                _context6.next = 25;
+                return data['companies'][0];
+              case 25:
+                firstCompanydata = _context6.sent;
+                companyTotalCryptoHoldings = document.querySelector('.companyTotalCryptoHoldings');
+                _context6.next = 29;
+                return firstCompanydata['total_holdings'];
+              case 29:
+                unformattedTotalCryptoHoldings = _context6.sent;
+                totalCryptoHoldings = unformattedTotalCryptoHoldings.toLocaleString();
+                companyTotalCryptoHoldings.innerHTML = totalCryptoHoldings;
+                companyTotalUSDholdings = document.querySelector('.companyTotalUSDholdings');
                 _context6.next = 35;
-                break;
-              case 31:
-                _context6.prev = 31;
-                _context6.t0 = _context6["catch"](0);
-                console.log(_context6.t0);
-                console.log('could not change timeframe for stock chart...');
+                return firstCompanydata['total_current_value_usd'];
               case 35:
+                unformattedUsdHoldings = _context6.sent;
+                totalUsdHoldings = unformattedUsdHoldings.toLocaleString();
+                companyTotalUSDholdings.innerHTML = totalUsdHoldings;
+
+                // fetch the dominance and total supply
+                percentOfTotalSupply = document.querySelector('.publicCompanyMarketCapDominance');
+                percentOfTotalSupply.innerHTML = firstCompanydata['percentage_of_total_supply'];
+
+                // fetch the investment returns
+                investmentAmounts = [];
+                _context6.next = 43;
+                return stockName[0]['total_entry_value_usd'];
+              case 43:
+                InitialInvestmentValue = _context6.sent;
+                investmentAmounts.push(InitialInvestmentValue);
+                _context6.next = 47;
+                return stockName[0]['total_current_value_usd'];
+              case 47:
+                let = currentInvestmentValue = _context6.sent;
+                investmentAmounts.push(currentInvestmentValue);
+                console.log(investmentAmounts);
+                publicCompanyInvestmentReturns.data.datasets.forEach(function (data) {
+                  data.data.push(InitialInvestmentValue);
+                  data.data.push(currentInvestmentValue);
+                });
+                ;
+                changeColorOfInvestmentChart();
+                publicCompanyInvestmentReturns.update();
+              case 54:
               case "end":
                 return _context6.stop();
             }
-          }, _callee6, null, [[0, 31]]);
+          }, _callee6);
         }));
-        return function changeStockTimeframe() {
+        return function fetchStockList() {
           return _ref6.apply(this, arguments);
         };
       }();
-      // Change the displayed stock for the chart
-      var changeStockAsset = /*#__PURE__*/function () {
-        var _ref7 = _asyncToGenerator( /*#__PURE__*/_regeneratorRuntime().mark(function _callee7() {
-          return _regeneratorRuntime().wrap(function _callee7$(_context7) {
-            while (1) switch (_context7.prev = _context7.next) {
-              case 0:
-                console.log('');
-              case 1:
-              case "end":
-                return _context7.stop();
-            }
-          }, _callee7);
-        }));
-        return function changeStockAsset() {
-          return _ref7.apply(this, arguments);
-        };
-      }();
+      var changeHeldAsset = function changeHeldAsset(event) {
+        var chartBTCButton = document.querySelector('.chartBTCButton');
+        var chartETHButton = document.querySelector('.chartETHButton');
+        if (event.target.value == 'bitcoin') {
+          chartBTCButton.style.backgroundColor = 'rgb(128, 128, 128, 0.6)';
+          chartETHButton.style.backgroundColor = 'rgb(128, 128, 128, 0.2)';
+          selectedAsset = event.target.value;
+          fetchStockList();
+          changeColorOfInvestmentChart();
+        } else {
+          chartBTCButton.style.backgroundColor = 'rgb(128, 128, 128, 0.2)';
+          chartETHButton.style.backgroundColor = 'rgb(128, 128, 128, 0.6)';
+          selectedAsset = event.target.value;
+          fetchStockList();
+          changeColorOfInvestmentChart();
+        }
+      };
       var myAPIkey = 'GH9DTBAMAJL2HKD1';
 
       // CODE FOR CHANGING THE CHART SCALE
@@ -1019,25 +976,22 @@ var marketsStocksObserver = new IntersectionObserver(function (entries, marketsS
       logChartOption.addEventListener('click', changeChartScale);
       ;
 
-      // variables for the chart data arrays (price and data)
+      // variables for price, time, and ticker
       var timeframeData = [];
       var stockPriceData = [];
-
-      // The ticker and timeframe variables
-      var ticker = 'AAPL';
-      var timeframe = 'TIME_SERIES_WEEKLY_ADJUSTED'; // TIME_SERIES_DAILY_ADJUSTED, TIME_SERIES_WEEKLY_ADJUSTED, TIME_SERIES_MONTHLY_ADJUSTED
-      var timeSeries = 'Weekly Adjusted Time Series';
-      dictateTimeframe();
+      var reversedFetchedPrice = [];
+      var fetchedPriceData = [];
+      var ticker = 'MSTR';
+      var nameOfPublicCompany = 'MicroStrategy Inc.';
+      var timeframe = 'TIME_SERIES_DAILY_ADJUSTED'; // TIME_SERIES_DAILY_ADJUSTED, TIME_SERIES_WEEKLY_ADJUSTED
+      var timeSeries = 'Time Series (Daily)';
       ;
       fetchData();
       ;
-      var selectedTimePeriodEl = document.querySelector('.stockChartTimeframe');
-      selectedTimePeriodEl.addEventListener('change', changeStockTimeframe);
-      ;
-      var selectedStockEl = document.querySelector('.stockList');
-      selectedStockEl.addEventListener('change', changeStockAsset);
+      var publicStockChartTimeframe = document.querySelector('.publicStockTimeframeSelection');
+      publicStockChartTimeframe.addEventListener('change', changeTimeframe);
 
-      // Code for the chart
+      // CODE FOR THE MAIN PRICE CHART
       var stockPriceCanvas = document.querySelector('.marketStockPrice');
       var stockPriceChart = new Chart(stockPriceCanvas, {
         type: 'line',
@@ -1064,6 +1018,63 @@ var marketsStocksObserver = new IntersectionObserver(function (entries, marketsS
             }
           }
         }
+      });
+
+      // INVESTMENT RETURN DATA AND CHART
+      var selectedAsset = 'bitcoin';
+      var investmentAmounts = [];
+      var backgroundColor = 'rgb(255,255,255, 0.15)';
+      ;
+      fetchStockList();
+
+      // if the user changes the held asset
+      var heldAssetByPublicCompanies = document.querySelectorAll('.heldAssetByPublicCompanies');
+      ;
+      heldAssetByPublicCompanies.forEach(function (asset) {
+        asset.addEventListener('click', changeHeldAsset);
+      });
+
+      // CODE FOR THE INVESTMENT RETURN CHART
+      var investmentReturnChart = document.querySelector('.publicStockAssetHoldingChart');
+      var publicCompanyInvestmentReturns = new Chart(investmentReturnChart, {
+        type: 'line',
+        data: {
+          labels: ['Initial Investment', 'Current Value'],
+          datasets: [{
+            label: 'Gain/Loss',
+            data: investmentAmounts,
+            fill: true,
+            pointRadius: 0,
+            borderWidth: 1,
+            backgroundColor: backgroundColor,
+            borderColor: '#FFFFFF'
+          }]
+        },
+        options: {
+          type: 'logarithmic',
+          display: true,
+          position: 'left',
+          responsive: true,
+          maintainAspectRatio: false,
+          scales: {
+            y: {
+              grid: {
+                color: '#232323'
+              },
+              ticks: {
+                beginAtZero: false,
+                callback: function callback(value, index, values) {
+                  return '$' + value / 1e9 + ' ' + 'B';
+                  ;
+                }
+              }
+            }
+          }
+        }
+      });
+      window.addEventListener("resize", function (event) {
+        var publicStockAssetHoldingChart = document.querySelector('.publicStockAssetHoldingChart');
+        publicStockAssetHoldingChart.style.width = '100%';
       });
 
       // End of the if statement for the intersection observer
@@ -1097,7 +1108,7 @@ var parent = module.bundle.parent;
 if ((!parent || !parent.isParcelRequire) && typeof WebSocket !== 'undefined') {
   var hostname = "" || location.hostname;
   var protocol = location.protocol === 'https:' ? 'wss' : 'ws';
-  var ws = new WebSocket(protocol + '://' + hostname + ':' + "51413" + '/');
+  var ws = new WebSocket(protocol + '://' + hostname + ':' + "50393" + '/');
   ws.onmessage = function (event) {
     checkedAssets = {};
     assetsToAccept = [];

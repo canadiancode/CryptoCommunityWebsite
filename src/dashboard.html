@@ -92,7 +92,7 @@
                         <i class="fa-solid fa-arrow-up-short-wide"></i>
                     </div>
                     <div class="chartButtonContainer opened">
-                        <button>Asset Price</button>
+                        <button>Price and Holdings</button>
                         <button>Market Capitalization</button>
                         <button>Volume</button>
                     </div>
@@ -167,7 +167,7 @@
                         <div class="chartOptions">
                             <div class="assetSelectionDiv">
                                 <label>Asset:</label>
-                                <select class="assetList"></select>
+                                <select class="assetList theListOfAssetsOnAllPages"></select>
                             </div>
                             <div class="timeframeSelectionDiv">
                                 <label>Timeframe:</label>
@@ -194,38 +194,60 @@
                         </div>
                     </div>
                     <div class="marketPublicstockChartContainer marketPriceDiv">
-                        <p>Markets</p>
-                        <h1>Public Exchanges, Miners & Stakers</h1>
-                        <canvas class="marketStockPrice"></canvas>
-                        <div class="chartOptions">
-                            <div class="assetSelectionDiv">
-                                <label>Asset:</label>
-                                <select class="stockList">
-                                    <option value="AAPL" class="stockOption">Apple - $AAPL</option>
-                                    <option value="COIN" class="stockOption">Coinbase - $COIN</option>
-                                </select>
+                        <div class="chartAndOptionContainer">
+                            <p>Markets</p>
+                            <h1>Public Company Holdings</h1>
+                            <div class="PublicCompanyHoldingsContainer">
+                                <canvas class="marketStockPrice"></canvas>
                             </div>
-                            <div class="timeframeSelectionDiv">
-                                <label>Timeframe:</label>
-                                <select class="stockChartTimeframe timeframeList">
-                                    <option value="36500" class="timeframe year">All Time</option>
-                                    <option value="3650" class="timeframe year">10 Year</option>
-                                    <option value="2555" class="timeframe year">7 Year</option>
-                                    <option value="1825" class="timeframe year">5 Year</option>
-                                    <option value="1460" class="timeframe year">4 Year</option>
-                                    <option value="1095" class="timeframe year">3 Year</option>
-                                    <option value="730" class="timeframe year">2 Year</option>
-                                    <option selected value="365" class="timeframe year">1 Year</option>
-                                    <option value="90" class="timeframe onequarter">90D</option>
-                                    <option value="30" class="timeframe onequarter">30D</option>
-                                    <option value="7" class="timeframe onequarter">7D</option>
-                                </select>
-                            </div>
-                            <div class="logOptionDiv">
-                                <div>
-                                    <button class="stockAutoChartOption chartLogAutoButton autoChartOption">Auto</button>
-                                    <button class="stockLogChartOption chartLogAutoButton logChartOption">Log</button>
+                            <div class="chartOptions">
+                                <div class="assetSelectionDiv">
+                                    <label>Company:</label>
+                                    <select class="stockList theListOfAssetsOnAllPages">
+                                    </select>
                                 </div>
+                                <div class="timeframeSelectionDiv">
+                                    <label>Timeframe:</label>
+                                    <select class="publicStockTimeframeSelection timeframeList">
+                                        <option value="TIME_SERIES_WEEKLY_ADJUSTED" class="timeframe year">Long Term</option>
+                                        <option selected value="TIME_SERIES_DAILY_ADJUSTED" class="timeframe year">Short Term</option>
+                                    </select>
+                                </div>
+                                <div class="logOptionDiv">
+                                    <div>
+                                        <button class="stockAutoChartOption chartLogAutoButton autoChartOption">Auto</button>
+                                        <button class="stockLogChartOption chartLogAutoButton logChartOption">Log</button>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="publicStockDataContainer">
+                            <div class="heldAssetContainer logOptionDiv">
+                                <div>
+                                    <button value="bitcoin" class="chartBTCButton heldAssetByPublicCompanies chartLogAutoButton">BTC</button>
+                                    <button value="ethereum" class="chartETHButton heldAssetByPublicCompanies chartLogAutoButton">ETH</button>
+                                </div>
+                            </div>
+                            <div class="publicStockTextDataContainer">
+                                <div class="stockNameDiv">
+                                    <h1 class="publicStockHoldingFullName"></h1>
+                                    <p class="publicStockHoldingTicker"></p>
+                                </div>
+                                <div class="holdingsDiv"> 
+                                    <div>
+                                        <h3>Total Holdings:</h3>
+                                        <div class="totalHoldingDataDiv"><p class="companyTotalCryptoHoldings">0</p> <p class="nameofSelectedCryptoPublicCompany">Bitcoin</p></div>
+                                        <div class="totalHoldingDataDiv"><p>$</p><p class="companyTotalUSDholdings">0</p></div>
+                                    </div>
+                                    <div>
+                                        <h3>% of Total Supply:</h3>
+                                        <div class="totalHoldingDataDiv"><p class="publicCompanyMarketCapDominance">0.0</p><p>%</p></div>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="InvestmentReturnsDiv">
+                                <h3>Investment Returns:</h3>
+                                <canvas class="publicStockAssetHoldingChart"></canvas>
                             </div>
                         </div>
                     </div>

@@ -132,6 +132,11 @@
   transform: translateX(0%);
   height: 100%;
 }
+.dashboardContainer .dataContainer .dataPageContainer .dataSubPageContainer {
+  display: flex;
+  flex-direction: column;
+  gap: 4em;
+}
 .dashboardContainer .dataContainer .dataPageContainer .dataSubPageContainer div {
   max-width: 1200px;
   margin: 0 auto;
@@ -167,7 +172,7 @@
   color: var(--white);
   font-family: var(--paragraphFontFamily);
 }
-.dashboardContainer .dataContainer .dataPageContainer .dataSubPageContainer div .chartOptions .assetSelectionDiv .assetList {
+.dashboardContainer .dataContainer .dataPageContainer .dataSubPageContainer div .chartOptions .assetSelectionDiv .theListOfAssetsOnAllPages {
   max-width: 200px;
   background-color: rgba(128, 128, 128, 0.6);
   border-radius: 5px;
@@ -219,7 +224,7 @@
 .dashboardContainer .dataContainer .dataPageContainer .dataSubPageContainer div .chartOptions .logOptionDiv .logChartOption {
   background-color: rgba(128, 128, 128, 0.2);
 }
-@media screen and (max-width: 700px) {
+@media screen and (max-width: 750px) {
   .dashboardContainer .dataContainer .dataPageContainer .dataSubPageContainer div .chartOptions {
     flex-direction: column;
     gap: 15px;
@@ -249,6 +254,159 @@
 .dashboardContainer .dataContainer .marketPriceDiv h1 {
   color: var(--white);
   padding-left: 2em;
+}
+.dashboardContainer .dataContainer .marketPublicstockChartContainer {
+  display: flex;
+  flex-direction: row;
+  gap: 3em;
+  overflow: hidden;
+}
+@media screen and (max-width: 950px) {
+  .dashboardContainer .dataContainer .marketPublicstockChartContainer {
+    flex-direction: column;
+    gap: 1em;
+  }
+}
+.dashboardContainer .dataContainer .marketPublicstockChartContainer .chartAndOptionContainer {
+  min-width: 60vw;
+}
+.dashboardContainer .dataContainer .marketPublicstockChartContainer div {
+  margin: 0;
+  width: 100%;
+}
+.dashboardContainer .dataContainer .marketPublicstockChartContainer div .chartOptions {
+  margin: 0 auto;
+  min-width: 100%;
+}
+.dashboardContainer .dataContainer .marketPublicstockChartContainer div .chartOptions .assetSelectionDiv select {
+  min-width: 200px;
+}
+.dashboardContainer .dataContainer .marketPublicstockChartContainer div .chartOptions .logOptionDiv {
+  margin: 0 auto;
+}
+.dashboardContainer .dataContainer .marketPublicstockChartContainer div .chartOptions .logOptionDiv div {
+  display: flex;
+  justify-content: flex-end;
+  gap: 10px;
+}
+@media screen and (max-width: 950px) {
+  .dashboardContainer .dataContainer .marketPublicstockChartContainer div .chartOptions .logOptionDiv div {
+    justify-content: center;
+  }
+}
+.dashboardContainer .dataContainer .marketPublicstockChartContainer div .PublicCompanyHoldingsContainer {
+  max-width: 1200px;
+  margin: 0 auto;
+  min-height: 70vh;
+}
+@media screen and (max-width: 950px) {
+  .dashboardContainer .dataContainer .marketPublicstockChartContainer div .PublicCompanyHoldingsContainer {
+    min-height: 50vh;
+  }
+}
+.dashboardContainer .dataContainer .marketPublicstockChartContainer div .PublicCompanyHoldingsContainer canvas {
+  width: 100%;
+  height: 100%;
+  max-width: 1200px;
+  max-height: 500px;
+}
+@media screen and (max-width: 600px) {
+  .dashboardContainer .dataContainer .marketPublicstockChartContainer div .PublicCompanyHoldingsContainer canvas {
+    max-height: 350px;
+  }
+}
+.dashboardContainer .dataContainer .marketPublicstockChartContainer .publicStockDataContainer {
+  display: flex;
+  flex-direction: column;
+  color: var(--white);
+  gap: 1.5em;
+  align-self: center;
+  max-width: 200px;
+  width: 100%;
+  overflow: hidden;
+}
+.dashboardContainer .dataContainer .marketPublicstockChartContainer .publicStockDataContainer .heldAssetContainer {
+  width: 100%;
+  display: flex;
+  flex-direction: row;
+  justify-content: flex-end;
+}
+@media screen and (max-width: 950px) {
+  .dashboardContainer .dataContainer .marketPublicstockChartContainer .publicStockDataContainer .heldAssetContainer {
+    margin-bottom: -1em;
+    margin-top: 1em;
+  }
+}
+.dashboardContainer .dataContainer .marketPublicstockChartContainer .publicStockDataContainer .heldAssetContainer div {
+  margin: 0;
+}
+.dashboardContainer .dataContainer .marketPublicstockChartContainer .publicStockDataContainer .heldAssetContainer .chartLogAutoButton {
+  padding: 0em 15px;
+  border: none;
+  color: white;
+  border-radius: 5px;
+  cursor: pointer;
+  transition: 0.5s;
+  font-family: var(--paragraphFontFamily);
+}
+.dashboardContainer .dataContainer .marketPublicstockChartContainer .publicStockDataContainer .heldAssetContainer .chartBTCButton {
+  background-color: rgba(128, 128, 128, 0.6);
+}
+.dashboardContainer .dataContainer .marketPublicstockChartContainer .publicStockDataContainer .heldAssetContainer .chartETHButton {
+  background-color: rgba(128, 128, 128, 0.2);
+}
+.dashboardContainer .dataContainer .marketPublicstockChartContainer .publicStockDataContainer .publicStockTextDataContainer {
+  display: flex;
+  flex-direction: column;
+  color: var(--white);
+  gap: 1.5em;
+  margin: 0;
+}
+.dashboardContainer .dataContainer .marketPublicstockChartContainer .publicStockDataContainer .publicStockTextDataContainer .stockNameDiv {
+  display: flex;
+  flex-direction: column;
+  justify-content: flex-start;
+  margin: 0;
+  padding: 0;
+}
+.dashboardContainer .dataContainer .marketPublicstockChartContainer .publicStockDataContainer .publicStockTextDataContainer .stockNameDiv h1 {
+  padding-left: 0;
+}
+.dashboardContainer .dataContainer .marketPublicstockChartContainer .publicStockDataContainer .publicStockTextDataContainer .stockNameDiv p {
+  padding-left: 0;
+}
+.dashboardContainer .dataContainer .marketPublicstockChartContainer .publicStockDataContainer .publicStockTextDataContainer .holdingsDiv {
+  display: flex;
+  flex-direction: column;
+  width: 100%;
+  justify-content: center;
+  gap: 10px;
+}
+@media screen and (max-width: 950px) {
+  .dashboardContainer .dataContainer .marketPublicstockChartContainer .publicStockDataContainer .publicStockTextDataContainer .holdingsDiv {
+    flex-direction: row;
+  }
+}
+.dashboardContainer .dataContainer .marketPublicstockChartContainer .publicStockDataContainer .publicStockTextDataContainer .holdingsDiv div div {
+  display: flex;
+  gap: 6px;
+}
+.dashboardContainer .dataContainer .marketPublicstockChartContainer .publicStockDataContainer .publicStockTextDataContainer .holdingsDiv div h3 {
+  color: var(--white);
+  padding-left: 0em;
+}
+.dashboardContainer .dataContainer .marketPublicstockChartContainer .publicStockDataContainer .publicStockTextDataContainer .holdingsDiv div p {
+  padding-left: 0em;
+}
+.dashboardContainer .dataContainer .marketPublicstockChartContainer .publicStockDataContainer .InvestmentReturnsDiv {
+  width: 100%;
+  height: 100%;
+  overflow: hidden;
+}
+.dashboardContainer .dataContainer .marketPublicstockChartContainer .publicStockDataContainer .InvestmentReturnsDiv canvas {
+  width: 100%;
+  height: 100%;
+  max-height: 250px;
 }
 
 /*# sourceMappingURL=/tools.50630abf.css.map */

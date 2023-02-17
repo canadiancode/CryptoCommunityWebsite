@@ -442,7 +442,6 @@ const marketsStocksObserver = new IntersectionObserver(function(entries, markets
 
           let response = await fetch(URL);
           let data = await response.json();
-          console.log(data);
 
           // fetch the names of the stocks
           let stockName = await data['companies'];
@@ -711,3 +710,24 @@ const marketsStocksObserver = new IntersectionObserver(function(entries, markets
 
 const marketPublicstockChartContainer = document.querySelector('.marketPublicstockChartContainer');
 marketsStocksObserver.observe(marketPublicstockChartContainer);
+
+
+
+// testing for the fetched data
+// let testingTicker = 'COIN';
+
+// async function fetchStockData() {
+//   const myAPIkey = 'GH9DTBAMAJL2HKD1';
+//   const options = {
+//     method: 'GET',
+//     headers: {
+//         'X-RapidAPI-Key': '5abcde3910mshe635fb57c055c0fp10d768jsna1801b9b4a77',
+//         'X-RapidAPI-Host': 'real-time-finance-data.p.rapidapi.com'
+//     }
+// };
+//   let URL = `https://www.alphavantage.co/query?function=TIME_SERIES_DAILY_ADJUSTED&symbol=${testingTicker}&apikey=${myAPIkey}`;
+//   let response = await fetch(URL);
+//   let data = await response.json();
+//   console.log(data);
+// }
+// fetchStockData();

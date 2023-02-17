@@ -846,12 +846,9 @@ var marketsStocksObserver = new IntersectionObserver(function (entries, marketsS
                 return response.json();
               case 8:
                 data = _context6.sent;
-                console.log(data);
-
-                // fetch the names of the stocks
-                _context6.next = 12;
+                _context6.next = 11;
                 return data['companies'];
-              case 12:
+              case 11:
                 stockName = _context6.sent;
                 stockList = document.querySelector('.stockList');
                 arrayNumber = 0;
@@ -888,21 +885,21 @@ var marketsStocksObserver = new IntersectionObserver(function (entries, marketsS
                 nameofSelectedCryptoPublicCompany.innerHTML = UpperCaseSelectedAsset;
 
                 // fetch the total holding data
-                _context6.next = 27;
+                _context6.next = 26;
                 return data['companies'][0];
-              case 27:
+              case 26:
                 firstCompanydata = _context6.sent;
                 companyTotalCryptoHoldings = document.querySelector('.companyTotalCryptoHoldings');
-                _context6.next = 31;
+                _context6.next = 30;
                 return firstCompanydata['total_holdings'];
-              case 31:
+              case 30:
                 unformattedTotalCryptoHoldings = _context6.sent;
                 totalCryptoHoldings = unformattedTotalCryptoHoldings.toLocaleString();
                 companyTotalCryptoHoldings.innerHTML = totalCryptoHoldings;
                 companyTotalUSDholdings = document.querySelector('.companyTotalUSDholdings');
-                _context6.next = 37;
+                _context6.next = 36;
                 return firstCompanydata['total_current_value_usd'];
-              case 37:
+              case 36:
                 unformattedUsdHoldings = _context6.sent;
                 totalUsdHoldings = unformattedUsdHoldings.toLocaleString();
                 companyTotalUSDholdings.innerHTML = totalUsdHoldings;
@@ -912,13 +909,13 @@ var marketsStocksObserver = new IntersectionObserver(function (entries, marketsS
                 percentOfTotalSupply.innerHTML = firstCompanydata['percentage_of_total_supply'];
 
                 // fetch the investment returns
-                _context6.next = 44;
+                _context6.next = 43;
                 return stockName[0]['total_entry_value_usd'];
-              case 44:
+              case 43:
                 InitialInvestmentValue = _context6.sent;
-                _context6.next = 47;
+                _context6.next = 46;
                 return stockName[0]['total_current_value_usd'];
-              case 47:
+              case 46:
                 let = currentInvestmentValue = _context6.sent;
                 publicCompanyInvestmentReturns.data.datasets.forEach(function (data) {
                   data.data.push(InitialInvestmentValue);
@@ -927,18 +924,18 @@ var marketsStocksObserver = new IntersectionObserver(function (entries, marketsS
                 ;
                 changeColorOfInvestmentChart();
                 publicCompanyInvestmentReturns.update();
-                _context6.next = 58;
+                _context6.next = 57;
                 break;
-              case 54:
-                _context6.prev = 54;
+              case 53:
+                _context6.prev = 53;
                 _context6.t0 = _context6["catch"](0);
                 console.log(_context6.t0);
                 console.log('Could not fetch the list of stocks...');
-              case 58:
+              case 57:
               case "end":
                 return _context6.stop();
             }
-          }, _callee6, null, [[0, 54]]);
+          }, _callee6, null, [[0, 53]]);
         }));
         return function fetchStockList() {
           return _ref6.apply(this, arguments);
@@ -1194,6 +1191,25 @@ var marketsStocksObserver = new IntersectionObserver(function (entries, marketsS
 }, dataPageOptions);
 var marketPublicstockChartContainer = document.querySelector('.marketPublicstockChartContainer');
 marketsStocksObserver.observe(marketPublicstockChartContainer);
+
+// testing for the fetched data
+// let testingTicker = 'COIN';
+
+// async function fetchStockData() {
+//   const myAPIkey = 'GH9DTBAMAJL2HKD1';
+//   const options = {
+//     method: 'GET',
+//     headers: {
+//         'X-RapidAPI-Key': '5abcde3910mshe635fb57c055c0fp10d768jsna1801b9b4a77',
+//         'X-RapidAPI-Host': 'real-time-finance-data.p.rapidapi.com'
+//     }
+// };
+//   let URL = `https://www.alphavantage.co/query?function=TIME_SERIES_DAILY_ADJUSTED&symbol=${testingTicker}&apikey=${myAPIkey}`;
+//   let response = await fetch(URL);
+//   let data = await response.json();
+//   console.log(data);
+// }
+// fetchStockData();
 },{}],"../node_modules/parcel-bundler/src/builtins/hmr-runtime.js":[function(require,module,exports) {
 var global = arguments[3];
 var OVERLAY_ID = '__parcel__error__overlay__';

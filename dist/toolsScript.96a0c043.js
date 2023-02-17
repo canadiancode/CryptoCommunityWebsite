@@ -820,24 +820,14 @@ var marketsStocksObserver = new IntersectionObserver(function (entries, marketsS
           return _ref5.apply(this, arguments);
         };
       }();
-      // change timeframe for main stock chart
-      var changeTimeframe = function changeTimeframe() {
-        if (publicStockChartTimeframe.value == 'TIME_SERIES_DAILY_ADJUSTED') {
-          timeSeries = 'Time Series (Daily)'; // Time Series (Daily), Weekly Adjusted Time Series
-          timeframe = publicStockChartTimeframe.value;
-        } else {
-          timeSeries = 'Weekly Adjusted Time Series'; // Time Series (Daily), Weekly Adjusted Time Series
-          timeframe = publicStockChartTimeframe.value;
-        }
-        fetchData();
-      };
       var fetchStockList = /*#__PURE__*/function () {
         var _ref6 = _asyncToGenerator( /*#__PURE__*/_regeneratorRuntime().mark(function _callee6() {
-          var URL, response, data, stockName, stockList, _iterator8, _step8, names, optionEl, nameOfStock, fullTicker, justTicker, singleticker, publicStockHoldingFullName, selectedStock, publicStockHoldingTicker, nameofSelectedCryptoPublicCompany, UpperCaseSelectedAsset, firstCompanydata, companyTotalCryptoHoldings, unformattedTotalCryptoHoldings, totalCryptoHoldings, companyTotalUSDholdings, unformattedUsdHoldings, totalUsdHoldings, percentOfTotalSupply, InitialInvestmentValue, changeColorOfInvestmentChart;
+          var changeColorOfInvestmentChart, URL, response, data, stockName, stockList, arrayNumber, _iterator8, _step8, names, optionEl, nameOfStock, fullTicker, justTicker, singleticker, publicStockHoldingFullName, selectedStock, publicStockHoldingTicker, nameofSelectedCryptoPublicCompany, UpperCaseSelectedAsset, firstCompanydata, companyTotalCryptoHoldings, unformattedTotalCryptoHoldings, totalCryptoHoldings, companyTotalUSDholdings, unformattedUsdHoldings, totalUsdHoldings, percentOfTotalSupply, InitialInvestmentValue;
           return _regeneratorRuntime().wrap(function _callee6$(_context6) {
             while (1) switch (_context6.prev = _context6.next) {
               case 0:
-                changeColorOfInvestmentChart = function _changeColorOfInvestm() {
+                _context6.prev = 0;
+                changeColorOfInvestmentChart = function changeColorOfInvestmentChart() {
                   if (InitialInvestmentValue < currentInvestmentValue) {
                     backgroundColor = 'rgb(0,255,0, 0.15)';
                   } else {
@@ -846,31 +836,33 @@ var marketsStocksObserver = new IntersectionObserver(function (entries, marketsS
                   publicCompanyInvestmentReturns.data.datasets.forEach(function (data) {
                     data.backgroundColor = backgroundColor;
                   });
-                  publicCompanyInvestmentReturns.options.scales.y.ticks.beginAtZero = false;
                 };
                 URL = "https://api.coingecko.com/api/v3/companies/public_treasury/".concat(selectedAsset);
-                _context6.next = 4;
+                _context6.next = 5;
                 return fetch(URL);
-              case 4:
+              case 5:
                 response = _context6.sent;
-                _context6.next = 7;
+                _context6.next = 8;
                 return response.json();
-              case 7:
+              case 8:
                 data = _context6.sent;
                 console.log(data);
 
                 // fetch the names of the stocks
-                _context6.next = 11;
+                _context6.next = 12;
                 return data['companies'];
-              case 11:
+              case 12:
                 stockName = _context6.sent;
                 stockList = document.querySelector('.stockList');
+                arrayNumber = 0;
                 _iterator8 = _createForOfIteratorHelper(stockName);
                 try {
                   for (_iterator8.s(); !(_step8 = _iterator8.n()).done;) {
                     names = _step8.value;
                     // create the element for the drop down list
                     optionEl = document.createElement('option');
+                    optionEl.classList.add(arrayNumber);
+                    arrayNumber++;
                     nameOfStock = names['name'];
                     optionEl.appendChild(document.createTextNode(nameOfStock));
                     fullTicker = names['symbol'];
@@ -896,21 +888,21 @@ var marketsStocksObserver = new IntersectionObserver(function (entries, marketsS
                 nameofSelectedCryptoPublicCompany.innerHTML = UpperCaseSelectedAsset;
 
                 // fetch the total holding data
-                _context6.next = 25;
+                _context6.next = 27;
                 return data['companies'][0];
-              case 25:
+              case 27:
                 firstCompanydata = _context6.sent;
                 companyTotalCryptoHoldings = document.querySelector('.companyTotalCryptoHoldings');
-                _context6.next = 29;
+                _context6.next = 31;
                 return firstCompanydata['total_holdings'];
-              case 29:
+              case 31:
                 unformattedTotalCryptoHoldings = _context6.sent;
                 totalCryptoHoldings = unformattedTotalCryptoHoldings.toLocaleString();
                 companyTotalCryptoHoldings.innerHTML = totalCryptoHoldings;
                 companyTotalUSDholdings = document.querySelector('.companyTotalUSDholdings');
-                _context6.next = 35;
+                _context6.next = 37;
                 return firstCompanydata['total_current_value_usd'];
-              case 35:
+              case 37:
                 unformattedUsdHoldings = _context6.sent;
                 totalUsdHoldings = unformattedUsdHoldings.toLocaleString();
                 companyTotalUSDholdings.innerHTML = totalUsdHoldings;
@@ -920,18 +912,14 @@ var marketsStocksObserver = new IntersectionObserver(function (entries, marketsS
                 percentOfTotalSupply.innerHTML = firstCompanydata['percentage_of_total_supply'];
 
                 // fetch the investment returns
-                investmentAmounts = [];
-                _context6.next = 43;
+                _context6.next = 44;
                 return stockName[0]['total_entry_value_usd'];
-              case 43:
+              case 44:
                 InitialInvestmentValue = _context6.sent;
-                investmentAmounts.push(InitialInvestmentValue);
                 _context6.next = 47;
                 return stockName[0]['total_current_value_usd'];
               case 47:
                 let = currentInvestmentValue = _context6.sent;
-                investmentAmounts.push(currentInvestmentValue);
-                console.log(investmentAmounts);
                 publicCompanyInvestmentReturns.data.datasets.forEach(function (data) {
                   data.data.push(InitialInvestmentValue);
                   data.data.push(currentInvestmentValue);
@@ -939,16 +927,138 @@ var marketsStocksObserver = new IntersectionObserver(function (entries, marketsS
                 ;
                 changeColorOfInvestmentChart();
                 publicCompanyInvestmentReturns.update();
+                _context6.next = 58;
+                break;
               case 54:
+                _context6.prev = 54;
+                _context6.t0 = _context6["catch"](0);
+                console.log(_context6.t0);
+                console.log('Could not fetch the list of stocks...');
+              case 58:
               case "end":
                 return _context6.stop();
             }
-          }, _callee6);
+          }, _callee6, null, [[0, 54]]);
         }));
         return function fetchStockList() {
           return _ref6.apply(this, arguments);
         };
       }();
+      // function to initially fetch the stock names and company data
+      var changeTimeframe = function changeTimeframe() {
+        if (publicStockChartTimeframe.value == 'TIME_SERIES_DAILY_ADJUSTED') {
+          timeSeries = 'Time Series (Daily)'; // Time Series (Daily), Weekly Adjusted Time Series
+          timeframe = publicStockChartTimeframe.value;
+        } else {
+          timeSeries = 'Weekly Adjusted Time Series'; // Time Series (Daily), Weekly Adjusted Time Series
+          timeframe = publicStockChartTimeframe.value;
+        }
+        fetchData();
+        changeHeldAsset();
+        fetchStockList();
+      };
+      // change the displayed stock data and price action
+      var changeDisplayedStock = function changeDisplayedStock() {
+        // for the stock chart
+        var listOfCryptoCompanies = document.querySelector('.listOfCryptoCompanies');
+        var selectedStockTicker = listOfCryptoCompanies.value;
+        ticker = selectedStockTicker;
+        fetchData();
+
+        // change company full name and ticker symbol
+        var selectedStock = listOfCryptoCompanies.options[listOfCryptoCompanies.selectedIndex].text;
+        var publicStockHoldingFullName = document.querySelector('.publicStockHoldingFullName');
+        publicStockHoldingFullName.innerHTML = selectedStock;
+        var publicStockHoldingTicker = document.querySelector('.publicStockHoldingTicker');
+        publicStockHoldingTicker.innerHTML = listOfCryptoCompanies.value;
+        var nameofSelectedCryptoPublicCompany = document.querySelector('.nameofSelectedCryptoPublicCompany');
+        nameofSelectedCryptoPublicCompany.innerHTML = selectedAsset.charAt(0).toUpperCase() + selectedAsset.slice(1);
+
+        // change the company holdings and % of total supply
+        function reFetchCompanyData() {
+          return _reFetchCompanyData.apply(this, arguments);
+        }
+        function _reFetchCompanyData() {
+          _reFetchCompanyData = _asyncToGenerator( /*#__PURE__*/_regeneratorRuntime().mark(function _callee7() {
+            var URL, response, data, selectedStockEl, selectedStockOrderValue, stockNumberInArray, companyCryptoHoldings, companyTotalCryptoHoldings, companyUsdHoldings, companyTotalUsdHoldings, percentOfTotalSupply, percentOfTotalSupplyEl, initialInvestmentValue, _currentInvestmentValue;
+            return _regeneratorRuntime().wrap(function _callee7$(_context7) {
+              while (1) switch (_context7.prev = _context7.next) {
+                case 0:
+                  _context7.prev = 0;
+                  URL = "https://api.coingecko.com/api/v3/companies/public_treasury/".concat(selectedAsset);
+                  _context7.next = 4;
+                  return fetch(URL);
+                case 4:
+                  response = _context7.sent;
+                  _context7.next = 7;
+                  return response.json();
+                case 7:
+                  data = _context7.sent;
+                  // for the stock number within the list
+                  selectedStockEl = listOfCryptoCompanies.options[listOfCryptoCompanies.selectedIndex];
+                  selectedStockOrderValue = Array.from(selectedStockEl.classList);
+                  stockNumberInArray = selectedStockOrderValue.toString(); // the crypto holdings
+                  _context7.next = 13;
+                  return data['companies'][stockNumberInArray]['total_holdings'];
+                case 13:
+                  companyCryptoHoldings = _context7.sent;
+                  companyTotalCryptoHoldings = document.querySelector('.companyTotalCryptoHoldings');
+                  companyTotalCryptoHoldings.innerHTML = companyCryptoHoldings.toLocaleString();
+                  // the holdings in USD
+                  _context7.next = 18;
+                  return data['companies'][stockNumberInArray]['total_current_value_usd'];
+                case 18:
+                  companyUsdHoldings = _context7.sent;
+                  companyTotalUsdHoldings = document.querySelector('.companyTotalUSDholdings');
+                  companyTotalUsdHoldings.innerHTML = companyUsdHoldings.toLocaleString();
+
+                  // the % of total supply
+                  _context7.next = 23;
+                  return data['companies'][stockNumberInArray]['percentage_of_total_supply'];
+                case 23:
+                  percentOfTotalSupply = _context7.sent;
+                  percentOfTotalSupplyEl = document.querySelector('.publicCompanyMarketCapDominance');
+                  percentOfTotalSupplyEl.innerHTML = percentOfTotalSupply;
+
+                  // the investment value
+                  investmentAmounts = [];
+                  _context7.next = 29;
+                  return data['companies'][stockNumberInArray]['total_entry_value_usd'];
+                case 29:
+                  initialInvestmentValue = _context7.sent;
+                  _context7.next = 32;
+                  return data['companies'][stockNumberInArray]['total_current_value_usd'];
+                case 32:
+                  _currentInvestmentValue = _context7.sent;
+                  investmentAmounts.push(initialInvestmentValue);
+                  investmentAmounts.push(_currentInvestmentValue);
+                  publicCompanyInvestmentReturns.data.datasets[0].data = investmentAmounts;
+                  if (initialInvestmentValue < _currentInvestmentValue) {
+                    backgroundColor = 'rgb(0,255,0, 0.15)';
+                  } else {
+                    backgroundColor = 'rgb(255,0,0, 0.15)';
+                  }
+                  publicCompanyInvestmentReturns.data.datasets[0].backgroundColor = backgroundColor;
+                  publicCompanyInvestmentReturns.update();
+                  console.log(investmentAmounts);
+                  _context7.next = 46;
+                  break;
+                case 42:
+                  _context7.prev = 42;
+                  _context7.t0 = _context7["catch"](0);
+                  console.log(_context7.t0);
+                  console.log('Could not change displayed stock info...');
+                case 46:
+                case "end":
+                  return _context7.stop();
+              }
+            }, _callee7, null, [[0, 42]]);
+          }));
+          return _reFetchCompanyData.apply(this, arguments);
+        }
+        ;
+        reFetchCompanyData();
+      };
       var changeHeldAsset = function changeHeldAsset(event) {
         var chartBTCButton = document.querySelector('.chartBTCButton');
         var chartETHButton = document.querySelector('.chartETHButton');
@@ -956,14 +1066,12 @@ var marketsStocksObserver = new IntersectionObserver(function (entries, marketsS
           chartBTCButton.style.backgroundColor = 'rgb(128, 128, 128, 0.6)';
           chartETHButton.style.backgroundColor = 'rgb(128, 128, 128, 0.2)';
           selectedAsset = event.target.value;
-          fetchStockList();
-          changeColorOfInvestmentChart();
+          changeDisplayedStock();
         } else {
           chartBTCButton.style.backgroundColor = 'rgb(128, 128, 128, 0.2)';
           chartETHButton.style.backgroundColor = 'rgb(128, 128, 128, 0.6)';
           selectedAsset = event.target.value;
-          fetchStockList();
-          changeColorOfInvestmentChart();
+          changeDisplayedStock();
         }
       };
       var myAPIkey = 'GH9DTBAMAJL2HKD1';
@@ -983,13 +1091,30 @@ var marketsStocksObserver = new IntersectionObserver(function (entries, marketsS
       var fetchedPriceData = [];
       var ticker = 'MSTR';
       var nameOfPublicCompany = 'MicroStrategy Inc.';
+
+      // INVESTMENT RETURN DATA AND CHART
+      var selectedAsset = 'bitcoin';
+      var investmentAmounts = [];
+      var backgroundColor = 'rgb(255,255,255, 0.15)';
       var timeframe = 'TIME_SERIES_DAILY_ADJUSTED'; // TIME_SERIES_DAILY_ADJUSTED, TIME_SERIES_WEEKLY_ADJUSTED
       var timeSeries = 'Time Series (Daily)';
       ;
       fetchData();
       ;
+      fetchStockList();
+      ;
       var publicStockChartTimeframe = document.querySelector('.publicStockTimeframeSelection');
       publicStockChartTimeframe.addEventListener('change', changeTimeframe);
+      ;
+      var listOfCryptoCompanies = document.querySelector('.listOfCryptoCompanies');
+      listOfCryptoCompanies.addEventListener('change', changeDisplayedStock);
+
+      // if the user changes the held asset
+      var heldAssetByPublicCompanies = document.querySelectorAll('.heldAssetByPublicCompanies');
+      ;
+      heldAssetByPublicCompanies.forEach(function (asset) {
+        asset.addEventListener('click', changeHeldAsset);
+      });
 
       // CODE FOR THE MAIN PRICE CHART
       var stockPriceCanvas = document.querySelector('.marketStockPrice');
@@ -1018,20 +1143,6 @@ var marketsStocksObserver = new IntersectionObserver(function (entries, marketsS
             }
           }
         }
-      });
-
-      // INVESTMENT RETURN DATA AND CHART
-      var selectedAsset = 'bitcoin';
-      var investmentAmounts = [];
-      var backgroundColor = 'rgb(255,255,255, 0.15)';
-      ;
-      fetchStockList();
-
-      // if the user changes the held asset
-      var heldAssetByPublicCompanies = document.querySelectorAll('.heldAssetByPublicCompanies');
-      ;
-      heldAssetByPublicCompanies.forEach(function (asset) {
-        asset.addEventListener('click', changeHeldAsset);
       });
 
       // CODE FOR THE INVESTMENT RETURN CHART
@@ -1064,7 +1175,7 @@ var marketsStocksObserver = new IntersectionObserver(function (entries, marketsS
               ticks: {
                 beginAtZero: false,
                 callback: function callback(value, index, values) {
-                  return '$' + value / 1e9 + ' ' + 'B';
+                  return '$' + value / 1e6 + ' ' + 'M';
                   ;
                 }
               }
@@ -1108,7 +1219,7 @@ var parent = module.bundle.parent;
 if ((!parent || !parent.isParcelRequire) && typeof WebSocket !== 'undefined') {
   var hostname = "" || location.hostname;
   var protocol = location.protocol === 'https:' ? 'wss' : 'ws';
-  var ws = new WebSocket(protocol + '://' + hostname + ':' + "50393" + '/');
+  var ws = new WebSocket(protocol + '://' + hostname + ':' + "58472" + '/');
   ws.onmessage = function (event) {
     checkedAssets = {};
     assetsToAccept = [];

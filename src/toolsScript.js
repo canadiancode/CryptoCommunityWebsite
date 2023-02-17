@@ -364,6 +364,11 @@ const marketsStocksObserver = new IntersectionObserver(function(entries, markets
       let ticker = 'MSTR';
       let nameOfPublicCompany = 'MicroStrategy Inc.';
 
+      // INVESTMENT RETURN DATA AND CHART
+      let selectedAsset = 'bitcoin';
+      let investmentAmounts = [];
+      let backgroundColor = 'rgb(255,255,255, 0.15)';
+
       let timeframe = 'TIME_SERIES_DAILY_ADJUSTED'; // TIME_SERIES_DAILY_ADJUSTED, TIME_SERIES_WEEKLY_ADJUSTED
       let timeSeries = 'Time Series (Daily)'; // Time Series (Daily), Weekly Adjusted Time Series
 
@@ -430,8 +435,88 @@ const marketsStocksObserver = new IntersectionObserver(function(entries, markets
       };
       fetchData();
 
+      async function fetchStockList() {
 
-      // change timeframe for main stock chart
+        try {
+          let URL = `https://api.coingecko.com/api/v3/companies/public_treasury/${selectedAsset}`;
+
+          let response = await fetch(URL);
+          let data = await response.json();
+          console.log(data);
+
+          // fetch the names of the stocks
+          let stockName = await data['companies'];
+          const stockList = document.querySelector('.stockList');
+          let arrayNumber = 0;
+          for (const names of stockName) {
+            // create the element for the drop down list
+            const optionEl = document.createElement('option');
+            optionEl.classList.add(arrayNumber);
+            arrayNumber++;
+            let nameOfStock = names['name'];
+            optionEl.appendChild(document.createTextNode(nameOfStock));
+            let fullTicker = names['symbol'];
+            let justTicker = fullTicker.split(':').pop();
+            let singleticker = justTicker.trim();
+            optionEl.value = singleticker;
+            stockList.appendChild(optionEl);
+          }
+
+          // fetch the data on the text section
+          let publicStockHoldingFullName = document.querySelector('.publicStockHoldingFullName');
+          let selectedStock = stockList.options[stockList.selectedIndex].text;
+          publicStockHoldingFullName.innerHTML = selectedStock; 
+          let publicStockHoldingTicker = document.querySelector('.publicStockHoldingTicker');
+          publicStockHoldingTicker.innerHTML = stockList.value;
+          let nameofSelectedCryptoPublicCompany = document.querySelector('.nameofSelectedCryptoPublicCompany');
+          let UpperCaseSelectedAsset = selectedAsset.charAt(0).toUpperCase() + selectedAsset.slice(1);
+          nameofSelectedCryptoPublicCompany.innerHTML = UpperCaseSelectedAsset;
+
+          // fetch the total holding data
+          let firstCompanydata = await data['companies'][0];
+          let companyTotalCryptoHoldings = document.querySelector('.companyTotalCryptoHoldings');
+          let unformattedTotalCryptoHoldings = await firstCompanydata['total_holdings'];
+          let totalCryptoHoldings = unformattedTotalCryptoHoldings.toLocaleString();
+          companyTotalCryptoHoldings.innerHTML = totalCryptoHoldings;
+          let companyTotalUSDholdings = document.querySelector('.companyTotalUSDholdings');
+          let unformattedUsdHoldings = await firstCompanydata['total_current_value_usd'];
+          let totalUsdHoldings = unformattedUsdHoldings.toLocaleString();
+          companyTotalUSDholdings.innerHTML = totalUsdHoldings;
+
+          // fetch the dominance and total supply
+          let percentOfTotalSupply = document.querySelector('.publicCompanyMarketCapDominance');
+          percentOfTotalSupply.innerHTML = firstCompanydata['percentage_of_total_supply'];
+
+          // fetch the investment returns
+          let InitialInvestmentValue = await stockName[0]['total_entry_value_usd'];
+          let = currentInvestmentValue = await stockName[0]['total_current_value_usd'];
+          publicCompanyInvestmentReturns.data.datasets.forEach(data => {
+            data.data.push(InitialInvestmentValue);
+            data.data.push(currentInvestmentValue);
+          });
+
+          function changeColorOfInvestmentChart() {
+            if (InitialInvestmentValue < currentInvestmentValue) {
+              backgroundColor = 'rgb(0,255,0, 0.15)';
+            } else {
+              backgroundColor = 'rgb(255,0,0, 0.15)';
+            }
+            publicCompanyInvestmentReturns.data.datasets.forEach(data => {
+              data.backgroundColor = backgroundColor;
+            });
+          };
+          changeColorOfInvestmentChart();
+
+          publicCompanyInvestmentReturns.update();
+        }
+        catch(error) {
+          console.log(error);
+          console.log('Could not fetch the list of stocks...')
+        }
+      };
+      fetchStockList();
+
+      // function to initially fetch the stock names and company data
       function changeTimeframe() {
 
         if (publicStockChartTimeframe.value == 'TIME_SERIES_DAILY_ADJUSTED') {
@@ -443,9 +528,106 @@ const marketsStocksObserver = new IntersectionObserver(function(entries, markets
           timeframe = publicStockChartTimeframe.value;
         }
         fetchData();
+        changeHeldAsset();
+        fetchStockList();
       };
       const publicStockChartTimeframe = document.querySelector('.publicStockTimeframeSelection');
       publicStockChartTimeframe.addEventListener('change', changeTimeframe);
+
+      // change the displayed stock data and price action
+      function changeDisplayedStock() {
+        // for the stock chart
+        const listOfCryptoCompanies = document.querySelector('.listOfCryptoCompanies');
+        let selectedStockTicker = listOfCryptoCompanies.value;
+        ticker = selectedStockTicker;
+        fetchData();
+
+        // change company full name and ticker symbol
+        let selectedStock = listOfCryptoCompanies.options[listOfCryptoCompanies.selectedIndex].text;
+        let publicStockHoldingFullName = document.querySelector('.publicStockHoldingFullName');
+        publicStockHoldingFullName.innerHTML = selectedStock;
+        let publicStockHoldingTicker = document.querySelector('.publicStockHoldingTicker');
+        publicStockHoldingTicker.innerHTML = listOfCryptoCompanies.value;
+        let nameofSelectedCryptoPublicCompany = document.querySelector('.nameofSelectedCryptoPublicCompany');
+        nameofSelectedCryptoPublicCompany.innerHTML = selectedAsset.charAt(0).toUpperCase() + selectedAsset.slice(1);
+
+        // change the company holdings and % of total supply
+        async function reFetchCompanyData() {
+          try {
+
+            let URL = `https://api.coingecko.com/api/v3/companies/public_treasury/${selectedAsset}`;
+            let response = await fetch(URL);
+            let data = await response.json();
+            // for the stock number within the list
+            let selectedStockEl = listOfCryptoCompanies.options[listOfCryptoCompanies.selectedIndex];
+            let selectedStockOrderValue = Array.from(selectedStockEl.classList);
+            let stockNumberInArray = selectedStockOrderValue.toString();
+            // the crypto holdings
+            let companyCryptoHoldings = await data['companies'][stockNumberInArray]['total_holdings'];
+            let companyTotalCryptoHoldings = document.querySelector('.companyTotalCryptoHoldings');
+            companyTotalCryptoHoldings.innerHTML = companyCryptoHoldings.toLocaleString();
+            // the holdings in USD
+            let companyUsdHoldings = await data['companies'][stockNumberInArray]['total_current_value_usd'];
+            let companyTotalUsdHoldings = document.querySelector('.companyTotalUSDholdings');
+            companyTotalUsdHoldings.innerHTML = companyUsdHoldings.toLocaleString();
+
+            // the % of total supply
+            let percentOfTotalSupply = await data['companies'][stockNumberInArray]['percentage_of_total_supply'];
+            let percentOfTotalSupplyEl = document.querySelector('.publicCompanyMarketCapDominance');
+            percentOfTotalSupplyEl.innerHTML = percentOfTotalSupply;
+
+            // the investment value
+            investmentAmounts = [];
+            let initialInvestmentValue = await data['companies'][stockNumberInArray]['total_entry_value_usd'];
+            let currentInvestmentValue = await data['companies'][stockNumberInArray]['total_current_value_usd'];
+            investmentAmounts.push(initialInvestmentValue);
+            investmentAmounts.push(currentInvestmentValue);
+            publicCompanyInvestmentReturns.data.datasets[0].data = investmentAmounts;
+            if (initialInvestmentValue < currentInvestmentValue) {
+              backgroundColor = 'rgb(0,255,0, 0.15)';
+            } else {
+              backgroundColor = 'rgb(255,0,0, 0.15)';
+            }
+            publicCompanyInvestmentReturns.data.datasets[0].backgroundColor = backgroundColor;
+            publicCompanyInvestmentReturns.update();
+
+
+
+            console.log(investmentAmounts);
+  
+          }
+          catch(error) {
+            console.log(error);
+            console.log('Could not change displayed stock info...')
+          }
+        };
+        reFetchCompanyData();
+
+      };
+      const listOfCryptoCompanies = document.querySelector('.listOfCryptoCompanies');
+      listOfCryptoCompanies.addEventListener('change', changeDisplayedStock);
+
+      // if the user changes the held asset
+      const heldAssetByPublicCompanies = document.querySelectorAll('.heldAssetByPublicCompanies');
+      function changeHeldAsset(event) {
+        const chartBTCButton = document.querySelector('.chartBTCButton');
+        const chartETHButton = document.querySelector('.chartETHButton');
+        if (event.target.value == 'bitcoin') {
+          chartBTCButton.style.backgroundColor = 'rgb(128, 128, 128, 0.6)';
+          chartETHButton.style.backgroundColor = 'rgb(128, 128, 128, 0.2)';
+          selectedAsset = event.target.value;
+          changeDisplayedStock();
+        } else {
+          chartBTCButton.style.backgroundColor = 'rgb(128, 128, 128, 0.2)';
+          chartETHButton.style.backgroundColor = 'rgb(128, 128, 128, 0.6)';
+          selectedAsset = event.target.value;
+          changeDisplayedStock();
+        }
+
+      };
+      heldAssetByPublicCompanies.forEach(asset => {
+        asset.addEventListener('click', changeHeldAsset);
+      });
 
       // CODE FOR THE MAIN PRICE CHART
       const stockPriceCanvas = document.querySelector('.marketStockPrice');
@@ -474,113 +656,6 @@ const marketsStocksObserver = new IntersectionObserver(function(entries, markets
             }
           }
         }
-      });
-
-
-      // INVESTMENT RETURN DATA AND CHART
-      let selectedAsset = 'bitcoin';
-      let investmentAmounts = [];
-      let backgroundColor = 'rgb(255,255,255, 0.15)';
-
-      async function fetchStockList() {
-
-        let URL = `https://api.coingecko.com/api/v3/companies/public_treasury/${selectedAsset}`;
-
-        let response = await fetch(URL);
-        let data = await response.json();
-        console.log(data);
-
-        // fetch the names of the stocks
-        let stockName = await data['companies'];
-        const stockList = document.querySelector('.stockList');
-        for (const names of stockName) {
-          // create the element for the drop down list
-          const optionEl = document.createElement('option');
-          let nameOfStock = names['name'];
-          optionEl.appendChild(document.createTextNode(nameOfStock));
-          let fullTicker = names['symbol'];
-          let justTicker = fullTicker.split(':').pop();
-          let singleticker = justTicker.trim();
-          optionEl.value = singleticker;
-          stockList.appendChild(optionEl);
-        }
-
-        // fetch the data on the text section
-        let publicStockHoldingFullName = document.querySelector('.publicStockHoldingFullName');
-        let selectedStock = stockList.options[stockList.selectedIndex].text;
-        publicStockHoldingFullName.innerHTML = selectedStock; 
-        let publicStockHoldingTicker = document.querySelector('.publicStockHoldingTicker');
-        publicStockHoldingTicker.innerHTML = stockList.value;
-        let nameofSelectedCryptoPublicCompany = document.querySelector('.nameofSelectedCryptoPublicCompany');
-        let UpperCaseSelectedAsset = selectedAsset.charAt(0).toUpperCase() + selectedAsset.slice(1);
-        nameofSelectedCryptoPublicCompany.innerHTML = UpperCaseSelectedAsset;
-
-        // fetch the total holding data
-        let firstCompanydata = await data['companies'][0];
-        let companyTotalCryptoHoldings = document.querySelector('.companyTotalCryptoHoldings');
-        let unformattedTotalCryptoHoldings = await firstCompanydata['total_holdings'];
-        let totalCryptoHoldings = unformattedTotalCryptoHoldings.toLocaleString();
-        companyTotalCryptoHoldings.innerHTML = totalCryptoHoldings;
-        let companyTotalUSDholdings = document.querySelector('.companyTotalUSDholdings');
-        let unformattedUsdHoldings = await firstCompanydata['total_current_value_usd'];
-        let totalUsdHoldings = unformattedUsdHoldings.toLocaleString();
-        companyTotalUSDholdings.innerHTML = totalUsdHoldings;
-
-        // fetch the dominance and total supply
-        let percentOfTotalSupply = document.querySelector('.publicCompanyMarketCapDominance');
-        percentOfTotalSupply.innerHTML = firstCompanydata['percentage_of_total_supply'];
-
-        // fetch the investment returns
-        investmentAmounts = [];
-        let InitialInvestmentValue = await stockName[0]['total_entry_value_usd'];
-        investmentAmounts.push(InitialInvestmentValue);
-        let = currentInvestmentValue = await stockName[0]['total_current_value_usd'];
-        investmentAmounts.push(currentInvestmentValue);
-        console.log(investmentAmounts);
-        publicCompanyInvestmentReturns.data.datasets.forEach(data => {
-          data.data.push(InitialInvestmentValue);
-          data.data.push(currentInvestmentValue);
-        });
-
-        function changeColorOfInvestmentChart() {
-          if (InitialInvestmentValue < currentInvestmentValue) {
-            backgroundColor = 'rgb(0,255,0, 0.15)';
-          } else {
-            backgroundColor = 'rgb(255,0,0, 0.15)';
-          }
-          publicCompanyInvestmentReturns.data.datasets.forEach(data => {
-            data.backgroundColor = backgroundColor;
-          });
-          publicCompanyInvestmentReturns.options.scales.y.ticks.beginAtZero = false;
-        };
-        changeColorOfInvestmentChart();
-
-        publicCompanyInvestmentReturns.update();
-      };
-      fetchStockList();
-
-      // if the user changes the held asset
-      const heldAssetByPublicCompanies = document.querySelectorAll('.heldAssetByPublicCompanies');
-      function changeHeldAsset(event) {
-        const chartBTCButton = document.querySelector('.chartBTCButton');
-        const chartETHButton = document.querySelector('.chartETHButton');
-        if (event.target.value == 'bitcoin') {
-          chartBTCButton.style.backgroundColor = 'rgb(128, 128, 128, 0.6)';
-          chartETHButton.style.backgroundColor = 'rgb(128, 128, 128, 0.2)';
-          selectedAsset = event.target.value;
-          fetchStockList();
-          changeColorOfInvestmentChart();
-        } else {
-          chartBTCButton.style.backgroundColor = 'rgb(128, 128, 128, 0.2)';
-          chartETHButton.style.backgroundColor = 'rgb(128, 128, 128, 0.6)';
-          selectedAsset = event.target.value;
-          fetchStockList();
-          changeColorOfInvestmentChart();
-        }
-
-      };
-      heldAssetByPublicCompanies.forEach(asset => {
-        asset.addEventListener('click', changeHeldAsset);
       });
 
       // CODE FOR THE INVESTMENT RETURN CHART
@@ -613,7 +688,7 @@ const marketsStocksObserver = new IntersectionObserver(function(entries, markets
               ticks: {
                 beginAtZero: false,
                 callback: function(value, index, values) {
-                  return '$' + value / 1e9 + ' ' + 'B';;
+                  return '$' + value / 1e6 + ' ' + 'M';;
                 }
               }
             }
@@ -632,5 +707,7 @@ const marketsStocksObserver = new IntersectionObserver(function(entries, markets
     }
   })
 }, dataPageOptions);
+
+
 const marketPublicstockChartContainer = document.querySelector('.marketPublicstockChartContainer');
 marketsStocksObserver.observe(marketPublicstockChartContainer);

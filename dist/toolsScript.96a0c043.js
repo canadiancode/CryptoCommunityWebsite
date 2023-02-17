@@ -864,9 +864,31 @@ var marketsStocksObserver = new IntersectionObserver(function (entries, marketsS
                     optionEl.appendChild(document.createTextNode(nameOfStock));
                     fullTicker = names['symbol'];
                     justTicker = fullTicker.split(':').pop();
-                    singleticker = justTicker.trim();
+                    singleticker = justTicker.trim(); // change necessary ticker names
+                    if (singleticker == 'Hut-8') {
+                      singleticker = 'HUT';
+                    } else if (singleticker == '3659') {
+                      singleticker = 'NEXOF';
+                    } else if (singleticker == 'VYGR') {
+                      singleticker = 'VYGVQ';
+                    } else if (singleticker == 'BIGG') {
+                      singleticker = 'BBKCF';
+                    } else if (singleticker == 'DCC') {
+                      singleticker = 'DGGXF';
+                    } else if (singleticker == 'FORT') {
+                      singleticker = 'FRTTF';
+                    } else if (singleticker == 'MODE') {
+                      singleticker = 'MODGF';
+                    } else if (singleticker == 'DASH') {
+                      singleticker = 'NPPTF';
+                    }
                     optionEl.value = singleticker;
-                    stockList.appendChild(optionEl);
+
+                    // if function to remove unnecessary stocks from the list
+                    if (singleticker !== '1357' && singleticker !== 'AKER' && singleticker !== 'HODL' && singleticker !== 'BROOK') {
+                      stockList.appendChild(optionEl);
+                    }
+                    ;
                   }
 
                   // fetch the data on the text section
@@ -1191,25 +1213,6 @@ var marketsStocksObserver = new IntersectionObserver(function (entries, marketsS
 }, dataPageOptions);
 var marketPublicstockChartContainer = document.querySelector('.marketPublicstockChartContainer');
 marketsStocksObserver.observe(marketPublicstockChartContainer);
-
-// testing for the fetched data
-// let testingTicker = 'COIN';
-
-// async function fetchStockData() {
-//   const myAPIkey = 'GH9DTBAMAJL2HKD1';
-//   const options = {
-//     method: 'GET',
-//     headers: {
-//         'X-RapidAPI-Key': '5abcde3910mshe635fb57c055c0fp10d768jsna1801b9b4a77',
-//         'X-RapidAPI-Host': 'real-time-finance-data.p.rapidapi.com'
-//     }
-// };
-//   let URL = `https://www.alphavantage.co/query?function=TIME_SERIES_DAILY_ADJUSTED&symbol=${testingTicker}&apikey=${myAPIkey}`;
-//   let response = await fetch(URL);
-//   let data = await response.json();
-//   console.log(data);
-// }
-// fetchStockData();
 },{}],"../node_modules/parcel-bundler/src/builtins/hmr-runtime.js":[function(require,module,exports) {
 var global = arguments[3];
 var OVERLAY_ID = '__parcel__error__overlay__';

@@ -479,6 +479,7 @@ const marketsStocksObserver = new IntersectionObserver(function(entries, markets
             optionEl.value = singleticker;
 
             // if function to remove unnecessary stocks from the list
+            stockList.innerHTML = '';
             if (singleticker !== '1357' && singleticker !== 'AKER' && singleticker !== 'HODL' && singleticker !== 'BROOK') {
               stockList.appendChild(optionEl);
             };

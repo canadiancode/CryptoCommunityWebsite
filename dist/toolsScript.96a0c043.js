@@ -183,7 +183,7 @@ var dataPageOptions = {
   threshold: 0
 };
 
-// MARKETS PAGE -- CRYPTOCURRENCIES // MARKETS PAGE -- CRYPTOCURRENCIES // MARKETS PAGE -- CRYPTOCURRENCIES
+// MARKETS PAGE -- CRYPTOCURRENCY PRICES // -- CRYPTOCURRENCY PRICES // CRYPTOCURRENCY PRICES
 var marketsCryptoObserver = new IntersectionObserver(function (entries, marketsCryptoObserver) {
   entries.forEach(function (entry) {
     if (entry.isIntersecting) {
@@ -1215,7 +1215,7 @@ var marketsStocksObserver = new IntersectionObserver(function (entries, marketsS
 var marketPublicstockChartContainer = document.querySelector('.marketPublicstockChartContainer');
 marketsStocksObserver.observe(marketPublicstockChartContainer);
 
-// MARKETS PAGE -- MARKET CAPS AND 
+// MARKETS PAGE -- COMPARE MARKET CAPS // COMPARE MARKET CAPS // COMPARE MARKET CAPS
 var marketsCompareMarketCapObserver = new IntersectionObserver(function (entries, marketsCompareMarketCapObserver) {
   entries.forEach(function (entry) {
     if (entry.isIntersecting) {
@@ -1580,19 +1580,21 @@ var marketsCompareMarketCapObserver = new IntersectionObserver(function (entries
                 return response.json();
               case 8:
                 assetListData = _context9.sent;
+                console.log(assetListData);
+
                 // ASSET 1 DATA
                 _iterator15 = _createForOfIteratorHelper(assetListData);
-                _context9.prev = 10;
+                _context9.prev = 11;
                 _iterator15.s();
-              case 12:
+              case 13:
                 if ((_step15 = _iterator15.n()).done) {
-                  _context9.next = 31;
+                  _context9.next = 32;
                   break;
                 }
                 asset = _step15.value;
-                _context9.next = 16;
+                _context9.next = 17;
                 return asset.id;
-              case 16:
+              case 17:
                 assetID = _context9.sent;
                 listOptions = document.createElement('option');
                 listOptions.classList.add(assetID);
@@ -1600,33 +1602,33 @@ var marketsCompareMarketCapObserver = new IntersectionObserver(function (entries
                 assetCountInArrayOne++;
 
                 // for the display name
-                _context9.next = 23;
+                _context9.next = 24;
                 return asset.name;
-              case 23:
+              case 24:
                 assetName = _context9.sent;
-                _context9.next = 26;
+                _context9.next = 27;
                 return assetName;
-              case 26:
+              case 27:
                 listOptions.value = _context9.sent;
                 // add option onto the dropdown selection
                 listOptions.appendChild(document.createTextNode(assetName));
                 // add element to lists
                 assetListElOne.appendChild(listOptions);
-              case 29:
-                _context9.next = 12;
+              case 30:
+                _context9.next = 13;
                 break;
-              case 31:
-                _context9.next = 36;
+              case 32:
+                _context9.next = 37;
                 break;
-              case 33:
-                _context9.prev = 33;
-                _context9.t0 = _context9["catch"](10);
+              case 34:
+                _context9.prev = 34;
+                _context9.t0 = _context9["catch"](11);
                 _iterator15.e(_context9.t0);
-              case 36:
-                _context9.prev = 36;
+              case 37:
+                _context9.prev = 37;
                 _iterator15.f();
-                return _context9.finish(36);
-              case 39:
+                return _context9.finish(37);
+              case 40:
                 // variables for the asset metrics within panel
                 marketCapValuationOne = document.querySelector('.marketCapValuationOne');
                 fullyDilutedValOne = document.querySelector('.fullyDilutedValOne');
@@ -1639,24 +1641,31 @@ var marketsCompareMarketCapObserver = new IntersectionObserver(function (entries
                   // market cap
                   shortenedMarketCapOne = totalMarketCapOne / 1000000000;
                   formattedTotalMarketCapOne = shortenedMarketCapOne.toLocaleString();
-                  marketCapValuationOne.innerHTML = "".concat(formattedTotalMarketCapOne, " B");
+                  marketCapValuationOne.innerHTML = "$ ".concat(formattedTotalMarketCapOne, " B");
 
                   // fully diluted valuation
                   fullyDilutedvalOne = assetListData[firstNumberInList]['fully_diluted_valuation'];
                   shortendedFullyDilutedValOne = (fullyDilutedvalOne / 1000000000).toLocaleString();
-                  formattedFullyDilutedValOne = "".concat(shortendedFullyDilutedValOne, " B");
-                  fullyDilutedValOne.innerHTML = formattedFullyDilutedValOne;
+                  formattedFullyDilutedValOne = "$ ".concat(shortendedFullyDilutedValOne, " B");
+                  if (assetListData[firstNumberInList]['max_supply'] == null) {
+                    fullyDilutedValOne.innerHTML = 'No max supply..';
+                    console.log('no max supply');
+                    console.log(assetListData[firstNumberInList]['max_supply']);
+                  } else {
+                    fullyDilutedValOne.innerHTML = formattedFullyDilutedValOne;
+                    console.log(assetListData[firstNumberInList]['max_supply']);
+                  }
                 } else {
                   // market cap
                   _totalMarketCapOne = assetListData[firstNumberInList]['market_cap'];
                   _shortenedMarketCapOne = _totalMarketCapOne / 1000000000;
                   _formattedTotalMarketCapOne = _shortenedMarketCapOne.toLocaleString();
-                  marketCapValuationOne.innerHTML = "".concat(_formattedTotalMarketCapOne, " M");
+                  marketCapValuationOne.innerHTML = "$ ".concat(_formattedTotalMarketCapOne, " M");
 
                   // fully diluted valuation
                   _fullyDilutedvalOne = assetListData[firstNumberInList]['fully_diluted_valuation'];
                   _shortendedFullyDilutedValOne = (_fullyDilutedvalOne / 1000000000).toLocaleString();
-                  _formattedFullyDilutedValOne = "".concat(_shortendedFullyDilutedValOne, " M");
+                  _formattedFullyDilutedValOne = "$ ".concat(_shortendedFullyDilutedValOne, " M");
                   fullyDilutedValOne.innerHTML = _formattedFullyDilutedValOne;
                 }
                 // % from all time high
@@ -1665,17 +1674,17 @@ var marketsCompareMarketCapObserver = new IntersectionObserver(function (entries
 
                 // ASSET 2 DATA
                 _iterator16 = _createForOfIteratorHelper(assetListData);
-                _context9.prev = 50;
+                _context9.prev = 51;
                 _iterator16.s();
-              case 52:
+              case 53:
                 if ((_step16 = _iterator16.n()).done) {
-                  _context9.next = 71;
+                  _context9.next = 72;
                   break;
                 }
                 _asset = _step16.value;
-                _context9.next = 56;
+                _context9.next = 57;
                 return _asset.id;
-              case 56:
+              case 57:
                 _assetID = _context9.sent;
                 _listOptions = document.createElement('option');
                 _listOptions.classList.add(_assetID);
@@ -1683,33 +1692,33 @@ var marketsCompareMarketCapObserver = new IntersectionObserver(function (entries
                 assetCountInArrayTwo++;
 
                 // for the display name
-                _context9.next = 63;
+                _context9.next = 64;
                 return _asset.name;
-              case 63:
+              case 64:
                 _assetName = _context9.sent;
-                _context9.next = 66;
+                _context9.next = 67;
                 return _assetName;
-              case 66:
+              case 67:
                 _listOptions.value = _context9.sent;
                 // add option onto the dropdown selection
                 _listOptions.appendChild(document.createTextNode(_assetName));
                 // add element to lists
                 assetListElTwo.appendChild(_listOptions);
-              case 69:
-                _context9.next = 52;
+              case 70:
+                _context9.next = 53;
                 break;
-              case 71:
-                _context9.next = 76;
+              case 72:
+                _context9.next = 77;
                 break;
-              case 73:
-                _context9.prev = 73;
-                _context9.t1 = _context9["catch"](50);
+              case 74:
+                _context9.prev = 74;
+                _context9.t1 = _context9["catch"](51);
                 _iterator16.e(_context9.t1);
-              case 76:
-                _context9.prev = 76;
+              case 77:
+                _context9.prev = 77;
                 _iterator16.f();
-                return _context9.finish(76);
-              case 79:
+                return _context9.finish(77);
+              case 80:
                 assetListElTwo.selectedIndex = 1;
                 marketCapValuationTwo = document.querySelector('.marketCapValuationTwo');
                 fullyDilutedValTwo = document.querySelector('.fullyDilutedValTwo');
@@ -1722,41 +1731,41 @@ var marketsCompareMarketCapObserver = new IntersectionObserver(function (entries
                   // market cap
                   shortenedMarketCapTwo = totalMarketCapTwo / 1000000000;
                   formattedTotalMarketCapTwo = shortenedMarketCapTwo.toLocaleString();
-                  marketCapValuationTwo.innerHTML = "".concat(formattedTotalMarketCapTwo, " B");
+                  marketCapValuationTwo.innerHTML = "$ ".concat(formattedTotalMarketCapTwo, " B");
 
                   // fully diluted valuation
                   fullyDilutedvalTwo = assetListData[secondNumberInList]['fully_diluted_valuation'];
                   shortendedFullyDilutedValTwo = (fullyDilutedvalTwo / 1000000000).toLocaleString();
-                  formattedFullyDilutedValTwo = "".concat(shortendedFullyDilutedValTwo, " B");
+                  formattedFullyDilutedValTwo = "$ ".concat(shortendedFullyDilutedValTwo, " B");
                   fullyDilutedValTwo.innerHTML = formattedFullyDilutedValTwo;
                 } else {
                   // market cap
                   _totalMarketCapTwo = assetListData[secondNumberInList]['market_cap'];
                   _shortenedMarketCapTwo = _totalMarketCapTwo / 1000000000;
                   _formattedTotalMarketCapTwo = _shortenedMarketCapTwo.toLocaleString();
-                  marketCapValuationTwo.innerHTML = "".concat(_formattedTotalMarketCapTwo, " M");
+                  marketCapValuationTwo.innerHTML = "$ ".concat(_formattedTotalMarketCapTwo, " M");
 
                   // fully diluted valuation
                   _fullyDilutedvalTwo = assetListData[secondNumberInList]['fully_diluted_valuation'];
                   _shortendedFullyDilutedValTwo = (_fullyDilutedvalTwo / 1000000000).toLocaleString();
-                  _formattedFullyDilutedValTwo = "".concat(_shortendedFullyDilutedValTwo, " M");
+                  _formattedFullyDilutedValTwo = "$ ".concat(_shortendedFullyDilutedValTwo, " M");
                   fullyDilutedValTwo.innerHTML = _formattedFullyDilutedValTwo;
                 }
                 // % from all time high
                 percentFromAllTimeHighTwo = assetListData[secondNumberInList]['ath_change_percentage'];
                 percentFromATHTwo.innerHTML = Math.round(percentFromAllTimeHighTwo.toLocaleString());
-                _context9.next = 96;
+                _context9.next = 97;
                 break;
-              case 92:
-                _context9.prev = 92;
+              case 93:
+                _context9.prev = 93;
                 _context9.t2 = _context9["catch"](0);
                 console.log(_context9.t2);
                 console.log('cannot get list of assets from CoinGecko...');
-              case 96:
+              case 97:
               case "end":
                 return _context9.stop();
             }
-          }, _callee9, null, [[0, 92], [10, 33, 36, 39], [50, 73, 76, 79]]);
+          }, _callee9, null, [[0, 93], [11, 34, 37, 40], [51, 74, 77, 80]]);
         }));
         return function getAssetList() {
           return _ref8.apply(this, arguments);
@@ -2043,7 +2052,7 @@ var parent = module.bundle.parent;
 if ((!parent || !parent.isParcelRequire) && typeof WebSocket !== 'undefined') {
   var hostname = "" || location.hostname;
   var protocol = location.protocol === 'https:' ? 'wss' : 'ws';
-  var ws = new WebSocket(protocol + '://' + hostname + ':' + "52650" + '/');
+  var ws = new WebSocket(protocol + '://' + hostname + ':' + "65361" + '/');
   ws.onmessage = function (event) {
     checkedAssets = {};
     assetsToAccept = [];

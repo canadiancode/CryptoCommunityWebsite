@@ -55,7 +55,7 @@ const dataPageOptions = {
   threshold: 0
 };
 
-  // MARKETS PAGE -- CRYPTOCURRENCIES // MARKETS PAGE -- CRYPTOCURRENCIES // MARKETS PAGE -- CRYPTOCURRENCIES
+  // MARKETS PAGE -- CRYPTOCURRENCY PRICES // -- CRYPTOCURRENCY PRICES // CRYPTOCURRENCY PRICES
 const marketsCryptoObserver = new IntersectionObserver(function(entries, marketsCryptoObserver) {
   entries.forEach(entry => {
     if (entry.isIntersecting) {
@@ -316,8 +316,8 @@ const marketsCryptoObserver = new IntersectionObserver(function(entries, markets
                 callback: function(value, index, values) {
                     return '$' + value.toLocaleString("en-US");
                 }
-            }
-            }
+              }
+            }  
           }
         }
       });
@@ -734,7 +734,7 @@ const marketPublicstockChartContainer = document.querySelector('.marketPublicsto
 marketsStocksObserver.observe(marketPublicstockChartContainer);
 
 
-  // MARKETS PAGE -- MARKET CAPS AND 
+  // MARKETS PAGE -- COMPARE MARKET CAPS // COMPARE MARKET CAPS // COMPARE MARKET CAPS
 const marketsCompareMarketCapObserver = new IntersectionObserver(function(entries, marketsCompareMarketCapObserver) {
   entries.forEach(entry => {
     if (entry.isIntersecting) {
@@ -923,6 +923,8 @@ const marketsCompareMarketCapObserver = new IntersectionObserver(function(entrie
           let response = await fetch(assetListURL);
           let assetListData = await response.json();
 
+          console.log(assetListData);
+
           // ASSET 1 DATA
           for (const asset of assetListData) {
             // for the ID 
@@ -957,24 +959,35 @@ const marketsCompareMarketCapObserver = new IntersectionObserver(function(entrie
             // market cap
             let shortenedMarketCapOne = totalMarketCapOne / 1000000000;
             let formattedTotalMarketCapOne = shortenedMarketCapOne.toLocaleString();
-            marketCapValuationOne.innerHTML = `${formattedTotalMarketCapOne} B`;
+            marketCapValuationOne.innerHTML = `$ ${formattedTotalMarketCapOne} B`;
 
             // fully diluted valuation
             let fullyDilutedvalOne = assetListData[firstNumberInList]['fully_diluted_valuation'];
             let shortendedFullyDilutedValOne = (fullyDilutedvalOne / 1000000000).toLocaleString();
-            let formattedFullyDilutedValOne = `${shortendedFullyDilutedValOne} B`;
-            fullyDilutedValOne.innerHTML = formattedFullyDilutedValOne;
+            let formattedFullyDilutedValOne = `$ ${shortendedFullyDilutedValOne} B`;
+
+            if (assetListData[firstNumberInList]['max_supply'] == null) {
+              fullyDilutedValOne.innerHTML = 'No max supply..';
+              console.log('no max supply');
+              console.log(assetListData[firstNumberInList]['max_supply']);
+            } else {
+              fullyDilutedValOne.innerHTML = formattedFullyDilutedValOne;
+              console.log(assetListData[firstNumberInList]['max_supply']);
+            }
+
+            
+
           } else {
             // market cap
             let totalMarketCapOne = assetListData[firstNumberInList]['market_cap'];
             let shortenedMarketCapOne = totalMarketCapOne / 1000000000;
             let formattedTotalMarketCapOne = shortenedMarketCapOne.toLocaleString();
-            marketCapValuationOne.innerHTML = `${formattedTotalMarketCapOne} M`;
+            marketCapValuationOne.innerHTML = `$ ${formattedTotalMarketCapOne} M`;
 
             // fully diluted valuation
             let fullyDilutedvalOne = assetListData[firstNumberInList]['fully_diluted_valuation'];
             let shortendedFullyDilutedValOne = (fullyDilutedvalOne / 1000000000).toLocaleString();
-            let formattedFullyDilutedValOne = `${shortendedFullyDilutedValOne} M`;
+            let formattedFullyDilutedValOne = `$ ${shortendedFullyDilutedValOne} M`;
             fullyDilutedValOne.innerHTML = formattedFullyDilutedValOne;
           }
           // % from all time high
@@ -1015,24 +1028,24 @@ const marketsCompareMarketCapObserver = new IntersectionObserver(function(entrie
             // market cap
             let shortenedMarketCapTwo = totalMarketCapTwo / 1000000000;
             let formattedTotalMarketCapTwo = shortenedMarketCapTwo.toLocaleString();
-            marketCapValuationTwo.innerHTML = `${formattedTotalMarketCapTwo} B`;
+            marketCapValuationTwo.innerHTML = `$ ${formattedTotalMarketCapTwo} B`;
 
             // fully diluted valuation
             let fullyDilutedvalTwo = assetListData[secondNumberInList]['fully_diluted_valuation'];
             let shortendedFullyDilutedValTwo = (fullyDilutedvalTwo / 1000000000).toLocaleString();
-            let formattedFullyDilutedValTwo = `${shortendedFullyDilutedValTwo} B`;
+            let formattedFullyDilutedValTwo = `$ ${shortendedFullyDilutedValTwo} B`;
             fullyDilutedValTwo.innerHTML = formattedFullyDilutedValTwo;
           } else {
             // market cap
             let totalMarketCapTwo = assetListData[secondNumberInList]['market_cap'];
             let shortenedMarketCapTwo = totalMarketCapTwo / 1000000000;
             let formattedTotalMarketCapTwo = shortenedMarketCapTwo.toLocaleString();
-            marketCapValuationTwo.innerHTML = `${formattedTotalMarketCapTwo} M`;
+            marketCapValuationTwo.innerHTML = `$ ${formattedTotalMarketCapTwo} M`;
 
             // fully diluted valuation
             let fullyDilutedvalTwo = assetListData[secondNumberInList]['fully_diluted_valuation'];
             let shortendedFullyDilutedValTwo = (fullyDilutedvalTwo / 1000000000).toLocaleString();
-            let formattedFullyDilutedValTwo = `${shortendedFullyDilutedValTwo} M`;
+            let formattedFullyDilutedValTwo = `$ ${shortendedFullyDilutedValTwo} M`;
             fullyDilutedValTwo.innerHTML = formattedFullyDilutedValTwo;
           }
           // % from all time high

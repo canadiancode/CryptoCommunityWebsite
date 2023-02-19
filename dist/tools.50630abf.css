@@ -465,6 +465,16 @@
   gap: 4px;
   margin: 0;
 }
+@media screen and (max-width: 500px) {
+  .dashboardContainer .dataContainer .compareMarketCapContainer .compareAssetsDataContainer .comparedAssetContainer .assetSelectionDiv .comparedAssetDataContainer div {
+    flex-direction: column;
+    margin: 15px 0px;
+  }
+}
+.dashboardContainer .dataContainer .compareMarketCapContainer .compareAssetsDataContainer .comparedAssetContainer .assetSelectionDiv .comparedAssetDataContainer div .fromATHdata {
+  display: flex;
+  flex-direction: row;
+}
 .dashboardContainer .dataContainer .compareMarketCapContainer .compareAssetsDataContainer .comparedAssetContainer .assetSelectionDiv .comparedAssetDataContainer p {
   padding-left: 0em;
 }

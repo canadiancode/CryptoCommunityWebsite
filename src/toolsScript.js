@@ -47,6 +47,8 @@ for (let i = 0; i < categoryHeadingContainer.length; i++) {
 };
 
   // START OF THE DATA PAGES // START OF THE DATA PAGES // START OF THE DATA PAGES
+
+  // the option for the intersection observer
 const dataPageContainer = document.querySelectorAll('.dataSubPageContainer');
 const dataPageOptions = {
   rootMargin: "0px",
@@ -326,7 +328,6 @@ const marketsCryptoObserver = new IntersectionObserver(function(entries, markets
 const marketCryptoPriceContainer = document.querySelector('.marketCryptocurrrencyChartContainer');
 marketsCryptoObserver.observe(marketCryptoPriceContainer);
 
-
   // MARKETS PAGE -- PUBLIC EXCHANGES, STAKERS & MINERS // MARKETS PAGE -- PUBLIC EXCHANGES, STAKERS & MINERS
 const marketsStocksObserver = new IntersectionObserver(function(entries, marketsStocksObserver) {
   entries.forEach(entry => {
@@ -362,7 +363,6 @@ const marketsStocksObserver = new IntersectionObserver(function(entries, markets
       let reversedFetchedPrice = [];
       let fetchedPriceData = [];
       let ticker = 'MSTR';
-      let nameOfPublicCompany = 'MicroStrategy Inc.';
 
       // INVESTMENT RETURN DATA AND CHART
       let selectedAsset = 'bitcoin';
@@ -447,6 +447,7 @@ const marketsStocksObserver = new IntersectionObserver(function(entries, markets
           let stockName = await data['companies'];
           const stockList = document.querySelector('.stockList');
           let arrayNumber = 0;
+          stockList.innerHTML = '';
           for (const names of stockName) {
             // create the element for the drop down list
             const optionEl = document.createElement('option');
@@ -479,7 +480,6 @@ const marketsStocksObserver = new IntersectionObserver(function(entries, markets
             optionEl.value = singleticker;
 
             // if function to remove unnecessary stocks from the list
-            stockList.innerHTML = '';
             if (singleticker !== '1357' && singleticker !== 'AKER' && singleticker !== 'HODL' && singleticker !== 'BROOK') {
               stockList.appendChild(optionEl);
             };
@@ -711,7 +711,7 @@ const marketsStocksObserver = new IntersectionObserver(function(entries, markets
               ticks: {
                 beginAtZero: false,
                 callback: function(value, index, values) {
-                  return '$' + value / 1e6 + ' ' + 'M';;
+                  return '$' + value / 1e6 + ' ' + 'M';
                 }
               }
             }
@@ -730,8 +730,553 @@ const marketsStocksObserver = new IntersectionObserver(function(entries, markets
     }
   })
 }, dataPageOptions);
-
-
 const marketPublicstockChartContainer = document.querySelector('.marketPublicstockChartContainer');
 marketsStocksObserver.observe(marketPublicstockChartContainer);
 
+
+  // MARKETS PAGE -- MARKET CAPS AND 
+const marketsCompareMarketCapObserver = new IntersectionObserver(function(entries, marketsCompareMarketCapObserver) {
+  entries.forEach(entry => {
+    if (entry.isIntersecting) {
+
+      // CODE FOR CHANGING THE CHART SCALE
+      let chartScale = 'linear'; //logarithmic or linear
+      const autoChartOption = document.querySelector('.marketCapAutoChartOption');
+      autoChartOption.addEventListener('click', changeChartScale)
+      const logChartOption = document.querySelector('.marketCaplogChartOption');
+      logChartOption.addEventListener('click', changeChartScale);
+      function changeChartScale(event) {
+      if (event.target.classList.contains('autoChartOption')) {
+          autoChartOption.style.backgroundColor = 'rgb(128, 128, 128, 0.6)';
+          logChartOption.style.backgroundColor = 'rgb(128, 128, 128, 0.2)';
+          chartScale = 'linear';
+          displayedChart.options.scales.y.type = chartScale;
+          displayedChart.update();
+      } else {
+              autoChartOption.style.backgroundColor = 'rgb(128, 128, 128, 0.2)';
+              logChartOption.style.backgroundColor = 'rgb(128, 128, 128, 0.6)';
+              chartScale = 'logarithmic';
+              displayedChart.options.scales.y.type = chartScale;
+              displayedChart.update();
+          }
+      };
+
+      // variables for timeframe
+      let chartTime = []; //fetched data
+      let selectedTimePeriod = '365';
+
+      // variables for selected assets
+      let assetPriceData = []; //fetched data
+      let firstSelectedAssetID = 'bitcoin';
+      let firstSelectedAssetName = 'Bitcoin';
+      let secondSelectedAssetID = 'ethereum';
+      let secondSelectedAssetName = 'Ethereum';
+
+      // fetch initial data
+      async function fetchData() {
+          try {
+          // FETCH ASSET 1 DATA -- FETCH ASSET 1 DATA 
+          let URLOne = `https://api.coingecko.com/api/v3/coins/${firstSelectedAssetID}/market_chart?vs_currency=usd&days=${selectedTimePeriod}`;
+          let responseOne = await fetch(URLOne);
+          let dataOne = await responseOne.json();
+          let marketcapAndTimeDataOne = await dataOne.market_caps;
+
+          // FETCH ASSET 2 DATA -- FETCH ASSET 2 DATA
+          let URLTwo = `https://api.coingecko.com/api/v3/coins/${secondSelectedAssetID}/market_chart?vs_currency=usd&days=${selectedTimePeriod}`;
+          let responseTwo = await fetch(URLTwo);
+          let dataTwo = await responseTwo.json();
+          let marketcapAndTimeDataTwo = await dataTwo.market_caps;
+
+          // ADD LONGEST TIMEFRAME
+          if (marketcapAndTimeDataOne.length > marketcapAndTimeDataTwo.length) {
+            // clear old data from chart
+            chartTime = [];
+            assetPriceData = [];
+            
+            // adding the fetched time to the chart
+            for (const time of marketcapAndTimeDataOne) {
+              let epochTimeframe = await time[0];
+              let formattedDate = new Date(epochTimeframe);
+              let longTimeframe = formattedDate.toUTCString();
+              let timeframe = longTimeframe.substring(5, 16);
+              chartTime.push(timeframe);
+            };
+
+            // ADD ASSET 1 DATA -- ADD ASSET 1 DATA
+            let fetchedPriceData = [];
+            for (const marketCap of marketcapAndTimeDataOne) {
+              let marketCaps = await marketCap[1];
+              fetchedPriceData.push(marketCaps);
+            };
+            let DataObject = {
+              label: `Price of ${firstSelectedAssetName}`,
+              data: fetchedPriceData,
+              fill: false,
+              pointRadius: 0,
+              borderWidth: 1,
+              backgroundColor: '#FFFFFF',
+              borderColor: '#FFFFFF',
+              yAxisID: 'y'
+            };
+            assetPriceData.push(DataObject);
+
+            // ADD ASSET 2 DATA -- ADD ASSET 2 DATA
+            let missingZeroValues = marketcapAndTimeDataOne.length - marketcapAndTimeDataTwo.length;
+            let fetchedPriceDataTwo = [];
+            for (let i = 0; i < missingZeroValues; i++) {
+              fetchedPriceDataTwo.push('');
+            };
+
+            for (const marketCap of marketcapAndTimeDataTwo) {
+              let marketCaps = await marketCap[1];
+              fetchedPriceDataTwo.push(marketCaps);
+            };
+            let DataObjectTwo = {
+              label: `Price of ${secondSelectedAssetName}`,
+              data: fetchedPriceDataTwo,
+              fill: false,
+              pointRadius: 0,
+              borderWidth: 1,
+              backgroundColor: '#FF0000',
+              borderColor: '#FF0000',
+              yAxisID: 'y'
+            };
+            assetPriceData.push(DataObjectTwo);
+          } else {
+            // clear old data from chart
+            chartTime = [];
+            assetPriceData = [];
+
+            // adding the fetched time to the chart
+            for (const time of marketcapAndTimeDataTwo) {
+              let epochTimeframe = await time[0];
+              let formattedDate = new Date(epochTimeframe);
+              let longTimeframe = formattedDate.toUTCString();
+              let timeframe = longTimeframe.substring(5, 16);
+              chartTime.push(timeframe);
+            };
+
+            // ADD ASSET 1 DATA -- ADD ASSET 1 DATA
+            let fetchedPriceData = [];
+            let missingZeroValues = marketcapAndTimeDataTwo.length - marketcapAndTimeDataOne.length;
+            for (let i = 0; i < missingZeroValues; i++) {
+              fetchedPriceData.push('');
+            };
+            for (const marketCap of marketcapAndTimeDataOne) {
+              let marketCaps = await marketCap[1];
+              fetchedPriceData.push(marketCaps);
+            };
+            let DataObject = {
+              label: `Price of ${firstSelectedAssetName}`,
+              data: fetchedPriceData,
+              fill: false,
+              pointRadius: 0,
+              borderWidth: 1,
+              backgroundColor: '#FFFFFF',
+              borderColor: '#FFFFFF',
+              yAxisID: 'y'
+            };
+            assetPriceData.push(DataObject);
+
+            // ADD ASSET 2 DATA -- ADD ASSET 2 DATA
+            let fetchedPriceDataTwo = [];
+            for (const marketCap of marketcapAndTimeDataTwo) {
+              let marketCaps = await marketCap[1];
+              fetchedPriceDataTwo.push(marketCaps);
+            };
+            let DataObjectTwo = {
+              label: `Price of ${secondSelectedAssetName}`,
+              data: fetchedPriceDataTwo,
+              fill: false,
+              pointRadius: 0,
+              borderWidth: 1,
+              backgroundColor: '#FF0000',
+              borderColor: '#FF0000',
+              yAxisID: 'y'
+            };
+            assetPriceData.push(DataObjectTwo);
+          };
+
+
+          // UPDATE CHART WITH DATA
+          displayedChart.data.datasets = assetPriceData;
+          displayedChart.data.labels = chartTime;
+          displayedChart.update();
+        }
+        catch(error) {
+          console.log('could not fetch initial data...');
+        }
+      }
+      fetchData();
+
+        // generate list of assets and add market cap metrics
+      const assetListURL = 'https://api.coingecko.com/api/v3/coins/markets?vs_currency=usd&order=market_cap_desc&per_page=250&page=1&sparkline=false';
+      const assetListElOne = document.querySelector('.cryptoCompareAssetListOne');
+      const assetListElTwo = document.querySelector('.cryptoCompareAssetListTwo');
+      async function getAssetList() {
+        try {
+          // the number of the asset inside the array
+          let assetCountInArrayOne = 0;
+          let assetCountInArrayTwo = 0;
+
+          // fetch the list of assets
+          let response = await fetch(assetListURL);
+          let assetListData = await response.json();
+
+          // ASSET 1 DATA
+          for (const asset of assetListData) {
+            // for the ID 
+            let assetID = await asset.id;
+            const listOptions = document.createElement('option');
+            listOptions.classList.add(assetID);
+            listOptions.classList.add(assetCountInArrayOne);
+            assetCountInArrayOne++;
+
+            // for the display name
+            let assetName = await asset.name;
+            listOptions.value = await assetName;
+
+            // add option onto the dropdown selection
+            listOptions.appendChild(document.createTextNode(assetName));
+            // add element to lists
+            assetListElOne.appendChild(listOptions);
+          }
+          // variables for the asset metrics within panel
+          let marketCapValuationOne = document.querySelector('.marketCapValuationOne');
+          let fullyDilutedValOne = document.querySelector('.fullyDilutedValOne');
+          let percentFromATHOne = document.querySelector('.percentFromATHOne');
+
+          // getting the number within the array
+          let firstListOfCryptos = document.querySelector('.cryptoCompareAssetListOne');
+          let firstNumberInCryptoList = firstListOfCryptos.options[firstListOfCryptos.selectedIndex];
+          let firstNumberInList = firstNumberInCryptoList.classList[1];
+
+          // is it in the millions or billions
+          let totalMarketCapOne = assetListData[firstNumberInList]['market_cap'];
+          if (totalMarketCapOne > 1000000000) {
+            // market cap
+            let shortenedMarketCapOne = totalMarketCapOne / 1000000000;
+            let formattedTotalMarketCapOne = shortenedMarketCapOne.toLocaleString();
+            marketCapValuationOne.innerHTML = `${formattedTotalMarketCapOne} B`;
+
+            // fully diluted valuation
+            let fullyDilutedvalOne = assetListData[firstNumberInList]['fully_diluted_valuation'];
+            let shortendedFullyDilutedValOne = (fullyDilutedvalOne / 1000000000).toLocaleString();
+            let formattedFullyDilutedValOne = `${shortendedFullyDilutedValOne} B`;
+            fullyDilutedValOne.innerHTML = formattedFullyDilutedValOne;
+          } else {
+            // market cap
+            let totalMarketCapOne = assetListData[firstNumberInList]['market_cap'];
+            let shortenedMarketCapOne = totalMarketCapOne / 1000000000;
+            let formattedTotalMarketCapOne = shortenedMarketCapOne.toLocaleString();
+            marketCapValuationOne.innerHTML = `${formattedTotalMarketCapOne} M`;
+
+            // fully diluted valuation
+            let fullyDilutedvalOne = assetListData[firstNumberInList]['fully_diluted_valuation'];
+            let shortendedFullyDilutedValOne = (fullyDilutedvalOne / 1000000000).toLocaleString();
+            let formattedFullyDilutedValOne = `${shortendedFullyDilutedValOne} M`;
+            fullyDilutedValOne.innerHTML = formattedFullyDilutedValOne;
+          }
+          // % from all time high
+          let percentFromAllTimeHighOne = assetListData[firstNumberInList]['ath_change_percentage'];
+          percentFromATHOne.innerHTML = Math.round(percentFromAllTimeHighOne.toLocaleString());
+
+          // ASSET 2 DATA
+          for (const asset of assetListData) {
+            // for the ID 
+            let assetID = await asset.id;
+            const listOptions = document.createElement('option');
+            listOptions.classList.add(assetID);
+            listOptions.classList.add(assetCountInArrayTwo);
+            assetCountInArrayTwo++;
+
+            // for the display name
+            let assetName = await asset.name;
+            listOptions.value = await assetName;
+
+            // add option onto the dropdown selection
+            listOptions.appendChild(document.createTextNode(assetName));
+            // add element to lists
+            assetListElTwo.appendChild(listOptions);
+          }
+          assetListElTwo.selectedIndex = 1;
+
+          let marketCapValuationTwo = document.querySelector('.marketCapValuationTwo');
+          let fullyDilutedValTwo = document.querySelector('.fullyDilutedValTwo');
+          let percentFromATHTwo = document.querySelector('.percentFromATHTwo');
+
+          let secondListOfCryptos = document.querySelector('.cryptoCompareAssetListTwo');
+          let secondNumberInCryptoList = secondListOfCryptos.options[secondListOfCryptos.selectedIndex];
+          let secondNumberInList = secondNumberInCryptoList.classList[1];
+
+          // is it in the millions or billions
+          let totalMarketCapTwo = assetListData[secondNumberInList]['market_cap'];
+          if (totalMarketCapTwo > 1000000000) {
+            // market cap
+            let shortenedMarketCapTwo = totalMarketCapTwo / 1000000000;
+            let formattedTotalMarketCapTwo = shortenedMarketCapTwo.toLocaleString();
+            marketCapValuationTwo.innerHTML = `${formattedTotalMarketCapTwo} B`;
+
+            // fully diluted valuation
+            let fullyDilutedvalTwo = assetListData[secondNumberInList]['fully_diluted_valuation'];
+            let shortendedFullyDilutedValTwo = (fullyDilutedvalTwo / 1000000000).toLocaleString();
+            let formattedFullyDilutedValTwo = `${shortendedFullyDilutedValTwo} B`;
+            fullyDilutedValTwo.innerHTML = formattedFullyDilutedValTwo;
+          } else {
+            // market cap
+            let totalMarketCapTwo = assetListData[secondNumberInList]['market_cap'];
+            let shortenedMarketCapTwo = totalMarketCapTwo / 1000000000;
+            let formattedTotalMarketCapTwo = shortenedMarketCapTwo.toLocaleString();
+            marketCapValuationTwo.innerHTML = `${formattedTotalMarketCapTwo} M`;
+
+            // fully diluted valuation
+            let fullyDilutedvalTwo = assetListData[secondNumberInList]['fully_diluted_valuation'];
+            let shortendedFullyDilutedValTwo = (fullyDilutedvalTwo / 1000000000).toLocaleString();
+            let formattedFullyDilutedValTwo = `${shortendedFullyDilutedValTwo} M`;
+            fullyDilutedValTwo.innerHTML = formattedFullyDilutedValTwo;
+          }
+          // % from all time high
+          let percentFromAllTimeHighTwo = assetListData[secondNumberInList]['ath_change_percentage'];
+          percentFromATHTwo.innerHTML = Math.round(percentFromAllTimeHighTwo.toLocaleString());
+        }
+        catch(error) {
+            console.log(error);
+            console.log('cannot get list of assets from CoinGecko...');
+        }
+      }
+      getAssetList();
+
+      async function reFetchAssetMetrics() {
+        try {
+
+          // re-fetch the list of assets
+          let response = await fetch(assetListURL);
+          let assetListData = await response.json();
+
+          // ASSET 1 DATA
+          // variables for the asset metrics within panel
+          let marketCapValuationOne = document.querySelector('.marketCapValuationOne');
+          let fullyDilutedValOne = document.querySelector('.fullyDilutedValOne');
+          let percentFromATHOne = document.querySelector('.percentFromATHOne');
+
+          // getting the number within the array
+          let firstListOfCryptos = document.querySelector('.cryptoCompareAssetListOne');
+          let firstNumberInCryptoList = firstListOfCryptos.options[firstListOfCryptos.selectedIndex];
+          let firstNumberInList = firstNumberInCryptoList.classList[1];
+
+          // is it in the millions or billions
+          let totalMarketCapOne = assetListData[firstNumberInList]['market_cap'];
+          if (totalMarketCapOne > 1000000000) {
+            // market cap
+            let shortenedMarketCapOne = totalMarketCapOne / 1000000000;
+            let formattedTotalMarketCapOne = shortenedMarketCapOne.toLocaleString();
+            marketCapValuationOne.innerHTML = `${formattedTotalMarketCapOne} B`;
+
+            // fully diluted valuation
+            let fullyDilutedvalOne = assetListData[firstNumberInList]['fully_diluted_valuation'];
+            let shortendedFullyDilutedValOne = (fullyDilutedvalOne / 1000000000).toLocaleString();
+            let formattedFullyDilutedValOne = `${shortendedFullyDilutedValOne} B`;
+            fullyDilutedValOne.innerHTML = formattedFullyDilutedValOne;
+          } else {
+            // market cap
+            let totalMarketCapOne = assetListData[firstNumberInList]['market_cap'];
+            let shortenedMarketCapOne = totalMarketCapOne / 1000000000;
+            let formattedTotalMarketCapOne = shortenedMarketCapOne.toLocaleString();
+            marketCapValuationOne.innerHTML = `${formattedTotalMarketCapOne} M`;
+
+            // fully diluted valuation
+            let fullyDilutedvalOne = assetListData[firstNumberInList]['fully_diluted_valuation'];
+            let shortendedFullyDilutedValOne = (fullyDilutedvalOne / 1000000000).toLocaleString();
+            let formattedFullyDilutedValOne = `${shortendedFullyDilutedValOne} M`;
+            fullyDilutedValOne.innerHTML = formattedFullyDilutedValOne;
+          }
+          // % from all time high
+          let percentFromAllTimeHighOne = assetListData[firstNumberInList]['ath_change_percentage'];
+          percentFromATHOne.innerHTML = Math.round(percentFromAllTimeHighOne.toLocaleString());
+
+          // ASSET 2 DATA
+          let marketCapValuationTwo = document.querySelector('.marketCapValuationTwo');
+          let fullyDilutedValTwo = document.querySelector('.fullyDilutedValTwo');
+          let percentFromATHTwo = document.querySelector('.percentFromATHTwo');
+
+          let secondListOfCryptos = document.querySelector('.cryptoCompareAssetListTwo');
+          let secondNumberInCryptoList = secondListOfCryptos.options[secondListOfCryptos.selectedIndex];
+          let secondNumberInList = secondNumberInCryptoList.classList[1];
+
+          // is it in the millions or billions
+          let totalMarketCapTwo = assetListData[secondNumberInList]['market_cap'];
+          if (totalMarketCapTwo > 1000000000) {
+            // market cap
+            let shortenedMarketCapTwo = totalMarketCapTwo / 1000000000;
+            let formattedTotalMarketCapTwo = shortenedMarketCapTwo.toLocaleString();
+            marketCapValuationTwo.innerHTML = `${formattedTotalMarketCapTwo} B`;
+
+            // fully diluted valuation
+            let fullyDilutedvalTwo = assetListData[secondNumberInList]['fully_diluted_valuation'];
+            let shortendedFullyDilutedValTwo = (fullyDilutedvalTwo / 1000000000).toLocaleString();
+            let formattedFullyDilutedValTwo = `${shortendedFullyDilutedValTwo} B`;
+            fullyDilutedValTwo.innerHTML = formattedFullyDilutedValTwo;
+          } else {
+            // market cap
+            let totalMarketCapTwo = assetListData[secondNumberInList]['market_cap'];
+            let shortenedMarketCapTwo = totalMarketCapTwo / 1000000000;
+            let formattedTotalMarketCapTwo = shortenedMarketCapTwo.toLocaleString();
+            marketCapValuationTwo.innerHTML = `${formattedTotalMarketCapTwo} M`;
+
+            // fully diluted valuation
+            let fullyDilutedvalTwo = assetListData[secondNumberInList]['fully_diluted_valuation'];
+            let shortendedFullyDilutedValTwo = (fullyDilutedvalTwo / 1000000000).toLocaleString();
+            let formattedFullyDilutedValTwo = `${shortendedFullyDilutedValTwo} M`;
+            fullyDilutedValTwo.innerHTML = formattedFullyDilutedValTwo;
+          }
+          // % from all time high
+          let percentFromAllTimeHighTwo = assetListData[secondNumberInList]['ath_change_percentage'];
+          percentFromATHTwo.innerHTML = Math.round(percentFromAllTimeHighTwo.toLocaleString());
+        }
+        catch(error) {
+            console.log(error);
+            console.log('cannot get list of assets from CoinGecko...');
+        }
+      }
+
+      // change timeframe
+      function changeTimeframe() {
+        selectedTimePeriod = '';
+        assetPriceData = [];
+        chartTime = [];
+
+        selectedTimePeriod = selectedTimePeriodEl.value;
+        fetchData();
+      }
+      const selectedTimePeriodEl = document.querySelector('.compareMarketCapTimeframeList');
+      selectedTimePeriodEl.addEventListener('change', changeTimeframe);
+
+      // change asset  -- asset 1
+      function changeAssetOne(event) {
+        let selectedOption = changeAssetOneEl.options[changeAssetOneEl.selectedIndex];
+        firstSelectedAssetID = selectedOption.classList[0];
+        firstSelectedAssetName = selectedOption.value;
+        fetchData();
+        reFetchAssetMetrics();
+      }
+      const changeAssetOneEl = document.querySelector('.cryptoCompareAssetListOne');
+      changeAssetOneEl.addEventListener('change', changeAssetOne);
+      // change asset -- asset 2
+      function changeAssetTwo(event) {
+        let selectedOption = changeAssetTwoEl.options[changeAssetTwoEl.selectedIndex];
+        secondSelectedAssetID = selectedOption.classList[0];
+        secondSelectedAssetName = selectedOption.value;
+        fetchData();
+        reFetchAssetMetrics();
+      }
+      const changeAssetTwoEl = document.querySelector('.cryptoCompareAssetListTwo');
+      changeAssetTwoEl.addEventListener('change', changeAssetTwo);
+      
+      // CODE FOR THE CHART.JS LIBRARY
+      const ctx = document.querySelector('.marketCryptoCap');
+      let displayedChart = new Chart(ctx, {
+        type: 'line',
+        data: {
+          labels: chartTime,
+          datasets: assetPriceData,
+        },
+        options: {
+          type: chartScale,
+          display: true,
+          position: 'left',
+          responsive: true,
+          maintainAspectRatio: false,
+          scales: {
+            y: {
+              grid: {
+                color: '#232323',
+              },
+              ticks: {
+                // Include a dollar sign in the ticks
+                callback: function(value, index, values) {
+                  return '$' + value / 1e9 + ' ' + 'B';
+                }
+            }
+            }
+          }
+        }
+      });
+
+
+
+      // CODE FOR DOMINANCE CHART ASSET 1 -- ASSET 1 CHART
+      const assetOneCanvas = document.querySelector('.marketCapDominanceAssetOne');
+      let doughnutOne = new Chart(assetOneCanvas, {
+        type: 'doughnut',
+        data: {
+          labels: ['Red', 'Blue', 'Yellow'],
+          datasets: [{
+            data: [300, 50, 100],
+            backgroundColor: [
+              'rgb(255, 99, 132)',
+              'rgb(54, 162, 235)',
+              'rgb(255, 205, 86)'
+            ],
+            hoverOffset: 24
+          }]
+        },
+        options: {
+          plugins: {
+            legend: {
+              display: true,
+              position: 'bottom',
+            }
+          }
+        }
+      })
+
+      // CODE FOR DOMINANCE CHART ASSET 2 -- ASSET 2 CHART
+      const assetTwoCanvas = document.querySelector('.marketCapDominanceAssetTwo');
+
+    // end of the Intersection Observer
+    }
+  })
+}, dataPageOptions);
+const compareMarketCapContainer = document.querySelector('.compareMarketCapContainer');
+marketsCompareMarketCapObserver.observe(compareMarketCapContainer);
+
+
+
+
+// CHANGE PAGE TO SELECED DATA DASHBOARD
+function loadFirstDataDashboard() {
+  const dataSubPageContainer = document.querySelectorAll('.dataSubPageContainer');
+  for (let i = 0; i < dataSubPageContainer.length; i++) {
+    dataSubPageContainer[i].style.display = 'none';
+  };
+  const priceContainer = document.querySelector('.priceContainer');
+  priceContainer.style.display = 'flex';
+
+}
+loadFirstDataDashboard();
+function changeDisplayedDashboard(event) {
+  const dataSubPageContainer = document.querySelectorAll('.dataSubPageContainer');
+  for (let i = 0; i < dataSubPageContainer.length; i++) {
+    dataSubPageContainer[i].style.display = 'none';
+  };
+
+  if (event.target.classList.contains('priceHolingsBtn')) {
+    const priceContainer = document.querySelector('.priceContainer');
+    priceContainer.style.display = 'flex';
+  }
+  else if (event.target.classList.contains('compareMarketCapBtn')) {
+    const compareMarketCapContainer = document.querySelector('.compareMarketCapContainer');
+    compareMarketCapContainer.style.display = 'flex';
+  }
+  else if (event.target.classList.contains('marketVolumeBtn')) {
+    const volumePageContainer = document.querySelector('.volumePageContainer');
+    volumePageContainer.style.display = 'flex';
+  } 
+  else {
+    console.log('no displayed charts available');
+  }
+};
+const dataDashboardSelectionBtn = document.querySelectorAll('.dataDashboardSelectionBtn');
+dataDashboardSelectionBtn.forEach(button => {
+  button.addEventListener('click', changeDisplayedDashboard);
+});

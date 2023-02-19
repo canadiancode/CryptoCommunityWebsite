@@ -92,9 +92,9 @@
                         <i class="fa-solid fa-arrow-up-short-wide"></i>
                     </div>
                     <div class="chartButtonContainer opened">
-                        <button>Price and Holdings</button>
-                        <button>Market Capitalization</button>
-                        <button>Volume</button>
+                        <button class="priceHolingsBtn dataDashboardSelectionBtn">Price and Holdings</button>
+                        <button class="compareMarketCapBtn dataDashboardSelectionBtn">Compare Market Caps</button>
+                        <button class="marketVolumeBtn dataDashboardSelectionBtn">Volume</button>
                     </div>
                 </div>
 
@@ -105,9 +105,9 @@
                         <i class="fa-solid fa-arrow-up-short-wide"></i>
                     </div>
                     <div class="chartButtonContainer">
-                        <button>On-Chain Metrics</button>
-                        <button>Transaction Costs</button>
-                        <button>Value Flows</button>
+                        <button class="dataDashboardSelectionBtn">On-Chain Metrics</button>
+                        <button class="dataDashboardSelectionBtn">Transaction Costs</button>
+                        <button class="dataDashboardSelectionBtn">Value Flows</button>
                     </div>
                 </div>
 
@@ -118,9 +118,9 @@
                         <i class="fa-solid fa-arrow-up-short-wide"></i>
                     </div>
                     <div class="chartButtonContainer">
-                        <button>Total Value Locked</button>
-                        <button>Protocol Revenue</button>
-                        <button>Exploits</button>
+                        <button class="dataDashboardSelectionBtn">Total Value Locked</button>
+                        <button class="dataDashboardSelectionBtn">Protocol Revenue</button>
+                        <button class="dataDashboardSelectionBtn">Exploits</button>
                     </div>
                 </div>
 
@@ -131,9 +131,9 @@
                         <i class="fa-solid fa-arrow-up-short-wide"></i>
                     </div>
                     <div class="chartButtonContainer">
-                        <button>NFT sales</button>
-                        <button>Trending NFTs</button>
-                        <button>NFT trading volume</button>
+                        <button class="dataDashboardSelectionBtn">NFT sales</button>
+                        <button class="dataDashboardSelectionBtn">Trending NFTs</button>
+                        <button class="dataDashboardSelectionBtn">NFT trading volume</button>
                     </div>
                 </div>
 
@@ -144,8 +144,8 @@
                         <i class="fa-solid fa-arrow-up-short-wide"></i>
                     </div>
                     <div class="chartButtonContainer">
-                        <button>Web Traffic</button>
-                        <button>Social Score</button>
+                        <button class="dataDashboardSelectionBtn">Web Traffic</button>
+                        <button class="dataDashboardSelectionBtn">Social Score</button>
                     </div>
                 </div>
 
@@ -222,12 +222,12 @@
                             </div>
                         </div>
                         <div class="publicStockDataContainer">
-                            <div class="heldAssetContainer logOptionDiv">
+                            <!-- <div class="heldAssetContainer logOptionDiv">
                                 <div>
                                     <button value="bitcoin" class="chartBTCButton heldAssetByPublicCompanies chartLogAutoButton">BTC</button>
                                     <button value="ethereum" class="chartETHButton heldAssetByPublicCompanies chartLogAutoButton">ETH</button>
                                 </div>
-                            </div>
+                            </div> -->
                             <div class="publicStockTextDataContainer">
                                 <div class="stockNameDiv">
                                     <h1 class="publicStockHoldingFullName"></h1>
@@ -252,8 +252,66 @@
                         </div>
                     </div>
                 </div>
-                <!-- <div class="marketCapContainer dataSubPageContainer"></div>
-                <div class="volumePageContainer dataSubPageContainer"></div> -->
+                <div class="compareMarketCapContainer dataSubPageContainer">
+                    <div class="marketCryptocurrrencyChartContainer marketPriceDiv">
+                        <p>Markets</p>
+                        <h1>Compare Market Capitalizations</h1>
+                        <canvas class="marketCryptoCap"></canvas>
+                        <div class="chartOptions">
+                            <div class="timeframeSelectionDiv">
+                                <label>Timeframe:</label>
+                                <select class="compareMarketCapTimeframeList timeframeList">
+                                    <option value="4380" class="timeframe year">All Time</option>
+                                    <option value="3650" class="timeframe year">10 Year</option>
+                                    <option value="2555" class="timeframe year">7 Year</option>
+                                    <option value="1825" class="timeframe year">5 Year</option>
+                                    <option value="1460" class="timeframe year">4 Year</option>
+                                    <option value="1095" class="timeframe year">3 Year</option>
+                                    <option value="730" class="timeframe year">2 Year</option>
+                                    <option value="365" selected class="timeframe year">1 Year</option>
+                                    <option value="120" class="timeframe onequarter">90D</option>
+                                    <option value="30" class="timeframe onequarter">30D</option>
+                                    <option value="7" class="timeframe onequarter">7D</option>
+                                </select>
+                            </div>
+                            <div class="logOptionDiv">
+                                <div>
+                                    <button class="chartLogAutoButton autoChartOption marketCapAutoChartOption">Auto</button>
+                                    <button class="chartLogAutoButton logChartOption marketCaplogChartOption">Log</button>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="compareAssetsDataContainer chartOptions">
+                            <div class="comparedAssetContainer comparedAssetOneContainer">
+                                <div class="assetSelectionDiv">
+                                    <div class="assetSelection">
+                                        <label>Asset 1:</label>
+                                        <select class="cryptoCompareAssetListOne theListOfAssetsOnAllPages"></select>
+                                    </div>
+                                    <div class="comparedAssetDataContainer">
+                                        <div><p>Market Cap: $</p><p class="marketCapValuationOne">100</p></div>
+                                        <div><p>Fully Diluted Valuation: $</p><p class="fullyDilutedValOne">150</p></div>
+                                        <div><p>% from ATH: </p><p class="percentFromATHOne">60</p><p> %</p></div>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="comparedAssetContainer comparedAssetTWoContainer">
+                                <div class="assetSelectionDiv">
+                                    <div class="assetSelection">
+                                        <label>Asset 2:</label>
+                                        <select class="cryptoCompareAssetListTwo theListOfAssetsOnAllPages"></select>
+                                    </div>
+                                    <div class="comparedAssetDataContainer">
+                                        <div><p>Market Cap: $</p><p class="marketCapValuationTwo">100</p></div>
+                                        <div><p>Fully Diluted Valuation: $</p><p class="fullyDilutedValTwo">150</p></div>
+                                        <div><p>% from ATH: </p><p class="percentFromATHTwo">60</p><p> %</p></div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="volumePageContainer dataSubPageContainer"></div>
             </div>
 
             <!-- On-Chain page -->

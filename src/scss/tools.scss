@@ -3,7 +3,7 @@
     background: linear-gradient(0deg, rgba(23,23,23,0.9) 0%, rgba(0,0,0,1) 100%);
     position: relative;
     padding-left: 20px;
-    // open and close the panel
+    // the button to open the dashboard list container
     .openCloseCategoriesDiv {
         width: 120px;
         height: 30px;
@@ -28,9 +28,11 @@
             transition: 0.5s;
         }
     }
+    // the button to open the dashboard list container
     .openCategoryList {
         left: -10px;
     }
+    // the text that shows 'dashboard'
     .containerSignDiv {
         border: 1px solid var(--white);
         width: fit-content;
@@ -48,7 +50,7 @@
             cursor: pointer;
         }
     }
-    // The panel for the data selection
+    // The panel containing the dashboard page buttons
     .chartSelectionPanelContainer {
         position: absolute;
         left: 0;
@@ -139,11 +141,17 @@
     // start of the data pages
     .dataContainer {
         .dataPageContainer {
+            display: flex;
+            flex-direction: column;
+            gap: 4em;
             // general CSS for all charts
             .dataSubPageContainer {
                 display: flex;
                 flex-direction: column;
                 gap: 4em;
+                h1, h3, p {
+                    cursor: default;
+                }
                 div {
                     max-width: 1200px;
                     margin: 0 auto;
@@ -196,6 +204,7 @@
                             gap: 0.5rem;
                             label {
                                 font-family: var(--paragraphFontFamily);
+                                cursor: default;
                             }
                               .timeframeList {
                                 max-width: 150px;
@@ -252,7 +261,9 @@
                 }
             }
         }
-        // CSS for the crypto price chart
+        // END OF THE GENERAL CSS CODE ABOVE
+        
+        // MARKETS -- PRICE AND HOLDINGS -- CRYPTO PRICES -- CRYPTO PRICES
         .marketPriceDiv {
             width: 100%;
             padding: 1em 2em;
@@ -265,7 +276,8 @@
                 padding-left: 2em;
             }
         }
-        // CSS for the public stock data chart and data
+
+        // MARKETS -- PRICE AND HOLDINGS -- PUBLIC HOLDINGS -- PUBLIC HOLDINGS
         .marketPublicstockChartContainer {
             display: flex;
             flex-direction: row;
@@ -423,5 +435,64 @@
                 }
             }
         }
+
+        // MARKETS -- PRICE AND HOLDINGS -- COMPARE MARKET CAPS -- COMPARE MARKET CAPS
+        .compareMarketCapContainer {
+            padding: 1em 0em;
+            .compareAssetsDataContainer {
+                display: flex;
+                flex-direction: column;
+                padding: 0em;
+                label {
+                    font-family: var(--paragraphFontFamily);
+                    color: var(--white);
+                }
+                .comparedAssetContainer {
+                    width: 100%;
+                    .assetSelectionDiv {
+                        display: flex;
+                        flex-direction: column;
+                        border-radius: 24px;
+                        background: #1A1B1F;
+                        padding: 2em;
+                        width: 100%;
+                        box-shadow: inset 2px 2px 5px 0px var(--black), inset -2px -2px 5px 0px var(--black);
+                        .assetSelection {
+                            margin: 0;
+                            padding: 1%;
+                            display: flex;
+                            flex-direction: row;
+                            gap: 7px;
+                            @media screen and (max-width: 500px) {
+                                & {
+                                    flex-direction: column;
+                                }
+                            }
+                        }
+                        .comparedAssetDataContainer {
+                            margin: 0;
+                            display: flex;
+                            flex-direction: column;
+                            justify-content: flex-start;
+                            gap: 5px;
+                            div {
+                                display: flex;
+                                gap: 4px;
+                                margin: 0;
+                            }
+                            p {
+                                padding-left: 0em;
+                            }
+                        }
+                    }
+                }
+            }
+        }
+
+
+
+
+
+
     }
 }

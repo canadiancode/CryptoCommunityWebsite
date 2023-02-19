@@ -132,10 +132,18 @@
   transform: translateX(0%);
   height: 100%;
 }
+.dashboardContainer .dataContainer .dataPageContainer {
+  display: flex;
+  flex-direction: column;
+  gap: 4em;
+}
 .dashboardContainer .dataContainer .dataPageContainer .dataSubPageContainer {
   display: flex;
   flex-direction: column;
   gap: 4em;
+}
+.dashboardContainer .dataContainer .dataPageContainer .dataSubPageContainer h1, .dashboardContainer .dataContainer .dataPageContainer .dataSubPageContainer h3, .dashboardContainer .dataContainer .dataPageContainer .dataSubPageContainer p {
+  cursor: default;
 }
 .dashboardContainer .dataContainer .dataPageContainer .dataSubPageContainer div {
   max-width: 1200px;
@@ -192,6 +200,7 @@
 }
 .dashboardContainer .dataContainer .dataPageContainer .dataSubPageContainer div .chartOptions .timeframeSelectionDiv label {
   font-family: var(--paragraphFontFamily);
+  cursor: default;
 }
 .dashboardContainer .dataContainer .dataPageContainer .dataSubPageContainer div .chartOptions .timeframeSelectionDiv .timeframeList {
   max-width: 150px;
@@ -407,6 +416,57 @@
   width: 100%;
   height: 100%;
   max-height: 250px;
+}
+.dashboardContainer .dataContainer .compareMarketCapContainer {
+  padding: 1em 0em;
+}
+.dashboardContainer .dataContainer .compareMarketCapContainer .compareAssetsDataContainer {
+  display: flex;
+  flex-direction: column;
+  padding: 0em;
+}
+.dashboardContainer .dataContainer .compareMarketCapContainer .compareAssetsDataContainer label {
+  font-family: var(--paragraphFontFamily);
+  color: var(--white);
+}
+.dashboardContainer .dataContainer .compareMarketCapContainer .compareAssetsDataContainer .comparedAssetContainer {
+  width: 100%;
+}
+.dashboardContainer .dataContainer .compareMarketCapContainer .compareAssetsDataContainer .comparedAssetContainer .assetSelectionDiv {
+  display: flex;
+  flex-direction: column;
+  border-radius: 24px;
+  background: #1A1B1F;
+  padding: 2em;
+  width: 100%;
+  box-shadow: inset 2px 2px 5px 0px var(--black), inset -2px -2px 5px 0px var(--black);
+}
+.dashboardContainer .dataContainer .compareMarketCapContainer .compareAssetsDataContainer .comparedAssetContainer .assetSelectionDiv .assetSelection {
+  margin: 0;
+  padding: 1%;
+  display: flex;
+  flex-direction: row;
+  gap: 7px;
+}
+@media screen and (max-width: 500px) {
+  .dashboardContainer .dataContainer .compareMarketCapContainer .compareAssetsDataContainer .comparedAssetContainer .assetSelectionDiv .assetSelection {
+    flex-direction: column;
+  }
+}
+.dashboardContainer .dataContainer .compareMarketCapContainer .compareAssetsDataContainer .comparedAssetContainer .assetSelectionDiv .comparedAssetDataContainer {
+  margin: 0;
+  display: flex;
+  flex-direction: column;
+  justify-content: flex-start;
+  gap: 5px;
+}
+.dashboardContainer .dataContainer .compareMarketCapContainer .compareAssetsDataContainer .comparedAssetContainer .assetSelectionDiv .comparedAssetDataContainer div {
+  display: flex;
+  gap: 4px;
+  margin: 0;
+}
+.dashboardContainer .dataContainer .compareMarketCapContainer .compareAssetsDataContainer .comparedAssetContainer .assetSelectionDiv .comparedAssetDataContainer p {
+  padding-left: 0em;
 }
 
 /*# sourceMappingURL=/tools.50630abf.css.map */

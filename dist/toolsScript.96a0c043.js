@@ -1670,7 +1670,7 @@ var marketsCompareMarketCapObserver = new IntersectionObserver(function (entries
                 }
                 // % from all time high
                 percentFromAllTimeHighOne = assetListData[firstNumberInList]['ath_change_percentage'];
-                percentFromATHOne.innerHTML = Math.round(percentFromAllTimeHighOne.toLocaleString());
+                percentFromATHOne.innerHTML = "% from ATH: ".concat(Math.round(percentFromAllTimeHighOne.toLocaleString()), "%");
 
                 // ASSET 2 DATA
                 _iterator16 = _createForOfIteratorHelper(assetListData);
@@ -1753,7 +1753,7 @@ var marketsCompareMarketCapObserver = new IntersectionObserver(function (entries
                 }
                 // % from all time high
                 percentFromAllTimeHighTwo = assetListData[secondNumberInList]['ath_change_percentage'];
-                percentFromATHTwo.innerHTML = Math.round(percentFromAllTimeHighTwo.toLocaleString());
+                percentFromATHTwo.innerHTML = "% from ATH: ".concat(Math.round(percentFromAllTimeHighTwo.toLocaleString()), "%");
                 _context9.next = 97;
                 break;
               case 93:
@@ -2052,7 +2052,7 @@ var parent = module.bundle.parent;
 if ((!parent || !parent.isParcelRequire) && typeof WebSocket !== 'undefined') {
   var hostname = "" || location.hostname;
   var protocol = location.protocol === 'https:' ? 'wss' : 'ws';
-  var ws = new WebSocket(protocol + '://' + hostname + ':' + "65361" + '/');
+  var ws = new WebSocket(protocol + '://' + hostname + ':' + "50171" + '/');
   ws.onmessage = function (event) {
     checkedAssets = {};
     assetsToAccept = [];

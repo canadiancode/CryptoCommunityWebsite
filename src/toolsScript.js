@@ -46,7 +46,49 @@ for (let i = 0; i < categoryHeadingContainer.length; i++) {
   categoryHeadingContainer[i].addEventListener('click', openOrCloseCategory);
 };
 
-  // START OF THE DATA PAGES // START OF THE DATA PAGES // START OF THE DATA PAGES
+// CHANGE PAGE TO SELECED DATA DASHBOARD
+function loadFirstDataDashboard() {
+  const dataSubPageContainer = document.querySelectorAll('.dataSubPageContainer');
+  for (let i = 0; i < dataSubPageContainer.length; i++) {
+    dataSubPageContainer[i].style.display = 'none';
+  };
+  const priceContainer = document.querySelector('.priceContainer');
+  priceContainer.style.display = 'flex';
+
+}
+loadFirstDataDashboard();
+function changeDisplayedDashboard(event) {
+  const dataSubPageContainer = document.querySelectorAll('.dataSubPageContainer');
+  for (let i = 0; i < dataSubPageContainer.length; i++) {
+    dataSubPageContainer[i].style.display = 'none';
+  };
+
+  if (event.target.classList.contains('priceHolingsBtn')) {
+    const priceContainer = document.querySelector('.priceContainer');
+    priceContainer.style.display = 'flex';
+  }
+  else if (event.target.classList.contains('compareMarketCapBtn')) {
+    const compareMarketCapContainer = document.querySelector('.compareMarketCapContainer');
+    compareMarketCapContainer.style.display = 'flex';
+  }
+  else if (event.target.classList.contains('marketVolumeBtn')) {
+    const volumePageContainer = document.querySelector('.volumePageContainer');
+    volumePageContainer.style.display = 'flex';
+  } 
+  else {
+    console.log('no displayed charts available');
+  }
+};
+const dataDashboardSelectionBtn = document.querySelectorAll('.dataDashboardSelectionBtn');
+dataDashboardSelectionBtn.forEach(button => {
+  button.addEventListener('click', changeDisplayedDashboard);
+  button.addEventListener('click', openOrCloseCategoryList);
+});
+
+
+
+  // START OF THE DATA PAGES -- START OF THE DATA PAGES -- START OF THE DATA PAGES
+  // START OF THE DATA PAGES -- START OF THE DATA PAGES -- START OF THE DATA PAGES
 
   // the option for the intersection observer
 const dataPageContainer = document.querySelectorAll('.dataSubPageContainer');
@@ -1255,41 +1297,3 @@ marketsCompareMarketCapObserver.observe(compareMarketCapContainer);
 
 
 
-
-// CHANGE PAGE TO SELECED DATA DASHBOARD
-function loadFirstDataDashboard() {
-  const dataSubPageContainer = document.querySelectorAll('.dataSubPageContainer');
-  for (let i = 0; i < dataSubPageContainer.length; i++) {
-    dataSubPageContainer[i].style.display = 'none';
-  };
-  const priceContainer = document.querySelector('.priceContainer');
-  priceContainer.style.display = 'flex';
-
-}
-loadFirstDataDashboard();
-function changeDisplayedDashboard(event) {
-  const dataSubPageContainer = document.querySelectorAll('.dataSubPageContainer');
-  for (let i = 0; i < dataSubPageContainer.length; i++) {
-    dataSubPageContainer[i].style.display = 'none';
-  };
-
-  if (event.target.classList.contains('priceHolingsBtn')) {
-    const priceContainer = document.querySelector('.priceContainer');
-    priceContainer.style.display = 'flex';
-  }
-  else if (event.target.classList.contains('compareMarketCapBtn')) {
-    const compareMarketCapContainer = document.querySelector('.compareMarketCapContainer');
-    compareMarketCapContainer.style.display = 'flex';
-  }
-  else if (event.target.classList.contains('marketVolumeBtn')) {
-    const volumePageContainer = document.querySelector('.volumePageContainer');
-    volumePageContainer.style.display = 'flex';
-  } 
-  else {
-    console.log('no displayed charts available');
-  }
-};
-const dataDashboardSelectionBtn = document.querySelectorAll('.dataDashboardSelectionBtn');
-dataDashboardSelectionBtn.forEach(button => {
-  button.addEventListener('click', changeDisplayedDashboard);
-});

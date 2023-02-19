@@ -174,7 +174,45 @@ for (var i = 0; i < categoryHeadingContainer.length; i++) {
 }
 ;
 
-// START OF THE DATA PAGES // START OF THE DATA PAGES // START OF THE DATA PAGES
+// CHANGE PAGE TO SELECED DATA DASHBOARD
+function loadFirstDataDashboard() {
+  var dataSubPageContainer = document.querySelectorAll('.dataSubPageContainer');
+  for (var _i = 0; _i < dataSubPageContainer.length; _i++) {
+    dataSubPageContainer[_i].style.display = 'none';
+  }
+  ;
+  var priceContainer = document.querySelector('.priceContainer');
+  priceContainer.style.display = 'flex';
+}
+loadFirstDataDashboard();
+function changeDisplayedDashboard(event) {
+  var dataSubPageContainer = document.querySelectorAll('.dataSubPageContainer');
+  for (var _i2 = 0; _i2 < dataSubPageContainer.length; _i2++) {
+    dataSubPageContainer[_i2].style.display = 'none';
+  }
+  ;
+  if (event.target.classList.contains('priceHolingsBtn')) {
+    var priceContainer = document.querySelector('.priceContainer');
+    priceContainer.style.display = 'flex';
+  } else if (event.target.classList.contains('compareMarketCapBtn')) {
+    var _compareMarketCapContainer = document.querySelector('.compareMarketCapContainer');
+    _compareMarketCapContainer.style.display = 'flex';
+  } else if (event.target.classList.contains('marketVolumeBtn')) {
+    var volumePageContainer = document.querySelector('.volumePageContainer');
+    volumePageContainer.style.display = 'flex';
+  } else {
+    console.log('no displayed charts available');
+  }
+}
+;
+var dataDashboardSelectionBtn = document.querySelectorAll('.dataDashboardSelectionBtn');
+dataDashboardSelectionBtn.forEach(function (button) {
+  button.addEventListener('click', changeDisplayedDashboard);
+  button.addEventListener('click', openOrCloseCategoryList);
+});
+
+// START OF THE DATA PAGES -- START OF THE DATA PAGES -- START OF THE DATA PAGES
+// START OF THE DATA PAGES -- START OF THE DATA PAGES -- START OF THE DATA PAGES
 
 // the option for the intersection observer
 var dataPageContainer = document.querySelectorAll('.dataSubPageContainer');
@@ -737,7 +775,7 @@ var marketsStocksObserver = new IntersectionObserver(function (entries, marketsS
       // function to initially fetch the data
       var fetchData = /*#__PURE__*/function () {
         var _ref5 = _asyncToGenerator( /*#__PURE__*/_regeneratorRuntime().mark(function _callee5() {
-          var options, URL, response, data, unorderedTimeframeData, timeSeriesData, time, priceSeriesData, allPriceDataObject, _i, allPrices, closePrices, closePrice, dataObject;
+          var options, URL, response, data, unorderedTimeframeData, timeSeriesData, time, priceSeriesData, allPriceDataObject, _i3, allPrices, closePrices, closePrice, dataObject;
           return _regeneratorRuntime().wrap(function _callee5$(_context5) {
             while (1) switch (_context5.prev = _context5.next) {
               case 0:
@@ -780,8 +818,8 @@ var marketsStocksObserver = new IntersectionObserver(function (entries, marketsS
               case 22:
                 priceSeriesData = _context5.sent;
                 allPriceDataObject = Object.values(priceSeriesData);
-                for (_i = 0; _i < allPriceDataObject.length; _i++) {
-                  allPrices = allPriceDataObject["".concat(_i)];
+                for (_i3 = 0; _i3 < allPriceDataObject.length; _i3++) {
+                  allPrices = allPriceDataObject["".concat(_i3)];
                   closePrices = Object.values(allPrices);
                   closePrice = Number(closePrices[4]);
                   reversedFetchedPrice.push(closePrice);
@@ -1237,7 +1275,7 @@ var marketsCompareMarketCapObserver = new IntersectionObserver(function (entries
       // fetch initial data
       var fetchData = /*#__PURE__*/function () {
         var _ref7 = _asyncToGenerator( /*#__PURE__*/_regeneratorRuntime().mark(function _callee8() {
-          var URLOne, responseOne, dataOne, marketcapAndTimeDataOne, URLTwo, responseTwo, dataTwo, marketcapAndTimeDataTwo, _iterator9, _step9, time, epochTimeframe, formattedDate, longTimeframe, timeframe, fetchedPriceData, _iterator10, _step10, marketCap, marketCaps, DataObject, missingZeroValues, fetchedPriceDataTwo, _i2, _iterator11, _step11, _marketCap, _marketCaps, DataObjectTwo, _iterator12, _step12, _time, _epochTimeframe, _formattedDate, _longTimeframe, _timeframe, _fetchedPriceData, _missingZeroValues, _i3, _iterator13, _step13, _marketCap2, _marketCaps2, _DataObject, _fetchedPriceDataTwo, _iterator14, _step14, _marketCap3, _marketCaps3, _DataObjectTwo;
+          var URLOne, responseOne, dataOne, marketcapAndTimeDataOne, URLTwo, responseTwo, dataTwo, marketcapAndTimeDataTwo, _iterator9, _step9, time, epochTimeframe, formattedDate, longTimeframe, timeframe, fetchedPriceData, _iterator10, _step10, marketCap, marketCaps, DataObject, missingZeroValues, fetchedPriceDataTwo, _i4, _iterator11, _step11, _marketCap, _marketCaps, DataObjectTwo, _iterator12, _step12, _time, _epochTimeframe, _formattedDate, _longTimeframe, _timeframe, _fetchedPriceData, _missingZeroValues, _i5, _iterator13, _step13, _marketCap2, _marketCaps2, _DataObject, _fetchedPriceDataTwo, _iterator14, _step14, _marketCap3, _marketCaps3, _DataObjectTwo;
           return _regeneratorRuntime().wrap(function _callee8$(_context8) {
             while (1) switch (_context8.prev = _context8.next) {
               case 0:
@@ -1360,7 +1398,7 @@ var marketsCompareMarketCapObserver = new IntersectionObserver(function (entries
                 // ADD ASSET 2 DATA -- ADD ASSET 2 DATA
                 missingZeroValues = marketcapAndTimeDataOne.length - marketcapAndTimeDataTwo.length;
                 fetchedPriceDataTwo = [];
-                for (_i2 = 0; _i2 < missingZeroValues; _i2++) {
+                for (_i4 = 0; _i4 < missingZeroValues; _i4++) {
                   fetchedPriceDataTwo.push('');
                 }
                 ;
@@ -1450,7 +1488,7 @@ var marketsCompareMarketCapObserver = new IntersectionObserver(function (entries
                 // ADD ASSET 1 DATA -- ADD ASSET 1 DATA
                 _fetchedPriceData = [];
                 _missingZeroValues = marketcapAndTimeDataTwo.length - marketcapAndTimeDataOne.length;
-                for (_i3 = 0; _i3 < _missingZeroValues; _i3++) {
+                for (_i5 = 0; _i5 < _missingZeroValues; _i5++) {
                   _fetchedPriceData.push('');
                 }
                 ;
@@ -1991,42 +2029,6 @@ var marketsCompareMarketCapObserver = new IntersectionObserver(function (entries
 }, dataPageOptions);
 var compareMarketCapContainer = document.querySelector('.compareMarketCapContainer');
 marketsCompareMarketCapObserver.observe(compareMarketCapContainer);
-
-// CHANGE PAGE TO SELECED DATA DASHBOARD
-function loadFirstDataDashboard() {
-  var dataSubPageContainer = document.querySelectorAll('.dataSubPageContainer');
-  for (var _i4 = 0; _i4 < dataSubPageContainer.length; _i4++) {
-    dataSubPageContainer[_i4].style.display = 'none';
-  }
-  ;
-  var priceContainer = document.querySelector('.priceContainer');
-  priceContainer.style.display = 'flex';
-}
-loadFirstDataDashboard();
-function changeDisplayedDashboard(event) {
-  var dataSubPageContainer = document.querySelectorAll('.dataSubPageContainer');
-  for (var _i5 = 0; _i5 < dataSubPageContainer.length; _i5++) {
-    dataSubPageContainer[_i5].style.display = 'none';
-  }
-  ;
-  if (event.target.classList.contains('priceHolingsBtn')) {
-    var priceContainer = document.querySelector('.priceContainer');
-    priceContainer.style.display = 'flex';
-  } else if (event.target.classList.contains('compareMarketCapBtn')) {
-    var _compareMarketCapContainer = document.querySelector('.compareMarketCapContainer');
-    _compareMarketCapContainer.style.display = 'flex';
-  } else if (event.target.classList.contains('marketVolumeBtn')) {
-    var volumePageContainer = document.querySelector('.volumePageContainer');
-    volumePageContainer.style.display = 'flex';
-  } else {
-    console.log('no displayed charts available');
-  }
-}
-;
-var dataDashboardSelectionBtn = document.querySelectorAll('.dataDashboardSelectionBtn');
-dataDashboardSelectionBtn.forEach(function (button) {
-  button.addEventListener('click', changeDisplayedDashboard);
-});
 },{}],"../node_modules/parcel-bundler/src/builtins/hmr-runtime.js":[function(require,module,exports) {
 var global = arguments[3];
 var OVERLAY_ID = '__parcel__error__overlay__';

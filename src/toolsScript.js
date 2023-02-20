@@ -1007,17 +1007,7 @@ const marketsCompareMarketCapObserver = new IntersectionObserver(function(entrie
             let fullyDilutedvalOne = assetListData[firstNumberInList]['fully_diluted_valuation'];
             let shortendedFullyDilutedValOne = (fullyDilutedvalOne / 1000000000).toLocaleString();
             let formattedFullyDilutedValOne = `$ ${shortendedFullyDilutedValOne} B`;
-
-            if (assetListData[firstNumberInList]['max_supply'] == null) {
-              fullyDilutedValOne.innerHTML = 'No max supply..';
-              console.log('no max supply');
-              console.log(assetListData[firstNumberInList]['max_supply']);
-            } else {
-              fullyDilutedValOne.innerHTML = formattedFullyDilutedValOne;
-              console.log(assetListData[firstNumberInList]['max_supply']);
-            }
-
-
+            fullyDilutedValOne.innerHTML = formattedFullyDilutedValOne;
 
           } else {
             // market cap
@@ -1147,7 +1137,7 @@ const marketsCompareMarketCapObserver = new IntersectionObserver(function(entrie
           }
           // % from all time high
           let percentFromAllTimeHighOne = assetListData[firstNumberInList]['ath_change_percentage'];
-          percentFromATHOne.innerHTML = Math.round(percentFromAllTimeHighOne.toLocaleString());
+          percentFromATHOne.innerHTML = `% from ATH: ${Math.round(percentFromAllTimeHighOne.toLocaleString())}%`;
 
           // ASSET 2 DATA
           let marketCapValuationTwo = document.querySelector('.marketCapValuationTwo');
@@ -1186,7 +1176,7 @@ const marketsCompareMarketCapObserver = new IntersectionObserver(function(entrie
           }
           // % from all time high
           let percentFromAllTimeHighTwo = assetListData[secondNumberInList]['ath_change_percentage'];
-          percentFromATHTwo.innerHTML = Math.round(percentFromAllTimeHighTwo.toLocaleString());
+          percentFromATHTwo.innerHTML = `% from ATH: ${Math.round(percentFromAllTimeHighTwo.toLocaleString())}%`;
         }
         catch(error) {
             console.log(error);

@@ -1008,7 +1008,6 @@ const marketsCompareMarketCapObserver = new IntersectionObserver(function(entrie
             let shortendedFullyDilutedValOne = (fullyDilutedvalOne / 1000000000).toLocaleString();
             let formattedFullyDilutedValOne = `$ ${shortendedFullyDilutedValOne} B`;
             fullyDilutedValOne.innerHTML = formattedFullyDilutedValOne;
-
           } else {
             // market cap
             let totalMarketCapOne = assetListData[firstNumberInList]['market_cap'];

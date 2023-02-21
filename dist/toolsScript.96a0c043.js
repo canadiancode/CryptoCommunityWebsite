@@ -1685,14 +1685,7 @@ var marketsCompareMarketCapObserver = new IntersectionObserver(function (entries
                   fullyDilutedvalOne = assetListData[firstNumberInList]['fully_diluted_valuation'];
                   shortendedFullyDilutedValOne = (fullyDilutedvalOne / 1000000000).toLocaleString();
                   formattedFullyDilutedValOne = "$ ".concat(shortendedFullyDilutedValOne, " B");
-                  if (assetListData[firstNumberInList]['max_supply'] == null) {
-                    fullyDilutedValOne.innerHTML = 'No max supply..';
-                    console.log('no max supply');
-                    console.log(assetListData[firstNumberInList]['max_supply']);
-                  } else {
-                    fullyDilutedValOne.innerHTML = formattedFullyDilutedValOne;
-                    console.log(assetListData[firstNumberInList]['max_supply']);
-                  }
+                  fullyDilutedValOne.innerHTML = formattedFullyDilutedValOne;
                 } else {
                   // market cap
                   _totalMarketCapOne = assetListData[firstNumberInList]['market_cap'];
@@ -1859,7 +1852,7 @@ var marketsCompareMarketCapObserver = new IntersectionObserver(function (entries
                 }
                 // % from all time high
                 percentFromAllTimeHighOne = assetListData[firstNumberInList]['ath_change_percentage'];
-                percentFromATHOne.innerHTML = Math.round(percentFromAllTimeHighOne.toLocaleString());
+                percentFromATHOne.innerHTML = "% from ATH: ".concat(Math.round(percentFromAllTimeHighOne.toLocaleString()), "%");
 
                 // ASSET 2 DATA
                 marketCapValuationTwo = document.querySelector('.marketCapValuationTwo');
@@ -1895,7 +1888,7 @@ var marketsCompareMarketCapObserver = new IntersectionObserver(function (entries
                 }
                 // % from all time high
                 percentFromAllTimeHighTwo = assetListData[secondNumberInList]['ath_change_percentage'];
-                percentFromATHTwo.innerHTML = Math.round(percentFromAllTimeHighTwo.toLocaleString());
+                percentFromATHTwo.innerHTML = "% from ATH: ".concat(Math.round(percentFromAllTimeHighTwo.toLocaleString()), "%");
                 _context10.next = 33;
                 break;
               case 29:
@@ -2054,7 +2047,7 @@ var parent = module.bundle.parent;
 if ((!parent || !parent.isParcelRequire) && typeof WebSocket !== 'undefined') {
   var hostname = "" || location.hostname;
   var protocol = location.protocol === 'https:' ? 'wss' : 'ws';
-  var ws = new WebSocket(protocol + '://' + hostname + ':' + "50171" + '/');
+  var ws = new WebSocket(protocol + '://' + hostname + ':' + "56533" + '/');
   ws.onmessage = function (event) {
     checkedAssets = {};
     assetsToAccept = [];

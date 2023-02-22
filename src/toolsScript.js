@@ -52,8 +52,9 @@ function loadFirstDataDashboard() {
   for (let i = 0; i < dataSubPageContainer.length; i++) {
     dataSubPageContainer[i].style.display = 'none';
   };
-  const priceContainer = document.querySelector('.priceContainer');
-  priceContainer.style.display = 'flex';
+  // change the selection below for what to show when building
+  const showThisContainer = document.querySelector('.volumePageContainer');
+  showThisContainer.style.display = 'flex';
 
 }
 loadFirstDataDashboard();
@@ -84,7 +85,6 @@ dataDashboardSelectionBtn.forEach(button => {
   button.addEventListener('click', changeDisplayedDashboard);
   button.addEventListener('click', openOrCloseCategoryList);
 });
-
 
 
   // START OF THE DATA PAGES -- START OF THE DATA PAGES -- START OF THE DATA PAGES
@@ -369,6 +369,7 @@ const marketsCryptoObserver = new IntersectionObserver(function(entries, markets
 }, dataPageOptions);
 const marketCryptoPriceContainer = document.querySelector('.marketCryptocurrrencyChartContainer');
 marketsCryptoObserver.observe(marketCryptoPriceContainer);
+
 
   // MARKETS PAGE -- PUBLIC EXCHANGES, STAKERS & MINERS // MARKETS PAGE -- PUBLIC EXCHANGES, STAKERS & MINERS
 const marketsStocksObserver = new IntersectionObserver(function(entries, marketsStocksObserver) {
@@ -1285,4 +1286,95 @@ const compareMarketCapContainer = document.querySelector('.compareMarketCapConta
 marketsCompareMarketCapObserver.observe(compareMarketCapContainer);
 
 
+// MARKETS PAGE -- EXCHANGE VOLUMES // EXCHANGE VOLUMES // EXCHANGE VOLUMES
+const exchangeVolumeObserver = new IntersectionObserver(function(entries, exchangeVolumeObserver) {
+  entries.forEach(entry => {
 
+    // CEX VOLUME COMPARISON -- CEX DOMINANCE
+
+    let totalBitcoinVolume = 0;
+
+    let BitcoinPrice = 0;
+    let dominacneOfExchanges = [];
+    let nameOfAllExchanges = [];
+
+    // fetch the total volume of entire crypto market
+    async function fetchTotalVolumes() {
+      let URL = 'https://api.coingecko.com/api/v3/coins/markets?vs_currency=USD&order=market_cap_desc&per_page=100&page=1&sparkline=false';
+      let response = await fetch(URL);
+      let data = await response.json();
+      // console.log(await data);
+
+      let bitcoinTotalVolumeVariable = await data[0]['total_volume'];
+      totalBitcoinVolume = await bitcoinTotalVolumeVariable;
+
+      let currentBitcoinPrice = await data[0]['current_price'];
+      BitcoinPrice = currentBitcoinPrice;
+    }
+    fetchTotalVolumes();
+
+    // fetch the volume for each exchange
+    async function fetchSingleCexVolumes() {
+
+      let volumeOfAllExchanges = [];
+
+      let URL = 'https://api.coingecko.com/api/v3/exchanges';
+      let response = await fetch(URL);
+      let data = await response.json();
+      // console.log(await data);
+
+      for (const exchange of data) {
+
+        // the volume for each exchanged pushed into an array
+        let exchangeTradedVolumeInBitcoin = exchange['trade_volume_24h_btc'];
+        let exchangeTradedVolumeUsd = exchangeTradedVolumeInBitcoin * BitcoinPrice;
+        volumeOfAllExchanges.push(exchangeTradedVolumeUsd);
+
+        // the name of the exchange
+        let exchangeTradedName = exchange['name'];
+        nameOfAllExchanges.push(exchangeTradedName);
+      };
+
+      // only take the first 15 exchangs
+      await nameOfAllExchanges.splice(-80);
+      await volumeOfAllExchanges.splice(-80);
+
+      // get the dominance as a percentage
+      for (const percentages of volumeOfAllExchanges) {
+        let dominance = percentages / totalBitcoinVolume;
+        let percentDominance = dominance * 100;
+        dominacneOfExchanges.push(percentDominance);
+      }
+    }
+    fetchSingleCexVolumes();
+
+
+    console.log(dominacneOfExchanges);
+    console.log(nameOfAllExchanges);
+
+
+    // CHART FOR THE CEX VOLUMES
+    const cexVolumePieChartEl = document.querySelector('.cexVolumePieChart');
+    let cexVolumePieChart = new Chart(cexVolumePieChartEl, {
+      type: 'doughnut', 
+      data: {
+        labels: ['Binance','Coinbase','Kraken'],
+        datasets: [{
+          label: ['% of Total CEX Volume'],
+          data: [60, 30, 10],
+          hoverOffset: 10,
+        }]
+      },
+      options: {
+        cutout: '40%'
+      }
+    });
+
+    // CEX vs. DEX COMPARISON
+
+    
+
+  })
+}, dataPageOptions);
+const exchangeDataContainer = document.querySelector('.volumePageContainer');
+exchangeVolumeObserver.observe(exchangeDataContainer);

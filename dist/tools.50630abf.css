@@ -478,5 +478,11 @@
 .dashboardContainer .dataContainer .compareMarketCapContainer .compareAssetsDataContainer .comparedAssetContainer .assetSelectionDiv .comparedAssetDataContainer p {
   padding-left: 0em;
 }
+.dashboardContainer .dataContainer .volumePageContainer .cexVolumeChartContainer .cexVolumeChartData .dataContainer .cexVolumePieBarContainer {
+  color: var(--white);
+}
+.dashboardContainer .dataContainer .volumePageContainer .cexVolumeChartContainer .cexVolumeChartData .dataContainer .cexVolumePieBarContainer h3 {
+  padding-left: 2em;
+}
 
 /*# sourceMappingURL=/tools.50630abf.css.map */

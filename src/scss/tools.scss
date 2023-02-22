@@ -498,7 +498,26 @@
             }
         }
 
+        .volumePageContainer {
+            .cexVolumeChartContainer {
+                .cexVolumeChartData {
+                    .dataContainer {
+                        .cexVolumePieBarContainer {
+                            color: var(--white);
+                            h3 {
+                                padding-left: 2em;
+                            }
+                            .cexVolumePieChartDiv {
 
+                            }
+                            .cexVolumeBarChartDiv {
+
+                            }
+                        }
+                    }
+                }
+            }
+        }
 
 
 

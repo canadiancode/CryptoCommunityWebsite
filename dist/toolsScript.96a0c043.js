@@ -181,8 +181,9 @@ function loadFirstDataDashboard() {
     dataSubPageContainer[_i].style.display = 'none';
   }
   ;
-  var priceContainer = document.querySelector('.priceContainer');
-  priceContainer.style.display = 'flex';
+  // change the selection below for what to show when building
+  var showThisContainer = document.querySelector('.volumePageContainer');
+  showThisContainer.style.display = 'flex';
 }
 loadFirstDataDashboard();
 function changeDisplayedDashboard(event) {
@@ -2022,6 +2023,148 @@ var marketsCompareMarketCapObserver = new IntersectionObserver(function (entries
 }, dataPageOptions);
 var compareMarketCapContainer = document.querySelector('.compareMarketCapContainer');
 marketsCompareMarketCapObserver.observe(compareMarketCapContainer);
+
+// MARKETS PAGE -- EXCHANGE VOLUMES // EXCHANGE VOLUMES // EXCHANGE VOLUMES
+var exchangeVolumeObserver = new IntersectionObserver(function (entries, exchangeVolumeObserver) {
+  entries.forEach(function (entry) {
+    // CEX VOLUME COMPARISON -- CEX DOMINANCE
+
+    var totalBitcoinVolume = 0;
+    var BitcoinPrice = 0;
+    var dominacneOfExchanges = [];
+    var nameOfAllExchanges = [];
+
+    // fetch the total volume of entire crypto market
+    function fetchTotalVolumes() {
+      return _fetchTotalVolumes.apply(this, arguments);
+    }
+    function _fetchTotalVolumes() {
+      _fetchTotalVolumes = _asyncToGenerator( /*#__PURE__*/_regeneratorRuntime().mark(function _callee11() {
+        var URL, response, data, bitcoinTotalVolumeVariable, currentBitcoinPrice;
+        return _regeneratorRuntime().wrap(function _callee11$(_context11) {
+          while (1) switch (_context11.prev = _context11.next) {
+            case 0:
+              URL = 'https://api.coingecko.com/api/v3/coins/markets?vs_currency=USD&order=market_cap_desc&per_page=100&page=1&sparkline=false';
+              _context11.next = 3;
+              return fetch(URL);
+            case 3:
+              response = _context11.sent;
+              _context11.next = 6;
+              return response.json();
+            case 6:
+              data = _context11.sent;
+              _context11.next = 9;
+              return data[0]['total_volume'];
+            case 9:
+              bitcoinTotalVolumeVariable = _context11.sent;
+              _context11.next = 12;
+              return bitcoinTotalVolumeVariable;
+            case 12:
+              totalBitcoinVolume = _context11.sent;
+              _context11.next = 15;
+              return data[0]['current_price'];
+            case 15:
+              currentBitcoinPrice = _context11.sent;
+              BitcoinPrice = currentBitcoinPrice;
+            case 17:
+            case "end":
+              return _context11.stop();
+          }
+        }, _callee11);
+      }));
+      return _fetchTotalVolumes.apply(this, arguments);
+    }
+    fetchTotalVolumes();
+
+    // fetch the volume for each exchange
+    function fetchSingleCexVolumes() {
+      return _fetchSingleCexVolumes.apply(this, arguments);
+    }
+    function _fetchSingleCexVolumes() {
+      _fetchSingleCexVolumes = _asyncToGenerator( /*#__PURE__*/_regeneratorRuntime().mark(function _callee12() {
+        var volumeOfAllExchanges, URL, response, data, _iterator17, _step17, exchange, exchangeTradedVolumeInBitcoin, exchangeTradedVolumeUsd, exchangeTradedName, _i6, _volumeOfAllExchanges, percentages, dominance, percentDominance;
+        return _regeneratorRuntime().wrap(function _callee12$(_context12) {
+          while (1) switch (_context12.prev = _context12.next) {
+            case 0:
+              volumeOfAllExchanges = [];
+              URL = 'https://api.coingecko.com/api/v3/exchanges';
+              _context12.next = 4;
+              return fetch(URL);
+            case 4:
+              response = _context12.sent;
+              _context12.next = 7;
+              return response.json();
+            case 7:
+              data = _context12.sent;
+              // console.log(await data);
+              _iterator17 = _createForOfIteratorHelper(data);
+              try {
+                for (_iterator17.s(); !(_step17 = _iterator17.n()).done;) {
+                  exchange = _step17.value;
+                  // the volume for each exchanged pushed into an array
+                  exchangeTradedVolumeInBitcoin = exchange['trade_volume_24h_btc'];
+                  exchangeTradedVolumeUsd = exchangeTradedVolumeInBitcoin * BitcoinPrice;
+                  volumeOfAllExchanges.push(exchangeTradedVolumeUsd);
+
+                  // the name of the exchange
+                  exchangeTradedName = exchange['name'];
+                  nameOfAllExchanges.push(exchangeTradedName);
+                }
+              } catch (err) {
+                _iterator17.e(err);
+              } finally {
+                _iterator17.f();
+              }
+              ;
+
+              // only take the first 15 exchangs
+              _context12.next = 13;
+              return nameOfAllExchanges.splice(-80);
+            case 13:
+              _context12.next = 15;
+              return volumeOfAllExchanges.splice(-80);
+            case 15:
+              // get the dominance as a percentage
+              for (_i6 = 0, _volumeOfAllExchanges = volumeOfAllExchanges; _i6 < _volumeOfAllExchanges.length; _i6++) {
+                percentages = _volumeOfAllExchanges[_i6];
+                dominance = percentages / totalBitcoinVolume;
+                percentDominance = dominance * 100;
+                dominacneOfExchanges.push(percentDominance);
+              }
+            case 16:
+            case "end":
+              return _context12.stop();
+          }
+        }, _callee12);
+      }));
+      return _fetchSingleCexVolumes.apply(this, arguments);
+    }
+    fetchSingleCexVolumes();
+    console.log(dominacneOfExchanges);
+    console.log(nameOfAllExchanges);
+
+    // CHART FOR THE CEX VOLUMES
+    var cexVolumePieChartEl = document.querySelector('.cexVolumePieChart');
+    var cexVolumePieChart = new Chart(cexVolumePieChartEl, {
+      type: 'doughnut',
+      data: {
+        labels: ['Binance', 'Coinbase', 'Kraken'],
+        datasets: [{
+          label: ['% of Total CEX Volume'],
+          data: [60, 30, 10],
+          hoverOffset: 10
+        }]
+      },
+      options: {
+        cutout: '40%'
+      }
+    });
+
+    // CEX vs. DEX COMPARISON
+  });
+}, dataPageOptions);
+var exchangeDataContainer = document.querySelector('.volumePageContainer');
+exchangeVolumeObserver.observe(exchangeDataContainer);
 },{}],"../node_modules/parcel-bundler/src/builtins/hmr-runtime.js":[function(require,module,exports) {
 var global = arguments[3];
 var OVERLAY_ID = '__parcel__error__overlay__';

@@ -1390,7 +1390,7 @@ const exchangeVolumeObserver = new IntersectionObserver(function(entries, exchan
     let totalOpenInterest = 0;
     let nameOfFuturesExchanges = [];
     let openInterests = [];
-    
+
     // fetch all the futures exchanges
     async function fetchFuturesExchanges() {
 
@@ -1456,21 +1456,21 @@ const exchangeVolumeObserver = new IntersectionObserver(function(entries, exchan
     }
     fetchFuturesExchanges();
 
-      // CHART FOR THE OPEN INTEREST DOMINANCE
-      const openInterestPieChartEl = document.querySelector('.futuresOpenInterestChart');
-      let openInterestPieChart = new Chart(openInterestPieChartEl, {
-        type: 'doughnut', 
-        data: {},
-        options: {
-          cutout: '40%',
-          plugins: {
-            legend: {
-              display: true,
-              position: 'left'
-            }
+    // CHART FOR THE OPEN INTEREST DOMINANCE
+    const openInterestPieChartEl = document.querySelector('.futuresOpenInterestChart');
+    let openInterestPieChart = new Chart(openInterestPieChartEl, {
+      type: 'doughnut', 
+      data: {},
+      options: {
+        cutout: '40%',
+        plugins: {
+          legend: {
+            display: true,
+            position: 'left'
           }
         }
-      });
+      }
+    });
 
 
     // CEX vs. DEX COMPARISON -- CEX vs. DEX COMPARISON

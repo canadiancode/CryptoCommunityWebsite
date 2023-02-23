@@ -1290,7 +1290,7 @@ marketsCompareMarketCapObserver.observe(compareMarketCapContainer);
 const exchangeVolumeObserver = new IntersectionObserver(function(entries, exchangeVolumeObserver) {
   entries.forEach(entry => {
 
-    // CEX VOLUME COMPARISON -- CEX DOMINANCE
+      // CEX VOLUME COMPARISON -- CEX DOMINANCE // CEX DOMINANCE
     let totalBitcoinVolume = 0;
     let BitcoinPrice = 0;
     let dominanceOfExchanges = [];
@@ -1299,73 +1299,78 @@ const exchangeVolumeObserver = new IntersectionObserver(function(entries, exchan
     // fetch the volume data
     async function fetchVolumeData() {
 
+      try {
         // FETCH THE TOTAL VOLUME & BTC PRICE 
-      let TotalVolumeUrl = 'https://api.coingecko.com/api/v3/coins/markets?vs_currency=USD&order=market_cap_desc&per_page=100&page=1&sparkline=false';
-      let totalVolumeResponse = await fetch(TotalVolumeUrl);
-      let totalVolumeData = await totalVolumeResponse.json();
-      // console.log(await data);
+        let TotalVolumeUrl = 'https://api.coingecko.com/api/v3/coins/markets?vs_currency=USD&order=market_cap_desc&per_page=100&page=1&sparkline=false';
+        let totalVolumeResponse = await fetch(TotalVolumeUrl);
+        let totalVolumeData = await totalVolumeResponse.json();
+  
+        // get the total BTC volume for all exchangs
+        let bitcoinTotalVolumeVariable = await totalVolumeData[0]['total_volume'];
+        totalBitcoinVolume = await bitcoinTotalVolumeVariable;
+  
+        // get the pric of Bitcoin
+        let currentBitcoinPrice = await totalVolumeData[0]['current_price'];
+        BitcoinPrice = currentBitcoinPrice;
+  
+          // FETCH SINGLE EXCHANGE DATA AND DOMINANCE
+        let singleExchanageUrl = 'https://api.coingecko.com/api/v3/exchanges';
+        let singleExchangeResponse = await fetch(singleExchanageUrl);
+        let singleExchangeData = await singleExchangeResponse.json();
+        // console.log(singleExchangeData);
+  
+        // get the name of the exchange
+        for (const names of singleExchangeData) {
+          let singleExchangeName = names['name'];
+          nameOfAllExchanges.push(singleExchangeName);
+        };
+  
+        // get the 24H btc volume for the exchange
+        for (const dominance of singleExchangeData) {
+          let totalBtcTraded = dominance['trade_volume_24h_btc'];
+          let totalUsdTraded = totalBtcTraded * BitcoinPrice;
+          let dominanceDecimal = totalUsdTraded / totalBitcoinVolume;
+          let dominancePercentage = dominanceDecimal * 100;
+          dominanceOfExchanges.push(dominancePercentage);
+        };
+  
+        // shorten array to only display certain amount 
+        nameOfAllExchanges.splice(-80);
+        dominanceOfExchanges.splice(-80);
+  
+        // calculate other exchange dominance
+        let displayedExchangeDominance = 0;
+        let otherExchangeDominance = 0;
+        for (const percentage of dominanceOfExchanges) {
+          displayedExchangeDominance += percentage;
+        }
+        otherExchangeDominance = 100 - displayedExchangeDominance;
+  
+        // add the other exchanage data to array
+        nameOfAllExchanges.push('others');
+        dominanceOfExchanges.push(otherExchangeDominance);
+  
+        let CexDominancedata = {
+          labels: nameOfAllExchanges,
+          datasets: [{
+            label: ['% of Total CEX Volume'],
+            data: dominanceOfExchanges,
+            hoverOffset: 10,
+          }]
+        };
+  
+        // update the chart
+        cexVolumePieChart.data = CexDominancedata;
+        cexVolumePieChart.update();
 
-      // get the total BTC volume for all exchangs
-      let bitcoinTotalVolumeVariable = await totalVolumeData[0]['total_volume'];
-      totalBitcoinVolume = await bitcoinTotalVolumeVariable;
-
-      // get the pric of Bitcoin
-      let currentBitcoinPrice = await totalVolumeData[0]['current_price'];
-      BitcoinPrice = currentBitcoinPrice;
-
-        // FETCH SINGLE EXCHANGE DATA AND DOMINANCE
-      let singleExchanageUrl = 'https://api.coingecko.com/api/v3/exchanges';
-      let singleExchangeResponse = await fetch(singleExchanageUrl);
-      let singleExchangeData = await singleExchangeResponse.json();
-      // console.log(singleExchangeData);
-
-      // get the name of the exchange
-      for (const names of singleExchangeData) {
-        let singleExchangeName = names['name'];
-        nameOfAllExchanges.push(singleExchangeName);
-      };
-
-      // get the 24H btc volume for the exchange
-      for (const dominance of singleExchangeData) {
-        let totalBtcTraded = dominance['trade_volume_24h_btc'];
-        let totalUsdTraded = totalBtcTraded * BitcoinPrice;
-        let dominanceDecimal = totalUsdTraded / totalBitcoinVolume;
-        let dominancePercentage = dominanceDecimal * 100;
-        dominanceOfExchanges.push(dominancePercentage);
-      };
-
-      // shorten array to only display certain amount 
-      nameOfAllExchanges.splice(-80);
-      dominanceOfExchanges.splice(-80);
-
-      // calculate other exchange dominance
-      let displayedExchangeDominance = 0;
-      let otherExchangeDominance = 0;
-      for (const percentage of dominanceOfExchanges) {
-        displayedExchangeDominance += percentage;
+      } catch(error) {
+        console.log(error);
+        console.log('Could not fetch the exchange data..')
       }
-      otherExchangeDominance = 100 - displayedExchangeDominance;
-
-      // add the other exchanage data to array
-      nameOfAllExchanges.push('others');
-      dominanceOfExchanges.push(otherExchangeDominance);
-
-      let CexDominancedata = {
-        labels: nameOfAllExchanges,
-        datasets: [{
-          label: ['% of Total CEX Volume'],
-          data: dominanceOfExchanges,
-          hoverOffset: 10,
-        }]
-      };
-
-      // update the chart
-      cexVolumePieChart.data = CexDominancedata;
-      cexVolumePieChart.update();
     }
     fetchVolumeData();
 
-    // CHART FOR THE CEX DOMINANCE
+      // CHART FOR THE CEX DOMINANCE
     const cexVolumePieChartEl = document.querySelector('.cexVolumePieChart');
     let cexVolumePieChart = new Chart(cexVolumePieChartEl, {
       type: 'doughnut', 
@@ -1381,31 +1386,92 @@ const exchangeVolumeObserver = new IntersectionObserver(function(entries, exchan
       }
     });
 
-    // CEX VOLUME COMPARISON -- FUTURES OPEN INTEREST
+      // CEX VOLUME COMPARISON -- FUTURES OPEN INTEREST // FUTURES OPEN INTEREST
     let totalOpenInterest = 0;
-    let nameOfFuturesExchange = [];
+    let nameOfFuturesExchanges = [];
     let openInterests = [];
-
+    
     // fetch all the futures exchanges
     async function fetchFuturesExchanges() {
-      let URL = 'https://api.coingecko.com/api/v3/derivatives/exchanges/list';
-      let response = await fetch(URL);
-      let data = await response.json();
 
-      console.log(await data);
+      // fetching the data for futures exchanges
+      try {
+        let URL = 'https://api.coingecko.com/api/v3/derivatives/exchanges';
+        let response = await fetch(URL);
+        let data = await response.json();
+  
+        // extracting names and ID's of futures exchanages
+        for (const name of data) {
+          let futuresExchange = name['name'];
+          nameOfFuturesExchanges.push(futuresExchange);
+        }
+
+        // calculate the total open interest
+        for (const singleExchangeOi of data) {
+          if (singleExchangeOi['open_interest_btc'] > 0) {
+            let currentOpenInterest = singleExchangeOi['open_interest_btc'];
+            totalOpenInterest += currentOpenInterest;
+          }
+        }
+
+        // extract open interest of each exchange
+        for (const openInterest of data) {
+          let openInterestData = openInterest['open_interest_btc'];
+          let openInterestDominance = openInterestData / totalOpenInterest;
+          let openInterestDominancePercentage = openInterestDominance * 100;
+          openInterests.push(openInterestDominancePercentage);
+        };
+
+        // shorten array to only display certain amount 
+        nameOfFuturesExchanges.splice(-30);
+        openInterests.splice(-30);
+
+        // add the the 'other' exchanges
+        let totalOiOtherExchanges = 0;
+        let otherExchangeDominance = 0; 
+        for (const otherExchanges of openInterests) {
+          totalOiOtherExchanges += otherExchanges;
+          otherExchangeDominance = 100 - totalOiOtherExchanges;
+        }
+        openInterests.push(otherExchangeDominance);
+        nameOfFuturesExchanges.push('other');
+
+        let OpenInterestDominancedata = {
+          labels: nameOfFuturesExchanges,
+          datasets: [{
+            label: ['% of Total Open Interest'],
+            data: openInterests,
+            hoverOffset: 10,
+          }]
+        };
+  
+        // update the chart
+        openInterestPieChart.data = OpenInterestDominancedata;
+        openInterestPieChart.update();
+
+      } catch(error) {
+        console.log(error);
+        console.log('Could not fetch list of Futures exchanges...')
+      }
     }
     fetchFuturesExchanges();
 
-    // fetch the open interest for each futures exchange
-    let futuresExchange = 'binance_futures';
-    async function fetchOpenInterest() {
-      let URL = `https://api.coingecko.com/api/v3/derivatives/exchanges/${futuresExchange}`;
-      let response = await fetch(URL);
-      let data = await response.json();
+      // CHART FOR THE OPEN INTEREST DOMINANCE
+      const openInterestPieChartEl = document.querySelector('.futuresOpenInterestChart');
+      let openInterestPieChart = new Chart(openInterestPieChartEl, {
+        type: 'doughnut', 
+        data: {},
+        options: {
+          cutout: '40%',
+          plugins: {
+            legend: {
+              display: true,
+              position: 'left'
+            }
+          }
+        }
+      });
 
-      console.log(data);
-    };
-    fetchOpenInterest();
 
     // CEX vs. DEX COMPARISON -- CEX vs. DEX COMPARISON
 

@@ -2027,7 +2027,7 @@ marketsCompareMarketCapObserver.observe(compareMarketCapContainer);
 // MARKETS PAGE -- EXCHANGE VOLUMES // EXCHANGE VOLUMES // EXCHANGE VOLUMES
 var exchangeVolumeObserver = new IntersectionObserver(function (entries, exchangeVolumeObserver) {
   entries.forEach(function (entry) {
-    // CEX VOLUME COMPARISON -- CEX DOMINANCE
+    // CEX VOLUME COMPARISON -- CEX DOMINANCE // CEX DOMINANCE
     var totalBitcoinVolume = 0;
     var BitcoinPrice = 0;
     var dominanceOfExchanges = [];
@@ -2043,39 +2043,40 @@ var exchangeVolumeObserver = new IntersectionObserver(function (entries, exchang
         return _regeneratorRuntime().wrap(function _callee11$(_context11) {
           while (1) switch (_context11.prev = _context11.next) {
             case 0:
+              _context11.prev = 0;
               // FETCH THE TOTAL VOLUME & BTC PRICE 
               TotalVolumeUrl = 'https://api.coingecko.com/api/v3/coins/markets?vs_currency=USD&order=market_cap_desc&per_page=100&page=1&sparkline=false';
-              _context11.next = 3;
+              _context11.next = 4;
               return fetch(TotalVolumeUrl);
-            case 3:
+            case 4:
               totalVolumeResponse = _context11.sent;
-              _context11.next = 6;
+              _context11.next = 7;
               return totalVolumeResponse.json();
-            case 6:
+            case 7:
               totalVolumeData = _context11.sent;
-              _context11.next = 9;
+              _context11.next = 10;
               return totalVolumeData[0]['total_volume'];
-            case 9:
+            case 10:
               bitcoinTotalVolumeVariable = _context11.sent;
-              _context11.next = 12;
+              _context11.next = 13;
               return bitcoinTotalVolumeVariable;
-            case 12:
+            case 13:
               totalBitcoinVolume = _context11.sent;
-              _context11.next = 15;
+              _context11.next = 16;
               return totalVolumeData[0]['current_price'];
-            case 15:
+            case 16:
               currentBitcoinPrice = _context11.sent;
               BitcoinPrice = currentBitcoinPrice;
 
               // FETCH SINGLE EXCHANGE DATA AND DOMINANCE
               singleExchanageUrl = 'https://api.coingecko.com/api/v3/exchanges';
-              _context11.next = 20;
+              _context11.next = 21;
               return fetch(singleExchanageUrl);
-            case 20:
+            case 21:
               singleExchangeResponse = _context11.sent;
-              _context11.next = 23;
+              _context11.next = 24;
               return singleExchangeResponse.json();
-            case 23:
+            case 24:
               singleExchangeData = _context11.sent;
               // console.log(singleExchangeData);
               // get the name of the exchange
@@ -2144,11 +2145,18 @@ var exchangeVolumeObserver = new IntersectionObserver(function (entries, exchang
               }; // update the chart
               cexVolumePieChart.data = CexDominancedata;
               cexVolumePieChart.update();
-            case 42:
+              _context11.next = 49;
+              break;
+            case 45:
+              _context11.prev = 45;
+              _context11.t0 = _context11["catch"](0);
+              console.log(_context11.t0);
+              console.log('Could not fetch the exchange data..');
+            case 49:
             case "end":
               return _context11.stop();
           }
-        }, _callee11);
+        }, _callee11, null, [[0, 45]]);
       }));
       return _fetchVolumeData.apply(this, arguments);
     }
@@ -2170,9 +2178,9 @@ var exchangeVolumeObserver = new IntersectionObserver(function (entries, exchang
       }
     });
 
-    // CEX VOLUME COMPARISON -- FUTURES OPEN INTEREST
+    // CEX VOLUME COMPARISON -- FUTURES OPEN INTEREST // FUTURES OPEN INTEREST
     var totalOpenInterest = 0;
-    var nameOfFuturesExchange = [];
+    var nameOfFuturesExchanges = [];
     var openInterests = [];
 
     // fetch all the futures exchanges
@@ -2181,66 +2189,130 @@ var exchangeVolumeObserver = new IntersectionObserver(function (entries, exchang
     }
     function _fetchFuturesExchanges() {
       _fetchFuturesExchanges = _asyncToGenerator( /*#__PURE__*/_regeneratorRuntime().mark(function _callee12() {
-        var URL, response, data;
+        var URL, response, data, _iterator20, _step20, name, futuresExchange, _iterator21, _step21, singleExchangeOi, currentOpenInterest, _iterator22, _step22, openInterest, openInterestData, openInterestDominance, openInterestDominancePercentage, totalOiOtherExchanges, otherExchangeDominance, _iterator23, _step23, otherExchanges, OpenInterestDominancedata;
         return _regeneratorRuntime().wrap(function _callee12$(_context12) {
           while (1) switch (_context12.prev = _context12.next) {
             case 0:
-              URL = 'https://api.coingecko.com/api/v3/derivatives/exchanges/list';
-              _context12.next = 3;
+              _context12.prev = 0;
+              URL = 'https://api.coingecko.com/api/v3/derivatives/exchanges';
+              _context12.next = 4;
               return fetch(URL);
-            case 3:
+            case 4:
               response = _context12.sent;
-              _context12.next = 6;
+              _context12.next = 7;
               return response.json();
-            case 6:
+            case 7:
               data = _context12.sent;
-              _context12.t0 = console;
-              _context12.next = 10;
-              return data;
-            case 10:
-              _context12.t1 = _context12.sent;
-              _context12.t0.log.call(_context12.t0, _context12.t1);
-            case 12:
+              // extracting names and ID's of futures exchanages
+              _iterator20 = _createForOfIteratorHelper(data);
+              try {
+                for (_iterator20.s(); !(_step20 = _iterator20.n()).done;) {
+                  name = _step20.value;
+                  futuresExchange = name['name'];
+                  nameOfFuturesExchanges.push(futuresExchange);
+                }
+
+                // calculate the total open interest
+              } catch (err) {
+                _iterator20.e(err);
+              } finally {
+                _iterator20.f();
+              }
+              _iterator21 = _createForOfIteratorHelper(data);
+              try {
+                for (_iterator21.s(); !(_step21 = _iterator21.n()).done;) {
+                  singleExchangeOi = _step21.value;
+                  if (singleExchangeOi['open_interest_btc'] > 0) {
+                    currentOpenInterest = singleExchangeOi['open_interest_btc'];
+                    totalOpenInterest += currentOpenInterest;
+                  }
+                }
+
+                // extract open interest of each exchange
+              } catch (err) {
+                _iterator21.e(err);
+              } finally {
+                _iterator21.f();
+              }
+              _iterator22 = _createForOfIteratorHelper(data);
+              try {
+                for (_iterator22.s(); !(_step22 = _iterator22.n()).done;) {
+                  openInterest = _step22.value;
+                  openInterestData = openInterest['open_interest_btc'];
+                  openInterestDominance = openInterestData / totalOpenInterest;
+                  openInterestDominancePercentage = openInterestDominance * 100;
+                  openInterests.push(openInterestDominancePercentage);
+                }
+              } catch (err) {
+                _iterator22.e(err);
+              } finally {
+                _iterator22.f();
+              }
+              ;
+
+              // shorten array to only display certain amount 
+              nameOfFuturesExchanges.splice(-30);
+              openInterests.splice(-30);
+
+              // add the the 'other' exchanges
+              totalOiOtherExchanges = 0;
+              otherExchangeDominance = 0;
+              _iterator23 = _createForOfIteratorHelper(openInterests);
+              try {
+                for (_iterator23.s(); !(_step23 = _iterator23.n()).done;) {
+                  otherExchanges = _step23.value;
+                  totalOiOtherExchanges += otherExchanges;
+                  otherExchangeDominance = 100 - totalOiOtherExchanges;
+                }
+              } catch (err) {
+                _iterator23.e(err);
+              } finally {
+                _iterator23.f();
+              }
+              openInterests.push(otherExchangeDominance);
+              nameOfFuturesExchanges.push('other');
+              OpenInterestDominancedata = {
+                labels: nameOfFuturesExchanges,
+                datasets: [{
+                  label: ['% of Total Open Interest'],
+                  data: openInterests,
+                  hoverOffset: 10
+                }]
+              }; // update the chart
+              openInterestPieChart.data = OpenInterestDominancedata;
+              openInterestPieChart.update();
+              _context12.next = 32;
+              break;
+            case 28:
+              _context12.prev = 28;
+              _context12.t0 = _context12["catch"](0);
+              console.log(_context12.t0);
+              console.log('Could not fetch list of Futures exchanges...');
+            case 32:
             case "end":
               return _context12.stop();
           }
-        }, _callee12);
+        }, _callee12, null, [[0, 28]]);
       }));
       return _fetchFuturesExchanges.apply(this, arguments);
     }
     fetchFuturesExchanges();
 
-    // fetch the open interest for each futures exchange
-    var futuresExchange = 'binance_futures';
-    function fetchOpenInterest() {
-      return _fetchOpenInterest.apply(this, arguments);
-    }
-    function _fetchOpenInterest() {
-      _fetchOpenInterest = _asyncToGenerator( /*#__PURE__*/_regeneratorRuntime().mark(function _callee13() {
-        var URL, response, data;
-        return _regeneratorRuntime().wrap(function _callee13$(_context13) {
-          while (1) switch (_context13.prev = _context13.next) {
-            case 0:
-              URL = "https://api.coingecko.com/api/v3/derivatives/exchanges/".concat(futuresExchange);
-              _context13.next = 3;
-              return fetch(URL);
-            case 3:
-              response = _context13.sent;
-              _context13.next = 6;
-              return response.json();
-            case 6:
-              data = _context13.sent;
-              console.log(data);
-            case 8:
-            case "end":
-              return _context13.stop();
+    // CHART FOR THE OPEN INTEREST DOMINANCE
+    var openInterestPieChartEl = document.querySelector('.futuresOpenInterestChart');
+    var openInterestPieChart = new Chart(openInterestPieChartEl, {
+      type: 'doughnut',
+      data: {},
+      options: {
+        cutout: '40%',
+        plugins: {
+          legend: {
+            display: true,
+            position: 'left'
           }
-        }, _callee13);
-      }));
-      return _fetchOpenInterest.apply(this, arguments);
-    }
-    ;
-    fetchOpenInterest();
+        }
+      }
+    });
 
     // CEX vs. DEX COMPARISON -- CEX vs. DEX COMPARISON
 
@@ -2274,7 +2346,7 @@ var parent = module.bundle.parent;
 if ((!parent || !parent.isParcelRequire) && typeof WebSocket !== 'undefined') {
   var hostname = "" || location.hostname;
   var protocol = location.protocol === 'https:' ? 'wss' : 'ws';
-  var ws = new WebSocket(protocol + '://' + hostname + ':' + "61527" + '/');
+  var ws = new WebSocket(protocol + '://' + hostname + ':' + "60327" + '/');
   ws.onmessage = function (event) {
     checkedAssets = {};
     assetsToAccept = [];

@@ -656,11 +656,6 @@ const marketsStocksObserver = new IntersectionObserver(function(entries, markets
             }
             publicCompanyInvestmentReturns.data.datasets[0].backgroundColor = backgroundColor;
             publicCompanyInvestmentReturns.update();
-
-
-
-            console.log(investmentAmounts);
-  
           }
           catch(error) {
             console.log(error);
@@ -1385,6 +1380,9 @@ const exchangeVolumeObserver = new IntersectionObserver(function(entries, exchan
         }
       }
     });
+    window.addEventListener("resize", (event) => {
+      cexVolumePieChartEl.style.width = '100%';
+    });
 
       // CEX VOLUME COMPARISON -- FUTURES OPEN INTEREST // FUTURES OPEN INTEREST
     let totalOpenInterest = 0;
@@ -1470,6 +1468,9 @@ const exchangeVolumeObserver = new IntersectionObserver(function(entries, exchan
           }
         }
       }
+    });
+    window.addEventListener("resize", (event) => {
+      openInterestPieChartEl.style.width = '100%';
     });
 
 

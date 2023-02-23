@@ -1101,19 +1101,18 @@ var marketsStocksObserver = new IntersectionObserver(function (entries, marketsS
                   }
                   publicCompanyInvestmentReturns.data.datasets[0].backgroundColor = backgroundColor;
                   publicCompanyInvestmentReturns.update();
-                  console.log(investmentAmounts);
-                  _context7.next = 46;
+                  _context7.next = 45;
                   break;
-                case 42:
-                  _context7.prev = 42;
+                case 41:
+                  _context7.prev = 41;
                   _context7.t0 = _context7["catch"](0);
                   console.log(_context7.t0);
                   console.log('Could not change displayed stock info...');
-                case 46:
+                case 45:
                 case "end":
                   return _context7.stop();
               }
-            }, _callee7, null, [[0, 42]]);
+            }, _callee7, null, [[0, 41]]);
           }));
           return _reFetchCompanyData.apply(this, arguments);
         }
@@ -2177,6 +2176,9 @@ var exchangeVolumeObserver = new IntersectionObserver(function (entries, exchang
         }
       }
     });
+    window.addEventListener("resize", function (event) {
+      cexVolumePieChartEl.style.width = '100%';
+    });
 
     // CEX VOLUME COMPARISON -- FUTURES OPEN INTEREST // FUTURES OPEN INTEREST
     var totalOpenInterest = 0;
@@ -2312,6 +2314,9 @@ var exchangeVolumeObserver = new IntersectionObserver(function (entries, exchang
           }
         }
       }
+    });
+    window.addEventListener("resize", function (event) {
+      openInterestPieChartEl.style.width = '100%';
     });
 
     // CEX vs. DEX COMPARISON -- CEX vs. DEX COMPARISON

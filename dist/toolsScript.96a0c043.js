@@ -2028,33 +2028,33 @@ marketsCompareMarketCapObserver.observe(compareMarketCapContainer);
 var exchangeVolumeObserver = new IntersectionObserver(function (entries, exchangeVolumeObserver) {
   entries.forEach(function (entry) {
     // CEX VOLUME COMPARISON -- CEX DOMINANCE
-
     var totalBitcoinVolume = 0;
     var BitcoinPrice = 0;
-    var dominacneOfExchanges = [];
+    var dominanceOfExchanges = [];
     var nameOfAllExchanges = [];
 
-    // fetch the total volume of entire crypto market
-    function fetchTotalVolumes() {
-      return _fetchTotalVolumes.apply(this, arguments);
+    // fetch the volume data
+    function fetchVolumeData() {
+      return _fetchVolumeData.apply(this, arguments);
     }
-    function _fetchTotalVolumes() {
-      _fetchTotalVolumes = _asyncToGenerator( /*#__PURE__*/_regeneratorRuntime().mark(function _callee11() {
-        var URL, response, data, bitcoinTotalVolumeVariable, currentBitcoinPrice;
+    function _fetchVolumeData() {
+      _fetchVolumeData = _asyncToGenerator( /*#__PURE__*/_regeneratorRuntime().mark(function _callee11() {
+        var TotalVolumeUrl, totalVolumeResponse, totalVolumeData, bitcoinTotalVolumeVariable, currentBitcoinPrice, singleExchanageUrl, singleExchangeResponse, singleExchangeData, _iterator17, _step17, names, singleExchangeName, _iterator18, _step18, dominance, totalBtcTraded, totalUsdTraded, dominanceDecimal, dominancePercentage, displayedExchangeDominance, otherExchangeDominance, _iterator19, _step19, percentage, CexDominancedata;
         return _regeneratorRuntime().wrap(function _callee11$(_context11) {
           while (1) switch (_context11.prev = _context11.next) {
             case 0:
-              URL = 'https://api.coingecko.com/api/v3/coins/markets?vs_currency=USD&order=market_cap_desc&per_page=100&page=1&sparkline=false';
+              // FETCH THE TOTAL VOLUME & BTC PRICE 
+              TotalVolumeUrl = 'https://api.coingecko.com/api/v3/coins/markets?vs_currency=USD&order=market_cap_desc&per_page=100&page=1&sparkline=false';
               _context11.next = 3;
-              return fetch(URL);
+              return fetch(TotalVolumeUrl);
             case 3:
-              response = _context11.sent;
+              totalVolumeResponse = _context11.sent;
               _context11.next = 6;
-              return response.json();
+              return totalVolumeResponse.json();
             case 6:
-              data = _context11.sent;
+              totalVolumeData = _context11.sent;
               _context11.next = 9;
-              return data[0]['total_volume'];
+              return totalVolumeData[0]['total_volume'];
             case 9:
               bitcoinTotalVolumeVariable = _context11.sent;
               _context11.next = 12;
@@ -2062,53 +2062,29 @@ var exchangeVolumeObserver = new IntersectionObserver(function (entries, exchang
             case 12:
               totalBitcoinVolume = _context11.sent;
               _context11.next = 15;
-              return data[0]['current_price'];
+              return totalVolumeData[0]['current_price'];
             case 15:
               currentBitcoinPrice = _context11.sent;
               BitcoinPrice = currentBitcoinPrice;
-            case 17:
-            case "end":
-              return _context11.stop();
-          }
-        }, _callee11);
-      }));
-      return _fetchTotalVolumes.apply(this, arguments);
-    }
-    fetchTotalVolumes();
 
-    // fetch the volume for each exchange
-    function fetchSingleCexVolumes() {
-      return _fetchSingleCexVolumes.apply(this, arguments);
-    }
-    function _fetchSingleCexVolumes() {
-      _fetchSingleCexVolumes = _asyncToGenerator( /*#__PURE__*/_regeneratorRuntime().mark(function _callee12() {
-        var volumeOfAllExchanges, URL, response, data, _iterator17, _step17, exchange, exchangeTradedVolumeInBitcoin, exchangeTradedVolumeUsd, exchangeTradedName, _i6, _volumeOfAllExchanges, percentages, dominance, percentDominance;
-        return _regeneratorRuntime().wrap(function _callee12$(_context12) {
-          while (1) switch (_context12.prev = _context12.next) {
-            case 0:
-              volumeOfAllExchanges = [];
-              URL = 'https://api.coingecko.com/api/v3/exchanges';
-              _context12.next = 4;
-              return fetch(URL);
-            case 4:
-              response = _context12.sent;
-              _context12.next = 7;
-              return response.json();
-            case 7:
-              data = _context12.sent;
-              // console.log(await data);
-              _iterator17 = _createForOfIteratorHelper(data);
+              // FETCH SINGLE EXCHANGE DATA AND DOMINANCE
+              singleExchanageUrl = 'https://api.coingecko.com/api/v3/exchanges';
+              _context11.next = 20;
+              return fetch(singleExchanageUrl);
+            case 20:
+              singleExchangeResponse = _context11.sent;
+              _context11.next = 23;
+              return singleExchangeResponse.json();
+            case 23:
+              singleExchangeData = _context11.sent;
+              // console.log(singleExchangeData);
+              // get the name of the exchange
+              _iterator17 = _createForOfIteratorHelper(singleExchangeData);
               try {
                 for (_iterator17.s(); !(_step17 = _iterator17.n()).done;) {
-                  exchange = _step17.value;
-                  // the volume for each exchanged pushed into an array
-                  exchangeTradedVolumeInBitcoin = exchange['trade_volume_24h_btc'];
-                  exchangeTradedVolumeUsd = exchangeTradedVolumeInBitcoin * BitcoinPrice;
-                  volumeOfAllExchanges.push(exchangeTradedVolumeUsd);
-
-                  // the name of the exchange
-                  exchangeTradedName = exchange['name'];
-                  nameOfAllExchanges.push(exchangeTradedName);
+                  names = _step17.value;
+                  singleExchangeName = names['name'];
+                  nameOfAllExchanges.push(singleExchangeName);
                 }
               } catch (err) {
                 _iterator17.e(err);
@@ -2117,50 +2093,158 @@ var exchangeVolumeObserver = new IntersectionObserver(function (entries, exchang
               }
               ;
 
-              // only take the first 15 exchangs
-              _context12.next = 13;
-              return nameOfAllExchanges.splice(-80);
-            case 13:
-              _context12.next = 15;
-              return volumeOfAllExchanges.splice(-80);
-            case 15:
-              // get the dominance as a percentage
-              for (_i6 = 0, _volumeOfAllExchanges = volumeOfAllExchanges; _i6 < _volumeOfAllExchanges.length; _i6++) {
-                percentages = _volumeOfAllExchanges[_i6];
-                dominance = percentages / totalBitcoinVolume;
-                percentDominance = dominance * 100;
-                dominacneOfExchanges.push(percentDominance);
+              // get the 24H btc volume for the exchange
+              _iterator18 = _createForOfIteratorHelper(singleExchangeData);
+              try {
+                for (_iterator18.s(); !(_step18 = _iterator18.n()).done;) {
+                  dominance = _step18.value;
+                  totalBtcTraded = dominance['trade_volume_24h_btc'];
+                  totalUsdTraded = totalBtcTraded * BitcoinPrice;
+                  dominanceDecimal = totalUsdTraded / totalBitcoinVolume;
+                  dominancePercentage = dominanceDecimal * 100;
+                  dominanceOfExchanges.push(dominancePercentage);
+                }
+              } catch (err) {
+                _iterator18.e(err);
+              } finally {
+                _iterator18.f();
               }
-            case 16:
+              ;
+
+              // shorten array to only display certain amount 
+              nameOfAllExchanges.splice(-80);
+              dominanceOfExchanges.splice(-80);
+
+              // calculate other exchange dominance
+              displayedExchangeDominance = 0;
+              otherExchangeDominance = 0;
+              _iterator19 = _createForOfIteratorHelper(dominanceOfExchanges);
+              try {
+                for (_iterator19.s(); !(_step19 = _iterator19.n()).done;) {
+                  percentage = _step19.value;
+                  displayedExchangeDominance += percentage;
+                }
+              } catch (err) {
+                _iterator19.e(err);
+              } finally {
+                _iterator19.f();
+              }
+              otherExchangeDominance = 100 - displayedExchangeDominance;
+
+              // add the other exchanage data to array
+              nameOfAllExchanges.push('others');
+              dominanceOfExchanges.push(otherExchangeDominance);
+              CexDominancedata = {
+                labels: nameOfAllExchanges,
+                datasets: [{
+                  label: ['% of Total CEX Volume'],
+                  data: dominanceOfExchanges,
+                  hoverOffset: 10
+                }]
+              }; // update the chart
+              cexVolumePieChart.data = CexDominancedata;
+              cexVolumePieChart.update();
+            case 42:
+            case "end":
+              return _context11.stop();
+          }
+        }, _callee11);
+      }));
+      return _fetchVolumeData.apply(this, arguments);
+    }
+    fetchVolumeData();
+
+    // CHART FOR THE CEX DOMINANCE
+    var cexVolumePieChartEl = document.querySelector('.cexVolumePieChart');
+    var cexVolumePieChart = new Chart(cexVolumePieChartEl, {
+      type: 'doughnut',
+      data: {},
+      options: {
+        cutout: '40%',
+        plugins: {
+          legend: {
+            display: true,
+            position: 'left'
+          }
+        }
+      }
+    });
+
+    // CEX VOLUME COMPARISON -- FUTURES OPEN INTEREST
+    var totalOpenInterest = 0;
+    var nameOfFuturesExchange = [];
+    var openInterests = [];
+
+    // fetch all the futures exchanges
+    function fetchFuturesExchanges() {
+      return _fetchFuturesExchanges.apply(this, arguments);
+    }
+    function _fetchFuturesExchanges() {
+      _fetchFuturesExchanges = _asyncToGenerator( /*#__PURE__*/_regeneratorRuntime().mark(function _callee12() {
+        var URL, response, data;
+        return _regeneratorRuntime().wrap(function _callee12$(_context12) {
+          while (1) switch (_context12.prev = _context12.next) {
+            case 0:
+              URL = 'https://api.coingecko.com/api/v3/derivatives/exchanges/list';
+              _context12.next = 3;
+              return fetch(URL);
+            case 3:
+              response = _context12.sent;
+              _context12.next = 6;
+              return response.json();
+            case 6:
+              data = _context12.sent;
+              _context12.t0 = console;
+              _context12.next = 10;
+              return data;
+            case 10:
+              _context12.t1 = _context12.sent;
+              _context12.t0.log.call(_context12.t0, _context12.t1);
+            case 12:
             case "end":
               return _context12.stop();
           }
         }, _callee12);
       }));
-      return _fetchSingleCexVolumes.apply(this, arguments);
+      return _fetchFuturesExchanges.apply(this, arguments);
     }
-    fetchSingleCexVolumes();
-    console.log(dominacneOfExchanges);
-    console.log(nameOfAllExchanges);
+    fetchFuturesExchanges();
 
-    // CHART FOR THE CEX VOLUMES
-    var cexVolumePieChartEl = document.querySelector('.cexVolumePieChart');
-    var cexVolumePieChart = new Chart(cexVolumePieChartEl, {
-      type: 'doughnut',
-      data: {
-        labels: ['Binance', 'Coinbase', 'Kraken'],
-        datasets: [{
-          label: ['% of Total CEX Volume'],
-          data: [60, 30, 10],
-          hoverOffset: 10
-        }]
-      },
-      options: {
-        cutout: '40%'
-      }
-    });
+    // fetch the open interest for each futures exchange
+    var futuresExchange = 'binance_futures';
+    function fetchOpenInterest() {
+      return _fetchOpenInterest.apply(this, arguments);
+    }
+    function _fetchOpenInterest() {
+      _fetchOpenInterest = _asyncToGenerator( /*#__PURE__*/_regeneratorRuntime().mark(function _callee13() {
+        var URL, response, data;
+        return _regeneratorRuntime().wrap(function _callee13$(_context13) {
+          while (1) switch (_context13.prev = _context13.next) {
+            case 0:
+              URL = "https://api.coingecko.com/api/v3/derivatives/exchanges/".concat(futuresExchange);
+              _context13.next = 3;
+              return fetch(URL);
+            case 3:
+              response = _context13.sent;
+              _context13.next = 6;
+              return response.json();
+            case 6:
+              data = _context13.sent;
+              console.log(data);
+            case 8:
+            case "end":
+              return _context13.stop();
+          }
+        }, _callee13);
+      }));
+      return _fetchOpenInterest.apply(this, arguments);
+    }
+    ;
+    fetchOpenInterest();
 
-    // CEX vs. DEX COMPARISON
+    // CEX vs. DEX COMPARISON -- CEX vs. DEX COMPARISON
+
+    // end of the Intersection Observer
   });
 }, dataPageOptions);
 var exchangeDataContainer = document.querySelector('.volumePageContainer');
@@ -2190,7 +2274,7 @@ var parent = module.bundle.parent;
 if ((!parent || !parent.isParcelRequire) && typeof WebSocket !== 'undefined') {
   var hostname = "" || location.hostname;
   var protocol = location.protocol === 'https:' ? 'wss' : 'ws';
-  var ws = new WebSocket(protocol + '://' + hostname + ':' + "49277" + '/');
+  var ws = new WebSocket(protocol + '://' + hostname + ':' + "61527" + '/');
   ws.onmessage = function (event) {
     checkedAssets = {};
     assetsToAccept = [];

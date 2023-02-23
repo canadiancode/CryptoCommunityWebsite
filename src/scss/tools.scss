@@ -259,22 +259,24 @@
                         }
                     }
                 }
+                .marketPriceDiv {
+                    width: 100%;
+                    padding: 1em 2em;
+                    p {
+                        color: var(--white);
+                        padding-left: 4em;
+                    }
+                    h1 {
+                        color: var(--white);
+                        padding-left: 2em;
+                    }
+                }
             }
         }
         // END OF THE GENERAL CSS CODE ABOVE
         
         // MARKETS -- PRICE AND HOLDINGS -- CRYPTO PRICES -- CRYPTO PRICES
-        .marketPriceDiv {
-            width: 100%;
-            padding: 1em 2em;
-            p {
-                color: var(--white);
-                padding-left: 4em;
-            }
-            h1 {
-                color: var(--white);
-                padding-left: 2em;
-            }
+        .marketCryptocurrrencyChartContainer {
         }
 
         // MARKETS -- PRICE AND HOLDINGS -- PUBLIC HOLDINGS -- PUBLIC HOLDINGS
@@ -290,7 +292,7 @@
                 }
             }
             .chartAndOptionContainer {
-                min-width: 60vw;
+                min-width: 50vw;
             }
             div {
                 margin: 0;
@@ -348,6 +350,10 @@
                 max-width: 200px;
                 width: 100%;
                 overflow: hidden;
+                box-shadow: inset 2px 2px 5px 0px var(--black), inset -2px -2px 5px 0px var(--black);
+                border-radius: 24px;
+                background: #1A1B1F;
+                padding: 2em;
                 .heldAssetContainer {
                     width: 100%;
                     display: flex;
@@ -504,23 +510,35 @@
                     .dataContainer {
                         .cexVolumePieBarContainer {
                             color: var(--white);
+                            display: flex;
+                            gap: 1em;
+                            flex-direction: row;
+                            @media screen and (max-width: 900px) {
+                                & {
+                                    flex-direction: column;
+                                }
+                            }
                             h3 {
                                 padding-left: 2em;
                             }
                             .cexVolumePieChartDiv {
-
+                                box-shadow: inset 2px 2px 5px 0px var(--black), inset -2px -2px 5px 0px var(--black);
+                                border-radius: 24px;
+                                background: #1A1B1F;
+                                padding: 2em;
+                                width: 100%;
                             }
-                            .cexVolumeBarChartDiv {
-
+                            .futuresOpenInterestChartDiv {
+                                box-shadow: inset 2px 2px 5px 0px var(--black), inset -2px -2px 5px 0px var(--black);
+                                border-radius: 24px;
+                                background: #1A1B1F;
+                                padding: 2em;   
+                                width: 100%;                             
                             }
                         }
                     }
                 }
             }
         }
-
-
-
-
     }
 }

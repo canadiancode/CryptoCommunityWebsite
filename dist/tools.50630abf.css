@@ -252,15 +252,15 @@
     gap: 10px;
   }
 }
-.dashboardContainer .dataContainer .marketPriceDiv {
+.dashboardContainer .dataContainer .dataPageContainer .dataSubPageContainer .marketPriceDiv {
   width: 100%;
   padding: 1em 2em;
 }
-.dashboardContainer .dataContainer .marketPriceDiv p {
+.dashboardContainer .dataContainer .dataPageContainer .dataSubPageContainer .marketPriceDiv p {
   color: var(--white);
   padding-left: 4em;
 }
-.dashboardContainer .dataContainer .marketPriceDiv h1 {
+.dashboardContainer .dataContainer .dataPageContainer .dataSubPageContainer .marketPriceDiv h1 {
   color: var(--white);
   padding-left: 2em;
 }
@@ -277,7 +277,7 @@
   }
 }
 .dashboardContainer .dataContainer .marketPublicstockChartContainer .chartAndOptionContainer {
-  min-width: 60vw;
+  min-width: 50vw;
 }
 .dashboardContainer .dataContainer .marketPublicstockChartContainer div {
   margin: 0;
@@ -333,6 +333,10 @@
   max-width: 200px;
   width: 100%;
   overflow: hidden;
+  box-shadow: inset 2px 2px 5px 0px var(--black), inset -2px -2px 5px 0px var(--black);
+  border-radius: 24px;
+  background: #1A1B1F;
+  padding: 2em;
 }
 .dashboardContainer .dataContainer .marketPublicstockChartContainer .publicStockDataContainer .heldAssetContainer {
   width: 100%;
@@ -480,9 +484,31 @@
 }
 .dashboardContainer .dataContainer .volumePageContainer .cexVolumeChartContainer .cexVolumeChartData .dataContainer .cexVolumePieBarContainer {
   color: var(--white);
+  display: flex;
+  gap: 1em;
+  flex-direction: row;
+}
+@media screen and (max-width: 900px) {
+  .dashboardContainer .dataContainer .volumePageContainer .cexVolumeChartContainer .cexVolumeChartData .dataContainer .cexVolumePieBarContainer {
+    flex-direction: column;
+  }
 }
 .dashboardContainer .dataContainer .volumePageContainer .cexVolumeChartContainer .cexVolumeChartData .dataContainer .cexVolumePieBarContainer h3 {
   padding-left: 2em;
+}
+.dashboardContainer .dataContainer .volumePageContainer .cexVolumeChartContainer .cexVolumeChartData .dataContainer .cexVolumePieBarContainer .cexVolumePieChartDiv {
+  box-shadow: inset 2px 2px 5px 0px var(--black), inset -2px -2px 5px 0px var(--black);
+  border-radius: 24px;
+  background: #1A1B1F;
+  padding: 2em;
+  width: 100%;
+}
+.dashboardContainer .dataContainer .volumePageContainer .cexVolumeChartContainer .cexVolumeChartData .dataContainer .cexVolumePieBarContainer .futuresOpenInterestChartDiv {
+  box-shadow: inset 2px 2px 5px 0px var(--black), inset -2px -2px 5px 0px var(--black);
+  border-radius: 24px;
+  background: #1A1B1F;
+  padding: 2em;
+  width: 100%;
 }
 
 /*# sourceMappingURL=/tools.50630abf.css.map */

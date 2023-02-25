@@ -2319,7 +2319,141 @@ var exchangeVolumeObserver = new IntersectionObserver(function (entries, exchang
       openInterestPieChartEl.style.width = '100%';
     });
 
-    // CEX vs. DEX COMPARISON -- CEX vs. DEX COMPARISON
+    // FUTURES FUNDING RATE 
+    var fundingRateAsset = 'BTC';
+    var ticker = 'unexpired';
+    var futuresExchanges = [];
+    var fundingRates = [];
+    var totalFundingRateOpenInterest = 0;
+    var weightedAverageFundingRate = 0;
+    function fetchFundingRate() {
+      return _fetchFundingRate.apply(this, arguments);
+    }
+    function _fetchFundingRate() {
+      _fetchFundingRate = _asyncToGenerator( /*#__PURE__*/_regeneratorRuntime().mark(function _callee13() {
+        var URL, response, data, _iterator24, _step24, market, rawExchangeName, exchangeRemoveFutureText, exchangeOneBracket, exchangeTwoBracket, exchange, averageFundingRate, _iterator25, _step25, fundingRate, rate, weightedFundingRateDominance, multiplier, weightedAverage, fundingRateObject, averageFundingRateEl, weightedAverageFundingRateEl;
+        return _regeneratorRuntime().wrap(function _callee13$(_context13) {
+          while (1) switch (_context13.prev = _context13.next) {
+            case 0:
+              URL = "https://api.coingecko.com/api/v3/derivatives?include_tickers=".concat(ticker);
+              _context13.next = 3;
+              return fetch(URL);
+            case 3:
+              response = _context13.sent;
+              _context13.next = 6;
+              return response.json();
+            case 6:
+              data = _context13.sent;
+              try {
+                // extract the name of the exchange
+                _iterator24 = _createForOfIteratorHelper(data);
+                try {
+                  for (_iterator24.s(); !(_step24 = _iterator24.n()).done;) {
+                    market = _step24.value;
+                    if (market['index_id'] === fundingRateAsset && market['funding_rate'] != 0 && market['open_interest'] > 0) {
+                      rawExchangeName = market['market'];
+                      exchangeRemoveFutureText = rawExchangeName.replace('Futures', '');
+                      exchangeOneBracket = exchangeRemoveFutureText.replace('(', '');
+                      exchangeTwoBracket = exchangeOneBracket.replace(')', '');
+                      exchange = exchangeTwoBracket.replace('()', '');
+                      futuresExchanges.push(exchange);
+                    }
+                  }
+                  // extract the funding rate
+                } catch (err) {
+                  _iterator24.e(err);
+                } finally {
+                  _iterator24.f();
+                }
+                averageFundingRate = 0;
+                _iterator25 = _createForOfIteratorHelper(data);
+                try {
+                  for (_iterator25.s(); !(_step25 = _iterator25.n()).done;) {
+                    fundingRate = _step25.value;
+                    if (fundingRate['index_id'] === fundingRateAsset && fundingRate['funding_rate'] != 0 && fundingRate['open_interest'] > 0) {
+                      rate = fundingRate['funding_rate'];
+                      fundingRates.push(rate);
+                      averageFundingRate += rate;
+
+                      // getting the total open interest from the pulled funding rates
+                      weightedFundingRateDominance = fundingRate['open_interest'];
+                      totalFundingRateOpenInterest += weightedFundingRateDominance;
+
+                      // getting the weighted average
+                      multiplier = fundingRate['funding_rate'] / totalFundingRateOpenInterest;
+                      weightedAverage = fundingRate['funding_rate'] * multiplier;
+                      weightedAverageFundingRate += weightedAverage;
+                    }
+                  }
+                } catch (err) {
+                  _iterator25.e(err);
+                } finally {
+                  _iterator25.f();
+                }
+                fundingRateObject = {
+                  labels: futuresExchanges,
+                  datasets: [{
+                    label: "".concat(fundingRateAsset, " funding rates"),
+                    data: fundingRates,
+                    borderWidth: 2,
+                    backgroundColor: 'rgb(255,255,255, 0.5)',
+                    borderColor: 'rgb(255,255,255, 0.8)'
+                  }]
+                }; // add average funding rate
+                averageFundingRateEl = document.querySelector('.averageFundingRate');
+                averageFundingRateEl.innerHTML = averageFundingRate.toFixed(3);
+
+                // add weighted funding rate
+                weightedAverageFundingRateEl = document.querySelector('.weightedAverageFundingRate');
+                weightedAverageFundingRateEl.innerHTML = weightedAverageFundingRate.toFixed(3);
+
+                // update chart with data
+                fundingRateChart.data = fundingRateObject;
+                fundingRateChart.update();
+              } catch (error) {
+                console.log(error);
+                console.log('Could not fetch Futures funding rates..');
+              }
+            case 8:
+            case "end":
+              return _context13.stop();
+          }
+        }, _callee13);
+      }));
+      return _fetchFundingRate.apply(this, arguments);
+    }
+    fetchFundingRate();
+    function changeFundingRateAsset(event) {
+      if (event.target.classList.contains('BtcFundingRateButton')) {
+        console.log('BTC!');
+      }
+    }
+    var changeFundingRateButton = document.querySelectorAll('.changeFundingRateButton');
+    changeFundingRateButton.forEach(function (button) {
+      button.addEventListener('click', changeFundingRateAsset);
+    });
+
+    // CHART FOR THE FUTURES FUNDING RATE
+    var fundingRateChartEl = document.querySelector('.fundingRateChart');
+    var fundingRateChart = new Chart(fundingRateChartEl, {
+      type: 'bar',
+      data: {},
+      options: {
+        scales: {
+          y: {
+            beginAtZero: true,
+            ticks: {
+              format: {
+                style: 'percent'
+              }
+            }
+          }
+        }
+      }
+    });
+    window.addEventListener("resize", function (event) {
+      fundingRateChartEl.style.height = '100%';
+    });
 
     // end of the Intersection Observer
   });
@@ -2351,7 +2485,7 @@ var parent = module.bundle.parent;
 if ((!parent || !parent.isParcelRequire) && typeof WebSocket !== 'undefined') {
   var hostname = "" || location.hostname;
   var protocol = location.protocol === 'https:' ? 'wss' : 'ws';
-  var ws = new WebSocket(protocol + '://' + hostname + ':' + "60327" + '/');
+  var ws = new WebSocket(protocol + '://' + hostname + ':' + "54665" + '/');
   ws.onmessage = function (event) {
     checkedAssets = {};
     assetsToAccept = [];

@@ -1474,8 +1474,112 @@ const exchangeVolumeObserver = new IntersectionObserver(function(entries, exchan
     });
 
 
-    // CEX vs. DEX COMPARISON -- CEX vs. DEX COMPARISON
+    // FUTURES FUNDING RATE 
+    let fundingRateAsset = 'BTC';
+    let ticker = 'unexpired';
+    let futuresExchanges = [];
+    let fundingRates = [];
+    let totalFundingRateOpenInterest = 0;
+    let weightedAverageFundingRate = 0;
 
+    async function fetchFundingRate() {
+      let URL = `https://api.coingecko.com/api/v3/derivatives?include_tickers=${ticker}`;
+      let response = await fetch(URL);
+      let data = await response.json();
+
+      try {
+          // extract the name of the exchange
+          for (const market of data) {
+            if (market['index_id'] === fundingRateAsset && market['funding_rate'] != 0 && market['open_interest'] > 0) {
+              let rawExchangeName = market['market'];
+              let exchangeRemoveFutureText = rawExchangeName.replace('Futures','');
+              let exchangeOneBracket = exchangeRemoveFutureText.replace('(','');
+              let exchangeTwoBracket = exchangeOneBracket.replace(')','');
+              let exchange = exchangeTwoBracket.replace('()','');
+              futuresExchanges.push(exchange);
+            }
+          }
+          // extract the funding rate
+          let averageFundingRate = 0;
+          for (const fundingRate of data) {
+            if (fundingRate['index_id'] === fundingRateAsset && fundingRate['funding_rate'] != 0 && fundingRate['open_interest'] > 0) {
+              let rate = fundingRate['funding_rate'];
+              fundingRates.push(rate);
+              averageFundingRate += rate;
+
+              // getting the total open interest from the pulled funding rates
+              let weightedFundingRateDominance = fundingRate['open_interest'];
+              totalFundingRateOpenInterest += weightedFundingRateDominance;
+
+              // getting the weighted average
+              let multiplier = fundingRate['funding_rate'] / totalFundingRateOpenInterest;
+              let weightedAverage = fundingRate['funding_rate'] * multiplier;
+              weightedAverageFundingRate += weightedAverage;
+            }
+          }
+  
+        let fundingRateObject = {
+          labels: futuresExchanges,
+          datasets: [{
+            label: `${fundingRateAsset} funding rates`,
+            data: fundingRates,
+            borderWidth: 2,
+            backgroundColor: 'rgb(255,255,255, 0.5)',
+            borderColor: 'rgb(255,255,255, 0.8)',
+          }]
+        };
+
+        // add average funding rate
+        let averageFundingRateEl = document.querySelector('.averageFundingRate');
+        averageFundingRateEl.innerHTML = averageFundingRate.toFixed(3);
+
+        // add weighted funding rate
+        let weightedAverageFundingRateEl = document.querySelector('.weightedAverageFundingRate');
+        weightedAverageFundingRateEl.innerHTML = weightedAverageFundingRate.toFixed(3);
+  
+        // update chart with data
+        fundingRateChart.data = fundingRateObject;
+        fundingRateChart.update();
+
+      } catch(error) {
+        console.log(error);
+        console.log('Could not fetch Futures funding rates..')
+      }
+    }
+    fetchFundingRate();
+
+    function changeFundingRateAsset(event) {
+      if (event.target.classList.contains('BtcFundingRateButton')) {
+        console.log('BTC!');
+      }
+    }
+    const changeFundingRateButton = document.querySelectorAll('.changeFundingRateButton');
+    changeFundingRateButton.forEach(button => {
+      button.addEventListener('click', changeFundingRateAsset)
+    });
+
+
+    // CHART FOR THE FUTURES FUNDING RATE
+    const fundingRateChartEl = document.querySelector('.fundingRateChart');
+    let  fundingRateChart = new Chart(fundingRateChartEl, {
+      type: 'bar',
+      data: {},
+      options: {
+        scales: {
+          y: {
+            beginAtZero: true,
+            ticks: {
+              format: {
+                style: 'percent'
+              }
+            }
+          }
+        }
+      },
+    });
+    window.addEventListener("resize", (event) => {
+      fundingRateChartEl.style.height = '100%';
+    });
     
     // end of the Intersection Observer
   })

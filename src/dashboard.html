@@ -334,9 +334,34 @@
                             </div>
                         </div>
                     </div>
-                    <!-- container for the CEX vs. DEX pie chart -->
-                    <div class="cexToDexVolumeComparisonContainer marketPriceDiv">
-
+                    <!-- container for the futures funding rate bar chart -->
+                    <div class="FundingRateContainer marketPriceDiv">
+                        <div class="dataContainer">
+                            <p>Markets</p>
+                            <h1>Futures Funding Rate</h1>
+                            <div class="fundingRateDataContainer">
+                                <div class="fundingRateChartDiv">
+                                    <h3>Funding Rates</h3>
+                                    <canvas class="fundingRateChart"></canvas>
+                                </div>
+                                <div class="fundingRateAverageDiv">
+                                    <div class="logOptionDiv">
+                                        <div>
+                                            <button class="BtcFundingRateButton changeFundingRateButton chartLogAutoButton autoChartOption">BTC</button>
+                                            <button class="EthFundingRateButton changeFundingRateButton chartLogAutoButton logChartOption">ETH</button>
+                                        </div>
+                                    </div>
+                                    <div class="averageFundingRateDiv">
+                                        <p>Average Funding Rate:</p>
+                                        <p><span class="averageFundingRate">0.0</span>%</p>
+                                    </div>
+                                    <div class="weightedAverageFundingRateDiv">
+                                        <p>Weighted Average Rate:</p>
+                                        <p><span class="weightedAverageFundingRate">0.0</span>%</p>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
                     </div>
 
                 </div>

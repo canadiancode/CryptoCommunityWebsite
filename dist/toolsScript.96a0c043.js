@@ -2396,8 +2396,8 @@ var exchangeVolumeObserver = new IntersectionObserver(function (entries, exchang
                     label: "".concat(fundingRateAsset, " funding rates"),
                     data: fundingRates,
                     borderWidth: 2,
-                    backgroundColor: 'rgb(255,255,255, 0.5)',
-                    borderColor: 'rgb(255,255,255, 0.8)'
+                    backgroundColor: 'rgb(255,255,255, 0.3)',
+                    borderColor: 'rgb(255,255,255, 0.5)'
                   }]
                 }; // add average funding rate
                 averageFundingRateEl = document.querySelector('.averageFundingRate');

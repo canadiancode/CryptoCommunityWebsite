@@ -1524,8 +1524,8 @@ const exchangeVolumeObserver = new IntersectionObserver(function(entries, exchan
             label: `${fundingRateAsset} funding rates`,
             data: fundingRates,
             borderWidth: 2,
-            backgroundColor: 'rgb(255,255,255, 0.5)',
-            borderColor: 'rgb(255,255,255, 0.8)',
+            backgroundColor: 'rgb(255,255,255, 0.3)',
+            borderColor: 'rgb(255,255,255, 0.5)',
           }]
         };
 

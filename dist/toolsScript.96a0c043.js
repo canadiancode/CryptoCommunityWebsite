@@ -2381,7 +2381,7 @@ var exchangeVolumeObserver = new IntersectionObserver(function (entries, exchang
 
                       // getting the weighted average
                       multiplier = fundingRate['funding_rate'] / totalFundingRateOpenInterest;
-                      weightedAverage = fundingRate['funding_rate'] * multiplier;
+                      weightedAverage = fundingRate['funding_rate'] * multiplier * 100;
                       weightedAverageFundingRate += weightedAverage;
                     }
                   }

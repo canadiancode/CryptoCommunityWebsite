@@ -36,10 +36,11 @@
     .containerSignDiv {
         border: 1px solid var(--white);
         width: fit-content;
+        min-width: 220px;
         position: absolute;
         transform: rotate(-90deg);
-        top: 64px;
-        left: -65px;
+        top: 80px;
+        left: -91px;
         border-bottom-left-radius: 25px;
         transition: 0.5s;
         background: var(--black);
@@ -292,7 +293,7 @@
                 }
             }
             .chartAndOptionContainer {
-                min-width: 50vw;
+                min-width: 40vw;
             }
             div {
                 margin: 0;
@@ -322,12 +323,6 @@
                 .PublicCompanyHoldingsContainer {
                     max-width: 1200px;
                     margin: 0 auto;
-                    min-height: 70vh;
-                    @media screen and (max-width: 950px) {
-                        & {
-                            min-height: 50vh;
-                        }
-                    }
                     canvas {
                         width: 100%;
                         height: 100%;
@@ -347,7 +342,7 @@
                 color: var(--white);
                 gap: 1.5em;
                 align-self: center;
-                max-width: 200px;
+                min-width: 150px;
                 width: 100%;
                 overflow: hidden;
                 box-shadow: inset 2px 2px 5px 0px var(--black), inset -2px -2px 5px 0px var(--black);

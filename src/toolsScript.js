@@ -1513,7 +1513,7 @@ const exchangeVolumeObserver = new IntersectionObserver(function(entries, exchan
 
               // getting the weighted average
               let multiplier = fundingRate['funding_rate'] / totalFundingRateOpenInterest;
-              let weightedAverage = fundingRate['funding_rate'] * multiplier;
+              let weightedAverage = (fundingRate['funding_rate'] * multiplier) * 100;
               weightedAverageFundingRate += weightedAverage;
             }
           }

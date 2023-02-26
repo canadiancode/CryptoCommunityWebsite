@@ -34,10 +34,11 @@
 .dashboardContainer .containerSignDiv {
   border: 1px solid var(--white);
   width: fit-content;
+  min-width: 220px;
   position: absolute;
   transform: rotate(-90deg);
-  top: 64px;
-  left: -65px;
+  top: 80px;
+  left: -91px;
   border-bottom-left-radius: 25px;
   transition: 0.5s;
   background: var(--black);
@@ -277,7 +278,7 @@
   }
 }
 .dashboardContainer .dataContainer .marketPublicstockChartContainer .chartAndOptionContainer {
-  min-width: 50vw;
+  min-width: 40vw;
 }
 .dashboardContainer .dataContainer .marketPublicstockChartContainer div {
   margin: 0;
@@ -306,12 +307,6 @@
 .dashboardContainer .dataContainer .marketPublicstockChartContainer div .PublicCompanyHoldingsContainer {
   max-width: 1200px;
   margin: 0 auto;
-  min-height: 70vh;
-}
-@media screen and (max-width: 950px) {
-  .dashboardContainer .dataContainer .marketPublicstockChartContainer div .PublicCompanyHoldingsContainer {
-    min-height: 50vh;
-  }
 }
 .dashboardContainer .dataContainer .marketPublicstockChartContainer div .PublicCompanyHoldingsContainer canvas {
   width: 100%;
@@ -330,7 +325,7 @@
   color: var(--white);
   gap: 1.5em;
   align-self: center;
-  max-width: 200px;
+  min-width: 150px;
   width: 100%;
   overflow: hidden;
   box-shadow: inset 2px 2px 5px 0px var(--black), inset -2px -2px 5px 0px var(--black);

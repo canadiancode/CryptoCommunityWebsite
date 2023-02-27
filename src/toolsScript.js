@@ -718,6 +718,10 @@ const marketsStocksObserver = new IntersectionObserver(function(entries, markets
           }
         }
       });
+      window.addEventListener("resize", (event) => {
+        stockPriceCanvas.style.width = '100%';
+        stockPriceCanvas.style.height = '100%';
+      });
 
       // CODE FOR THE INVESTMENT RETURN CHART
       const investmentReturnChart = document.querySelector('.publicStockAssetHoldingChart');
@@ -1242,37 +1246,6 @@ const marketsCompareMarketCapObserver = new IntersectionObserver(function(entrie
         }
       });
 
-
-
-      // CODE FOR DOMINANCE CHART ASSET 1 -- ASSET 1 CHART
-      const assetOneCanvas = document.querySelector('.marketCapDominanceAssetOne');
-      let doughnutOne = new Chart(assetOneCanvas, {
-        type: 'doughnut',
-        data: {
-          labels: ['Red', 'Blue', 'Yellow'],
-          datasets: [{
-            data: [300, 50, 100],
-            backgroundColor: [
-              'rgb(255, 99, 132)',
-              'rgb(54, 162, 235)',
-              'rgb(255, 205, 86)'
-            ],
-            hoverOffset: 24
-          }]
-        },
-        options: {
-          plugins: {
-            legend: {
-              display: true,
-              position: 'bottom',
-            }
-          }
-        }
-      })
-
-      // CODE FOR DOMINANCE CHART ASSET 2 -- ASSET 2 CHART
-      const assetTwoCanvas = document.querySelector('.marketCapDominanceAssetTwo');
-
     // end of the Intersection Observer
     }
   })
@@ -1384,7 +1357,7 @@ const exchangeVolumeObserver = new IntersectionObserver(function(entries, exchan
       cexVolumePieChartEl.style.width = '100%';
     });
 
-      // CEX VOLUME COMPARISON -- FUTURES OPEN INTEREST // FUTURES OPEN INTEREST
+      // CEX VOLUME COMPARISON -- FUTURES FUNDING RATE // FUTURES FUNDING RATE
     let totalOpenInterest = 0;
     let nameOfFuturesExchanges = [];
     let openInterests = [];
@@ -1479,6 +1452,7 @@ const exchangeVolumeObserver = new IntersectionObserver(function(entries, exchan
     let ticker = 'unexpired';
     let futuresExchanges = [];
     let fundingRates = [];
+    let exchangeOpenInterests = [];
     let totalFundingRateOpenInterest = 0;
     let weightedAverageFundingRate = 0;
 
@@ -1486,6 +1460,12 @@ const exchangeVolumeObserver = new IntersectionObserver(function(entries, exchan
       let URL = `https://api.coingecko.com/api/v3/derivatives?include_tickers=${ticker}`;
       let response = await fetch(URL);
       let data = await response.json();
+
+      futuresExchanges = [];
+      fundingRates = [];
+      exchangeOpenInterests = [];
+      totalFundingRateOpenInterest = 0;
+      weightedAverageFundingRate = 0;
 
       try {
           // extract the name of the exchange
@@ -1499,6 +1479,7 @@ const exchangeVolumeObserver = new IntersectionObserver(function(entries, exchan
               futuresExchanges.push(exchange);
             }
           }
+
           // extract the funding rate
           let averageFundingRate = 0;
           for (const fundingRate of data) {
@@ -1507,25 +1488,41 @@ const exchangeVolumeObserver = new IntersectionObserver(function(entries, exchan
               fundingRates.push(rate);
               averageFundingRate += rate;
 
-              // getting the total open interest from the pulled funding rates
-              let weightedFundingRateDominance = fundingRate['open_interest'];
-              totalFundingRateOpenInterest += weightedFundingRateDominance;
+              // fetch open interest for single exchange
+              let IO = fundingRate['open_interest'];
+              exchangeOpenInterests.push(IO);
 
-              // getting the weighted average
-              let multiplier = fundingRate['funding_rate'] / totalFundingRateOpenInterest;
-              let weightedAverage = (fundingRate['funding_rate'] * multiplier) * 100;
-              weightedAverageFundingRate += weightedAverage;
+              // getting the total open interest from the pulled funding rates
+              totalFundingRateOpenInterest += IO;
+            }
+          }
+
+          // get weighted average for funding rate
+          for (const weightedFR of data) {
+            if (weightedFR['index_id'] === fundingRateAsset && weightedFR['funding_rate'] != 0 && weightedFR['open_interest'] > 0) {
+              let weightForEachExchange = weightedFR['open_interest'] / totalFundingRateOpenInterest;
+              let FundingRate = weightedFR['funding_rate'];
+              let weightedFundingRate = weightForEachExchange * FundingRate;
+              weightedAverageFundingRate += weightedFundingRate;
             }
           }
   
         let fundingRateObject = {
           labels: futuresExchanges,
           datasets: [{
-            label: `${fundingRateAsset} funding rates`,
+            label: `${fundingRateAsset} funding rate %`,
             data: fundingRates,
             borderWidth: 2,
-            backgroundColor: 'rgb(255,255,255, 0.3)',
-            borderColor: 'rgb(255,255,255, 0.5)',
+            backgroundColor: 'rgb(255,255,255, 0.6)',
+            borderColor: 'rgb(255,255,255, 1)',
+            yAxisID: 'y',
+          },{
+            label: 'Exchange Open Interest',
+            data: exchangeOpenInterests,
+            borderWidth: 2,
+            backgroundColor: 'rgb(220, 20, 60, 0.2)',
+            borderColor: 'rgb(220, 20, 60, 0.4)',
+            yAxisID: 'y1'
           }]
         };
 
@@ -1549,9 +1546,23 @@ const exchangeVolumeObserver = new IntersectionObserver(function(entries, exchan
     fetchFundingRate();
 
     function changeFundingRateAsset(event) {
+
+      let BtcFundingRateButton = document.querySelector('.BtcFundingRateButton');
+      let EthFundingRateButton = document.querySelector('.EthFundingRateButton');
+      let displayedFundingRateAsset = document.querySelector('.displayedFundingRateAsset');
+
       if (event.target.classList.contains('BtcFundingRateButton')) {
-        console.log('BTC!');
+        fundingRateAsset = 'BTC';
+        BtcFundingRateButton.style.backgroundColor = 'rgba(128, 128, 128, 0.6)';
+        EthFundingRateButton.style.backgroundColor = 'rgba(128, 128, 128, 0.2)';
+        displayedFundingRateAsset.innerHTML = 'Bitcoin';
+      } else {
+        fundingRateAsset = 'ETH';
+        BtcFundingRateButton.style.backgroundColor = 'rgba(128, 128, 128, 0.2)';
+        EthFundingRateButton.style.backgroundColor = 'rgba(128, 128, 128, 0.6)';
+        displayedFundingRateAsset.innerHTML = 'Ethereum';
       }
+      fetchFundingRate();
     }
     const changeFundingRateButton = document.querySelectorAll('.changeFundingRateButton');
     changeFundingRateButton.forEach(button => {
@@ -1565,20 +1576,35 @@ const exchangeVolumeObserver = new IntersectionObserver(function(entries, exchan
       type: 'bar',
       data: {},
       options: {
+        responsive: true,
+        maintainAspectRatio: false,
         scales: {
           y: {
-            beginAtZero: true,
+            display: true,
+            position: 'left',
             ticks: {
-              format: {
-                style: 'percent'
-              }
+              beginAtZero: true,
+              color: 'rgb(255,255,255, 0.8)'
+            },
+          }, 
+          y1: {
+            display: true,
+            position: 'right',
+            ticks: {
+              beginAtZero: true,
+              // Include a dollar sign in the ticks
+              callback: function(value, index, values) {
+                return '$' + value / 1e9 + ' ' + 'B';
+              },
+              color: 'rgb(220, 20, 60, 0.8)'
             }
-          }
+          },
         }
-      },
+      }
     });
     window.addEventListener("resize", (event) => {
       fundingRateChartEl.style.height = '100%';
+      fundingRateChartEl.style.width = '100%';
     });
     
     // end of the Intersection Observer

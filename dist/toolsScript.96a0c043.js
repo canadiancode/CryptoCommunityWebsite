@@ -1203,6 +1203,10 @@ var marketsStocksObserver = new IntersectionObserver(function (entries, marketsS
           }
         }
       });
+      window.addEventListener("resize", function (event) {
+        stockPriceCanvas.style.width = '100%';
+        stockPriceCanvas.style.height = '100%';
+      });
 
       // CODE FOR THE INVESTMENT RETURN CHART
       var investmentReturnChart = document.querySelector('.publicStockAssetHoldingChart');
@@ -1991,31 +1995,6 @@ var marketsCompareMarketCapObserver = new IntersectionObserver(function (entries
         }
       });
 
-      // CODE FOR DOMINANCE CHART ASSET 1 -- ASSET 1 CHART
-      var assetOneCanvas = document.querySelector('.marketCapDominanceAssetOne');
-      var doughnutOne = new Chart(assetOneCanvas, {
-        type: 'doughnut',
-        data: {
-          labels: ['Red', 'Blue', 'Yellow'],
-          datasets: [{
-            data: [300, 50, 100],
-            backgroundColor: ['rgb(255, 99, 132)', 'rgb(54, 162, 235)', 'rgb(255, 205, 86)'],
-            hoverOffset: 24
-          }]
-        },
-        options: {
-          plugins: {
-            legend: {
-              display: true,
-              position: 'bottom'
-            }
-          }
-        }
-      });
-
-      // CODE FOR DOMINANCE CHART ASSET 2 -- ASSET 2 CHART
-      var assetTwoCanvas = document.querySelector('.marketCapDominanceAssetTwo');
-
       // end of the Intersection Observer
     }
   });
@@ -2180,7 +2159,7 @@ var exchangeVolumeObserver = new IntersectionObserver(function (entries, exchang
       cexVolumePieChartEl.style.width = '100%';
     });
 
-    // CEX VOLUME COMPARISON -- FUTURES OPEN INTEREST // FUTURES OPEN INTEREST
+    // CEX VOLUME COMPARISON -- FUTURES FUNDING RATE // FUTURES FUNDING RATE
     var totalOpenInterest = 0;
     var nameOfFuturesExchanges = [];
     var openInterests = [];
@@ -2324,6 +2303,7 @@ var exchangeVolumeObserver = new IntersectionObserver(function (entries, exchang
     var ticker = 'unexpired';
     var futuresExchanges = [];
     var fundingRates = [];
+    var exchangeOpenInterests = [];
     var totalFundingRateOpenInterest = 0;
     var weightedAverageFundingRate = 0;
     function fetchFundingRate() {
@@ -2331,7 +2311,7 @@ var exchangeVolumeObserver = new IntersectionObserver(function (entries, exchang
     }
     function _fetchFundingRate() {
       _fetchFundingRate = _asyncToGenerator( /*#__PURE__*/_regeneratorRuntime().mark(function _callee13() {
-        var URL, response, data, _iterator24, _step24, market, rawExchangeName, exchangeRemoveFutureText, exchangeOneBracket, exchangeTwoBracket, exchange, averageFundingRate, _iterator25, _step25, fundingRate, rate, weightedFundingRateDominance, multiplier, weightedAverage, fundingRateObject, averageFundingRateEl, weightedAverageFundingRateEl;
+        var URL, response, data, _iterator24, _step24, market, rawExchangeName, exchangeRemoveFutureText, exchangeOneBracket, exchangeTwoBracket, exchange, averageFundingRate, _iterator25, _step25, fundingRate, rate, IO, _iterator26, _step26, weightedFR, weightForEachExchange, FundingRate, weightedFundingRate, fundingRateObject, averageFundingRateEl, weightedAverageFundingRateEl;
         return _regeneratorRuntime().wrap(function _callee13$(_context13) {
           while (1) switch (_context13.prev = _context13.next) {
             case 0:
@@ -2344,6 +2324,11 @@ var exchangeVolumeObserver = new IntersectionObserver(function (entries, exchang
               return response.json();
             case 6:
               data = _context13.sent;
+              futuresExchanges = [];
+              fundingRates = [];
+              exchangeOpenInterests = [];
+              totalFundingRateOpenInterest = 0;
+              weightedAverageFundingRate = 0;
               try {
                 // extract the name of the exchange
                 _iterator24 = _createForOfIteratorHelper(data);
@@ -2359,6 +2344,7 @@ var exchangeVolumeObserver = new IntersectionObserver(function (entries, exchang
                       futuresExchanges.push(exchange);
                     }
                   }
+
                   // extract the funding rate
                 } catch (err) {
                   _iterator24.e(err);
@@ -2375,29 +2361,53 @@ var exchangeVolumeObserver = new IntersectionObserver(function (entries, exchang
                       fundingRates.push(rate);
                       averageFundingRate += rate;
 
-                      // getting the total open interest from the pulled funding rates
-                      weightedFundingRateDominance = fundingRate['open_interest'];
-                      totalFundingRateOpenInterest += weightedFundingRateDominance;
+                      // fetch open interest for single exchange
+                      IO = fundingRate['open_interest'];
+                      exchangeOpenInterests.push(IO);
 
-                      // getting the weighted average
-                      multiplier = fundingRate['funding_rate'] / totalFundingRateOpenInterest;
-                      weightedAverage = fundingRate['funding_rate'] * multiplier * 100;
-                      weightedAverageFundingRate += weightedAverage;
+                      // getting the total open interest from the pulled funding rates
+                      totalFundingRateOpenInterest += IO;
                     }
                   }
+
+                  // get weighted average for funding rate
                 } catch (err) {
                   _iterator25.e(err);
                 } finally {
                   _iterator25.f();
                 }
+                _iterator26 = _createForOfIteratorHelper(data);
+                try {
+                  for (_iterator26.s(); !(_step26 = _iterator26.n()).done;) {
+                    weightedFR = _step26.value;
+                    if (weightedFR['index_id'] === fundingRateAsset && weightedFR['funding_rate'] != 0 && weightedFR['open_interest'] > 0) {
+                      weightForEachExchange = weightedFR['open_interest'] / totalFundingRateOpenInterest;
+                      FundingRate = weightedFR['funding_rate'];
+                      weightedFundingRate = weightForEachExchange * FundingRate;
+                      weightedAverageFundingRate += weightedFundingRate;
+                    }
+                  }
+                } catch (err) {
+                  _iterator26.e(err);
+                } finally {
+                  _iterator26.f();
+                }
                 fundingRateObject = {
                   labels: futuresExchanges,
                   datasets: [{
-                    label: "".concat(fundingRateAsset, " funding rates"),
+                    label: "".concat(fundingRateAsset, " funding rate %"),
                     data: fundingRates,
                     borderWidth: 2,
-                    backgroundColor: 'rgb(255,255,255, 0.3)',
-                    borderColor: 'rgb(255,255,255, 0.5)'
+                    backgroundColor: 'rgb(255,255,255, 0.6)',
+                    borderColor: 'rgb(255,255,255, 1)',
+                    yAxisID: 'y'
+                  }, {
+                    label: 'Exchange Open Interest',
+                    data: exchangeOpenInterests,
+                    borderWidth: 2,
+                    backgroundColor: 'rgb(220, 20, 60, 0.2)',
+                    borderColor: 'rgb(220, 20, 60, 0.4)',
+                    yAxisID: 'y1'
                   }]
                 }; // add average funding rate
                 averageFundingRateEl = document.querySelector('.averageFundingRate');
@@ -2414,7 +2424,7 @@ var exchangeVolumeObserver = new IntersectionObserver(function (entries, exchang
                 console.log(error);
                 console.log('Could not fetch Futures funding rates..');
               }
-            case 8:
+            case 13:
             case "end":
               return _context13.stop();
           }
@@ -2424,9 +2434,21 @@ var exchangeVolumeObserver = new IntersectionObserver(function (entries, exchang
     }
     fetchFundingRate();
     function changeFundingRateAsset(event) {
+      var BtcFundingRateButton = document.querySelector('.BtcFundingRateButton');
+      var EthFundingRateButton = document.querySelector('.EthFundingRateButton');
+      var displayedFundingRateAsset = document.querySelector('.displayedFundingRateAsset');
       if (event.target.classList.contains('BtcFundingRateButton')) {
-        console.log('BTC!');
+        fundingRateAsset = 'BTC';
+        BtcFundingRateButton.style.backgroundColor = 'rgba(128, 128, 128, 0.6)';
+        EthFundingRateButton.style.backgroundColor = 'rgba(128, 128, 128, 0.2)';
+        displayedFundingRateAsset.innerHTML = 'Bitcoin';
+      } else {
+        fundingRateAsset = 'ETH';
+        BtcFundingRateButton.style.backgroundColor = 'rgba(128, 128, 128, 0.2)';
+        EthFundingRateButton.style.backgroundColor = 'rgba(128, 128, 128, 0.6)';
+        displayedFundingRateAsset.innerHTML = 'Ethereum';
       }
+      fetchFundingRate();
     }
     var changeFundingRateButton = document.querySelectorAll('.changeFundingRateButton');
     changeFundingRateButton.forEach(function (button) {
@@ -2439,13 +2461,27 @@ var exchangeVolumeObserver = new IntersectionObserver(function (entries, exchang
       type: 'bar',
       data: {},
       options: {
+        responsive: true,
+        maintainAspectRatio: false,
         scales: {
           y: {
-            beginAtZero: true,
+            display: true,
+            position: 'left',
             ticks: {
-              format: {
-                style: 'percent'
-              }
+              beginAtZero: true,
+              color: 'rgb(255,255,255, 0.8)'
+            }
+          },
+          y1: {
+            display: true,
+            position: 'right',
+            ticks: {
+              beginAtZero: true,
+              // Include a dollar sign in the ticks
+              callback: function callback(value, index, values) {
+                return '$' + value / 1e9 + ' ' + 'B';
+              },
+              color: 'rgb(220, 20, 60, 0.8)'
             }
           }
         }
@@ -2453,6 +2489,7 @@ var exchangeVolumeObserver = new IntersectionObserver(function (entries, exchang
     });
     window.addEventListener("resize", function (event) {
       fundingRateChartEl.style.height = '100%';
+      fundingRateChartEl.style.width = '100%';
     });
 
     // end of the Intersection Observer
@@ -2485,7 +2522,7 @@ var parent = module.bundle.parent;
 if ((!parent || !parent.isParcelRequire) && typeof WebSocket !== 'undefined') {
   var hostname = "" || location.hostname;
   var protocol = location.protocol === 'https:' ? 'wss' : 'ws';
-  var ws = new WebSocket(protocol + '://' + hostname + ':' + "54665" + '/');
+  var ws = new WebSocket(protocol + '://' + hostname + ':' + "59347" + '/');
   ws.onmessage = function (event) {
     checkedAssets = {};
     assetsToAccept = [];

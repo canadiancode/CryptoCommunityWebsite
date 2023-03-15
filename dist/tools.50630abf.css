@@ -616,5 +616,43 @@
 .dashboardContainer .dataContainer .volumePageContainer .FundingRateContainer .dataContainer .fundingRateDataContainer .fundingRateAverageDiv .logOptionDiv .logChartOption {
   background-color: rgba(128, 128, 128, 0.2);
 }
+.dashboardContainer .dataContainer .totalValueLockedContainer {
+  display: none;
+}
+.dashboardContainer .dataContainer .totalValueLockedContainer .TotalValueLockedChartContainer {
+  display: block;
+}
+.dashboardContainer .dataContainer .totalValueLockedContainer .TotalValueLockedChartContainer .compareTvlContainer {
+  display: flex;
+  justify-content: center;
+  margin: 0 auto;
+  gap: 0.5rem;
+  box-shadow: inset 2px 2px 5px 0px var(--black), inset -2px -2px 5px 0px var(--black);
+  background: #1A1B1F;
+  padding: 2em;
+  border-radius: 24px;
+  flex-direction: column;
+}
+.dashboardContainer .dataContainer .totalValueLockedContainer .TotalValueLockedChartContainer .compareTvlContainer .TvlSelectionContainer {
+  display: flex;
+  gap: 1rem;
+}
+@media screen and (max-width: 700px) {
+  .dashboardContainer .dataContainer .totalValueLockedContainer .TotalValueLockedChartContainer .compareTvlContainer .TvlSelectionContainer {
+    flex-direction: column;
+  }
+}
+.dashboardContainer .dataContainer .totalValueLockedContainer .TotalValueLockedChartContainer .compareTvlContainer .TvlSelectionContainer .compareTvlDataContainer {
+  margin: 0;
+}
+.dashboardContainer .dataContainer .totalValueLockedContainer .TotalValueLockedChartContainer .compareTvlContainer .TvlSelectionContainer .compareTvlDataContainer .totalValueLockedCurrentValueContainerEl {
+  margin: 0;
+}
+.dashboardContainer .dataContainer .totalValueLockedContainer .TotalValueLockedChartContainer .compareTvlContainer .TvlSelectionContainer .compareTvlDataContainer .totalValueLockedCurrentValueContainerEl .totalValueLockedCurrentValueEl {
+  padding-left: 0em;
+}
+.dashboardContainer .dataContainer .totalValueLockedContainer .TotalValueLockedChartContainer .compareTvlContainer .TvlSelectionContainer .compareTvlDataContainer .totalValueLockedCurrentValueContainerEl .currentTotalValueLocked {
+  padding-left: 0;
+}
 
 /*# sourceMappingURL=/tools.50630abf.css.map */

@@ -655,5 +655,45 @@
                 }
             }
         }
+
+        // DEFI -- TOTAL VALUE LOCKED -- TOTAL VALUE LOCKED -- TOTAL VALUE LOCKED
+        .totalValueLockedContainer {
+            display: none;
+            .TotalValueLockedChartContainer {
+                display: block;
+                .compareTvlContainer {
+                    display: flex;
+                    justify-content: center;
+                    margin: 0 auto;
+                    gap: 0.5rem;
+                    box-shadow: inset 2px 2px 5px 0px var(--black), inset -2px -2px 5px 0px var(--black);
+                    background: #1A1B1F;
+                    padding: 2em;
+                    border-radius: 24px;
+                    flex-direction: column;
+                    .TvlSelectionContainer {
+                        display: flex;
+                        gap: 1rem;
+                        @media screen and (max-width: 700px) {
+                            & {
+                                flex-direction: column;
+                            }
+                        }
+                        .compareTvlDataContainer {
+                            margin: 0;
+                            .totalValueLockedCurrentValueContainerEl {
+                                margin: 0;
+                                  .totalValueLockedCurrentValueEl {
+                                      padding-left: 0em;
+                                  }
+                                  .currentTotalValueLocked {
+                                    padding-left: 0;
+                                }
+                              }
+                        }
+                    }
+                }
+            }
+        }
     }
 }

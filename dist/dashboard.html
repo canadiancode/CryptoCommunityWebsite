@@ -98,19 +98,6 @@
                     </div>
                 </div>
 
-                <div class="onchainDiv dataCategoryContainer">
-                    <div class="categoryHeadingContainer">
-                        <h3>On-Chain</h3>
-                        <i class="fa-solid fa-arrow-down-short-wide"></i>
-                        <i class="fa-solid fa-arrow-up-short-wide"></i>
-                    </div>
-                    <div class="chartButtonContainer">
-                        <button class="dataDashboardSelectionBtn">On-Chain Metrics</button>
-                        <button class="dataDashboardSelectionBtn">Transaction Costs</button>
-                        <button class="dataDashboardSelectionBtn">Value Flows</button>
-                    </div>
-                </div>
-
                 <div class="defiDiv dataCategoryContainer">
                     <div class="categoryHeadingContainer">
                         <h3>DeFi</h3>
@@ -367,18 +354,65 @@
                 </div>
             </div>
 
-            <!-- On-Chain page -->
-            <div class="dataPageContainer">
-                <!-- <div class="onChainContainer dataSubPageContainer"></div>
-                <div class="transactionCostContainer dataSubPageContainer"></div>
-                <div class="valueFlowContainer dataSubPageContainer"></div> -->
-            </div>
-
             <!-- DeFi page -->
             <div class="dataPageContainer">
-                <!-- <div class="totalValueLockedContainer dataSubPageContainer"></div>
+                <div class="totalValueLockedContainer dataSubPageContainer">
+                    <!-- container for the TVL compare chart -->
+                    <div class="TotalValueLockedChartContainer marketPriceDiv">
+                        <p>DeFi</p>
+                        <h1>Compare Total Value Locked</h1>
+                        <canvas class="compareChainTVL"></canvas>
+                        <div class="chartOptions">
+                            <div class="timeframeSelectionDiv">
+                                <label>Timeframe:</label>
+                                <select class="compareTVLTimeframeList timeframeList">
+                                    <option value="4380" class="timeframe year">All Time</option>
+                                    <option value="3650" class="timeframe year">10 Year</option>
+                                    <option value="2555" class="timeframe year">7 Year</option>
+                                    <option value="1825" class="timeframe year">5 Year</option>
+                                    <option value="1460" class="timeframe year">4 Year</option>
+                                    <option value="1095" class="timeframe year">3 Year</option>
+                                    <option value="730" class="timeframe year">2 Year</option>
+                                    <option value="365" selected="" class="timeframe year">1 Year</option>
+                                    <option value="120" class="timeframe onequarter">90D</option>
+                                    <option value="30" class="timeframe onequarter">30D</option>
+                                </select>
+                            </div>
+                            <div class="logOptionDiv">
+                                <div>
+                                    <button class="chartLogAutoButton autoChartOption TVLAutoChartOption">Auto</button>
+                                    <button class="chartLogAutoButton logChartOption TVLlogChartOption">Log</button>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="chartOptions">
+                            <div class="comparedTVLOneContainer compareTvlContainer">
+                                <div class="assetSelectionDiv TvlSelectionContainer">
+                                    <div class="assetSelection">
+                                        <label>Asset 1:</label>
+                                        <select class="compareTVLListOne selectionOfChains theListOfAssetsOnAllPages"></select>
+                                    </div>
+                                    <div class="compareTvlDataContainer">
+                                        <div class="totalValueLockedCurrentValueContainerEl"><p class="totalValueLockedCurrentValueEl">Total Value Locked: </p><p class="TotalValueLockedOne currentTotalValueLocked">-</p></div>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="comparedTVLTWoContainer compareTvlContainer">
+                                <div class="assetSelectionDiv TvlSelectionContainer">
+                                    <div class="assetSelection">
+                                        <label>Asset 2:</label>
+                                        <select class="compareTVLListTwo selectionOfChains theListOfAssetsOnAllPages"></select>
+                                    </div>
+                                    <div class="compareTvlDataContainer">
+                                        <div class="totalValueLockedCurrentValueContainerEl"><p class="totalValueLockedCurrentValueEl">Total Value Locked: </p><p class="TotalValueLockedTwo currentTotalValueLocked">-</p></div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
                 <div class="protocolRevenueContainer dataSubPageContainer"></div>
-                <div class="exploitsContainer dataSubPageContainer"></div> -->
+                <div class="exploitsContainer dataSubPageContainer"></div>
             </div>
 
             <!-- NFT page -->

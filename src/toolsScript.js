@@ -53,7 +53,7 @@ function loadFirstDataDashboard() {
     dataSubPageContainer[i].style.display = 'none';
   };
   // change the selection below for what to show when building
-  const showThisContainer = document.querySelector('.volumePageContainer');
+  const showThisContainer = document.querySelector('.totalValueLockedContainer');
   showThisContainer.style.display = 'flex';
 
 }
@@ -75,6 +75,9 @@ function changeDisplayedDashboard(event) {
   else if (event.target.classList.contains('marketVolumeBtn')) {
     const volumePageContainer = document.querySelector('.volumePageContainer');
     volumePageContainer.style.display = 'flex';
+  } else if (event.target.classList.contains('dataDashboardSelectionBtn')) {
+    const totalValueLockedContainer = document.querySelector('.totalValueLockedContainer');
+    totalValueLockedContainer.style.display = 'flex';
   } 
   else {
     console.log('no displayed charts available');
@@ -1612,3 +1615,95 @@ const exchangeVolumeObserver = new IntersectionObserver(function(entries, exchan
 }, dataPageOptions);
 const exchangeDataContainer = document.querySelector('.volumePageContainer');
 exchangeVolumeObserver.observe(exchangeDataContainer);
+
+// DEFI PAGE -- TOTAL VALUE LOCKED // TOTAL VALUE LOCKED // TOTAL VALUE LOCKED 
+const totalvalueLockedObserver = new IntersectionObserver(function(entries, totalvalueLockedObserver) {
+  entries.forEach(entry => {
+    if (entry.isIntersecting) {
+
+      const chainNameList = [];
+      const chainTotalValueLockedList = [];
+
+      // fetch the names of the protocols and the current TVL
+      async function fetchChainList() {
+
+        try {
+          let chainListURL = `https://api.llama.fi/chains`;
+          let chainListData = await fetch(chainListURL);
+          let chainListResponse = await chainListData.json();
+
+          console.log(await chainListResponse);
+
+          // Add chains to list 
+          const compareTVLListOne = document.querySelector('.compareTVLListOne');
+          const compareTVLListTwo = document.querySelector('.compareTVLListTwo');
+          
+          for (const chain of chainListResponse) {
+            // extract name 
+            const chainName = chain['name'];
+            chainNameList.push(chainName);
+
+            // add TVL to list
+            const totalValueLocked = Math.round(chain['tvl']);
+            chainTotalValueLockedList.push(totalValueLocked);
+
+            // create option element and add to selection list 
+            const TvlListOneEl = document.createElement('option');
+            const TvlListTwoEl = document.createElement('option');
+            TvlListOneEl.value = chainName;
+            TvlListOneEl.classList.add('listOneChain');
+            TvlListTwoEl.value = chainName;
+            TvlListTwoEl.classList.add('listTwoChain');
+            TvlListOneEl.appendChild(document.createTextNode(chainName));
+            TvlListTwoEl.appendChild(document.createTextNode(chainName));
+            compareTVLListOne.appendChild(TvlListOneEl);
+            compareTVLListTwo.appendChild(TvlListTwoEl);
+          }
+
+          // add the current TVL for both chains
+          const firstChain = chainListResponse[0];
+          const curentTVL = Math.round(firstChain['tvl']).toLocaleString();
+          const TotalValueLockedOne = document.querySelector('.TotalValueLockedOne');
+          TotalValueLockedOne.innerHTML = `$ ${curentTVL}`;
+          const TotalValueLockedTwo = document.querySelector('.TotalValueLockedTwo');
+          TotalValueLockedTwo.innerHTML = `$ ${curentTVL}`;
+
+
+        } catch(error) {
+          console.log(error);
+          console.log('Could not fetch chain list...');
+        }
+      }
+      fetchChainList();
+
+      // Change current displayed TVL
+      function changeDisplayedTVL() {
+
+        // Add selected current Total Value Locked data to panel one
+        const TotalValueLockedOne = document.querySelector('.TotalValueLockedOne');
+        const compareTVLListOne = document.querySelector('.compareTVLListOne');
+        let selectedChainOneIndex = compareTVLListOne.selectedIndex;
+        let formatTVLValueOne = chainTotalValueLockedList[selectedChainOneIndex].toLocaleString();
+        TotalValueLockedOne.innerHTML = `$ ${formatTVLValueOne}`;
+
+        // Add selected current Total Value Locked data to panel two
+        const TotalValueLockedTwo = document.querySelector('.TotalValueLockedTwo');
+        const compareTVLListTwo = document.querySelector('.compareTVLListTwo');
+        let selectedChainTwoIndex = compareTVLListTwo.selectedIndex;
+        let formatTVLValueTwo = chainTotalValueLockedList[selectedChainTwoIndex].toLocaleString();
+        TotalValueLockedTwo.innerHTML = `$ ${formatTVLValueTwo}`;
+
+      }
+      const selectionOfChains = document.querySelectorAll('.selectionOfChains');
+      selectionOfChains.forEach(chain => {
+        chain.addEventListener('change', changeDisplayedTVL);
+      });
+      
+
+
+      // End of intersection observer
+    }
+  })
+}, dataPageOptions);
+const totalValueLockedContainer = document.querySelector('.totalValueLockedContainer');
+totalvalueLockedObserver.observe(totalValueLockedContainer);

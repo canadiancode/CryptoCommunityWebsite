@@ -182,7 +182,7 @@ function loadFirstDataDashboard() {
   }
   ;
   // change the selection below for what to show when building
-  var showThisContainer = document.querySelector('.volumePageContainer');
+  var showThisContainer = document.querySelector('.totalValueLockedContainer');
   showThisContainer.style.display = 'flex';
 }
 loadFirstDataDashboard();
@@ -201,6 +201,9 @@ function changeDisplayedDashboard(event) {
   } else if (event.target.classList.contains('marketVolumeBtn')) {
     var volumePageContainer = document.querySelector('.volumePageContainer');
     volumePageContainer.style.display = 'flex';
+  } else if (event.target.classList.contains('dataDashboardSelectionBtn')) {
+    var _totalValueLockedContainer = document.querySelector('.totalValueLockedContainer');
+    _totalValueLockedContainer.style.display = 'flex';
   } else {
     console.log('no displayed charts available');
   }
@@ -2497,6 +2500,121 @@ var exchangeVolumeObserver = new IntersectionObserver(function (entries, exchang
 }, dataPageOptions);
 var exchangeDataContainer = document.querySelector('.volumePageContainer');
 exchangeVolumeObserver.observe(exchangeDataContainer);
+
+// DEFI PAGE -- TOTAL VALUE LOCKED // TOTAL VALUE LOCKED // TOTAL VALUE LOCKED 
+var totalvalueLockedObserver = new IntersectionObserver(function (entries, totalvalueLockedObserver) {
+  entries.forEach(function (entry) {
+    if (entry.isIntersecting) {
+      // fetch the names of the protocols and the current TVL
+      var fetchChainList = /*#__PURE__*/function () {
+        var _ref10 = _asyncToGenerator( /*#__PURE__*/_regeneratorRuntime().mark(function _callee14() {
+          var chainListURL, chainListData, chainListResponse, compareTVLListOne, compareTVLListTwo, _iterator27, _step27, chain, chainName, totalValueLocked, TvlListOneEl, TvlListTwoEl, firstChain, curentTVL, TotalValueLockedOne, TotalValueLockedTwo;
+          return _regeneratorRuntime().wrap(function _callee14$(_context14) {
+            while (1) switch (_context14.prev = _context14.next) {
+              case 0:
+                _context14.prev = 0;
+                chainListURL = "https://api.llama.fi/chains";
+                _context14.next = 4;
+                return fetch(chainListURL);
+              case 4:
+                chainListData = _context14.sent;
+                _context14.next = 7;
+                return chainListData.json();
+              case 7:
+                chainListResponse = _context14.sent;
+                _context14.t0 = console;
+                _context14.next = 11;
+                return chainListResponse;
+              case 11:
+                _context14.t1 = _context14.sent;
+                _context14.t0.log.call(_context14.t0, _context14.t1);
+                // Add chains to list 
+                compareTVLListOne = document.querySelector('.compareTVLListOne');
+                compareTVLListTwo = document.querySelector('.compareTVLListTwo');
+                _iterator27 = _createForOfIteratorHelper(chainListResponse);
+                try {
+                  for (_iterator27.s(); !(_step27 = _iterator27.n()).done;) {
+                    chain = _step27.value;
+                    // extract name 
+                    chainName = chain['name'];
+                    chainNameList.push(chainName);
+
+                    // add TVL to list
+                    totalValueLocked = Math.round(chain['tvl']);
+                    chainTotalValueLockedList.push(totalValueLocked);
+
+                    // create option element and add to selection list 
+                    TvlListOneEl = document.createElement('option');
+                    TvlListTwoEl = document.createElement('option');
+                    TvlListOneEl.value = chainName;
+                    TvlListOneEl.classList.add('listOneChain');
+                    TvlListTwoEl.value = chainName;
+                    TvlListTwoEl.classList.add('listTwoChain');
+                    TvlListOneEl.appendChild(document.createTextNode(chainName));
+                    TvlListTwoEl.appendChild(document.createTextNode(chainName));
+                    compareTVLListOne.appendChild(TvlListOneEl);
+                    compareTVLListTwo.appendChild(TvlListTwoEl);
+                  }
+
+                  // add the current TVL for both chains
+                } catch (err) {
+                  _iterator27.e(err);
+                } finally {
+                  _iterator27.f();
+                }
+                firstChain = chainListResponse[0];
+                curentTVL = Math.round(firstChain['tvl']).toLocaleString();
+                TotalValueLockedOne = document.querySelector('.TotalValueLockedOne');
+                TotalValueLockedOne.innerHTML = "$ ".concat(curentTVL);
+                TotalValueLockedTwo = document.querySelector('.TotalValueLockedTwo');
+                TotalValueLockedTwo.innerHTML = "$ ".concat(curentTVL);
+                _context14.next = 29;
+                break;
+              case 25:
+                _context14.prev = 25;
+                _context14.t2 = _context14["catch"](0);
+                console.log(_context14.t2);
+                console.log('Could not fetch chain list...');
+              case 29:
+              case "end":
+                return _context14.stop();
+            }
+          }, _callee14, null, [[0, 25]]);
+        }));
+        return function fetchChainList() {
+          return _ref10.apply(this, arguments);
+        };
+      }();
+      // Change current displayed TVL
+      var changeDisplayedTVL = function changeDisplayedTVL() {
+        // Add selected current Total Value Locked data to panel one
+        var TotalValueLockedOne = document.querySelector('.TotalValueLockedOne');
+        var compareTVLListOne = document.querySelector('.compareTVLListOne');
+        var selectedChainOneIndex = compareTVLListOne.selectedIndex;
+        var formatTVLValueOne = chainTotalValueLockedList[selectedChainOneIndex].toLocaleString();
+        TotalValueLockedOne.innerHTML = "$ ".concat(formatTVLValueOne);
+
+        // Add selected current Total Value Locked data to panel two
+        var TotalValueLockedTwo = document.querySelector('.TotalValueLockedTwo');
+        var compareTVLListTwo = document.querySelector('.compareTVLListTwo');
+        var selectedChainTwoIndex = compareTVLListTwo.selectedIndex;
+        var formatTVLValueTwo = chainTotalValueLockedList[selectedChainTwoIndex].toLocaleString();
+        TotalValueLockedTwo.innerHTML = "$ ".concat(formatTVLValueTwo);
+      };
+      var chainNameList = [];
+      var chainTotalValueLockedList = [];
+      fetchChainList();
+      var selectionOfChains = document.querySelectorAll('.selectionOfChains');
+      selectionOfChains.forEach(function (chain) {
+        chain.addEventListener('change', changeDisplayedTVL);
+      });
+
+      // End of intersection observer
+    }
+  });
+}, dataPageOptions);
+var totalValueLockedContainer = document.querySelector('.totalValueLockedContainer');
+totalvalueLockedObserver.observe(totalValueLockedContainer);
 },{}],"../node_modules/parcel-bundler/src/builtins/hmr-runtime.js":[function(require,module,exports) {
 var global = arguments[3];
 var OVERLAY_ID = '__parcel__error__overlay__';
@@ -2522,7 +2640,7 @@ var parent = module.bundle.parent;
 if ((!parent || !parent.isParcelRequire) && typeof WebSocket !== 'undefined') {
   var hostname = "" || location.hostname;
   var protocol = location.protocol === 'https:' ? 'wss' : 'ws';
-  var ws = new WebSocket(protocol + '://' + hostname + ':' + "59347" + '/');
+  var ws = new WebSocket(protocol + '://' + hostname + ':' + "57150" + '/');
   ws.onmessage = function (event) {
     checkedAssets = {};
     assetsToAccept = [];

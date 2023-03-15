@@ -2508,7 +2508,7 @@ var totalvalueLockedObserver = new IntersectionObserver(function (entries, total
       // fetch the names of the protocols and the current TVL
       var fetchChainList = /*#__PURE__*/function () {
         var _ref10 = _asyncToGenerator( /*#__PURE__*/_regeneratorRuntime().mark(function _callee14() {
-          var chainListURL, chainListData, chainListResponse, compareTVLListOne, compareTVLListTwo, _iterator27, _step27, chain, chainName, totalValueLocked, TvlListOneEl, TvlListTwoEl, firstChain, curentTVL, TotalValueLockedOne, TotalValueLockedTwo;
+          var chainListURL, chainListData, chainListResponse, compareTVLListOne, compareTVLListTwo, _iterator27, _step27, chain, chainName, totalValueLocked, TvlListOneEl, TvlListTwoEl, firstChainInListName, nameOfFirstChainInList, firstChainInListTVL, TotalValueLockedOne, secondChainInList, nameOfSecondChainInList, secondCurrentTVL, TotalValueLockedTwo;
           return _regeneratorRuntime().wrap(function _callee14$(_context14) {
             while (1) switch (_context14.prev = _context14.next) {
               case 0:
@@ -2522,12 +2522,6 @@ var totalvalueLockedObserver = new IntersectionObserver(function (entries, total
                 return chainListData.json();
               case 7:
                 chainListResponse = _context14.sent;
-                _context14.t0 = console;
-                _context14.next = 11;
-                return chainListResponse;
-              case 11:
-                _context14.t1 = _context14.sent;
-                _context14.t0.log.call(_context14.t0, _context14.t1);
                 // Add chains to list 
                 compareTVLListOne = document.querySelector('.compareTVLListOne');
                 compareTVLListTwo = document.querySelector('.compareTVLListTwo');
@@ -2556,30 +2550,51 @@ var totalvalueLockedObserver = new IntersectionObserver(function (entries, total
                     compareTVLListTwo.appendChild(TvlListTwoEl);
                   }
 
-                  // add the current TVL for both chains
+                  // select second index for 2nd asset
                 } catch (err) {
                   _iterator27.e(err);
                 } finally {
                   _iterator27.f();
                 }
-                firstChain = chainListResponse[0];
-                curentTVL = Math.round(firstChain['tvl']).toLocaleString();
+                compareTVLListTwo.selectedIndex = 1;
+
+                // Add current TVL for both selected chains
+                _context14.next = 15;
+                return chainListResponse[0];
+              case 15:
+                firstChainInListName = _context14.sent;
+                _context14.next = 18;
+                return firstChainInListName['name'];
+              case 18:
+                nameOfFirstChainInList = _context14.sent;
+                firstDisplayedTVL = nameOfFirstChainInList;
+                firstChainInListTVL = Math.round(firstChainInListName['tvl']).toLocaleString();
                 TotalValueLockedOne = document.querySelector('.TotalValueLockedOne');
-                TotalValueLockedOne.innerHTML = "$ ".concat(curentTVL);
-                TotalValueLockedTwo = document.querySelector('.TotalValueLockedTwo');
-                TotalValueLockedTwo.innerHTML = "$ ".concat(curentTVL);
-                _context14.next = 29;
-                break;
+                TotalValueLockedOne.innerHTML = "$ ".concat(firstChainInListTVL);
+                _context14.next = 25;
+                return chainListResponse[1];
               case 25:
-                _context14.prev = 25;
-                _context14.t2 = _context14["catch"](0);
-                console.log(_context14.t2);
+                secondChainInList = _context14.sent;
+                _context14.next = 28;
+                return secondChainInList['name'];
+              case 28:
+                nameOfSecondChainInList = _context14.sent;
+                secondDisplayedTVL = nameOfSecondChainInList;
+                secondCurrentTVL = Math.round(secondChainInList['tvl']).toLocaleString();
+                TotalValueLockedTwo = document.querySelector('.TotalValueLockedTwo');
+                TotalValueLockedTwo.innerHTML = "$ ".concat(secondCurrentTVL);
+                _context14.next = 39;
+                break;
+              case 35:
+                _context14.prev = 35;
+                _context14.t0 = _context14["catch"](0);
+                console.log(_context14.t0);
                 console.log('Could not fetch chain list...');
-              case 29:
+              case 39:
               case "end":
                 return _context14.stop();
             }
-          }, _callee14, null, [[0, 25]]);
+          }, _callee14, null, [[0, 35]]);
         }));
         return function fetchChainList() {
           return _ref10.apply(this, arguments);
@@ -2591,6 +2606,8 @@ var totalvalueLockedObserver = new IntersectionObserver(function (entries, total
         var TotalValueLockedOne = document.querySelector('.TotalValueLockedOne');
         var compareTVLListOne = document.querySelector('.compareTVLListOne');
         var selectedChainOneIndex = compareTVLListOne.selectedIndex;
+        var selectedChainOne = compareTVLListOne.options[compareTVLListOne.selectedIndex].text;
+        firstDisplayedTVL = selectedChainOne;
         var formatTVLValueOne = chainTotalValueLockedList[selectedChainOneIndex].toLocaleString();
         TotalValueLockedOne.innerHTML = "$ ".concat(formatTVLValueOne);
 
@@ -2598,16 +2615,114 @@ var totalvalueLockedObserver = new IntersectionObserver(function (entries, total
         var TotalValueLockedTwo = document.querySelector('.TotalValueLockedTwo');
         var compareTVLListTwo = document.querySelector('.compareTVLListTwo');
         var selectedChainTwoIndex = compareTVLListTwo.selectedIndex;
+        var selectedChainTwo = compareTVLListTwo.options[compareTVLListTwo.selectedIndex].text;
+        secondDisplayedTVL = selectedChainTwo;
         var formatTVLValueTwo = chainTotalValueLockedList[selectedChainTwoIndex].toLocaleString();
         TotalValueLockedTwo.innerHTML = "$ ".concat(formatTVLValueTwo);
+        fetchHistoricalData();
       };
+      // fetch the historical data of the chain TVL
+      var fetchHistoricalData = /*#__PURE__*/function () {
+        var _ref11 = _asyncToGenerator( /*#__PURE__*/_regeneratorRuntime().mark(function _callee15() {
+          var firstDatasetURL, firstDatasetData, firstDatasetResponse, secondDatasetURL, secondDatasetData, secondDatasetResponse;
+          return _regeneratorRuntime().wrap(function _callee15$(_context15) {
+            while (1) switch (_context15.prev = _context15.next) {
+              case 0:
+                _context15.prev = 0;
+                // DATASET 1 TVL -- DATASET 1 TVL
+                firstDatasetURL = "https://api.llama.fi/charts/".concat(firstDisplayedTVL);
+                _context15.next = 4;
+                return fetch(firstDatasetURL);
+              case 4:
+                firstDatasetData = _context15.sent;
+                _context15.next = 7;
+                return firstDatasetData.json();
+              case 7:
+                firstDatasetResponse = _context15.sent;
+                // console.log(firstDisplayedTVL);
+                // console.log(await firstDatasetResponse);
+                // let TvlObjectOne = {
+                //   label: `Price of ${firstDisplayedTVL}`,
+                //   data: fetchedPriceData,
+                //   fill: false,
+                //   pointRadius: 0,
+                //   borderWidth: 1,
+                //   backgroundColor: '#FFFFFF',
+                //   borderColor: '#FFFFFF',
+                //   yAxisID: 'y'
+                // };
+                // DATASET 2 TVL -- DATASET 2 TVL
+                secondDatasetURL = "https://api.llama.fi/charts/".concat(secondDisplayedTVL);
+                _context15.next = 11;
+                return fetch(secondDatasetURL);
+              case 11:
+                secondDatasetData = _context15.sent;
+                _context15.next = 14;
+                return secondDatasetData.json();
+              case 14:
+                secondDatasetResponse = _context15.sent;
+                _context15.next = 21;
+                break;
+              case 17:
+                _context15.prev = 17;
+                _context15.t0 = _context15["catch"](0);
+                console.log(_context15.t0);
+                console.log('Could not fetch historical TVL data...');
+              case 21:
+              case "end":
+                return _context15.stop();
+            }
+          }, _callee15, null, [[0, 17]]);
+        }));
+        return function fetchHistoricalData() {
+          return _ref11.apply(this, arguments);
+        };
+      }();
       var chainNameList = [];
       var chainTotalValueLockedList = [];
+      var TVL_data = [];
+      var firstDisplayedTVL = '';
+      var secondDisplayedTVL = '';
       fetchChainList();
       var selectionOfChains = document.querySelectorAll('.selectionOfChains');
       selectionOfChains.forEach(function (chain) {
         chain.addEventListener('change', changeDisplayedTVL);
       });
+      fetchHistoricalData();
+
+      // CHART FOR THE TVL COMPARISON
+      // const compareTotalValueLockedCanvas = document.querySelector('.marketStockPrice');
+      // let compareTvlChart = new Chart(compareTotalValueLockedCanvas, {
+      //   type: 'line',
+      //   data: {
+      //     labels: timeframeData,
+      //     datasets: TVL_data,
+      //   },
+      //   options: {
+      //     type: chartScale,
+      //     display: true,
+      //     position: 'left',
+      //     responsive: true,
+      //     maintainAspectRatio: false,
+      //     scales: {
+      //       y: {
+      //         grid: {
+      //           color: '#232323',
+      //         },
+      //         ticks: {
+      //           // Include a dollar sign in the ticks
+      //           callback: function(value, index, values) {
+      //             return '$' + value / 1e9 + ' ' + 'B';
+      //           }
+      //       }
+      //       }
+      //     }
+      //   }
+      // });
+      // window.addEventListener("resize", (event) => {
+      //   compareTotalValueLockedCanvas.style.width = '100%';
+      //   compareTotalValueLockedCanvas.style.height = '100%';
+      // });
 
       // End of intersection observer
     }
@@ -2640,7 +2755,7 @@ var parent = module.bundle.parent;
 if ((!parent || !parent.isParcelRequire) && typeof WebSocket !== 'undefined') {
   var hostname = "" || location.hostname;
   var protocol = location.protocol === 'https:' ? 'wss' : 'ws';
-  var ws = new WebSocket(protocol + '://' + hostname + ':' + "57150" + '/');
+  var ws = new WebSocket(protocol + '://' + hostname + ':' + "55150" + '/');
   ws.onmessage = function (event) {
     checkedAssets = {};
     assetsToAccept = [];

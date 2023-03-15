@@ -1623,6 +1623,9 @@ const totalvalueLockedObserver = new IntersectionObserver(function(entries, tota
 
       const chainNameList = [];
       const chainTotalValueLockedList = [];
+      let TVL_data = [];
+      let firstDisplayedTVL = '';
+      let secondDisplayedTVL = '';
 
       // fetch the names of the protocols and the current TVL
       async function fetchChainList() {
@@ -1632,19 +1635,17 @@ const totalvalueLockedObserver = new IntersectionObserver(function(entries, tota
           let chainListData = await fetch(chainListURL);
           let chainListResponse = await chainListData.json();
 
-          console.log(await chainListResponse);
-
           // Add chains to list 
           const compareTVLListOne = document.querySelector('.compareTVLListOne');
           const compareTVLListTwo = document.querySelector('.compareTVLListTwo');
           
           for (const chain of chainListResponse) {
             // extract name 
-            const chainName = chain['name'];
+            let chainName = chain['name'];
             chainNameList.push(chainName);
 
             // add TVL to list
-            const totalValueLocked = Math.round(chain['tvl']);
+            let totalValueLocked = Math.round(chain['tvl']);
             chainTotalValueLockedList.push(totalValueLocked);
 
             // create option element and add to selection list 
@@ -1660,13 +1661,23 @@ const totalvalueLockedObserver = new IntersectionObserver(function(entries, tota
             compareTVLListTwo.appendChild(TvlListTwoEl);
           }
 
-          // add the current TVL for both chains
-          const firstChain = chainListResponse[0];
-          const curentTVL = Math.round(firstChain['tvl']).toLocaleString();
+          // select second index for 2nd asset
+          compareTVLListTwo.selectedIndex = 1;
+
+          // Add current TVL for both selected chains
+          let firstChainInListName = await chainListResponse[0];
+          let nameOfFirstChainInList = await firstChainInListName['name'];
+          firstDisplayedTVL = nameOfFirstChainInList;
+          let firstChainInListTVL = Math.round(firstChainInListName['tvl']).toLocaleString();
           const TotalValueLockedOne = document.querySelector('.TotalValueLockedOne');
-          TotalValueLockedOne.innerHTML = `$ ${curentTVL}`;
+          TotalValueLockedOne.innerHTML = `$ ${firstChainInListTVL}`;
+
+          let secondChainInList = await chainListResponse[1];
+          let nameOfSecondChainInList = await secondChainInList['name'];
+          secondDisplayedTVL = nameOfSecondChainInList;
+          let secondCurrentTVL = Math.round(secondChainInList['tvl']).toLocaleString();
           const TotalValueLockedTwo = document.querySelector('.TotalValueLockedTwo');
-          TotalValueLockedTwo.innerHTML = `$ ${curentTVL}`;
+          TotalValueLockedTwo.innerHTML = `$ ${secondCurrentTVL}`;
 
 
         } catch(error) {
@@ -1683,6 +1694,8 @@ const totalvalueLockedObserver = new IntersectionObserver(function(entries, tota
         const TotalValueLockedOne = document.querySelector('.TotalValueLockedOne');
         const compareTVLListOne = document.querySelector('.compareTVLListOne');
         let selectedChainOneIndex = compareTVLListOne.selectedIndex;
+        let selectedChainOne = compareTVLListOne.options[compareTVLListOne.selectedIndex].text;
+        firstDisplayedTVL = selectedChainOne;
         let formatTVLValueOne = chainTotalValueLockedList[selectedChainOneIndex].toLocaleString();
         TotalValueLockedOne.innerHTML = `$ ${formatTVLValueOne}`;
 
@@ -1690,16 +1703,106 @@ const totalvalueLockedObserver = new IntersectionObserver(function(entries, tota
         const TotalValueLockedTwo = document.querySelector('.TotalValueLockedTwo');
         const compareTVLListTwo = document.querySelector('.compareTVLListTwo');
         let selectedChainTwoIndex = compareTVLListTwo.selectedIndex;
+        let selectedChainTwo = compareTVLListTwo.options[compareTVLListTwo.selectedIndex].text;
+        secondDisplayedTVL = selectedChainTwo;
         let formatTVLValueTwo = chainTotalValueLockedList[selectedChainTwoIndex].toLocaleString();
         TotalValueLockedTwo.innerHTML = `$ ${formatTVLValueTwo}`;
 
+        fetchHistoricalData();
       }
       const selectionOfChains = document.querySelectorAll('.selectionOfChains');
       selectionOfChains.forEach(chain => {
         chain.addEventListener('change', changeDisplayedTVL);
       });
       
+      // fetch the historical data of the chain TVL
 
+      async function fetchHistoricalData() {
+
+        try {
+
+          // DATASET 1 TVL -- DATASET 1 TVL
+          let firstDatasetURL = `https://api.llama.fi/charts/${firstDisplayedTVL}`;
+          let firstDatasetData = await fetch(firstDatasetURL);
+          let firstDatasetResponse = await firstDatasetData.json();
+
+          // console.log(firstDisplayedTVL);
+          // console.log(await firstDatasetResponse);
+
+          // let TvlObjectOne = {
+          //   label: `Price of ${firstDisplayedTVL}`,
+          //   data: fetchedPriceData,
+          //   fill: false,
+          //   pointRadius: 0,
+          //   borderWidth: 1,
+          //   backgroundColor: '#FFFFFF',
+          //   borderColor: '#FFFFFF',
+          //   yAxisID: 'y'
+          // };
+
+
+          // DATASET 2 TVL -- DATASET 2 TVL
+          let secondDatasetURL = `https://api.llama.fi/charts/${secondDisplayedTVL}`;
+          let secondDatasetData = await fetch(secondDatasetURL);
+          let secondDatasetResponse = await secondDatasetData.json();
+
+          // console.log(secondDisplayedTVL);
+          // console.log(await secondDatasetResponse);
+
+          // let TvlObjectTwo = {
+          //   label: `Price of ${secondDisplayedTVL}`,
+          //   data: fetchedPriceData,
+          //   fill: false,
+          //   pointRadius: 0,
+          //   borderWidth: 1,
+          //   backgroundColor: '#FFFFFF',
+          //   borderColor: '#FFFFFF',
+          //   yAxisID: 'y'
+          // };
+
+        } 
+        catch(error) {
+          console.log(error);
+          console.log('Could not fetch historical TVL data...')
+        }
+
+      }
+      fetchHistoricalData();
+
+
+      // CHART FOR THE TVL COMPARISON
+      // const compareTotalValueLockedCanvas = document.querySelector('.marketStockPrice');
+      // let compareTvlChart = new Chart(compareTotalValueLockedCanvas, {
+      //   type: 'line',
+      //   data: {
+      //     labels: timeframeData,
+      //     datasets: TVL_data,
+      //   },
+      //   options: {
+      //     type: chartScale,
+      //     display: true,
+      //     position: 'left',
+      //     responsive: true,
+      //     maintainAspectRatio: false,
+      //     scales: {
+      //       y: {
+      //         grid: {
+      //           color: '#232323',
+      //         },
+      //         ticks: {
+      //           // Include a dollar sign in the ticks
+      //           callback: function(value, index, values) {
+      //             return '$' + value / 1e9 + ' ' + 'B';
+      //           }
+      //       }
+      //       }
+      //     }
+      //   }
+      // });
+      // window.addEventListener("resize", (event) => {
+      //   compareTotalValueLockedCanvas.style.width = '100%';
+      //   compareTotalValueLockedCanvas.style.height = '100%';
+      // });
 
       // End of intersection observer
     }

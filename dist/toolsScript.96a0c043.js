@@ -2621,10 +2621,21 @@ var totalvalueLockedObserver = new IntersectionObserver(function (entries, total
         TotalValueLockedTwo.innerHTML = "$ ".concat(formatTVLValueTwo);
         fetchHistoricalData();
       };
-      // fetch the historical data of the chain TVL
+      var changeChartScale = function changeChartScale(event) {
+        if (event.target.classList.contains('autoChartOption')) {
+          autoChartOption.style.backgroundColor = 'rgb(128, 128, 128, 0.6)';
+          logChartOption.style.backgroundColor = 'rgb(128, 128, 128, 0.2)';
+          chartScale = 'linear';
+        } else {
+          autoChartOption.style.backgroundColor = 'rgb(128, 128, 128, 0.2)';
+          logChartOption.style.backgroundColor = 'rgb(128, 128, 128, 0.6)';
+          chartScale = 'logarithmic';
+        }
+        console.log(chartScale);
+      };
       var fetchHistoricalData = /*#__PURE__*/function () {
         var _ref11 = _asyncToGenerator( /*#__PURE__*/_regeneratorRuntime().mark(function _callee15() {
-          var firstDatasetURL, firstDatasetData, firstDatasetResponse, secondDatasetURL, secondDatasetData, secondDatasetResponse;
+          var firstDatasetURL, firstDatasetData, firstDatasetResponse, secondDatasetURL, secondDatasetData, secondDatasetResponse, _iterator28, _step28, timeframe, epochTimeframe, startingDate, formattedDateValue, formattedDate, longTimeframe, displayedTimeframe, _iterator29, _step29, chainOneTvl, TVL, TvlObjectOne, _iterator30, _step30, chainTwoTvl, _TVL, TvlObjectTwo, _iterator31, _step31, _timeframe2, _epochTimeframe2, _startingDate, _formattedDateValue, _formattedDate2, _longTimeframe2, _displayedTimeframe, _iterator32, _step32, _chainOneTvl, _TVL2, _TvlObjectOne, _iterator33, _step33, _chainTwoTvl, _TVL3, _TvlObjectTwo;
           return _regeneratorRuntime().wrap(function _callee15$(_context15) {
             while (1) switch (_context15.prev = _context15.next) {
               case 0:
@@ -2639,18 +2650,6 @@ var totalvalueLockedObserver = new IntersectionObserver(function (entries, total
                 return firstDatasetData.json();
               case 7:
                 firstDatasetResponse = _context15.sent;
-                // console.log(firstDisplayedTVL);
-                // console.log(await firstDatasetResponse);
-                // let TvlObjectOne = {
-                //   label: `Price of ${firstDisplayedTVL}`,
-                //   data: fetchedPriceData,
-                //   fill: false,
-                //   pointRadius: 0,
-                //   borderWidth: 1,
-                //   backgroundColor: '#FFFFFF',
-                //   borderColor: '#FFFFFF',
-                //   yAxisID: 'y'
-                // };
                 // DATASET 2 TVL -- DATASET 2 TVL
                 secondDatasetURL = "https://api.llama.fi/charts/".concat(secondDisplayedTVL);
                 _context15.next = 11;
@@ -2661,18 +2660,172 @@ var totalvalueLockedObserver = new IntersectionObserver(function (entries, total
                 return secondDatasetData.json();
               case 14:
                 secondDatasetResponse = _context15.sent;
-                _context15.next = 21;
+                // IF THE FIRST DATASET IS LONGER
+                if (firstDatasetResponse.length > secondDatasetResponse.length) {
+                  totalValueLockedOne = [];
+                  totalValueLockedTwo = [];
+                  TVL_data = [];
+                  timeframe_data = [];
+                  _iterator28 = _createForOfIteratorHelper(firstDatasetResponse);
+                  try {
+                    for (_iterator28.s(); !(_step28 = _iterator28.n()).done;) {
+                      timeframe = _step28.value;
+                      epochTimeframe = timeframe['date'];
+                      startingDate = new Date(0);
+                      formattedDateValue = startingDate.setUTCSeconds(epochTimeframe);
+                      formattedDate = new Date(formattedDateValue);
+                      longTimeframe = formattedDate.toUTCString();
+                      displayedTimeframe = longTimeframe.substring(5, 16);
+                      timeframe_data.push(displayedTimeframe);
+                    }
+
+                    // DATASET 1 TVL EXTRACTION -- DATASET 1 TVL EXTRACTION
+                  } catch (err) {
+                    _iterator28.e(err);
+                  } finally {
+                    _iterator28.f();
+                  }
+                  _iterator29 = _createForOfIteratorHelper(firstDatasetResponse);
+                  try {
+                    for (_iterator29.s(); !(_step29 = _iterator29.n()).done;) {
+                      chainOneTvl = _step29.value;
+                      TVL = chainOneTvl['totalLiquidityUSD'];
+                      totalValueLockedOne.push(TVL);
+                    }
+                  } catch (err) {
+                    _iterator29.e(err);
+                  } finally {
+                    _iterator29.f();
+                  }
+                  TvlObjectOne = {
+                    label: "TVL of ".concat(firstDisplayedTVL),
+                    data: totalValueLockedOne,
+                    fill: false,
+                    pointRadius: 0,
+                    borderWidth: 1,
+                    backgroundColor: '#FFFFFF',
+                    borderColor: '#FFFFFF',
+                    yAxisID: 'y'
+                  };
+                  TVL_data.push(TvlObjectOne);
+
+                  // DATASET 2 TVL EXTRACTION -- DATASET 2 TVL EXTRACTION
+                  _iterator30 = _createForOfIteratorHelper(secondDatasetResponse);
+                  try {
+                    for (_iterator30.s(); !(_step30 = _iterator30.n()).done;) {
+                      chainTwoTvl = _step30.value;
+                      _TVL = chainTwoTvl['totalLiquidityUSD'];
+                      totalValueLockedTwo.push(_TVL);
+                    }
+                  } catch (err) {
+                    _iterator30.e(err);
+                  } finally {
+                    _iterator30.f();
+                  }
+                  TvlObjectTwo = {
+                    label: "TVL of ".concat(secondDisplayedTVL),
+                    data: totalValueLockedTwo,
+                    fill: false,
+                    pointRadius: 0,
+                    borderWidth: 1,
+                    backgroundColor: '#FF0000',
+                    borderColor: '#FF0000',
+                    yAxisID: 'y'
+                  };
+                  TVL_data.push(TvlObjectTwo);
+                } else {
+                  // IF THE SECOND DATASET IS LONGER
+
+                  totalValueLockedOne = [];
+                  totalValueLockedTwo = [];
+                  TVL_data = [];
+                  timeframe_data = [];
+                  _iterator31 = _createForOfIteratorHelper(secondDatasetResponse);
+                  try {
+                    for (_iterator31.s(); !(_step31 = _iterator31.n()).done;) {
+                      _timeframe2 = _step31.value;
+                      _epochTimeframe2 = _timeframe2['date'];
+                      _startingDate = new Date(0);
+                      _formattedDateValue = _startingDate.setUTCSeconds(_epochTimeframe2);
+                      _formattedDate2 = new Date(_formattedDateValue);
+                      _longTimeframe2 = _formattedDate2.toUTCString();
+                      _displayedTimeframe = _longTimeframe2.substring(5, 16);
+                      timeframe_data.push(_displayedTimeframe);
+                    }
+
+                    // DATASET 1 TVL EXTRACTION -- DATASET 1 TVL EXTRACTION
+                  } catch (err) {
+                    _iterator31.e(err);
+                  } finally {
+                    _iterator31.f();
+                  }
+                  _iterator32 = _createForOfIteratorHelper(firstDatasetResponse);
+                  try {
+                    for (_iterator32.s(); !(_step32 = _iterator32.n()).done;) {
+                      _chainOneTvl = _step32.value;
+                      _TVL2 = _chainOneTvl['totalLiquidityUSD'];
+                      totalValueLockedOne.push(_TVL2);
+                    }
+                  } catch (err) {
+                    _iterator32.e(err);
+                  } finally {
+                    _iterator32.f();
+                  }
+                  _TvlObjectOne = {
+                    label: "TVL of ".concat(firstDisplayedTVL),
+                    data: totalValueLockedOne,
+                    fill: false,
+                    pointRadius: 0,
+                    borderWidth: 1,
+                    backgroundColor: '#FFFFFF',
+                    borderColor: '#FFFFFF',
+                    yAxisID: 'y'
+                  };
+                  TVL_data.push(_TvlObjectOne);
+
+                  // DATASET 2 TVL EXTRACTION -- DATASET 2 TVL EXTRACTION
+                  _iterator33 = _createForOfIteratorHelper(secondDatasetResponse);
+                  try {
+                    for (_iterator33.s(); !(_step33 = _iterator33.n()).done;) {
+                      _chainTwoTvl = _step33.value;
+                      _TVL3 = _chainTwoTvl['totalLiquidityUSD'];
+                      totalValueLockedTwo.push(_TVL3);
+                    }
+                  } catch (err) {
+                    _iterator33.e(err);
+                  } finally {
+                    _iterator33.f();
+                  }
+                  _TvlObjectTwo = {
+                    label: "TVL of ".concat(secondDisplayedTVL),
+                    data: totalValueLockedTwo,
+                    fill: false,
+                    pointRadius: 0,
+                    borderWidth: 1,
+                    backgroundColor: '#FF0000',
+                    borderColor: '#FF0000',
+                    yAxisID: 'y'
+                  };
+                  TVL_data.push(_TvlObjectTwo);
+                }
+                console.log(TVL_data);
+                console.log(timeframe_data);
+
+                // UPDATE CHART
+                compareTvlChart.data.datasets = TVL_data;
+                compareTvlChart.data.labels = timeframe_data;
+                _context15.next = 26;
                 break;
-              case 17:
-                _context15.prev = 17;
+              case 22:
+                _context15.prev = 22;
                 _context15.t0 = _context15["catch"](0);
                 console.log(_context15.t0);
                 console.log('Could not fetch historical TVL data...');
-              case 21:
+              case 26:
               case "end":
                 return _context15.stop();
             }
-          }, _callee15, null, [[0, 17]]);
+          }, _callee15, null, [[0, 22]]);
         }));
         return function fetchHistoricalData() {
           return _ref11.apply(this, arguments);
@@ -2680,7 +2833,6 @@ var totalvalueLockedObserver = new IntersectionObserver(function (entries, total
       }();
       var chainNameList = [];
       var chainTotalValueLockedList = [];
-      var TVL_data = [];
       var firstDisplayedTVL = '';
       var secondDisplayedTVL = '';
       fetchChainList();
@@ -2688,41 +2840,55 @@ var totalvalueLockedObserver = new IntersectionObserver(function (entries, total
       selectionOfChains.forEach(function (chain) {
         chain.addEventListener('change', changeDisplayedTVL);
       });
+
+      // CODE FOR CHANGING THE CHART SCALE
+      var chartScale = 'linear'; //logarithmic or linear
+      var autoChartOption = document.querySelector('.TVLAutoChartOption');
+      autoChartOption.addEventListener('click', changeChartScale);
+      var logChartOption = document.querySelector('.TVLlogChartOption');
+      logChartOption.addEventListener('click', changeChartScale);
+      ;
+
+      // fetch the historical data of the chain TVL
+      var totalValueLockedOne = [];
+      var totalValueLockedTwo = [];
+      var TVL_data = [];
+      var timeframe_data = [];
       fetchHistoricalData();
 
       // CHART FOR THE TVL COMPARISON
-      // const compareTotalValueLockedCanvas = document.querySelector('.marketStockPrice');
-      // let compareTvlChart = new Chart(compareTotalValueLockedCanvas, {
-      //   type: 'line',
-      //   data: {
-      //     labels: timeframeData,
-      //     datasets: TVL_data,
-      //   },
-      //   options: {
-      //     type: chartScale,
-      //     display: true,
-      //     position: 'left',
-      //     responsive: true,
-      //     maintainAspectRatio: false,
-      //     scales: {
-      //       y: {
-      //         grid: {
-      //           color: '#232323',
-      //         },
-      //         ticks: {
-      //           // Include a dollar sign in the ticks
-      //           callback: function(value, index, values) {
-      //             return '$' + value / 1e9 + ' ' + 'B';
-      //           }
-      //       }
-      //       }
-      //     }
-      //   }
-      // });
-      // window.addEventListener("resize", (event) => {
-      //   compareTotalValueLockedCanvas.style.width = '100%';
-      //   compareTotalValueLockedCanvas.style.height = '100%';
-      // });
+      var compareTotalValueLockedCanvas = document.querySelector('.compareChainTVL');
+      var compareTvlChart = new Chart(compareTotalValueLockedCanvas, {
+        type: 'line',
+        data: {
+          labels: timeframe_data,
+          datasets: TVL_data
+        },
+        options: {
+          type: chartScale,
+          display: true,
+          position: 'left',
+          responsive: true,
+          maintainAspectRatio: false,
+          scales: {
+            y: {
+              grid: {
+                color: '#232323'
+              },
+              ticks: {
+                // Include a dollar sign in the ticks
+                callback: function callback(value, index, values) {
+                  return '$' + value / 1e9 + ' ' + 'B';
+                }
+              }
+            }
+          }
+        }
+      });
+      window.addEventListener("resize", function (event) {
+        compareTotalValueLockedCanvas.style.width = '100%';
+        compareTotalValueLockedCanvas.style.height = '100%';
+      });
 
       // End of intersection observer
     }
@@ -2755,7 +2921,7 @@ var parent = module.bundle.parent;
 if ((!parent || !parent.isParcelRequire) && typeof WebSocket !== 'undefined') {
   var hostname = "" || location.hostname;
   var protocol = location.protocol === 'https:' ? 'wss' : 'ws';
-  var ws = new WebSocket(protocol + '://' + hostname + ':' + "55150" + '/');
+  var ws = new WebSocket(protocol + '://' + hostname + ':' + "54263" + '/');
   ws.onmessage = function (event) {
     checkedAssets = {};
     assetsToAccept = [];

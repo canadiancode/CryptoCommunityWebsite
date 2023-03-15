@@ -1623,7 +1623,6 @@ const totalvalueLockedObserver = new IntersectionObserver(function(entries, tota
 
       const chainNameList = [];
       const chainTotalValueLockedList = [];
-      let TVL_data = [];
       let firstDisplayedTVL = '';
       let secondDisplayedTVL = '';
 
@@ -1714,8 +1713,32 @@ const totalvalueLockedObserver = new IntersectionObserver(function(entries, tota
       selectionOfChains.forEach(chain => {
         chain.addEventListener('change', changeDisplayedTVL);
       });
+
+      // CODE FOR CHANGING THE CHART SCALE
+      let chartScale = 'linear'; //logarithmic or linear
+      const autoChartOption = document.querySelector('.TVLAutoChartOption');
+      autoChartOption.addEventListener('click', changeChartScale);
+      const logChartOption = document.querySelector('.TVLlogChartOption');
+      logChartOption.addEventListener('click', changeChartScale);
+      function changeChartScale(event) {
+      if (event.target.classList.contains('autoChartOption')) {
+          autoChartOption.style.backgroundColor = 'rgb(128, 128, 128, 0.6)';
+          logChartOption.style.backgroundColor = 'rgb(128, 128, 128, 0.2)';
+          chartScale = 'linear';
+      } 
+      else {
+        autoChartOption.style.backgroundColor = 'rgb(128, 128, 128, 0.2)';
+        logChartOption.style.backgroundColor = 'rgb(128, 128, 128, 0.6)';
+        chartScale = 'logarithmic';
+        }
+        console.log(chartScale);
+      };
       
       // fetch the historical data of the chain TVL
+      let totalValueLockedOne = [];
+      let totalValueLockedTwo = [];
+      let TVL_data = [];
+      let timeframe_data = [];
 
       async function fetchHistoricalData() {
 
@@ -1726,39 +1749,127 @@ const totalvalueLockedObserver = new IntersectionObserver(function(entries, tota
           let firstDatasetData = await fetch(firstDatasetURL);
           let firstDatasetResponse = await firstDatasetData.json();
 
-          // console.log(firstDisplayedTVL);
-          // console.log(await firstDatasetResponse);
-
-          // let TvlObjectOne = {
-          //   label: `Price of ${firstDisplayedTVL}`,
-          //   data: fetchedPriceData,
-          //   fill: false,
-          //   pointRadius: 0,
-          //   borderWidth: 1,
-          //   backgroundColor: '#FFFFFF',
-          //   borderColor: '#FFFFFF',
-          //   yAxisID: 'y'
-          // };
-
-
           // DATASET 2 TVL -- DATASET 2 TVL
           let secondDatasetURL = `https://api.llama.fi/charts/${secondDisplayedTVL}`;
           let secondDatasetData = await fetch(secondDatasetURL);
           let secondDatasetResponse = await secondDatasetData.json();
 
-          // console.log(secondDisplayedTVL);
-          // console.log(await secondDatasetResponse);
+          // IF THE FIRST DATASET IS LONGER
+          if (firstDatasetResponse.length > secondDatasetResponse.length) {
 
-          // let TvlObjectTwo = {
-          //   label: `Price of ${secondDisplayedTVL}`,
-          //   data: fetchedPriceData,
-          //   fill: false,
-          //   pointRadius: 0,
-          //   borderWidth: 1,
-          //   backgroundColor: '#FFFFFF',
-          //   borderColor: '#FFFFFF',
-          //   yAxisID: 'y'
-          // };
+            totalValueLockedOne = [];
+            totalValueLockedTwo = [];
+            TVL_data = [];
+            timeframe_data = [];
+
+            for (const timeframe of firstDatasetResponse) {
+              let epochTimeframe = timeframe['date'];
+              let startingDate = new Date(0);
+              let formattedDateValue = startingDate.setUTCSeconds(epochTimeframe);
+              let formattedDate = new Date(formattedDateValue);
+              let longTimeframe = formattedDate.toUTCString();
+              let displayedTimeframe = longTimeframe.substring(5, 16);
+              timeframe_data.push(displayedTimeframe);
+            }
+          
+            // DATASET 1 TVL EXTRACTION -- DATASET 1 TVL EXTRACTION
+            for (const chainOneTvl of firstDatasetResponse) {
+              const TVL = chainOneTvl['totalLiquidityUSD']
+              totalValueLockedOne.push(TVL);
+            }
+
+            let TvlObjectOne = {
+              label: `TVL of ${firstDisplayedTVL}`,
+              data: totalValueLockedOne,
+              fill: false,
+              pointRadius: 0,
+              borderWidth: 1,
+              backgroundColor: '#FFFFFF',
+              borderColor: '#FFFFFF',
+              yAxisID: 'y'
+            };
+            TVL_data.push(TvlObjectOne);
+
+            // DATASET 2 TVL EXTRACTION -- DATASET 2 TVL EXTRACTION
+            for (const chainTwoTvl of secondDatasetResponse) {
+              const TVL = chainTwoTvl['totalLiquidityUSD'];
+              totalValueLockedTwo.push(TVL);
+            }
+
+            let TvlObjectTwo = {
+              label: `TVL of ${secondDisplayedTVL}`,
+              data: totalValueLockedTwo,
+              fill: false,
+              pointRadius: 0,
+              borderWidth: 1,
+              backgroundColor: '#FF0000',
+              borderColor: '#FF0000',
+              yAxisID: 'y'
+            };
+            TVL_data.push(TvlObjectTwo);          
+
+          } 
+          else { // IF THE SECOND DATASET IS LONGER
+
+            totalValueLockedOne = [];
+            totalValueLockedTwo = [];
+            TVL_data = [];
+            timeframe_data = [];
+            
+            for (const timeframe of secondDatasetResponse) {
+              let epochTimeframe = timeframe['date'];
+              let startingDate = new Date(0);
+              let formattedDateValue = startingDate.setUTCSeconds(epochTimeframe);
+              let formattedDate = new Date(formattedDateValue);
+              let longTimeframe = formattedDate.toUTCString();
+              let displayedTimeframe = longTimeframe.substring(5, 16);
+              timeframe_data.push(displayedTimeframe);
+            }
+
+            // DATASET 1 TVL EXTRACTION -- DATASET 1 TVL EXTRACTION
+            for (const chainOneTvl of firstDatasetResponse) {
+              const TVL = chainOneTvl['totalLiquidityUSD']
+              totalValueLockedOne.push(TVL);
+            }
+
+            let TvlObjectOne = {
+              label: `TVL of ${firstDisplayedTVL}`,
+              data: totalValueLockedOne,
+              fill: false,
+              pointRadius: 0,
+              borderWidth: 1,
+              backgroundColor: '#FFFFFF',
+              borderColor: '#FFFFFF',
+              yAxisID: 'y'
+            };
+            TVL_data.push(TvlObjectOne);
+
+            // DATASET 2 TVL EXTRACTION -- DATASET 2 TVL EXTRACTION
+            for (const chainTwoTvl of secondDatasetResponse) {
+              const TVL = chainTwoTvl['totalLiquidityUSD'];
+              totalValueLockedTwo.push(TVL);
+            }
+
+            let TvlObjectTwo = {
+              label: `TVL of ${secondDisplayedTVL}`,
+              data: totalValueLockedTwo,
+              fill: false,
+              pointRadius: 0,
+              borderWidth: 1,
+              backgroundColor: '#FF0000',
+              borderColor: '#FF0000',
+              yAxisID: 'y'
+            };
+            TVL_data.push(TvlObjectTwo);          
+
+          }
+          
+          console.log(TVL_data);
+          console.log(timeframe_data);
+
+          // UPDATE CHART
+          compareTvlChart.data.datasets = TVL_data;
+          compareTvlChart.data.labels = timeframe_data;
 
         } 
         catch(error) {
@@ -1771,38 +1882,39 @@ const totalvalueLockedObserver = new IntersectionObserver(function(entries, tota
 
 
       // CHART FOR THE TVL COMPARISON
-      // const compareTotalValueLockedCanvas = document.querySelector('.marketStockPrice');
-      // let compareTvlChart = new Chart(compareTotalValueLockedCanvas, {
-      //   type: 'line',
-      //   data: {
-      //     labels: timeframeData,
-      //     datasets: TVL_data,
-      //   },
-      //   options: {
-      //     type: chartScale,
-      //     display: true,
-      //     position: 'left',
-      //     responsive: true,
-      //     maintainAspectRatio: false,
-      //     scales: {
-      //       y: {
-      //         grid: {
-      //           color: '#232323',
-      //         },
-      //         ticks: {
-      //           // Include a dollar sign in the ticks
-      //           callback: function(value, index, values) {
-      //             return '$' + value / 1e9 + ' ' + 'B';
-      //           }
-      //       }
-      //       }
-      //     }
-      //   }
-      // });
-      // window.addEventListener("resize", (event) => {
-      //   compareTotalValueLockedCanvas.style.width = '100%';
-      //   compareTotalValueLockedCanvas.style.height = '100%';
-      // });
+      const compareTotalValueLockedCanvas = document.querySelector('.compareChainTVL');
+      let compareTvlChart = new Chart(compareTotalValueLockedCanvas, {
+        type: 'line',
+        data: {
+          labels: timeframe_data,
+          datasets: TVL_data,
+        },
+        options: {
+          type: chartScale,
+          display: true,
+          position: 'left',
+          responsive: true,
+          maintainAspectRatio: false,
+          scales: {
+            y: {
+              grid: {
+                color: '#232323',
+              },
+              ticks: {
+                // Include a dollar sign in the ticks
+                callback: function(value, index, values) {
+                  return '$' + value / 1e9 + ' ' + 'B';
+                }
+            }
+            }
+          }
+        }
+      });
+      window.addEventListener("resize", (event) => {
+        compareTotalValueLockedCanvas.style.width = '100%';
+        compareTotalValueLockedCanvas.style.height = '100%';
+      });
+
 
       // End of intersection observer
     }

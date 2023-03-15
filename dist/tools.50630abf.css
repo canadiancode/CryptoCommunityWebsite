@@ -621,6 +621,14 @@
 }
 .dashboardContainer .dataContainer .totalValueLockedContainer .TotalValueLockedChartContainer {
   display: block;
+  width: 100%;
+  height: 100%;
+}
+.dashboardContainer .dataContainer .totalValueLockedContainer .TotalValueLockedChartContainer .compareChainTVL {
+  height: 100%;
+  width: 100%;
+  min-height: 300px;
+  min-width: 250px;
 }
 .dashboardContainer .dataContainer .totalValueLockedContainer .TotalValueLockedChartContainer .compareTvlContainer {
   display: flex;

@@ -1,3 +1,15 @@
 Things I am working on:
 
-- Current issue is that the TVL using the DeFillama API does not match what is showing up on the DeFillama website. Perhaps it's taking the aggregate of L2's as well since the API has a much bigger value than what shows up on the main Defillama website.
+- add the additional data to the dataset with less time so it pushes the TVL with less info to the right hand side
+
+- incorporate the Log and Auto (linear) chart type button
+
+- add the option to change timeframe
+
+- add the button to include or exclude double count and liquid staking
+
+Context for the TVL URL:
+-> the TVL includes: liquid staking and double counted TVL
+
+Endpoint below excludes liquid staking and double counted TVL:
+https://api.llama.fi/v2/historicalChainTvl/Ethereum

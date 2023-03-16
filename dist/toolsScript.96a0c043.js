@@ -991,14 +991,15 @@ var marketsStocksObserver = new IntersectionObserver(function (entries, marketsS
                 ;
                 changeColorOfInvestmentChart();
                 publicCompanyInvestmentReturns.update();
-                _context6.next = 58;
+                _context6.next = 59;
                 break;
               case 54:
                 _context6.prev = 54;
                 _context6.t0 = _context6["catch"](0);
                 console.log(_context6.t0);
                 console.log('Could not fetch the list of stocks...');
-              case 58:
+                setTimeout(fetchStockList, 3000);
+              case 59:
               case "end":
                 return _context6.stop();
             }
@@ -2626,16 +2627,19 @@ var totalvalueLockedObserver = new IntersectionObserver(function (entries, total
           autoChartOption.style.backgroundColor = 'rgb(128, 128, 128, 0.6)';
           logChartOption.style.backgroundColor = 'rgb(128, 128, 128, 0.2)';
           chartScale = 'linear';
+          compareTvlChart.options.scales.y.type = chartScale;
+          compareTvlChart.update();
         } else {
           autoChartOption.style.backgroundColor = 'rgb(128, 128, 128, 0.2)';
           logChartOption.style.backgroundColor = 'rgb(128, 128, 128, 0.6)';
           chartScale = 'logarithmic';
+          compareTvlChart.options.scales.y.type = chartScale;
+          compareTvlChart.update();
         }
-        console.log(chartScale);
       };
       var fetchHistoricalData = /*#__PURE__*/function () {
         var _ref11 = _asyncToGenerator( /*#__PURE__*/_regeneratorRuntime().mark(function _callee15() {
-          var firstDatasetURL, firstDatasetData, firstDatasetResponse, secondDatasetURL, secondDatasetData, secondDatasetResponse, _iterator28, _step28, timeframe, epochTimeframe, startingDate, formattedDateValue, formattedDate, longTimeframe, displayedTimeframe, _iterator29, _step29, chainOneTvl, TVL, TvlObjectOne, _iterator30, _step30, chainTwoTvl, _TVL, TvlObjectTwo, _iterator31, _step31, _timeframe2, _epochTimeframe2, _startingDate, _formattedDateValue, _formattedDate2, _longTimeframe2, _displayedTimeframe, _iterator32, _step32, _chainOneTvl, _TVL2, _TvlObjectOne, _iterator33, _step33, _chainTwoTvl, _TVL3, _TvlObjectTwo;
+          var firstDatasetURL, firstDatasetData, firstDatasetResponse, secondDatasetURL, secondDatasetData, secondDatasetResponse, _iterator28, _step28, timeframe, epochTimeframe, startingDate, formattedDateValue, formattedDate, longTimeframe, displayedTimeframe, _iterator29, _step29, chainOneTvl, TVL, TvlObjectOne, addedTimeValueForTwo, _i6, _iterator30, _step30, chainTwoTvl, _TVL, TvlObjectTwo, _iterator31, _step31, _timeframe2, _epochTimeframe2, _startingDate, _formattedDateValue, _formattedDate2, _longTimeframe2, _displayedTimeframe, addedTimeValueForOne, _i7, _iterator32, _step32, _chainOneTvl, _TVL2, _TvlObjectOne, _iterator33, _step33, _chainTwoTvl, _TVL3, _TvlObjectTwo;
           return _regeneratorRuntime().wrap(function _callee15$(_context15) {
             while (1) switch (_context15.prev = _context15.next) {
               case 0:
@@ -2710,6 +2714,12 @@ var totalvalueLockedObserver = new IntersectionObserver(function (entries, total
                   TVL_data.push(TvlObjectOne);
 
                   // DATASET 2 TVL EXTRACTION -- DATASET 2 TVL EXTRACTION
+
+                  // add more data to the shorter timeframe TVL
+                  addedTimeValueForTwo = firstDatasetResponse.length - secondDatasetResponse.length;
+                  for (_i6 = 0; _i6 < addedTimeValueForTwo; _i6++) {
+                    totalValueLockedTwo.push('');
+                  }
                   _iterator30 = _createForOfIteratorHelper(secondDatasetResponse);
                   try {
                     for (_iterator30.s(); !(_step30 = _iterator30.n()).done;) {
@@ -2722,6 +2732,7 @@ var totalvalueLockedObserver = new IntersectionObserver(function (entries, total
                   } finally {
                     _iterator30.f();
                   }
+                  ;
                   TvlObjectTwo = {
                     label: "TVL of ".concat(secondDisplayedTVL),
                     data: totalValueLockedTwo,
@@ -2754,10 +2765,16 @@ var totalvalueLockedObserver = new IntersectionObserver(function (entries, total
                     }
 
                     // DATASET 1 TVL EXTRACTION -- DATASET 1 TVL EXTRACTION
+
+                    // add more data to the shorter timeframe TVL
                   } catch (err) {
                     _iterator31.e(err);
                   } finally {
                     _iterator31.f();
+                  }
+                  addedTimeValueForOne = secondDatasetResponse.length - firstDatasetResponse.length;
+                  for (_i7 = 0; _i7 < addedTimeValueForOne; _i7++) {
+                    totalValueLockedOne.push('');
                   }
                   _iterator32 = _createForOfIteratorHelper(firstDatasetResponse);
                   try {
@@ -2771,6 +2788,7 @@ var totalvalueLockedObserver = new IntersectionObserver(function (entries, total
                   } finally {
                     _iterator32.f();
                   }
+                  ;
                   _TvlObjectOne = {
                     label: "TVL of ".concat(firstDisplayedTVL),
                     data: totalValueLockedOne,
@@ -2796,6 +2814,7 @@ var totalvalueLockedObserver = new IntersectionObserver(function (entries, total
                   } finally {
                     _iterator33.f();
                   }
+                  ;
                   _TvlObjectTwo = {
                     label: "TVL of ".concat(secondDisplayedTVL),
                     data: totalValueLockedTwo,
@@ -2808,29 +2827,52 @@ var totalvalueLockedObserver = new IntersectionObserver(function (entries, total
                   };
                   TVL_data.push(_TvlObjectTwo);
                 }
-                console.log(TVL_data);
-                console.log(timeframe_data);
 
                 // UPDATE CHART
                 compareTvlChart.data.datasets = TVL_data;
                 compareTvlChart.data.labels = timeframe_data;
-                _context15.next = 26;
+                compareTvlChart.update();
+                _context15.next = 25;
                 break;
-              case 22:
-                _context15.prev = 22;
+              case 21:
+                _context15.prev = 21;
                 _context15.t0 = _context15["catch"](0);
                 console.log(_context15.t0);
                 console.log('Could not fetch historical TVL data...');
-              case 26:
+              case 25:
               case "end":
                 return _context15.stop();
             }
-          }, _callee15, null, [[0, 22]]);
+          }, _callee15, null, [[0, 21]]);
         }));
         return function fetchHistoricalData() {
           return _ref11.apply(this, arguments);
         };
       }();
+      var changeTimeframe = /*#__PURE__*/function () {
+        var _ref12 = _asyncToGenerator( /*#__PURE__*/_regeneratorRuntime().mark(function _callee16() {
+          var takeawayValue;
+          return _regeneratorRuntime().wrap(function _callee16$(_context16) {
+            while (1) switch (_context16.prev = _context16.next) {
+              case 0:
+                fetchHistoricalData();
+                // change timeframe value
+                selectedTimePeriod = compareTVLTimeframeList.options[compareTVLTimeframeList.selectedIndex].value;
+                takeawayValue = Number(timeframe_data.length) - Number(selectedTimePeriod);
+                timeframe_data.splice(0, takeawayValue);
+                console.log(timeframe_data);
+                compareTvlChart.data.labels = timeframe_data;
+                compareTvlChart.update();
+              case 7:
+              case "end":
+                return _context16.stop();
+            }
+          }, _callee16);
+        }));
+        return function changeTimeframe() {
+          return _ref12.apply(this, arguments);
+        };
+      }(); // CHART FOR THE TVL COMPARISON
       var chainNameList = [];
       var chainTotalValueLockedList = [];
       var firstDisplayedTVL = '';
@@ -2854,9 +2896,12 @@ var totalvalueLockedObserver = new IntersectionObserver(function (entries, total
       var totalValueLockedTwo = [];
       var TVL_data = [];
       var timeframe_data = [];
+      var selectedTimePeriod = 4380;
       fetchHistoricalData();
 
-      // CHART FOR THE TVL COMPARISON
+      // change timeframe of chart
+      var compareTVLTimeframeList = document.querySelector('.compareTVLTimeframeList');
+      compareTVLTimeframeList.addEventListener('change', changeTimeframe);
       var compareTotalValueLockedCanvas = document.querySelector('.compareChainTVL');
       var compareTvlChart = new Chart(compareTotalValueLockedCanvas, {
         type: 'line',
@@ -2921,7 +2966,7 @@ var parent = module.bundle.parent;
 if ((!parent || !parent.isParcelRequire) && typeof WebSocket !== 'undefined') {
   var hostname = "" || location.hostname;
   var protocol = location.protocol === 'https:' ? 'wss' : 'ws';
-  var ws = new WebSocket(protocol + '://' + hostname + ':' + "54263" + '/');
+  var ws = new WebSocket(protocol + '://' + hostname + ':' + "61004" + '/');
   ws.onmessage = function (event) {
     checkedAssets = {};
     assetsToAccept = [];

@@ -625,10 +625,10 @@
   height: 100%;
 }
 .dashboardContainer .dataContainer .totalValueLockedContainer .TotalValueLockedChartContainer .compareChainTVL {
-  height: 100%;
   width: 100%;
-  min-height: 300px;
-  min-width: 250px;
+  height: 100%;
+  max-width: 1200px;
+  max-height: 500px;
 }
 .dashboardContainer .dataContainer .totalValueLockedContainer .TotalValueLockedChartContainer .compareTvlContainer {
   display: flex;

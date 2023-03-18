@@ -1753,12 +1753,11 @@ const totalvalueLockedObserver = new IntersectionObserver(function(entries, tota
 
           const totalValueLockedAggInput = document.querySelector('.totalValueLockedAggInput');
           if (totalValueLockedAggInput.checked) {
-            mainEndpointURL = 'https://api.llama.fi/charts';
-            TvlExtractionKey = 'totalLiquidityUSD';
-
-          } else {
             mainEndpointURL = 'https://api.llama.fi/v2/historicalChainTvl';
             TvlExtractionKey = 'tvl';
+          } else {
+            mainEndpointURL = 'https://api.llama.fi/charts';
+            TvlExtractionKey = 'totalLiquidityUSD';
           };
           
           // DATASET 1 TVL -- DATASET 1 TVL

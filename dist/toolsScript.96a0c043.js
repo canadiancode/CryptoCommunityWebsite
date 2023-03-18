@@ -2639,30 +2639,40 @@ var totalvalueLockedObserver = new IntersectionObserver(function (entries, total
       };
       var fetchHistoricalData = /*#__PURE__*/function () {
         var _ref11 = _asyncToGenerator( /*#__PURE__*/_regeneratorRuntime().mark(function _callee15() {
-          var firstDatasetURL, firstDatasetData, firstDatasetResponse, secondDatasetURL, secondDatasetData, secondDatasetResponse, _iterator28, _step28, timeframe, epochTimeframe, startingDate, formattedDateValue, formattedDate, longTimeframe, displayedTimeframe, _iterator29, _step29, chainOneTvl, TVL, TvlObjectOne, addedTimeValueForTwo, _i6, _iterator30, _step30, chainTwoTvl, _TVL, TvlObjectTwo, removeItems, _removeItems, _iterator31, _step31, _timeframe2, _epochTimeframe2, _startingDate, _formattedDateValue, _formattedDate2, _longTimeframe2, _displayedTimeframe, addedTimeValueForOne, _i7, _iterator32, _step32, _chainOneTvl, _TVL2, _TvlObjectOne, _iterator33, _step33, _chainTwoTvl, _TVL3, _TvlObjectTwo, _removeItems2, _removeItems3;
+          var totalValueLockedAggInput, firstDatasetURL, firstDatasetData, firstDatasetResponse, secondDatasetURL, secondDatasetData, secondDatasetResponse, _iterator28, _step28, timeframe, epochTimeframe, startingDate, formattedDateValue, formattedDate, longTimeframe, displayedTimeframe, _iterator29, _step29, chainOneTvl, TVL, TvlObjectOne, addedTimeValueForTwo, _i6, _iterator30, _step30, chainTwoTvl, _TVL, TvlObjectTwo, removeItems, _removeItems, _iterator31, _step31, _timeframe2, _epochTimeframe2, _startingDate, _formattedDateValue, _formattedDate2, _longTimeframe2, _displayedTimeframe, addedTimeValueForOne, _i7, _iterator32, _step32, _chainOneTvl, _TVL2, _TvlObjectOne, _iterator33, _step33, _chainTwoTvl, _TVL3, _TvlObjectTwo, _removeItems2, _removeItems3;
           return _regeneratorRuntime().wrap(function _callee15$(_context15) {
             while (1) switch (_context15.prev = _context15.next) {
               case 0:
                 _context15.prev = 0;
+                totalValueLockedAggInput = document.querySelector('.totalValueLockedAggInput');
+                if (totalValueLockedAggInput.checked) {
+                  mainEndpointURL = 'https://api.llama.fi/charts';
+                  TvlExtractionKey = 'totalLiquidityUSD';
+                } else {
+                  mainEndpointURL = 'https://api.llama.fi/v2/historicalChainTvl';
+                  TvlExtractionKey = 'tvl';
+                }
+                ;
+
                 // DATASET 1 TVL -- DATASET 1 TVL
-                firstDatasetURL = "https://api.llama.fi/charts/".concat(firstDisplayedTVL);
-                _context15.next = 4;
-                return fetch(firstDatasetURL);
-              case 4:
-                firstDatasetData = _context15.sent;
+                firstDatasetURL = "".concat(mainEndpointURL, "/").concat(firstDisplayedTVL);
                 _context15.next = 7;
-                return firstDatasetData.json();
+                return fetch(firstDatasetURL);
               case 7:
+                firstDatasetData = _context15.sent;
+                _context15.next = 10;
+                return firstDatasetData.json();
+              case 10:
                 firstDatasetResponse = _context15.sent;
                 // DATASET 2 TVL -- DATASET 2 TVL
-                secondDatasetURL = "https://api.llama.fi/charts/".concat(secondDisplayedTVL);
-                _context15.next = 11;
-                return fetch(secondDatasetURL);
-              case 11:
-                secondDatasetData = _context15.sent;
+                secondDatasetURL = "".concat(mainEndpointURL, "/").concat(secondDisplayedTVL);
                 _context15.next = 14;
-                return secondDatasetData.json();
+                return fetch(secondDatasetURL);
               case 14:
+                secondDatasetData = _context15.sent;
+                _context15.next = 17;
+                return secondDatasetData.json();
+              case 17:
                 secondDatasetResponse = _context15.sent;
                 // IF THE FIRST DATASET IS LONGER
                 if (firstDatasetResponse.length > secondDatasetResponse.length) {
@@ -2694,7 +2704,7 @@ var totalvalueLockedObserver = new IntersectionObserver(function (entries, total
                   try {
                     for (_iterator29.s(); !(_step29 = _iterator29.n()).done;) {
                       chainOneTvl = _step29.value;
-                      TVL = chainOneTvl['totalLiquidityUSD'];
+                      TVL = chainOneTvl[TvlExtractionKey];
                       totalValueLockedOne.push(TVL);
                     }
                   } catch (err) {
@@ -2726,7 +2736,7 @@ var totalvalueLockedObserver = new IntersectionObserver(function (entries, total
                   try {
                     for (_iterator30.s(); !(_step30 = _iterator30.n()).done;) {
                       chainTwoTvl = _step30.value;
-                      _TVL = chainTwoTvl['totalLiquidityUSD'];
+                      _TVL = chainTwoTvl[TvlExtractionKey];
                       totalValueLockedTwo.push(_TVL);
                     }
                   } catch (err) {
@@ -2799,7 +2809,7 @@ var totalvalueLockedObserver = new IntersectionObserver(function (entries, total
                   try {
                     for (_iterator32.s(); !(_step32 = _iterator32.n()).done;) {
                       _chainOneTvl = _step32.value;
-                      _TVL2 = _chainOneTvl['totalLiquidityUSD'];
+                      _TVL2 = _chainOneTvl[TvlExtractionKey];
                       totalValueLockedOne.push(_TVL2);
                     }
                   } catch (err) {
@@ -2825,7 +2835,7 @@ var totalvalueLockedObserver = new IntersectionObserver(function (entries, total
                   try {
                     for (_iterator33.s(); !(_step33 = _iterator33.n()).done;) {
                       _chainTwoTvl = _step33.value;
-                      _TVL3 = _chainTwoTvl['totalLiquidityUSD'];
+                      _TVL3 = _chainTwoTvl[TvlExtractionKey];
                       totalValueLockedTwo.push(_TVL3);
                     }
                   } catch (err) {
@@ -2867,18 +2877,18 @@ var totalvalueLockedObserver = new IntersectionObserver(function (entries, total
                 compareTvlChart.data.datasets = TVL_data;
                 compareTvlChart.data.labels = timeframe_data;
                 compareTvlChart.update();
-                _context15.next = 26;
+                _context15.next = 29;
                 break;
-              case 22:
-                _context15.prev = 22;
+              case 25:
+                _context15.prev = 25;
                 _context15.t0 = _context15["catch"](0);
                 console.log(_context15.t0);
                 console.log('Could not fetch historical TVL data...');
-              case 26:
+              case 29:
               case "end":
                 return _context15.stop();
             }
-          }, _callee15, null, [[0, 22]]);
+          }, _callee15, null, [[0, 25]]);
         }));
         return function fetchHistoricalData() {
           return _ref11.apply(this, arguments);
@@ -2915,12 +2925,18 @@ var totalvalueLockedObserver = new IntersectionObserver(function (entries, total
       var TVL_data = [];
       var timeframe_data = [];
       var selectedTimePeriod = 4380;
+      var mainEndpointURL = 'https://api.llama.fi/charts';
+      var TvlExtractionKey = 'totalLiquidityUSD';
       fetchHistoricalData();
 
       // change timeframe of chart
       var compareTVLTimeframeList = document.querySelector('.compareTVLTimeframeList');
       compareTVLTimeframeList.addEventListener('change', changeTimeframe);
       ;
+
+      // Change how the TVL data is aggregated
+      var totalValueLockedAggInputContainer = document.querySelector('.totalValueLockedAggInputContainer');
+      totalValueLockedAggInputContainer.addEventListener('click', fetchHistoricalData);
 
       // CHART FOR THE TVL COMPARISON
       var compareTotalValueLockedCanvas = document.querySelector('.compareChainTVL');

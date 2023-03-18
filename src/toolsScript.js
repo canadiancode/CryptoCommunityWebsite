@@ -1744,18 +1744,30 @@ const totalvalueLockedObserver = new IntersectionObserver(function(entries, tota
       let TVL_data = [];
       let timeframe_data = [];
       let selectedTimePeriod = 4380;
+      let mainEndpointURL = 'https://api.llama.fi/charts';
+      let TvlExtractionKey = 'totalLiquidityUSD';
 
       async function fetchHistoricalData() {
 
         try {
 
+          const totalValueLockedAggInput = document.querySelector('.totalValueLockedAggInput');
+          if (totalValueLockedAggInput.checked) {
+            mainEndpointURL = 'https://api.llama.fi/charts';
+            TvlExtractionKey = 'totalLiquidityUSD';
+
+          } else {
+            mainEndpointURL = 'https://api.llama.fi/v2/historicalChainTvl';
+            TvlExtractionKey = 'tvl';
+          };
+          
           // DATASET 1 TVL -- DATASET 1 TVL
-          let firstDatasetURL = `https://api.llama.fi/charts/${firstDisplayedTVL}`;
+          let firstDatasetURL = `${mainEndpointURL}/${firstDisplayedTVL}`;
           let firstDatasetData = await fetch(firstDatasetURL);
           let firstDatasetResponse = await firstDatasetData.json();
 
           // DATASET 2 TVL -- DATASET 2 TVL
-          let secondDatasetURL = `https://api.llama.fi/charts/${secondDisplayedTVL}`;
+          let secondDatasetURL = `${mainEndpointURL}/${secondDisplayedTVL}`;
           let secondDatasetData = await fetch(secondDatasetURL);
           let secondDatasetResponse = await secondDatasetData.json();
 
@@ -1779,7 +1791,7 @@ const totalvalueLockedObserver = new IntersectionObserver(function(entries, tota
           
             // DATASET 1 TVL EXTRACTION -- DATASET 1 TVL EXTRACTION
             for (const chainOneTvl of firstDatasetResponse) {
-              let TVL = chainOneTvl['totalLiquidityUSD']
+              let TVL = chainOneTvl[TvlExtractionKey]
               totalValueLockedOne.push(TVL);
             };
 
@@ -1804,7 +1816,7 @@ const totalvalueLockedObserver = new IntersectionObserver(function(entries, tota
             }           
 
             for (const chainTwoTvl of secondDatasetResponse) {
-              let TVL = chainTwoTvl['totalLiquidityUSD'];
+              let TVL = chainTwoTvl[TvlExtractionKey];
               totalValueLockedTwo.push(TVL);
             };
 
@@ -1860,7 +1872,7 @@ const totalvalueLockedObserver = new IntersectionObserver(function(entries, tota
             };
 
             for (const chainOneTvl of firstDatasetResponse) {
-              let TVL = chainOneTvl['totalLiquidityUSD']
+              let TVL = chainOneTvl[TvlExtractionKey]
               totalValueLockedOne.push(TVL);
             };             
 
@@ -1878,7 +1890,7 @@ const totalvalueLockedObserver = new IntersectionObserver(function(entries, tota
 
             // DATASET 2 TVL EXTRACTION -- DATASET 2 TVL EXTRACTION
             for (const chainTwoTvl of secondDatasetResponse) {
-              let TVL = chainTwoTvl['totalLiquidityUSD'];
+              let TVL = chainTwoTvl[TvlExtractionKey];
               totalValueLockedTwo.push(TVL);
             };
 
@@ -1935,6 +1947,10 @@ const totalvalueLockedObserver = new IntersectionObserver(function(entries, tota
 
         fetchHistoricalData();
       };
+
+      // Change how the TVL data is aggregated
+      const totalValueLockedAggInputContainer = document.querySelector('.totalValueLockedAggInputContainer');
+      totalValueLockedAggInputContainer.addEventListener('click', fetchHistoricalData);
 
       // CHART FOR THE TVL COMPARISON
       const compareTotalValueLockedCanvas = document.querySelector('.compareChainTVL');

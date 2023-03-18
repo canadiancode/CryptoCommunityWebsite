@@ -11,5 +11,5 @@ Things I am working on:
 Context for the TVL URL:
 -> the TVL includes: liquid staking and double counted TVL
 
-Endpoint below excludes liquid staking and double counted TVL:
+Endpoint below :
 https://api.llama.fi/v2/historicalChainTvl/Ethereum

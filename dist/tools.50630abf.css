@@ -662,5 +662,74 @@
 .dashboardContainer .dataContainer .totalValueLockedContainer .TotalValueLockedChartContainer .compareTvlContainer .TvlSelectionContainer .compareTvlDataContainer .totalValueLockedCurrentValueContainerEl .currentTotalValueLocked {
   padding-left: 0;
 }
+.dashboardContainer .dataContainer .totalValueLockedContainer .TotalValueLockedChartContainer .chartOptions .aggOfTvlContainer {
+  display: flex;
+  flex-direction: row;
+  width: 100%;
+  justify-content: flex-start;
+}
+@media screen and (max-width: 780px) {
+  .dashboardContainer .dataContainer .totalValueLockedContainer .TotalValueLockedChartContainer .chartOptions .aggOfTvlContainer {
+    justify-content: center;
+  }
+}
+.dashboardContainer .dataContainer .totalValueLockedContainer .TotalValueLockedChartContainer .chartOptions .aggOfTvlContainer p {
+  padding-left: 0em;
+  max-width: 200px;
+}
+.dashboardContainer .dataContainer .totalValueLockedContainer .TotalValueLockedChartContainer .chartOptions .aggOfTvlContainer .switch {
+  position: relative;
+  display: inline-block;
+  width: 60px;
+  height: 34px;
+}
+.dashboardContainer .dataContainer .totalValueLockedContainer .TotalValueLockedChartContainer .chartOptions .aggOfTvlContainer .switch .totalValueLockedAggInputContainer {
+  min-width: 60px;
+  margin-right: 1rem;
+}
+.dashboardContainer .dataContainer .totalValueLockedContainer .TotalValueLockedChartContainer .chartOptions .aggOfTvlContainer .switch input {
+  opacity: 0;
+  width: 0;
+  height: 0;
+}
+.dashboardContainer .dataContainer .totalValueLockedContainer .TotalValueLockedChartContainer .chartOptions .aggOfTvlContainer .switch .slider {
+  position: absolute;
+  cursor: pointer;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background-color: #ccc;
+  -webkit-transition: 0.4s;
+  transition: 0.4s;
+}
+.dashboardContainer .dataContainer .totalValueLockedContainer .TotalValueLockedChartContainer .chartOptions .aggOfTvlContainer .switch .slider:before {
+  position: absolute;
+  content: "";
+  height: 26px;
+  width: 26px;
+  left: 4px;
+  bottom: 4px;
+  background-color: white;
+  -webkit-transition: 0.4s;
+  transition: 0.4s;
+}
+.dashboardContainer .dataContainer .totalValueLockedContainer .TotalValueLockedChartContainer .chartOptions .aggOfTvlContainer .switch input:checked + .slider {
+  background-color: #8b0000;
+}
+.dashboardContainer .dataContainer .totalValueLockedContainer .TotalValueLockedChartContainer .chartOptions .aggOfTvlContainer .switch input:focus + .slider {
+  box-shadow: 0 0 1px #8b0000;
+}
+.dashboardContainer .dataContainer .totalValueLockedContainer .TotalValueLockedChartContainer .chartOptions .aggOfTvlContainer .switch input:checked + .slider:before {
+  -webkit-transform: translateX(26px);
+  -ms-transform: translateX(26px);
+  transform: translateX(26px);
+}
+.dashboardContainer .dataContainer .totalValueLockedContainer .TotalValueLockedChartContainer .chartOptions .aggOfTvlContainer .switch .slider.round {
+  border-radius: 34px;
+}
+.dashboardContainer .dataContainer .totalValueLockedContainer .TotalValueLockedChartContainer .chartOptions .aggOfTvlContainer .switch .slider.round:before {
+  border-radius: 50%;
+}
 
 /*# sourceMappingURL=/tools.50630abf.css.map */

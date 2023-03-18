@@ -1775,13 +1775,13 @@ const totalvalueLockedObserver = new IntersectionObserver(function(entries, tota
               let longTimeframe = formattedDate.toUTCString();
               let displayedTimeframe = longTimeframe.substring(5, 16);
               timeframe_data.push(displayedTimeframe);
-            }
+            };
           
             // DATASET 1 TVL EXTRACTION -- DATASET 1 TVL EXTRACTION
             for (const chainOneTvl of firstDatasetResponse) {
               let TVL = chainOneTvl['totalLiquidityUSD']
               totalValueLockedOne.push(TVL);
-            }
+            };
 
             let TvlObjectOne = {
               label: `TVL of ${firstDisplayedTVL}`,
@@ -1800,7 +1800,7 @@ const totalvalueLockedObserver = new IntersectionObserver(function(entries, tota
             // add more data to the shorter timeframe TVL
             let addedTimeValueForTwo = firstDatasetResponse.length - secondDatasetResponse.length;
             for (let i = 0; i < addedTimeValueForTwo; i++) {
-              totalValueLockedTwo.push('');
+              totalValueLockedTwo.push('0');
             }           
 
             for (const chainTwoTvl of secondDatasetResponse) {
@@ -1818,7 +1818,20 @@ const totalvalueLockedObserver = new IntersectionObserver(function(entries, tota
               borderColor: '#FF0000',
               yAxisID: 'y'
             };
-            TVL_data.push(TvlObjectTwo);          
+            TVL_data.push(TvlObjectTwo);  
+
+            // change TVL data to fit timeframe
+            if (timeframe_data.length > selectedTimePeriod) {
+              let removeItems = timeframe_data.length - selectedTimePeriod;
+              totalValueLockedOne.splice(0, removeItems);
+              totalValueLockedTwo.splice(0, removeItems);
+            };
+            
+            // change time data to fit timeframe
+            if (timeframe_data.length > selectedTimePeriod) {
+              let removeItems = timeframe_data.length - selectedTimePeriod;
+              timeframe_data.splice(0, removeItems);
+            };  
 
           } 
           else { // IF THE SECOND DATASET IS LONGER
@@ -1836,20 +1849,20 @@ const totalvalueLockedObserver = new IntersectionObserver(function(entries, tota
               let longTimeframe = formattedDate.toUTCString();
               let displayedTimeframe = longTimeframe.substring(5, 16);
               timeframe_data.push(displayedTimeframe);
-            }
+            };      
 
             // DATASET 1 TVL EXTRACTION -- DATASET 1 TVL EXTRACTION
 
             // add more data to the shorter timeframe TVL
             let addedTimeValueForOne = secondDatasetResponse.length - firstDatasetResponse.length;
             for (let i = 0; i < addedTimeValueForOne; i++) {
-              totalValueLockedOne.push('');
-            }                
+              totalValueLockedOne.push('0');
+            };
 
             for (const chainOneTvl of firstDatasetResponse) {
               let TVL = chainOneTvl['totalLiquidityUSD']
               totalValueLockedOne.push(TVL);
-            };
+            };             
 
             let TvlObjectOne = {
               label: `TVL of ${firstDisplayedTVL}`,
@@ -1879,9 +1892,22 @@ const totalvalueLockedObserver = new IntersectionObserver(function(entries, tota
               borderColor: '#FF0000',
               yAxisID: 'y'
             };
-            TVL_data.push(TvlObjectTwo);          
+            TVL_data.push(TvlObjectTwo); 
 
-          }
+            // change TVL data to fit timeframe
+            if (timeframe_data.length > selectedTimePeriod) {
+              let removeItems = timeframe_data.length - selectedTimePeriod;
+              totalValueLockedOne.splice(0, removeItems);
+              totalValueLockedTwo.splice(0, removeItems);
+            };            
+            
+            // change time data to fit timeframe
+            if (timeframe_data.length > selectedTimePeriod) {
+              let removeItems = timeframe_data.length - selectedTimePeriod;
+              timeframe_data.splice(0, removeItems);
+            };            
+
+          };
 
           // UPDATE CHART
           compareTvlChart.data.datasets = TVL_data;
@@ -1900,16 +1926,15 @@ const totalvalueLockedObserver = new IntersectionObserver(function(entries, tota
       // change timeframe of chart
       const compareTVLTimeframeList = document.querySelector('.compareTVLTimeframeList');
       compareTVLTimeframeList.addEventListener('change', changeTimeframe);
-      async function changeTimeframe() {
-        fetchHistoricalData();
+      function changeTimeframe() {
+
         // change timeframe value
         selectedTimePeriod = compareTVLTimeframeList.options[compareTVLTimeframeList.selectedIndex].value;
         let takeawayValue = Number(timeframe_data.length) - Number(selectedTimePeriod);
         timeframe_data.splice(0, takeawayValue);
-        console.log(timeframe_data);
-        compareTvlChart.data.labels = timeframe_data;
-        compareTvlChart.update();
-      }
+
+        fetchHistoricalData();
+      };
 
       // CHART FOR THE TVL COMPARISON
       const compareTotalValueLockedCanvas = document.querySelector('.compareChainTVL');

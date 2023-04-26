@@ -2646,11 +2646,11 @@ var totalvalueLockedObserver = new IntersectionObserver(function (entries, total
                 _context15.prev = 0;
                 totalValueLockedAggInput = document.querySelector('.totalValueLockedAggInput');
                 if (totalValueLockedAggInput.checked) {
-                  mainEndpointURL = 'https://api.llama.fi/charts';
-                  TvlExtractionKey = 'totalLiquidityUSD';
-                } else {
                   mainEndpointURL = 'https://api.llama.fi/v2/historicalChainTvl';
                   TvlExtractionKey = 'tvl';
+                } else {
+                  mainEndpointURL = 'https://api.llama.fi/charts';
+                  TvlExtractionKey = 'totalLiquidityUSD';
                 }
                 ;
 
@@ -3003,7 +3003,7 @@ var parent = module.bundle.parent;
 if ((!parent || !parent.isParcelRequire) && typeof WebSocket !== 'undefined') {
   var hostname = "" || location.hostname;
   var protocol = location.protocol === 'https:' ? 'wss' : 'ws';
-  var ws = new WebSocket(protocol + '://' + hostname + ':' + "55178" + '/');
+  var ws = new WebSocket(protocol + '://' + hostname + ':' + "65244" + '/');
   ws.onmessage = function (event) {
     checkedAssets = {};
     assetsToAccept = [];

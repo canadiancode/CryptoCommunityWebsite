@@ -253,6 +253,9 @@
                 .phoneContainer {
                     height: 100%;
                     width: 100%;
+                    .phoneList {
+                        transition-duration: 0.1s;
+                    }
                     .phoneListTwo {
                         transform: translateY(-500px);
                     }

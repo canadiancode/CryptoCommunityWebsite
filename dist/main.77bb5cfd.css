@@ -252,6 +252,9 @@
   height: 100%;
   width: 100%;
 }
+.ourVisionSection .visionContentContainer .visionPhoneContainer .phoneListContainer .phoneContainer .phoneList {
+  transition-duration: 0.1s;
+}
 .ourVisionSection .visionContentContainer .visionPhoneContainer .phoneListContainer .phoneContainer .phoneListTwo {
   transform: translateY(-500px);
 }

@@ -1,0 +1,105 @@
+.tradingBotPageContainer {
+    padding: 0em 3em;
+    background: linear-gradient(0deg, rgba(23, 23, 23, 0.9) 0%, rgb(0, 0, 0) 100%);
+    h2, h3, h4, h5, p {
+        color: white;
+        cursor: default;
+    }
+    .generalInfoContainer {
+        padding: 1rem;
+        display: flex;
+        flex-direction: row;
+        width: 100%;
+        @media screen and (max-width: 900px) {
+            & {
+                flex-direction: column;
+                padding: 1rem 0rem;
+            }
+        }
+        .textContainerDiv {
+            width: 100%;
+            display: flex;
+            flex-direction: column;
+            align-self: center;
+            .textContainer {
+                h3 {
+                    font-family: var(--mainHeaderFont);
+                    font-size: 4vmax;
+                    position: relative;
+                    width: fit-content;
+                    @media screen and (max-width: 900px) {
+                        & {
+                            font-size: 5vmax;
+                        }
+                    }
+                }
+                span {
+                    text-shadow: 2px 2px 1px var(--red), -2px -2px 1px var(--red);
+                }
+                p {
+                    margin-top: 2rem;
+                    max-width: 600px;
+                    font-size: 1.2rem;
+                }
+            }
+        }
+        .imageContainerDiv {
+            width: 100%;
+        }
+    }
+    .strategyContainer {
+        display: flex;
+        flex-direction: row;
+        gap: 2rem;
+        padding: 3rem 3rem;
+        @media screen and (max-width: 1000px) {
+            & {
+                flex-direction: column;
+                padding: 3rem 0rem;
+
+            }
+        }
+        .strategy {
+            width: 100%;
+            display: flex;
+            gap: 2rem;
+            flex-direction: column;
+            justify-content: space-between;
+            box-shadow: inset 2px 2px 5px 0px var(--black), inset -2px -2px 5px 0px var(--black);
+            background: #1A1B1F;
+            padding: 2em;
+            h3 {
+                font-size: 3.5vmax;
+                text-shadow: 2px 2px 1px var(--red), -2px -2px 1px var(--red);
+                @media screen and (max-width: 1000px) {
+                    font-size: 5.5vmax;
+                }
+            }
+            p {
+                line-height: 1.5rem;
+                font-size: 1.2rem;
+            }
+            a {
+                width: 100%;
+                button {
+                    font-family: var(--mainHeaderFont);
+                    cursor: pointer;
+                    letter-spacing: 0.15rem;
+                    width: 100%;
+                    border-radius: 20px;
+                    border: 3px solid var(--white);
+                    background-color: var(--white);
+                    color: var(--black);
+                    transition: 0.5s;
+                    min-height: 15px;
+                    font-size: 1.2rem;
+                    &:hover {
+                        background-color: var(--red);
+                        color: var(--white);
+                    }
+                }
+            }
+        }
+    }
+}
+
